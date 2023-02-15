@@ -9,12 +9,17 @@ const SignUp = ({setUser}) => {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('')
+  const [formData, setFormData] = useState({
+    password: '',
+    confirmPswd: ''
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!name || !email) return;
     setUser({name: name, email: email})
     navigate('/')
+
   }
 
   return (
