@@ -1,5 +1,4 @@
 import React from 'react'
-import './signup.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -21,8 +20,8 @@ const SignUp = ({setUser}) => {
   return (
     <div className='container'>
       <div className='signup__container'>
-        <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
+          <h2>Sign Up</h2>
           <label htmlFor="create account">Create new account</label>
           
           <label htmlFor="name">Name</label>

@@ -70,7 +70,7 @@ label {
     gap: 1rem;
     margin: 1rem auto;
     max-width: 100%;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid #64748b;
     justify-content: flex-end;
     padding: 0 1rem;
 }
