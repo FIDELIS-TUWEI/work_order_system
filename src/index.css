@@ -12,8 +12,8 @@
 
 body {
     margin: auto;
-    background-color: coral;
     font-family: 'Poppins', sans-serif;
+    background: #f8fafc;
 }
 
 h2 {
@@ -29,16 +29,27 @@ form {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    box-shadow: 0 4px 6px 4px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 3rem auto;
 }
 
 input {
-    width: 50%;
+    width: 100%;
     padding: 0.8rem 1.2rem;
+    margin-bottom: 0.5rem;
     outline: none;
 }
 
+label {
+    margin-bottom: 0.5rem;
+}
+
+::placeholder {
+    color: #94a3b8;
+}
+
 .btn {
-    width: 40%;
     background-color: green;
     color: #fff;
     margin: 0.5rem auto;
@@ -52,4 +63,22 @@ input {
 .btn:hover {
     background: lightgreen;
     color: black;
+}
+
+.navbar {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem auto;
+    max-width: 100%;
+    border-bottom: 1px solid green;
+    justify-content: flex-end;
+    padding: 0 1rem;
+}
+
+.active {
+    color: #645cff;
+}
+
+.link {
+    color: #64748b;
 }

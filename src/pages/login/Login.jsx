@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './login.css'
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Login = ({setUser}) => {
 
@@ -13,13 +14,13 @@ const Login = ({setUser}) => {
     e.preventDefault();
     if(!email || !password) return;
     setUser({email: email, password: password})
-    navigate('/home')
+    navigate('/dashboard')
   }
 
   return (
     <div className='container login__container'>
-      <h2>Login</h2>
         <form onSubmit={handleSubmit}>
+          <h2>Login</h2>
           <label htmlFor="email">Email</label>
           <input 
             type="email" name="email" 
@@ -35,7 +36,10 @@ const Login = ({setUser}) => {
           />
 
           <button type='submit' className='btn'>Login</button>
+
+        <Link to='/'>Back</Link>
         </form>
+
     </div>
   )
 }

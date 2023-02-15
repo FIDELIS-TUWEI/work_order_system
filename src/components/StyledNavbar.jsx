@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom'
 
 const StyledNavbar = () => {
   return (
-    <nav>
-        <NavLink to='/'>Home</NavLink>
-        <NavLink to='/'>Login</NavLink>
-        <NavLink to='/'>Sign Up</NavLink>
+    <nav className='navbar'>
+        <NavLink to='/' className={({ isActive }) => (isActive ? 'link active' : 'link')}>Home</NavLink>
+        <NavLink to='/login' className={({ isActive }) => (isActive ? 'link active' : 'link')}>Login</NavLink>
+        <NavLink to='/signup' className={({ isActive }) => (isActive ? 'link active' : 'link')}>Sign Up</NavLink>
 
     </nav>
   )
