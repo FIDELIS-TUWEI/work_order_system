@@ -1,19 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './login.css'
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setUser}) => {
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(!email || !password) return;
+    setUser({email: email, password: password})
+    navigate('/home')
+  }
+
   return (
-    <div>
+    <div className='container login__container'>
       <h2>Login</h2>
-      <form>
-        <label htmlFor="email">Email</label>
-        <input type="email" name="email" placeholder='Enter your email' required />
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email</label>
+          <input 
+            type="email" name="email" 
+            placeholder='Enter your email' required
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <label htmlFor='password'>password</label>
-        <input type="password" name="password" placeholder='Enter your password' required />
+          <label htmlFor='password'>Password</label>
+          <input 
+            type="password" name="password" 
+            placeholder='Enter your password' required
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button type='submit'>Login</button>
-      </form>
+          <button type='submit' className='btn'>Login</button>
+        </form>
     </div>
   )
 }
