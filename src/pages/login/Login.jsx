@@ -1,42 +1,49 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
-const Login = ({setUser}) => {
 
+const Login = () => {
+  
+  // useNavigate
   const navigate = useNavigate();
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
-
-  const handleSubmit = async (e) => {
+  
+  // useState
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  
+  // Handle Login
+  const handleLogin = (e) => {
     e.preventDefault();
-    if(!email || !password) return;
-    setUser({email: email, password: password})
-    navigate('/dashboard')
+    
+    try {
+      const user = signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+      navigate("/")
+    } catch(error) {
+      window.alert(error.message)
   }
+  
 
   return (
-    <div className='container login__container'>
-        <form onSubmit={handleSubmit}>
-          <h2>Login</h2>
-          <label htmlFor="email">Email</label>
-          <input 
-            type="email" name="email" 
-            placeholder='Enter your email' required
-            onChange={(e) => setEmail(e.target.value)}
+    <div className='login__container'>
+        <form onSubmit={handleLogin}>
+          <label htmlFor="login">Login</label>
+          <input
+            type="text"
+            placeholder="Enter your email"
+            required
+            onChange={(e) => setLoginEmail(e.target.value)}
           />
-
-          <label htmlFor='password'>Password</label>
-          <input 
-            type="password" name="password" 
-            placeholder='Enter your password' required
-            onChange={(e) => setPassword(e.target.value)}
+          
+          <label htmFor="passowrd">Password</label>
+          <input
+            type="password"
+            placeholder="Enter your password"
+            required
+            onChange={(e) => setLoginPassword}
           />
-
-          <button type='submit' className='btn'>Login</button>
-
-        <Link to='/'>Back</Link>
+    
+          <button type="submit">Login</button>
         </form>
 
     </div>
