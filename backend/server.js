@@ -7,10 +7,19 @@ const cors = require("cors");
 // init express
 const app = express();
 
-// port for local
-const PORT = process.env.PORT || 5000;
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json())
+
+// Routes
+app.get("/", (req, res) => {
+    res.send("Home Page")
+})
 
 // connect to mongodb DB and start Server
+const PORT = process.env.PORT || 5000;
+
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
