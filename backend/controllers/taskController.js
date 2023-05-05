@@ -36,8 +36,18 @@ const getTask = async (req, res) => {
 };
 
 // Delete Task controller
-const deleteTask = (req, res) => {
+const deleteTask = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const task = await Task.findByIdAndDelete(id);
+        if (!task) {
+            return res.status(404).json(`No task with id: ${id} found`);
+        }
 
+        res.status(200).send("Task deleted");
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
 };
 
 module.exports = {
