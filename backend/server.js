@@ -22,6 +22,12 @@ app.get("/", (req, res) => {
     res.send("Home Page")
 });
 
+// Create a Task
+app.post("/api/tasks", async (req, res) => {
+    console.log(req.body);
+    res.send("Task Created");
+});
+
 // Error middleware
 app.use(errorHandler);
 
