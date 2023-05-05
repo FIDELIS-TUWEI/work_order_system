@@ -23,16 +23,6 @@ app.get("/", (req, res) => {
     res.send("Home Page")
 });
 
-// Create a Task
-app.post("/api/tasks", async (req, res) => {
-    try {
-        const task = await Task.create(req.body)
-        res.status(200).json(task)
-    } catch (error) {
-        res.status(500).json({msg: error.message})
-    }
-});
-
 // Error middleware
 app.use(errorHandler);
 
