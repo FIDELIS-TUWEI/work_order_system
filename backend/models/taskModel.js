@@ -6,7 +6,7 @@ const taskSchema = mongoose.Schema({
         type: String,
         required: [true, "Please add a Task"],
     },
-    employeeAssigned: {
+    employee: {
         type: String,
         required: [true, "Please enter name"],
     },
@@ -35,6 +35,7 @@ const taskSchema = mongoose.Schema({
     comments: {
         type: String,
         required: [true, "Please add a comment"],
+        default: false,
     },
     authorised: {
         type: String,
