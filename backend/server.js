@@ -6,6 +6,7 @@ const cors = require("cors");
 const userRoute = require("./routes/userRoute");
 const errorHandler = require("./middleWare/errorMiddleware")
 const Task = require("./models/taskModel")
+const taskRoutes = require("./routes/taskRoute")
 
 // init express
 const app = express();
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(taskRoutes);
 
 // Routes Middleware
 app.use("/api/users", userRoute);
