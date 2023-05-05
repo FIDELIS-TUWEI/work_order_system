@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 // schema for storing & validating user data in mongoDB
 const userSchema = mongoose.Schema({
@@ -29,16 +29,17 @@ const userSchema = mongoose.Schema({
     },
     phone: {
         type: String,
-        default: "+254"
+        default: "+254",
     },
     bio: {
         type: String,
         maxLength: [250, "Bio must not be more than 250  characters"],
-        default: "bio"
+        default: "bio",
     }
 }, {
     timestamps: true
-})
+});
 
-const User = mongoose.model("User", userSchema)
-module.exports = User
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
