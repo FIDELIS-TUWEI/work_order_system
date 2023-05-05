@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 
+// schema for storing & validating user data in mongoDB
 const userSchema = mongoose.Schema({
     name: {
         type: String,
