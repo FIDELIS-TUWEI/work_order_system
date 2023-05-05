@@ -18,7 +18,7 @@ const getTasks = async (req, res) => {
     } catch (error) {
         res.status(500).json({msg: error.message});
     }
-}
+};
 
 // Get a singleTask controller
 const getTask = async (req, res) => {
@@ -28,15 +28,21 @@ const getTask = async (req, res) => {
         if (!task) {
             return res.status(404).json(`No task with id: ${id} found`);
         };
-        
+
         res.status(200).json(task);
     } catch (error) {
         res.status(500).json({msg: error.message});
     }
-}
+};
+
+// Delete Task controller
+const deleteTask = (req, res) => {
+
+};
 
 module.exports = {
     createTask,
     getTasks,
     getTask,
+    deleteTask,
 }
