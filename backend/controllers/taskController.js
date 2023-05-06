@@ -50,9 +50,19 @@ const deleteTask = async (req, res) => {
     }
 };
 
+// update task controller
+const updateTask = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     createTask,
     getTasks,
     getTask,
     deleteTask,
+    updateTask
 }
