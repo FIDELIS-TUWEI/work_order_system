@@ -3,6 +3,7 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Layout from '../layouts/Layout';
 import Forgot from '../pages/auth/Forgot';
+import Reset from '../pages/auth/Reset';
 
 export const router = createBrowserRouter([
     {
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
     {
         path: "/forgot",
         element: <Forgot />,
+    },
+    {
+        path: "/reset",
+        element: <Reset />,
     }
 ]);
