@@ -1,4 +1,4 @@
-import RegisterComponent from "../components/common/RegisterComponent"
+import RegisterComponent from "../../components/common/RegisterComponent"
 
 // check registration state 
 const Register = () => {

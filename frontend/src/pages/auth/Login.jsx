@@ -1,4 +1,4 @@
-import LoginComponent from "../components/common/LoginComponent";
+import LoginComponent from "../../components/common/LoginComponent";
 
 // handle state for user if logged in
 
