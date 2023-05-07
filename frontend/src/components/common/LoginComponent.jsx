@@ -13,19 +13,16 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 const LoginComponent = () => {
-    // login from API
-
     // usestate
     const [showPassword, setShowPassword] = useState();
-
-    // state for credentials check
-    const [credentials, setCredentials] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     // useNavigate
     const navigate = useNavigate();
 
-    // function to login user
-    const loginUser = () => {
+    // function to get email change password
+    const getEmail = () => {
         
     }
 
@@ -67,7 +64,7 @@ const LoginComponent = () => {
                                 variant="outlined"
                                 required
                                 onChange={(e) => 
-                                    setCredentials({...credentials, email: e.target.value})}
+                                    setEmail({...email, email: e.target.value})}
                             />
 
                             <TextField
@@ -79,7 +76,7 @@ const LoginComponent = () => {
                                 type={ showPassword ? 'text' : "password" }
                                 required
                                 onChange={(e) => 
-                                    setCredentials({...credentials, password: e.target.value})}
+                                    setPassword({...password, password: e.target.value})}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position='end'>
@@ -99,7 +96,7 @@ const LoginComponent = () => {
                                 color='success' 
                                 variant="contained" 
                                 fullWidth 
-                                onClick={() =>loginUser()}
+                                onClick={() =>getEmail()}
                             >
                                 Login
                             </Button>
