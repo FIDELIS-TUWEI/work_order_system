@@ -4,7 +4,7 @@ import { CssBaseline, Grid,
     TextField, Button, Link,
     InputAdornment, IconButton
 } from "@mui/material";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +12,21 @@ import { useNavigate } from "react-router-dom";
 // theme
 const theme = createTheme();
 
-const RegisterComponent = () => {
-    // login from API
+// form initial state
+const initialState = {
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+};
 
+const RegisterComponent = () => {
     // usestate
     const [showPassword, setShowPassword] = useState();
+    const [formData, setFormData] = useState(initialState);
 
-    // state for credentials check
-    const [credentials, setCredentials] = useState();
+    // destructure initialstate
+    const { name, email, password, password2 } = formData;
 
     // useNavigate
     const navigate = useNavigate();
@@ -48,7 +55,7 @@ const RegisterComponent = () => {
                         }}
                     >
                         <Avatar sx={{ m:1, bgcolor: 'secondary-main' }}>
-                            <GroupAddIcon />
+                            <PersonAddAltIcon />
                         </Avatar>
 
                         <Typography>Register Page</Typography>
@@ -62,12 +69,23 @@ const RegisterComponent = () => {
                             <TextField 
                                 margin="normal"
                                 fullWidth
+                                id="name"
+                                label='Name'
+                                variant="outlined"
+                                required
+                                value={name}
+                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            />
+
+                            <TextField 
+                                margin="normal"
+                                fullWidth
                                 id="email"
                                 label='Enter your email'
                                 variant="outlined"
                                 required
-                                onChange={(e) => 
-                                    setCredentials({...credentials, email: e.target.value})}
+                                value={email}
+                                onChange={(e) => setFormData({...formData, email: e.target.value})}
                             />
 
                             <TextField
@@ -78,8 +96,8 @@ const RegisterComponent = () => {
                                 variant="outlined"
                                 type={ showPassword ? 'text' : "password" }
                                 required
-                                onChange={(e) => 
-                                    setCredentials({...credentials, password: e.target.value})}
+                                value={password}
+                                onChange={(e) => setFormData({...formData, password: e.target.value})}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position='end'>
@@ -98,13 +116,13 @@ const RegisterComponent = () => {
                             <TextField
                                 margin='normal'
                                 fullWidth
-                                id="password"
+                                id="password2"
                                 label="Confirm your Password"
                                 variant="outlined"
                                 type={ showPassword ? 'text' : "password" }
                                 required
-                                onChange={(e) => 
-                                    setCredentials({...credentials, password: e.target.value})}
+                                value={password2}
+                                onChange={(e) => setFormData({...formData, password2: e.target.value})}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position='end'>
@@ -135,7 +153,7 @@ const RegisterComponent = () => {
                                         onClick={() => navigate('/')} 
                                         sx={{ cursor: 'pointer'}}
                                     >
-                                        Register
+                                        Login
                                     </Link>
                                 </Typography>
                             </Box>
@@ -146,5 +164,5 @@ const RegisterComponent = () => {
         </ThemeProvider>
     );
 }
- 
+
 export default RegisterComponent;
