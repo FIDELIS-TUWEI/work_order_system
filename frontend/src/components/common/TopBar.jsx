@@ -1,4 +1,5 @@
-import { AppBar, Box, Toolbar, Typography, Button}from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Button, IconButton}from '@mui/material';
+import {AccountCircle} from '@mui/icons-material/AccountCircle';
 
 const TopBar = () => {
     return ( 
@@ -9,6 +10,10 @@ const TopBar = () => {
                         Work Order System
                     </Typography>
                     <Button color='inherit'>Login</Button>
+
+                    <IconButton>
+                        <AccountCircle />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </Box>
