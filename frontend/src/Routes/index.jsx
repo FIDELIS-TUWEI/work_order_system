@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
         element: <Forgot />,
     },
     {
-        path: "/reset",
+        path: "/reset/:resetToken",
         element: <Reset />,
     }
 ]);

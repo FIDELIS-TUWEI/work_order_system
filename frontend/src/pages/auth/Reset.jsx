@@ -1,6 +1,8 @@
+import ResetComponent from "../../components/common/ResetComponent";
+
 const Reset = () => {
     return ( 
-        <></>
+        <ResetComponent />
      );
 }
  
