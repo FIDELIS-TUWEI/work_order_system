@@ -24,6 +24,11 @@ const LoginComponent = () => {
     // useNavigate
     const navigate = useNavigate();
 
+    // function to login user
+    const loginUser = () => {
+        
+    }
+
     // function to handle IconButton Event
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -90,7 +95,14 @@ const LoginComponent = () => {
                                 }}
                             />
 
-                            <Button color='success' variant="contained">Login</Button>
+                            <Button 
+                                color='success' 
+                                variant="contained" 
+                                fullWidth 
+                                onClick={() =>loginUser()}
+                            >
+                                Login
+                            </Button>
                             <Box sx={{ mt: 1 }}>
                                 <Typography>
                                     Dont have an account?
