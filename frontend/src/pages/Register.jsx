@@ -1,6 +1,9 @@
+import RegisterComponent from "../components/common/RegisterComponent"
+
+// check registration state 
 const Register = () => {
     return ( 
-        <>Register</>
+        <RegisterComponent />
      );
 }
  

@@ -1,9 +1,8 @@
-import TopBar from "../components/common/TopBar";
 import CssBaseline from '@mui/material/CssBaseline';
 import { Container, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const HomeLayout = () => {
+const HomeComponent = () => {
     // navigate 
     const navigate = useNavigate();
 
@@ -14,8 +13,6 @@ const HomeLayout = () => {
 
     return ( 
         <>
-            <TopBar />
-
             <CssBaseline />
             <Container fixed>
                 <Box sx={{ height: '50vh' }}>
@@ -29,4 +26,4 @@ const HomeLayout = () => {
         </>
     );
 }
-export default HomeLayout;
+export default HomeComponent;
