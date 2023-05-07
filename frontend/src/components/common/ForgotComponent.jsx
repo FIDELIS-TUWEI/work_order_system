@@ -64,7 +64,11 @@ const ForgotComponent = () => {
                             >
                                 Get Reset Email
                             </Button>
-                            <Box sx={{ mt: 1 }}>
+                            <Box sx={{ 
+                                mt: 1, display: 'flex', 
+                                justifyContent: 'space-between', 
+                                }}
+                            >
                                     <Link 
                                         onClick={() => navigate('/home')} 
                                         sx={{ cursor: 'pointer'}}
