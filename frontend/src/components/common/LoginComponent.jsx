@@ -4,7 +4,7 @@ import { CssBaseline, Grid,
     TextField, Button, Link,
     InputAdornment, IconButton
 } from "@mui/material";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LoginIcon from '@mui/icons-material/Login';
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ const LoginComponent = () => {
                         }}
                     >
                         <Avatar sx={{ m:1, bgcolor: 'secondary-main' }}>
-                            <LockOutlinedIcon />
+                            <LoginIcon />
                         </Avatar>
 
                         <Typography>Login Page</Typography>
