@@ -4,12 +4,16 @@ import { CssBaseline, Grid,
     TextField, Button, Link,
 } from "@mui/material";
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // theme
 const theme = createTheme();
 
 const ForgotComponent = () => {
+    // state
+    const [email, setEmail] = useState("");
+
     // useNavigate
     const navigate = useNavigate();
 
@@ -47,6 +51,9 @@ const ForgotComponent = () => {
                                 label='Enter your email'
                                 variant="outlined"
                                 required
+                                onChange={(e) => {
+                                    setEmail({...email, email: e.target.value})
+                                }}
                             />
 
                             <Button 
@@ -62,14 +69,14 @@ const ForgotComponent = () => {
                                         onClick={() => navigate('/home')} 
                                         sx={{ cursor: 'pointer'}}
                                     >
-                                        Home
+                                        - Home
                                     </Link>
 
                                     <Link
                                         onClick={() => navigate('/')}
                                         sx={{ cursor: 'pointer'}}
                                     >
-                                        Login
+                                        - Login
                                     </Link>
                             </Box>
                         </Box>
