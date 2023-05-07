@@ -1,6 +1,10 @@
+import TopBar from "../components/common/TopBar";
+
 const HomeLayout = () => {
     return ( 
-        <>HomeLayout</>
+        <>
+            <TopBar />
+        </>
      );
 }
  
