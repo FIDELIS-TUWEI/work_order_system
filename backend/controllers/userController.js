@@ -72,7 +72,7 @@ const registerUser = asynHandler( async (req, res) => {
 
 // Login User
 const loginUser = asynHandler( async(req, res) => {
-
+    res.send("Login user")
 });
 
 module.exports = {
