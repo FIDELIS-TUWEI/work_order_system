@@ -137,7 +137,9 @@ const logOut = asynHandler( async(req, res) => {
 });
 
 // get user Data
-const getUser = asynHandler( async(req, res) => {});
+const getUser = asynHandler( async(req, res) => {
+    res.send("get user data");
+});
 
 module.exports = {
     registerUser,
