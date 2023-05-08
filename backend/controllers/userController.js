@@ -31,6 +31,18 @@ const registerUser = asynHandler( async (req, res) => {
         email,
         password,
     });
+
+    // preequisites to create user
+    if (user) {
+        const { _id, name, email, photo, phone, bio } = user;
+
+        res.status(201).json({
+            _id, name, email, photo, phone, bio
+        })
+    } else {
+        req.status(400)
+        throw new Error("Invalid user data")
+    }
 });
 
 module.exports = {
