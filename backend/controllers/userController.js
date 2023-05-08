@@ -124,7 +124,11 @@ const loginUser = asynHandler( async(req, res) => {
     }
 });
 
+// Logout User
+const logOut = asynHandler( async(req, res) => {});
+
 module.exports = {
     registerUser,
     loginUser,
+    logOut,
 };
