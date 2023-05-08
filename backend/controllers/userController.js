@@ -1,6 +1,7 @@
 const asynHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 // generateToken
 const generateToken = (id) => {
@@ -72,7 +73,42 @@ const registerUser = asynHandler( async (req, res) => {
 
 // Login User
 const loginUser = asynHandler( async(req, res) => {
-    res.send("Login user")
+    
+    const { email, password } = req.body;
+
+    // Validate request
+    if (!email || !password) {
+        res.status(400);
+        throw new Error("Please add email and password");
+    }
+
+    // Check if user exists
+    const user = await User.findOne({email})
+
+    // If user does not exist
+    if (!user) {
+        res.status(400);
+        throw new Error("User does not exist, please sign up")
+    }
+
+    // User exist? check if password is correct
+    const passwordIsCorrect = await bcrypt.compare(password, user.password);
+
+    // if user & password is correct
+    if (user && passwordIsCorrect) {
+        const { _id, name, email, photo, phone, bio } = user;
+        res.status(200).json({
+            _id,
+            name,
+            email,
+            photo,
+            phone,
+            bio,
+        });
+    } else {
+        res.status(400)
+        throw new Error("Ivalid email or password")
+    }
 });
 
 module.exports = {
