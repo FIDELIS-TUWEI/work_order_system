@@ -1,4 +1,4 @@
-const asynHandler = require("express-async-handler");
+const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -9,7 +9,7 @@ const generateToken = (id) => {
 }
 
 // Register User
-const registerUser = asynHandler( async (req, res) => {
+const registerUser = asyncHandler( async (req, res) => {
     // register user with name, email, password
     const { name, email, password } = req.body;
 
@@ -72,7 +72,7 @@ const registerUser = asynHandler( async (req, res) => {
 });
 
 // Login User
-const loginUser = asynHandler( async(req, res) => {
+const loginUser = asyncHandler( async(req, res) => {
     
     const { email, password } = req.body;
 
@@ -125,7 +125,7 @@ const loginUser = asynHandler( async(req, res) => {
 });
 
 // Logout User
-const logOut = asynHandler( async(req, res) => {
+const logOut = asyncHandler( async(req, res) => {
     res.cookie("token", "", {
         path: "/",
         httpOnly: true,
@@ -137,7 +137,7 @@ const logOut = asynHandler( async(req, res) => {
 });
 
 // get user Data
-const getUser = asynHandler( async(req, res) => {
+const getUser = asyncHandler( async(req, res) => {
     res.send("get user data");
 });
 
