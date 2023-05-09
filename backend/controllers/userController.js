@@ -120,7 +120,7 @@ const loginUser = asyncHandler( async(req, res) => {
         });
     } else {
         res.status(400)
-        throw new Error("Ivalid email or password")
+        throw new Error("Invalid email or password")
     }
 });
 
@@ -201,7 +201,32 @@ const updateUser = asyncHandler( async(req, res) => {
 
 // Change Password
 const changePassword = asyncHandler( async(req, res) => {
-    res.send("Change Password");
+    const user = await User.findById(req.user._id);
+    const { oldPassword, password} = req.body;
+
+    if (!user) {
+        res.status(400)
+        throw new Error("User not found, please signup")
+    }
+
+    // Validate
+    if (!oldPassword || !password) {
+        res.status(400);
+        throw new Error("Please add an old password")
+    }
+
+    // check if old password matches password in DB
+    const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
+
+    // Save new password
+    if (user && passwordIsCorrect) {
+        user.password = password;
+        await user.save();
+        res.status(200).send("Password change succesful");
+    } else {
+        res.status(400);
+        throw new Error("Old password is incorrect");
+    }
 });
 
 module.exports = {
