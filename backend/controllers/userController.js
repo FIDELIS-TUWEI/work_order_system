@@ -197,8 +197,11 @@ const updateUser = asyncHandler( async(req, res) => {
         res.status(404);
         throw new Error("User not found");
     }
+});
 
-    
+// Change Password
+const changePassword = asyncHandler( async(req, res) => {
+    res.send("Change Password");
 });
 
 module.exports = {
@@ -208,4 +211,5 @@ module.exports = {
     getUser,
     loginStatus,
     updateUser,
+    changePassword,
 };
