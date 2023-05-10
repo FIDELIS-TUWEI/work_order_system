@@ -240,6 +240,9 @@ const forgotPassword = asyncHandler( async(req, res) => {
         res.status(404)
         throw new Error("User not found");
     }
+
+    // Create Reset token
+    let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
 });
 
 module.exports = {
