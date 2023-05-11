@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Token = require("../models/tokenModel");
 const crypto = require('crypto');
+const sendEmail = require("../utils/sendEmail");
 
 // generateToken
 const generateToken = (id) => {
@@ -274,6 +275,18 @@ const forgotPassword = asyncHandler( async(req, res) => {
             <p>Regards.</p>
             <p>Holiday Inn IT Department</p>
         `;
+
+        const subject = "Password reset request";
+        const send_to = user.email;
+        const sent_from = process.env.EMAIL_USER;
+
+        try {
+            await sendEmail(subject, message, send_to, sent_from);
+            res.status(200).json({success: true, message: "Reset Email Sent"});
+        } catch (error) {
+            res.status(500);
+            throw new Error("Email not sent, please try again");
+        }
 
     res.send("Forgot password");
 });
