@@ -255,7 +255,7 @@ const forgotPassword = asyncHandler( async(req, res) => {
         
         // Save Token to DB
         await new Token({
-            userId: user.Id,
+            userId: user._id,
             token: hashedToken,
             createdAt: Date.now(),
             expiresAt: Date.now() + 30 * (60 * 1000) // expires after thirty minutes
@@ -287,8 +287,6 @@ const forgotPassword = asyncHandler( async(req, res) => {
             res.status(500);
             throw new Error("Email not sent, please try again");
         }
-
-    res.send("Forgot password");
 });
 
 module.exports = {
