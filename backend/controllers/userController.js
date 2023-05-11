@@ -260,7 +260,8 @@ const forgotPassword = asyncHandler( async(req, res) => {
             expiresAt: Date.now() + 30 * (60 * 1000) // expires after thirty minutes
         }).save()
 
-        
+        // Construct reset Url
+        const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
     res.send("Forgot password");
 });
