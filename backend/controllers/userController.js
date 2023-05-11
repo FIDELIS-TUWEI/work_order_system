@@ -263,6 +263,18 @@ const forgotPassword = asyncHandler( async(req, res) => {
         // Construct reset Url
         const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
+        // Reset Email
+        const message = `
+            <h2>Hello ${user.name}</h2>
+            <p>Please use the url below to reset your password</p>
+            <p>This reset link is valid for only 30 minutes.</p>
+
+            <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+
+            <p>Regards.</p>
+            <p>Holiday Inn IT Department</p>
+        `;
+
     res.send("Forgot password");
 });
 
