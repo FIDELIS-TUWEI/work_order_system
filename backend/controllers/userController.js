@@ -250,7 +250,17 @@ const forgotPassword = asyncHandler( async(req, res) => {
         .createHash("sha256")
         .update(resetToken)
         .digest("hex");
-    console.log(hashedToken);
+    
+        
+        // Save Token to DB
+        await new Token({
+            userId: user.Id,
+            token: hashedToken,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 30 * (60 * 1000) // expires after thirty minutes
+        }).save()
+
+        
 
     res.send("Forgot password");
 });
