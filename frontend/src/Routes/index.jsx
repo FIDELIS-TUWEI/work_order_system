@@ -26,9 +26,5 @@ export const router = createBrowserRouter([
     {
         path: "/reset/:resetToken",
         element: <Reset />,
-    },
-    {
-        path: "/logincode",
-        element: <LoginCode />,
     }
 ]);
