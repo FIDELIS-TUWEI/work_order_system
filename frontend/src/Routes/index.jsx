@@ -4,6 +4,7 @@ import Register from '../pages/auth/Register';
 import Layout from '../layouts/Layout';
 import Forgot from '../pages/auth/Forgot';
 import Reset from '../pages/auth/Reset';
+import LoginCode from '../pages/auth/LoginCode';
 
 export const router = createBrowserRouter([
     {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
     {
         path: "/reset/:resetToken",
         element: <Reset />,
+    },
+    {
+        path: "/logincode",
+        element: <LoginCode />,
     }
 ]);
