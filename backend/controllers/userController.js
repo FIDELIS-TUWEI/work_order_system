@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Token = require("../models/tokenModel");
+const crypto = require('crypto');
 
 // generateToken
 const generateToken = (id) => {
@@ -243,6 +244,15 @@ const forgotPassword = asyncHandler( async(req, res) => {
 
     // Create Reset token
     let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
+
+    // Hash token before saving to DB
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
+    console.log(hashedToken);
+
+    res.send("Forgot password");
 });
 
 module.exports = {
