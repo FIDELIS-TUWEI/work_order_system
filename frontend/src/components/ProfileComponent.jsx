@@ -8,13 +8,18 @@ const initialState = {
     phone: "",
     bio: "",
     role: "",
-    isVerified: "",
+    isVerified: false,
 }
 
 const ProfileComponent = () => {
 
     // state for profile
     const [profile, setProfile] = useState(initialState);
+
+    // function to handle Input change
+    const handleInputChange = () => {
+
+    }
     return ( 
         <>
 
@@ -35,14 +40,17 @@ const ProfileComponent = () => {
                         <Box>
                             <TextField 
                                 label="Name"
+                                onChange={handleInputChange}
                             />
 
                             <TextField 
                                 label="Email"
+                                onChange={handleInputChange}
                             />
 
                             <TextField 
                                 label="Phone"
+                                onChange={handleInputChange}
                             />
                         </Box>
                     </CardContent>
