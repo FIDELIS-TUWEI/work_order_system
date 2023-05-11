@@ -234,13 +234,19 @@ const changePassword = asyncHandler( async(req, res) => {
 
 // Forgot password controller
 const forgotPassword = asyncHandler( async(req, res) => {
-    const {email} = req.body;
-    const user = await User.findOne({email});
+    const { email } = req.body;
+    const user = await User.findOne({ email });
 
     // Check if user does not exist
     if (!user) {
         res.status(404)
         throw new Error("User not found");
+    }
+
+    // Delete Token if exists in DB
+    let token = await Token.findOne({userId: user._id});
+    if (token) {
+        await token.deleteOne();
     }
 
     // Create Reset token
