@@ -1,5 +1,6 @@
-import { Box, Card, CardContent, CardMedia, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Container, TextField, Typography } from "@mui/material";
 import HolidayLogo from "../assets/HolidayLogo.png";
+import { useState } from "react";
 
 // Initial State
 const initialState = {
@@ -15,6 +16,12 @@ const ProfileComponent = () => {
 
     // state for profile
     const [profile, setProfile] = useState(initialState);
+    const {name, email, phone, bio, role, isVerified} = profile;
+
+    // Handle Image change
+    const handleImageChange = () => {
+
+    }
 
     // function to handle Input change
     const handleInputChange = () => {
@@ -39,21 +46,42 @@ const ProfileComponent = () => {
                         
                         <Box>
                             <TextField 
+                                type="file"
+                                accept="image/*"
+                                name="image"
+                                onChange={handleImageChange}
+                            />
+
+                            <TextField 
                                 label="Name"
                                 onChange={handleInputChange}
+                                value={name}
                             />
 
                             <TextField 
                                 label="Email"
                                 onChange={handleInputChange}
+                                value={email}
                             />
 
                             <TextField 
                                 label="Phone"
                                 onChange={handleInputChange}
+                                value={phone}
+                            />
+
+                            <TextField 
+                                label="Bio"
+                                onChange={handleInputChange}
+                                value={bio}
+                                rows={4}
                             />
                         </Box>
                     </CardContent>
+
+                    <CardActions>
+                        <Button variant="contained" fullWidth color="success">Update Profile</Button>
+                    </CardActions>
                 </Card>
             </Container>
         </>
