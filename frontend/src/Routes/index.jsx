@@ -5,6 +5,7 @@ import Layout from '../layouts/Layout';
 import Forgot from '../pages/auth/Forgot';
 import Reset from '../pages/auth/Reset';
 import Profile from '../pages/profile/Profile';
+import ChangePassword from '../pages/changePassword/ChangePassword';
 
 export const router = createBrowserRouter([
     {
@@ -30,5 +31,9 @@ export const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Profile />
+    },
+    {
+        path: "/changepassword",
+        element: <ChangePassword />
     }
 ]);

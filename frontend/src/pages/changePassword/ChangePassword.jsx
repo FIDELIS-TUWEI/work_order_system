@@ -1,7 +1,7 @@
 import TopBar from "../../components/common/TopBar";
 import PageMenu from "../../components/pageMenu/PageMenu";
 
-const changepassword = () => {
+const ChangePassword = () => {
     return ( 
         <>
             <TopBar />
@@ -12,4 +12,4 @@ const changepassword = () => {
      );
 }
  
-export default changepassword;
+export default ChangePassword;
