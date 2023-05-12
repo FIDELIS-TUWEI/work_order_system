@@ -29,6 +29,7 @@ const LoginComponent = () => {
     // function to handle IconButton Event
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
+    
     return ( 
         <ThemeProvider theme={theme}>
             <Grid container component='main' sx={{ height: '100vh' }}>
@@ -101,6 +102,14 @@ const LoginComponent = () => {
                                 Login
                             </Button>
                             <Box sx={{ mt: 1 }}>
+                                <Typography>
+                                    <Link
+                                        onClick={() => navigate('/forgot')}
+                                        sx={{ cursor: 'pointer' }}
+                                    >
+                                        Forgot Password?
+                                    </Link>
+                                </Typography>
                                 <Typography>
                                     Dont have an account?
                                     <Link 
