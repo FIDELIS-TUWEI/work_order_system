@@ -30,7 +30,7 @@ const ResetComponent = () => {
     const navigate = useNavigate();
 
     // function to login user
-    const registerUser = () => {
+    const registerPassword = () => {
         
     }
 
@@ -119,9 +119,9 @@ const ResetComponent = () => {
                                 color='success' 
                                 variant="contained" 
                                 fullWidth 
-                                onClick={() =>registerUser()}
+                                onClick={() =>registerPassword()}
                             >
-                                Register
+                                Reset Password
                             </Button>
                             <Box sx={{ 
                                 mt: 1, display: 'flex', 
