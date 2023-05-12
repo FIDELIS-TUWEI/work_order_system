@@ -1,6 +1,12 @@
+import { Container } from "@mui/material";
+
 const InfoBox = () => {
     return ( 
-        <>InfoBox</>
+        <>
+            <Container>
+                
+            </Container>
+        </>
      );
 }
  
