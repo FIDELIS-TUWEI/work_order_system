@@ -1,6 +1,11 @@
+import { Container } from "@mui/material";
+import PageMenu from "../../components/pageMenu/PageMenu";
+
 const UserList = () => {
     return ( 
-        <>UserList</>
+        <Container>
+            <PageMenu />
+        </Container>
      );
 }
  
