@@ -1,5 +1,7 @@
-import { CssBaseline, Grid, 
-    ThemeProvider, createTheme, 
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme } from '@mui/material';
+import { Grid, 
+    ThemeProvider, 
     Box, Avatar, Paper, Typography, 
     TextField, Button, Link,
     InputAdornment, IconButton
