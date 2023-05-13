@@ -5,7 +5,7 @@ const InfoBox = ({ icon, title, count}) => {
     return ( 
         <>
             <Container>
-                <Card sx={{ m: '1rem', p: '1rem' }}>
+                <Card sx={{ m: '.6rem', p: '1rem' }}>
                     {icon}
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="p">{title}</Typography>      
