@@ -10,13 +10,12 @@ const UserList = () => {
             <PageMenu />
             <UserStats />
 
-            <Box component="div" sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box>
                 <Typography variant="h5">All Users</Typography>
                 <SearchBar />
-
-                <Box>
-                    <UserTable />
-                </Box>
+            </Box>
+            <Box component="div" sx={{ display: 'flex', flexDirection: 'column', m: '0.5rem' }}>
+                <UserTable />
             </Box>
         </Container>
      );
