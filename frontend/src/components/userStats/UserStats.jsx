@@ -17,8 +17,8 @@ const UserStats = () => {
         <>
             <Container>
             <CssBaseline />
-            <Box>
-                <Typography variant="h5">UserStats</Typography>
+            <Typography variant="h5">UserStats</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                 <InfoBox 
                     icon={groupIcon}
                     title={"Total Users"}
