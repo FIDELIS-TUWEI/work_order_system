@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import PageMenu from "../../components/pageMenu/PageMenu";
 import UserStats from "../../components/userStats/UserStats";
 
@@ -7,6 +7,10 @@ const UserList = () => {
         <Container>
             <PageMenu />
             <UserStats />
+
+            <Box component="div">
+                <Typography variant="h5">All Users</Typography>
+            </Box>
         </Container>
      );
 }
