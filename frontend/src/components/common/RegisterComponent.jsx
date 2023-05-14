@@ -9,6 +9,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 // theme
 const theme = createTheme();
 
@@ -32,8 +33,9 @@ const RegisterComponent = () => {
     const navigate = useNavigate();
 
     // function to login user
-    const registerUser = () => {
-        
+    const registerUser = (e) => {
+        e.preventDefault();
+
     }
 
     // function to handle IconButton Event
@@ -142,7 +144,7 @@ const RegisterComponent = () => {
                                 color='success' 
                                 variant="contained" 
                                 fullWidth 
-                                onClick={() =>registerUser()}
+                                onClick={registerUser}
                             >
                                 Register
                             </Button>

@@ -24,8 +24,9 @@ const LoginComponent = () => {
     const navigate = useNavigate();
 
     // function to get email change password
-    const getEmail = () => {
-        
+    const handleLogin = (e) => {
+        e.preventDefault();
+        console.log(email, password);
     }
 
     // function to handle IconButton Event
@@ -99,7 +100,7 @@ const LoginComponent = () => {
                                 color='success' 
                                 variant="contained" 
                                 fullWidth 
-                                onClick={() =>getEmail()}
+                                onClick={handleLogin}
                             >
                                 Login
                             </Button>
