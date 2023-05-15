@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const initialState = {
     name: "",
@@ -17,7 +18,7 @@ const initialState = {
 const TaskForm = () => {
     // useState
     const [formData, setFormData] = useState(initialState)
-    const { name } = formData;
+    const { name, employee, priority, location, issueIdentified, authorised } = formData;
 
     // useNavigate hook
     const navigate = useNavigate()
@@ -25,15 +26,18 @@ const TaskForm = () => {
     // function to create task
     const createTask = async(e) => {
         e.preventDefault();
-        console.log("data submit");
+        console.log(formData);
         navigate("/users");
+        if (name || employee || priority || location || issueIdentified || authorised) {
+            return toast.success("Task added")
+        }
     }
 
     return ( 
         <>
             <Box component="div">
                 <form action="" onSubmit={createTask}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <TextField 
                             name="addWork"
                             label="Add Work"
@@ -43,6 +47,61 @@ const TaskForm = () => {
                             required
                             fullWidth
                             onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Employee Assigned"
+                            margin="normal"
+                            variant="outlined"
+                            value={employee}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, employee: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Priority"
+                            margin="normal"
+                            variant="outlined"
+                            value={priority}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, priority: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Location"
+                            margin="normal"
+                            variant="outlined"
+                            value={location}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, location: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Issue Identified"
+                            margin="normal"
+                            variant="outlined"
+                            value={issueIdentified}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, issueIdentified: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Authorised"
+                            margin="normal"
+                            variant="outlined"
+                            value={authorised}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, authorised: e.target.value})}
                         />
 
                         <Button variant="contained" color="success" type="submit">Add</Button>
