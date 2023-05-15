@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Box, Container, Typography } from "@mui/material";
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -19,6 +19,18 @@ const Item = styled(Paper)(({ theme }) => ({
 const Task = () => {
     return ( 
         <>
+        <Box component="div" sx={{ 
+            display: 'flex', 
+            flexDirection: 'row', 
+            justifyContent: 'space-between' ,
+            mt: '0.8rem'
+            }}
+        >
+            <Typography>Total Tasks: 0 </Typography>
+            <Typography>Completed Tasks: 0 </Typography>
+        </Box>
+        <hr />
+
         <Box sx={{ width: '100%' }}>
             <Stack spacing={2}>
                 <Item>1. Door Lock 
