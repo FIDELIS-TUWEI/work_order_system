@@ -17,6 +17,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cors({
+    origin: ["http://localhost:5173/"]
+}));
 app.use("/api/tasks", taskRoutes);
 
 // Routes Middleware

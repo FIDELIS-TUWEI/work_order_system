@@ -18,7 +18,7 @@ const initialState = {
 const TaskForm = () => {
     // useState
     const [formData, setFormData] = useState(initialState)
-    const { name, employee, priority, location, issueIdentified, authorised } = formData;
+    const { name, employee, priority, location, issueIdentified, completed, dateCompleted, comments, authorised } = formData;
 
     // useNavigate hook
     const navigate = useNavigate()
@@ -28,8 +28,16 @@ const TaskForm = () => {
         e.preventDefault();
         console.log(formData);
         navigate("/users");
-        if (name || employee || priority || location || issueIdentified || authorised) {
+        if (name || employee || priority || location || issueIdentified || completed || dateCompleted || comments || authorised) {
             return toast.success("Task added")
+        }
+
+        // post request
+        try {
+            await axios.post("http://localhost:5000/api/tasks", formData);
+            setFormData({...formData, name: "", employee: "", priority: "", location: "", issueIdentified: "", authorised: ""})
+        } catch (error) {
+            toast.error(error.message)
         }
     }
 
@@ -91,6 +99,39 @@ const TaskForm = () => {
                             required
                             fullWidth
                             onChange={(e) => setFormData({...formData, issueIdentified: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Completed"
+                            margin="normal"
+                            variant="outlined"
+                            value={completed}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, completed: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Date Completed"
+                            margin="normal"
+                            variant="outlined"
+                            value={dateCompleted}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, dateCompleted: e.target.value})}
+                        />
+
+                        <TextField 
+                            name="addWork"
+                            label="Comments"
+                            margin="normal"
+                            variant="outlined"
+                            value={comments}
+                            required
+                            fullWidth
+                            onChange={(e) => setFormData({...formData, comments: e.target.value})}
                         />
 
                         <TextField 
