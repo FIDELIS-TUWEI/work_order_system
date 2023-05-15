@@ -22,6 +22,7 @@ const HomeComponent = () => {
                 </Box>
                 
                 <Button variant="contained" color="error" onClick={handleRegister}>Register</Button>
+                <Button variant='contained' color='success' onClick={() => navigate("/task")}>Tasks</Button>
             </Container>
         </>
     );
