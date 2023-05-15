@@ -7,6 +7,7 @@ import Reset from '../pages/auth/Reset';
 import Profile from '../pages/profile/Profile';
 import ChangePassword from '../pages/changePassword/ChangePassword';
 import UserList from '../pages/userList/UserList';
+import Tasks from '../pages/tasks/Tasks';
 
 export const router = createBrowserRouter([
     {
@@ -40,5 +41,9 @@ export const router = createBrowserRouter([
     {
         path: "/users",
         element: <UserList />,
+    },
+    {
+        path: "/task",
+        element: <Tasks />
     }
 ]);
