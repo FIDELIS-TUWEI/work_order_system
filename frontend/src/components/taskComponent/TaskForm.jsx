@@ -1,14 +1,34 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const initialState = {
+    name: "",
+    employee: "",
+    priority: "",
+    location: "",
+    issueIdentified: "",
+    completed: "",
+    dateCompleted: "",
+    comments: "",
+    authorised: "",
+};
 
 const TaskForm = () => {
-    // state
-    const [work, setWork] = useState();
+    // useState
+    const [formData, setFormData] = useState(initialState)
+    const { name } = formData;
 
-    // function to create Task
-    const createTask = (e) => {
-        e.preventDefault()
+    // useNavigate hook
+    const navigate = useNavigate()
+
+    // function to create task
+    const createTask = async(e) => {
+        e.preventDefault();
+        console.log("data submit");
+        navigate("/users");
     }
+
     return ( 
         <>
             <Box component="div">
@@ -19,13 +39,13 @@ const TaskForm = () => {
                             label="Add Work"
                             margin="normal"
                             variant="outlined"
+                            value={name}
                             required
                             fullWidth
-                            id="addWork"
-                            onChange={(e) => setWork({...work, work: e.target.value})}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
                         />
 
-                        <Button variant="contained" color="success">Add</Button>
+                        <Button variant="contained" color="success" type="submit">Add</Button>
                     </Box>
                 </form>
             </Box>
