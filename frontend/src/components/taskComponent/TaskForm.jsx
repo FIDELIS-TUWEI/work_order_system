@@ -13,13 +13,14 @@ const TaskForm = () => {
         <>
             <Box component="div">
                 <form action="" onSubmit={createTask}>
-                    <Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                         <TextField 
                             name="addWork"
                             label="Add Work"
                             margin="normal"
                             variant="outlined"
                             required
+                            fullWidth
                             id="addWork"
                             onChange={(e) => setWork({...work, work: e.target.value})}
                         />
