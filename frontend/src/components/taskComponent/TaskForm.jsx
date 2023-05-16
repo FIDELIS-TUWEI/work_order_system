@@ -26,7 +26,6 @@ const TaskForm = () => {
     // function to create task
     const createTask = async(e) => {
         e.preventDefault();
-        console.log(formData);
         navigate("/users");
         if (name || employee || priority || location || issueIdentified || completed || dateCompleted || comments || authorised) {
             return toast.success("Task added")
