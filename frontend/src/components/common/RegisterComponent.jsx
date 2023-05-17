@@ -53,7 +53,8 @@ const RegisterComponent = () => {
             .then((data) => {
                 console.log(data)
             })
-
+        
+        navigate("/task")
     }
 
     // function to handle IconButton Event
