@@ -1,45 +1,24 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 // database schema & model
-const taskSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, "Please add a Task"],
+const taskSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     },
-    employee: {
+    title:{
         type: String,
-        required: [true, "Please enter name"],
+        required: true,
     },
-    priority: {
+    text: {
         type: String,
-        required: [true, "Please enter priority level"],
-    },
-    location: {
-        type: String,
-        required: [true, "Enter work location"],
-    },
-    issueIdentified: {
-        type: String,
-        required: [true, "What issue has been identified"],
+        default: true
     },
     completed: {
         type: Boolean,
-        required: true,
-        default: false,
-    },
-    dateCompleted: {
-        type: String,
-        required: true,
-        default: false,
-    },
-    comments: {
-        type: String,
-        required: [true, "Please add a comment"],
-        default: false,
-    },
-    authorised: {
-        type: String,
-        required: true,
+        default: false
     }
 }, {
     timestamps: true
