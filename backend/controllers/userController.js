@@ -109,8 +109,8 @@ const logOut = asyncHandler( async(req, res) => {
 const getAllUsers = asyncHandler( async(req, res) => {
     const users = await User.find().select('-password').lean();
 
-    if (!users) {
-        return res.status(400).json({message: 'No Users found!'})
+    if (!users?.length) {
+        return res.status(400).json({message: 'No Users Found!'})
     }
     res.json(users);
 });
