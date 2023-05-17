@@ -2,6 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import axios from "axios";
 
 const initialState = {
     name: "",
@@ -26,10 +27,12 @@ const TaskForm = () => {
     // function to create task
     const createTask = async(e) => {
         e.preventDefault();
-        navigate("/users");
+        console.log(formData)
         if (name || employee || priority || location || issueIdentified || completed || dateCompleted || comments || authorised) {
-            return toast.success("Task added")
+            return toast.success("Task added");
         }
+        navigate("/users");
+
 
         // post request
         try {
@@ -43,7 +46,7 @@ const TaskForm = () => {
     return ( 
         <>
             <Box component="div">
-                <form action="" onSubmit={createTask}>
+                <form onSubmit={createTask}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <TextField 
                             name="addWork"
