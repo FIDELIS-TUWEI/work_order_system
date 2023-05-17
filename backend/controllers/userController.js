@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const Task = require("../models/taskModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Token = require("../models/tokenModel");
@@ -11,8 +12,8 @@ const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: "1d"});
 }
 
-// Register User
-const registerUser = asyncHandler( async (req, res) => {
+// Create New User
+const createUser = asyncHandler( async (req, res) => {
     // register user with name, email, password
     const { name, email, password } = req.body;
 
@@ -133,22 +134,14 @@ const logOut = asyncHandler( async(req, res) => {
     res.status(200).json({ message: "Succesfully Logged Out" })
 });
 
-// get user Data
-const getUser = asyncHandler( async(req, res) => {
-    const user = await User.findById(req.user._id);
+// get All users
+const getAllUsers = asyncHandler( async(req, res) => {
+    const users = await User.find().select('-password').lean();
 
-    if(user) {
-        const { _id, name, email } = user;
-        res.status(200).json({
-            _id,
-            name,
-            email,
-            bio,
-        });
-    } else {
-        res.status(400);
-        throw new Error("User not Found!")
+    if (!users) {
+        return res.status(400).json({message: 'No Users found!'})
     }
+    res.json(users);
 });
 
 // Get Login Status
@@ -188,139 +181,16 @@ const updateUser = asyncHandler( async(req, res) => {
     }
 });
 
-// Change Password
-const changePassword = asyncHandler( async(req, res) => {
-    const user = await User.findById(req.user._id);
-    const { oldPassword, password} = req.body;
-
-    if (!user) {
-        res.status(400)
-        throw new Error("User not found, please signup")
-    }
-
-    // Validate
-    if (!oldPassword || !password) {
-        res.status(400);
-        throw new Error("Please add an old password")
-    }
-
-    // check if old password matches password in DB
-    const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
-
-    // Save new password
-    if (user && passwordIsCorrect) {
-        user.password = password;
-        await user.save();
-        res.status(200).send("Password change succesful");
-    } else {
-        res.status(400);
-        throw new Error("Old password is incorrect");
-    }
-});
-
-// Forgot password controller
-const forgotPassword = asyncHandler( async(req, res) => {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-
-    // Check if user does not exist
-    if (!user) {
-        res.status(404)
-        throw new Error("User not found");
-    }
-
-    // Delete Token if exists in DB
-    let token = await Token.findOne({userId: user._id});
-    if (token) {
-        await token.deleteOne();
-    }
-
-    // Create Reset token
-    let resetToken = crypto.randomBytes(32).toString("hex") + user._id;
-
-    // Hash token before saving to DB
-    const hashedToken = crypto
-        .createHash("sha256")
-        .update(resetToken)
-        .digest("hex");
-    
-        
-        // Save Token to DB
-        await new Token({
-            userId: user._id,
-            token: hashedToken,
-            createdAt: Date.now(),
-            expiresAt: Date.now() + 30 * (60 * 1000) // expires after thirty minutes
-        }).save()
-
-        // Construct reset Url
-        const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
-
-        // Reset Email
-        const message = `
-            <h2>Hello ${user.name}</h2>
-            <p>Please use the url below to reset your password</p>
-            <p>This reset link is valid for only 30 minutes.</p>
-
-            <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
-
-            <p>Regards.</p>
-            <p>Holiday Inn IT Department</p>
-        `;
-
-        const subject = "Password reset request";
-        const send_to = user.email;
-        const sent_from = process.env.EMAIL_USER;
-
-        try {
-            await sendEmail(subject, message, send_to, sent_from);
-            res.status(200).json({success: true, message: "Reset Email Sent"});
-        } catch (error) {
-            res.status(500);
-            throw new Error("Email not sent, please try again");
-        }
-});
-
-// Reset Password controller
-const resetPassword = asyncHandler( async(req, res) => {
-    
-    const { password } = req.body;
-    const { resetToken } = req.params;
-
-    // Hash token, then compare Token in DB
-    const hashedToken = crypto
-        .createHash("sha256")
-        .update(resetToken)
-        .digest("hex");
-
-        // Find token in DB
-        const userToken = await Token.findOne({
-            token: hashedToken,
-            expiresAt: {$gt: Date.now()}
-        })
-
-        if (!userToken) {
-            res.status(404);
-            throw new Error("Invalid or Expired Token");
-        }
-
-        // Find User
-        const user = await User.findOne({ _id:userToken.userId })
-        user.password = password;
-        await user.save();
-        res.status(200).json({
-            message: "Password reset succesful, Please Login"
-        });
+// Delete User
+const deleteUser = asyncHandler( async (req, res) => {
+    res.status("Delete User");
 })
-
 module.exports = {
-    registerUser,
+    createUser,
     loginUser,
     logOut,
-    getUser,
+    getAllUsers,
     loginStatus,
     updateUser,
-    changePassword,
-    forgotPassword,
-    resetPassword,
+    deleteUser,
 };
