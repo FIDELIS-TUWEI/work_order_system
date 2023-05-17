@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/dbConnect");
 const PORT = process.env.PORT || 5000;
 
+connectDB();
 
 // init express
 const app = express();
@@ -35,7 +36,10 @@ app.get("/", (req, res) => {
 app.use(errorHandler);
 
 // connect to mongodb DB and start Server
-app.listen(PORT, () => {
-    console.log(`Server Running on port ${PORT}`)
-})
+mongoose.connection.once('open', () => {
+    console.log('Connected to Database')
+    app.listen(PORT, () => {
+        console.log(`Server Running on port ${PORT}`)
+    })
+});
 
