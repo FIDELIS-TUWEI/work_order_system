@@ -8,6 +8,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 // theme
@@ -32,29 +33,34 @@ const RegisterComponent = () => {
     const navigate = useNavigate();
 
     // function to register user
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const { name, email, password } = formData;
-        fetch("http://localhost:5000/api/users/register", {
-            method: "POST",
-            crossDomain: true,
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                password,
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data)
+        try {
+            await fetch("http://localhost:5000/api/users/register", {
+                method: "POST",
+                crossDomain: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password,
+                }),
             })
-        
-        navigate("/task")
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                })
+
+                toast.success("User created");
+                navigate("/task");
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     // function to handle IconButton Event
