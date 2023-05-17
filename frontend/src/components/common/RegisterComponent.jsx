@@ -1,13 +1,14 @@
-import { CssBaseline, Grid, 
+import { CssBaseline,
     ThemeProvider, createTheme, 
-    Box, Avatar, Paper, Typography, 
+    Box, Avatar, Typography, 
     TextField, Button, Link,
-    InputAdornment, IconButton
+    InputAdornment, IconButton, Container
 } from "@mui/material";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 
 // theme
@@ -18,7 +19,6 @@ const initialState = {
     name: "",
     email: "",
     password: "",
-    password2: "",
 };
 
 const RegisterComponent = () => {
@@ -27,15 +27,32 @@ const RegisterComponent = () => {
     const [formData, setFormData] = useState(initialState);
 
     // destructure initialstate
-    const { name, email, password, password2 } = formData;
+    const { name, email, password } = formData;
 
     // useNavigate
     const navigate = useNavigate();
 
-    // function to login user
-    const registerUser = (e) => {
-        e.preventDefault();
+    // register request
+    const sendRequest = async () => {
+        const res = await axios
+            .post("http://localhost:5000/api/users/register", {
+                name,
+                email,
+                password,
+            })
+            .catch(err => console.log(err)); 
 
+        const data = await res.data;
+        return data;
+    }
+
+    // function to register user
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData)
+
+        // send http request
+        sendRequest().then(() => navigate("/profile"));
     }
 
     // function to handle IconButton Event
@@ -43,10 +60,10 @@ const RegisterComponent = () => {
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
     return ( 
         <ThemeProvider theme={theme}>
-            <Grid container component='main' sx={{ height: '100vh' }}>
+            <Container component='div'>
                 <CssBaseline />
 
-                <Grid item xs={12} sm={8} md={5} component={Paper} square elevation={6}>
+                <form onSubmit={handleSubmit}>
                     <Box
                         sx={{
                             my: 8,
@@ -62,16 +79,11 @@ const RegisterComponent = () => {
 
                         <Typography>Register Page</Typography>
 
-                        <Box
-                            component='form'
-                            sx={{ mt: 1 }}
-                            noValidate
-                            autoComplete="off"
-                        >
                             <TextField 
                                 margin="normal"
                                 fullWidth
                                 id="name"
+                                type="text"
                                 label='Name'
                                 variant="outlined"
                                 required
@@ -83,6 +95,7 @@ const RegisterComponent = () => {
                                 margin="normal"
                                 fullWidth
                                 id="email"
+                                type="email"
                                 label='Enter your email'
                                 variant="outlined"
                                 required
@@ -115,54 +128,27 @@ const RegisterComponent = () => {
                                 }}
                             />
 
-                            <TextField
-                                margin='normal'
-                                fullWidth
-                                id="password2"
-                                label="Confirm your Password"
-                                variant="outlined"
-                                type={ showPassword ? 'text' : "password" }
-                                required
-                                value={password2}
-                                onChange={(e) => setFormData({...formData, password2: e.target.value})}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position='end'>
-                                            <IconButton
-                                                aria-label='toggle password visibility'
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                            >
-                                                { showPassword ? <Visibility /> : <VisibilityOff /> }
-                                            </IconButton>
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-
                             <Button 
                                 color='success' 
                                 variant="contained" 
-                                fullWidth 
-                                onClick={registerUser}
+                                type="submit"
                             >
                                 Register
                             </Button>
-                            <Box sx={{ mt: 1 }}>
-                                <Typography>
-                                    Already have an account?
-                                    <Link 
-                                        onClick={() => navigate('/')} 
-                                        sx={{ cursor: 'pointer'}}
-                                    >
-                                        Login
-                                    </Link>
-                                </Typography>
-                            </Box>
-                        </Box>
                     </Box>
-                </Grid>
-            </Grid>
+                </form>
+                <Box sx={{ mt: 1 }}>
+                    <Typography>
+                        Already have an account?
+                        <Link 
+                            onClick={() => navigate('/')} 
+                            sx={{ cursor: 'pointer'}}
+                        >
+                            Login
+                        </Link>
+                    </Typography>
+                </Box>
+            </Container>
         </ThemeProvider>
     );
 }

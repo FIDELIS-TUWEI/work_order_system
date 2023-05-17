@@ -57,15 +57,12 @@ const registerUser = asyncHandler( async (req, res) => {
 
     // prerequisites to create user
     if (user) {
-        const { _id, name, email, photo, phone, bio } = user;
+        const { _id, name, email} = user;
 
         res.status(201).json({
             _id, 
             name, 
-            email, 
-            photo, 
-            phone, 
-            bio,
+            email,
             token,
         })
     } else {
@@ -111,14 +108,11 @@ const loginUser = asyncHandler( async(req, res) => {
 
     // if user & password is correct
     if (user && passwordIsCorrect) {
-        const { _id, name, email, photo, phone, bio } = user;
+        const { _id, name, email } = user;
         res.status(200).json({
             _id,
             name,
             email,
-            photo,
-            phone,
-            bio,
             token,
         });
     } else {
@@ -144,13 +138,11 @@ const getUser = asyncHandler( async(req, res) => {
     const user = await User.findById(req.user._id);
 
     if(user) {
-        const { _id, name, email, photo, phone, bio } = user;
+        const { _id, name, email } = user;
         res.status(200).json({
             _id,
             name,
             email,
-            photo,
-            phone,
             bio,
         });
     } else {
@@ -180,21 +172,15 @@ const updateUser = asyncHandler( async(req, res) => {
     const user = await User.findById(req.user._id);
 
     if (user) {
-        const { name, email, photo, phone, bio } = user;
+        const { name, email } = user;
         user.email = email;
         user.name = req.body.name || name;
-        user.photo = req.body.photo || photo;
-        user.phone = req.body.phone || phone;
-        user.bio = req.body.bio || bio;
 
         const updatedUser = await user.save();
         res.status(200).json({
             _id: updatedUser._id,
             name: updatedUser.name,
             email: updatedUser.email,
-            photo: updatedUser.photo,
-            phone: updatedUser.phone,
-            bio: updatedUser.bio,
         });
     } else {
         res.status(404);
