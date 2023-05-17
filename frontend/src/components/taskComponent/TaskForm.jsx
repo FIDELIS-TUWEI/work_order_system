@@ -28,10 +28,10 @@ const TaskForm = () => {
     const createTask = async(e) => {
         e.preventDefault();
         console.log(formData)
+        navigate("/users");
         if (name || employee || priority || location || issueIdentified || completed || dateCompleted || comments || authorised) {
             return toast.success("Task added");
         }
-        navigate("/users");
 
 
         // post request
