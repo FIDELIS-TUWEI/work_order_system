@@ -8,6 +8,9 @@ const errorHandler = require("./middleWare/errorMiddleware");
 const Task = require("./models/taskModel");
 const taskRoutes = require("./routes/taskRoute");
 const cookieParser = require("cookie-parser");
+const connectDB = require("./config/dbConnect");
+const PORT = process.env.PORT || 5000;
+
 
 // init express
 const app = express();
@@ -32,14 +35,7 @@ app.get("/", (req, res) => {
 app.use(errorHandler);
 
 // connect to mongodb DB and start Server
-const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server Running on port ${PORT}`)
+})
 
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => {
-        
-        app.listen(PORT, () => {
-            console.log(`Server Running on port ${PORT}`)
-        })
-    })
-    .catch((error) => console.log(error))
