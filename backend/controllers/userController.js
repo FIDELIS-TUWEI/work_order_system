@@ -14,61 +14,32 @@ const generateToken = (id) => {
 
 // Create New User
 const createUser = asyncHandler( async (req, res) => {
-    // register user with name, email, password
-    const { name, email, password } = req.body;
+    const { username, password, roles } = req.body;
 
-    // validation
-    if (!name || !email || !password) {
-        res.status(400);
-        throw new Error("Please fill in all the required fields");
+    // Confirm Data
+    if (!username || !password || !Array.isArray(roles) || !roles.length) {
+        return res.status(400).json({ message: 'All fields are required' })
     }
 
-    // password length check
-    if (password.length < 6) {
-        res.status(400);
-        throw new Error("Password must be upto 6 characters")
+    // Check for Duplicate
+    const duplicate = await User.findOne({ username }).lean().exec()
+
+    if (duplicate) {
+        return res.status(409).json({ message: 'Duplicate username' });
     }
 
-    // Check if email already exists
-    const userExists = await User.findOne({ email });
+    // Hash Password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    if (userExists) {
-        res.status(400);
-        throw new Error("Email has already been registered");
-    }
+    const userObject = { username, "password": hashedPassword, roles };
 
-    // Create new user
-    const user = await User.create({
-        name,
-        email,
-        password,
-    });
+    // Create and store new user
+    const user = await User.create(userObject);
 
-    // Generate Token for user
-    const token = generateToken(user._id);
-
-    // Send HTTP-only cookie
-    res.cookie("token", token, {
-        path: "/",
-        httpOnly: true,
-        expires: new Date(Date.now() + 1000 * 86400), // 1 day
-        sameSite: "none",
-        secure: true,
-    });
-
-    // prerequisites to create user
-    if (user) {
-        const { _id, name, email} = user;
-
-        res.status(201).json({
-            _id, 
-            name, 
-            email,
-            token,
-        })
+    if (user) {// created
+        res.status(201).json({ message: `New user ${username} created` })
     } else {
-        req.status(400)
-        throw new Error("Invalid user data")
+        res.status(400).json({ message: 'Invalid user data received' });
     }
 });
 
