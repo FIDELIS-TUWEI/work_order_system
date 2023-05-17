@@ -8,7 +8,6 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 
 
 // theme
@@ -32,27 +31,29 @@ const RegisterComponent = () => {
     // useNavigate
     const navigate = useNavigate();
 
-    // register request
-    const sendRequest = async () => {
-        const res = await axios
-            .post("http://localhost:5000/api/users/register", {
-                name,
-                email,
-                password,
-            })
-            .catch(err => console.log(err)); 
-
-        const data = await res.data;
-        return data;
-    }
-
     // function to register user
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
+        const { name, email, password } = formData;
+        fetch("http://localhost:5000/api/users/register", {
+            method: "POST",
+            crossDomain: true,
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+            })
 
-        // send http request
-        sendRequest().then(() => navigate("/profile"));
     }
 
     // function to handle IconButton Event
