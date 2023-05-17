@@ -29,7 +29,7 @@ const createUser = asyncHandler( async (req, res) => {
     }
 
     // Hash Password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10) // salt rounds;
 
     const userObject = { username, "password": hashedPassword, roles };
 
@@ -133,23 +133,37 @@ const loginStatus = asyncHandler( async(req, res) => {
 
 // Update User
 const updateUser = asyncHandler( async(req, res) => {
-    const user = await User.findById(req.user._id);
+    const { id, username, roles, active, password } = re.body;
 
-    if (user) {
-        const { name, email } = user;
-        user.email = email;
-        user.name = req.body.name || name;
-
-        const updatedUser = await user.save();
-        res.status(200).json({
-            _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-        });
-    } else {
-        res.status(404);
-        throw new Error("User not found");
+    // confirm data
+    if (!id || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
+        return res.status(400).json({ message: 'All fields are required' });
     }
+
+    const user = await User.findById(id).exec();
+    
+    if (!user) {
+        return res.status(400).json({ message: 'User not found' });
+    }
+
+    // check for duplicate
+    const duplicate = await User.findOne({ username }).lean().exec();
+    if (duplicate && duplicate?._id.toString() !== id) {
+        return res.status(409).json({ message: 'Duplicate username' });
+    }
+
+    user.username = username
+    user.roles = roles
+    user.active = active
+
+    if (password) {
+        // Hash password
+        user.password = await bcrypt.hash(password, 10) // salt rounds
+    }
+
+    const updateUser = await User.save();
+
+    res.json({ message: `${updateUser.username} updated` })
 });
 
 // Delete User
