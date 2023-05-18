@@ -22,10 +22,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
-app.use("/api/tasks", taskRoutes);
+app.use("/tasks", taskRoutes);
 
 // Routes Middleware
-app.use("/api/users", userRoute);
+app.use("/users", userRoute);
 
 // Routes
 app.get("/", (req, res) => {
