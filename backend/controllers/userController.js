@@ -133,7 +133,7 @@ const loginStatus = asyncHandler( async(req, res) => {
 
 // Update User
 const updateUser = asyncHandler( async(req, res) => {
-    const { id, username, roles, active, password } = re.body;
+    const { id, username, roles, active, password } = req.body;
 
     // confirm data
     if (!id || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
@@ -176,7 +176,7 @@ const deleteUser = asyncHandler( async (req, res) => {
 
     const task = await Task.findOne({ user: id }).lean().exec();
 
-    if (task?.length) {
+    if (task) {
         return res.status(400).json({ message: 'User has assigned Task' })
     }
 

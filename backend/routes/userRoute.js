@@ -14,7 +14,7 @@ router.post("/login", loginUser);
 router.get("/logout", logOut);
 router.get("/getallusers", getAllUsers);
 router.get("/loggedin", loginStatus);
-router.patch("/updateuser", protect, updateUser);
+router.patch("/updateuser", updateUser);
 router.delete("/deleteuser", protect, deleteUser);
 
 module.exports = router;
