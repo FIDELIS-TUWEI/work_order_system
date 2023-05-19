@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -14,7 +14,7 @@ const Item = styled(Paper)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
-  }));
+}));
 
 const Task = () => {
     return ( 
@@ -42,7 +42,7 @@ const Task = () => {
             </Stack>
         </Box>
         </>
-     );
+    );
 }
- 
+
 export default Task;

@@ -9,10 +9,10 @@ const TaskList = () => {
             <Container>
                 <Typography variant="h5">Work Order Manager</Typography>
                 <TaskForm />
-                 <Task />
+                <Task />
             </Container>
         </>
-     );
+    );
 }
- 
+
 export default TaskList;
