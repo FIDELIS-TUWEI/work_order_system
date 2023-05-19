@@ -2,7 +2,6 @@ import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import axios from "axios";
 
 const initialState = {
     name: "",
@@ -31,15 +30,6 @@ const TaskForm = () => {
         navigate("/users");
         if (name || employee || priority || location || issueIdentified || completed || dateCompleted || comments || authorised) {
             return toast.success("Task added");
-        }
-
-
-        // post request
-        try {
-            await axios.post("http://localhost:5000/api/tasks", formData);
-            setFormData({...formData, name: "", employee: "", priority: "", location: "", issueIdentified: "", authorised: ""})
-        } catch (error) {
-            toast.error(error.message)
         }
     }
 
