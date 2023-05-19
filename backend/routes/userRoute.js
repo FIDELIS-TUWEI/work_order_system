@@ -12,7 +12,7 @@ const protect = require("../middleWare/authMiddleware");
 router.post("/register", createUser);
 router.post("/login", loginUser);
 router.get("/logout", logOut);
-router.get("/getallusers", getAllUsers);
+router.get("/getusers", getAllUsers);
 router.get("/loggedin", loginStatus);
 router.patch("/updateuser", updateUser);
 router.delete("/deleteuser", protect, deleteUser);
