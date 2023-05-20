@@ -4,6 +4,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login";
 import TasksPage from "../pages/TasksPage";
 import UsersPage from "../pages/UsersPage";
+import GetAllUsers from "../components/users/GetAllUsers";
 
 export const router = createBrowserRouter([
     {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
     {
         path: '/users',
         element: <UsersPage />
+    },
+    {
+        path: '/allusers',
+        element: <GetAllUsers />
     }
 ])
