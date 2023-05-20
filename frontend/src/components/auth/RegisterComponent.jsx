@@ -8,13 +8,16 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { useState } from 'react';
 
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
+            <Link color="inherit" href="https://www.holidayinn.com/">
+                Holiday Inn - Nairobi
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -25,6 +28,12 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 const RegisterComponent = () => {
+    // usestate
+    const [showPassword, setShowPassword] = useState();
+
+    // function to handle IconButton Event
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
     // function to submit form
     const handleSubmit = (e) => {
         e.target.preventDefault();
@@ -46,7 +55,7 @@ const RegisterComponent = () => {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Register
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -66,6 +75,19 @@ const RegisterComponent = () => {
                             label="Password"
                             type="password"
                             id="password"
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            aria-label='toggle password visibility'
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            { showPassword ? <Visibility /> : <VisibilityOff /> }
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
                         
                         <Button
@@ -74,7 +96,7 @@ const RegisterComponent = () => {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             >
-                        Sign In
+                        Register
                         </Button>
                         
                     </Box>
