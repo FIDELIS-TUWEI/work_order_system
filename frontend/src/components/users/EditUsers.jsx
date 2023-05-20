@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button } from "@mui/material";
 
-import { addUser, getUsers } from "../../api/api";
+import { addUser, getUser } from "../../api/api";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup) `
@@ -33,13 +33,12 @@ const EditUser = () => {
     // useEeffect hook DidMount 
     useEffect(() => {
         loadUserDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // function to load user details
     const loadUserDetails = async () => {
-        // eslint-disable-next-line no-unused-vars
-        const response = await getUsers(id);
+        const response = await getUser(id);
+        setUser(response.user);
     }
 
 

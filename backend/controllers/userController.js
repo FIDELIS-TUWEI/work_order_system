@@ -15,16 +15,6 @@ const addUser = asyncHandler( async (req, res) => {
     }
 });
 
-// Login User
-const loginUser = asyncHandler( async (req, res) => {
-    res.send("Login user")
-});
-
-// Logout User
-const logOut = asyncHandler( async (req, res) => {
-    res.send("Log Out")
-});
-
 // get All users
 const getUsers = asyncHandler( async (req, res) => {
     try {
@@ -35,14 +25,15 @@ const getUsers = asyncHandler( async (req, res) => {
     }
 });
 
-// Get Login Status
-const loginStatus = asyncHandler( async (req, res) => {
-    res.status("logged in")
-});
-
 // Update User
-const updateUser = asyncHandler( async (req, res) => {
-    res.send("User updated")
+const getUser = asyncHandler( async (req, res) => {
+    try {
+        //const user = await User.find({ _id: req.params.id })
+        const user = await User.findById(req.params.id);
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
 });
 
 // Delete User
@@ -52,10 +43,7 @@ const deleteUser = asyncHandler( async (req, res) => {
 
 module.exports = {
     addUser,
-    loginUser,
-    logOut,
     getUsers,
-    loginStatus,
-    updateUser,
+    getUser,
     deleteUser,
 };
