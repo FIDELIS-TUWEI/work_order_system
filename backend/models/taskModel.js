@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 // database schema & model
 const taskSchema = new mongoose.Schema({
@@ -23,13 +22,6 @@ const taskSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
-
-// task ticket number
-taskSchema.plugin(AutoIncrement, {
-    inc_field: 'ticket',
-    id: 'ticketNums',
-    start_seq: 1
-})
 
 const Task = mongoose.model("Task", taskSchema);
 module.exports = Task;

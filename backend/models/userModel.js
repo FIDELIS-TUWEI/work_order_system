@@ -4,6 +4,10 @@ const bcrypt = require("bcryptjs");
 
 // schema for storing & validating user data in mongoDB
 const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: [true, "Please add a name"]
