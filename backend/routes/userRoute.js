@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { 
-    createUser, loginUser, 
+    addUser, loginUser, 
     logOut, getAllUsers, loginStatus, 
     updateUser,
     deleteUser
@@ -9,7 +9,7 @@ const {
 const protect = require("../middleWare/authMiddleware");
 
 // user route
-router.post("/register", createUser);
+router.post("/add", addUser);
 router.post("/login", loginUser);
 router.get("/logout", logOut);
 router.get("/getusers", getAllUsers);

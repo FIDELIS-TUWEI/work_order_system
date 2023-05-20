@@ -12,34 +12,9 @@ const generateToken = (id) => {
 }
 
 // Create New User
-const createUser = asyncHandler( async (req, res) => {
-    const { username, password, roles } = req.body;
-
-    // Confirm Data
-    if (!username || !password || !Array.isArray(roles) || !roles.length) {
-        return res.status(400).json({ message: 'All fields are required' })
-    }
-
-    // Check for Duplicate
-    const duplicate = await User.findOne({ username }).lean().exec()
-
-    if (duplicate) {
-        return res.status(409).json({ message: 'Duplicate username' });
-    }
-
-    // Hash Password
-    const hashedPassword = await bcrypt.hash(password, 10) // salt rounds;
-
-    const userObject = { username, "password": hashedPassword, roles };
-
-    // Create and store new user
-    const user = await User.create(userObject);
-
-    if (user) {// created
-        res.status(201).json({ message: `New user ${username} created` })
-    } else {
-        res.status(400).json({ message: 'Invalid user data received' });
-    }
+const addUser = asyncHandler( async (req, res) => {
+    const user = req.body;
+    console.log(user);
 });
 
 // Login User
@@ -193,7 +168,7 @@ const deleteUser = asyncHandler( async (req, res) => {
 });
 
 module.exports = {
-    createUser,
+    addUser,
     loginUser,
     logOut,
     getAllUsers,
