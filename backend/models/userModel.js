@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-
+const autoIncrement = require("mongoose-auto-increment");
 
 // schema for storing & validating user data in mongoDB
 const userSchema = new mongoose.Schema({
@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+
+autoIncrement.initialize(mongoose.connection);
+userSchema.plugin(autoIncrement.plugin, 'User');
 
 
 // Encrypt password before saving to DB
