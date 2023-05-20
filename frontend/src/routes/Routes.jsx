@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import TasksPage from "../pages/TasksPage";
 import UsersPage from "../pages/UsersPage";
 import GetAllUsers from "../components/users/GetAllUsers";
+import EditUser from "../components/users/EditUsers";
 
 export const router = createBrowserRouter([
     {
@@ -30,5 +31,9 @@ export const router = createBrowserRouter([
     {
         path: '/allusers',
         element: <GetAllUsers />
+    },
+    {
+        path: "/edit",
+        element: <EditUser />
     }
 ])
