@@ -19,3 +19,12 @@ export const getUsers = async () => {
         console.log('Error while calling getUsers Api', error);
     }
 }
+
+// get single user with id
+export const getUser = async (id) => {
+    try {
+        return await axios.get(`${URL}/${id}`)
+    } catch (error) {
+        console.log('Error while calling getUser Api', error);
+    }
+}

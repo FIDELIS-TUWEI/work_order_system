@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button } from "@mui/material";
 
-import { addUser } from "../../api/api";
-import { useNavigate } from "react-router-dom";
+import { addUser, getUsers } from "../../api/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup) `
     width: 50%;
@@ -25,7 +25,23 @@ const EditUser = () => {
     // state
     const [user, setUser] = useState(initialState);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    // useParams
+    const { id } = useParams()
+
+    // useEeffect hook DidMount 
+    useEffect(() => {
+        loadUserDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // function to load user details
+    const loadUserDetails = async () => {
+        // eslint-disable-next-line no-unused-vars
+        const response = await getUsers(id);
+    }
+
 
     // function to handle input change
     const onValueChange = (e) => {
@@ -60,5 +76,5 @@ const EditUser = () => {
         </Container>
     );
 }
- 
+
 export default EditUser;
