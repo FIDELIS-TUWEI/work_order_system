@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
 
 import { getUsers } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 // MUI custom styles
 const StyledTable = styled(Table) `
@@ -27,6 +28,9 @@ const TBody = styled(TableRow)`
 const GetAllUsers = () => {
     // state 
     const [users, setUsers] = useState([]);
+
+    // navigate
+    const navigate = useNavigate();
 
     // useEffect hook to mount data
     useEffect(() => {
@@ -57,7 +61,14 @@ const GetAllUsers = () => {
                             <TableCell>{user.name}</TableCell>
                             <TableCell>{user.username}</TableCell>
                             <TableCell>
-                                <Button variant="contained" color="success" sx={{ mr: '10px' }}>Edit</Button>
+                                <Button 
+                                    variant="contained" 
+                                    color="success" 
+                                    sx={{ mr: '10px' }}
+                                    onClick={() => navigate("/edit")}
+                                >
+                                    Edit
+                                </Button>
                                 <Button variant="contained" color="error">Delete</Button>
                             </TableCell>
 

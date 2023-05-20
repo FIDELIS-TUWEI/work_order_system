@@ -40,7 +40,7 @@ const EditUser = () => {
 
     return ( 
         <Container>
-            <Typography variant="h5">New User</Typography>
+            <Typography variant="h5">Edit User</Typography>
             <FormControl>
                 <InputLabel>Name</InputLabel>
                 <Input onChange={(e) => onValueChange(e)} name="name" />
@@ -54,7 +54,7 @@ const EditUser = () => {
                 <Input onChange={(e) => onValueChange(e)} name="password" />
             </FormControl>
             <FormControl>
-                <Button variant="contained" onClick={() => addUserDetails()}>Add User</Button>
+                <Button variant="contained" onClick={() => addUserDetails()}>Edit User</Button>
             </FormControl>
             
         </Container>
