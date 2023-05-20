@@ -8,13 +8,12 @@ const GetAllUsers = () => {
     // state 
     const [users, setUsers] = useState([]);
 
-    // useEffect hook
+    // useEffect hook to mount data
     useEffect(() => {
         getAllUsers();
     }, [])
 
     // function to get users fro database
-    // eslint-disable-next-line no-unused-vars
     const getAllUsers = async () => {
         let response = await getUsers();
         setUsers(response.data)
