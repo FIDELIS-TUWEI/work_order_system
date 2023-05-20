@@ -6,9 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 import AddUser from "./AddUser";
-import DeleteUser from "./DeleteUsers";
-import UpdateUser from "./UpdateUsers";
-
 const UserList = () => {
     // navigate
     const navigate = useNavigate();
@@ -25,8 +22,6 @@ const UserList = () => {
                 </Toolbar>
             </AppBar>
             <AddUser />
-            <UpdateUser />
-            <DeleteUser />
         </>
             
     );
