@@ -1,6 +1,24 @@
+import { useEffect, useState } from "react";
+
 import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
+import { getUsers } from "../../api/api";
+
 const GetAllUsers = () => {
+    // state 
+    const [users, setUsers] = useState([]);
+
+    // useEffect hook
+    useEffect(() => {
+        getAllUsers();
+    }, [])
+
+    // function to get users fro database
+    // eslint-disable-next-line no-unused-vars
+    const getAllUsers = async () => {
+        let response = await getUsers();
+        setUsers(response.data)
+    }
     return ( 
         <Table>
             <TableHead>
@@ -12,10 +30,20 @@ const GetAllUsers = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
+                {
+                    users.map(user => {
+                        return <TableRow key={user._id}>
+                            <TableCell>{user._id}</TableCell>
+                            <TableCell>{user.name}</TableCell>
+                            <TableCell>{user.username}</TableCell>
 
+
+                        </TableRow>
+                    })
+                }
             </TableBody>
         </Table>
-     );
+    );
 }
  
 export default GetAllUsers;

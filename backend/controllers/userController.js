@@ -16,27 +16,32 @@ const addUser = asyncHandler( async (req, res) => {
 });
 
 // Login User
-const loginUser = asyncHandler( async(req, res) => {
+const loginUser = asyncHandler( async (req, res) => {
     res.send("Login user")
 });
 
 // Logout User
-const logOut = asyncHandler( async(req, res) => {
+const logOut = asyncHandler( async (req, res) => {
     res.send("Log Out")
 });
 
 // get All users
-const getAllUsers = asyncHandler( async(req, res) => {
-    res.send("Get all users")
+const getUsers = asyncHandler( async (req, res) => {
+    try {
+        const users = await User.find({})
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
 });
 
 // Get Login Status
-const loginStatus = asyncHandler( async(req, res) => {
+const loginStatus = asyncHandler( async (req, res) => {
     res.status("logged in")
 });
 
 // Update User
-const updateUser = asyncHandler( async(req, res) => {
+const updateUser = asyncHandler( async (req, res) => {
     res.send("User updated")
 });
 
@@ -49,7 +54,7 @@ module.exports = {
     addUser,
     loginUser,
     logOut,
-    getAllUsers,
+    getUsers,
     loginStatus,
     updateUser,
     deleteUser,
