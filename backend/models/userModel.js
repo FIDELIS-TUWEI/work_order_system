@@ -16,14 +16,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add a password"],
         minLength: [6, "Password must be 6 characters"]
-    },
-    roles: [{
-        type: String,
-        default: "Employee"
-    }],
-    active: {
-        type: Boolean,
-        default: true
     }
 }, {
     timestamps: true
