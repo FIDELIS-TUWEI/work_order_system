@@ -65,7 +65,7 @@ const GetAllUsers = () => {
                                     variant="contained" 
                                     color="success" 
                                     sx={{ mr: '10px' }}
-                                    onClick={() => navigate("/edit")}
+                                    onClick={() => navigate(`/edit/${user._id}`)}
                                 >
                                     Edit
                                 </Button>

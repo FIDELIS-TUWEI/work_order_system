@@ -54,7 +54,7 @@ const EditUser = () => {
                 <Input onChange={(e) => onValueChange(e)} name="password" />
             </FormControl>
             <FormControl>
-                <Button variant="contained" onClick={() => addUserDetails()}>Edit User</Button>
+                <Button variant="contained" onClick={() => addUserDetails()}>Update User</Button>
             </FormControl>
             
         </Container>
