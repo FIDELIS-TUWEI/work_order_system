@@ -1,7 +1,9 @@
 import { useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button, Select, MenuItem } from "@mui/material";
+
 import { addTask } from "../../api/taskApi";
+import { useNavigate } from "react-router-dom";
 
 
 const Container = styled(FormGroup) `
@@ -27,6 +29,8 @@ const AddTask = () => {
     // state
     const [task, setTask] = useState(initialState);
 
+    const navigate = useNavigate()
+
     // function to handle input change
     const onValueChange = (e) => {
         setTask({ ...task, [e.target.name]: e.target.value })
@@ -35,6 +39,7 @@ const AddTask = () => {
     // function to add task
     const addTaskDetails = async () => {
         await addTask(task);
+        navigate("/alltasks");
     }
 
     return ( 
@@ -47,6 +52,7 @@ const AddTask = () => {
                     <MenuItem value="Kessinger">Kessinger</MenuItem>
                     <MenuItem value="George">George</MenuItem>
                     <MenuItem value="Tito">Tito</MenuItem>
+                    <MenuItem value="Bonventure">Bonventure</MenuItem>
                 </Select>
             </FormControl>
             <FormControl>
