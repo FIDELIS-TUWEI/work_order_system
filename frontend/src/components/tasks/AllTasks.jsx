@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {  Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
+import {  Box, Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
 
 import { deleteTask, getTasks } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
@@ -53,6 +53,10 @@ const AllTasks = () => {
 
 
     return ( 
+        <>
+        <Box sx={{ display: "flex", justifyContent: 'flex-end', m: 'auto' }}>
+            <Button variant="contained" onClick={() => navigate("/addtasks")}>New Task</Button>
+        </Box>
         <StyledTable>
             <TableHead>
                 <THead>
@@ -98,6 +102,7 @@ const AllTasks = () => {
                 }
             </TableBody>
         </StyledTable>
+        </>
     );
 }
 
