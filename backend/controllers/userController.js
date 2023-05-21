@@ -21,7 +21,7 @@ const getUsers = asyncHandler( async (req, res) => {
         const users = await User.find({});
         res.status(200).json(users);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(404).json({ message: error.message });
     }
 });
 
