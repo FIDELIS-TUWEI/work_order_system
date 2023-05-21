@@ -19,7 +19,7 @@ const initialState = {
     location: "",
     assignedBy: "",
     status: "",
-    date: false,
+    date: "",
 }
 
 const AddTask = () => {
@@ -35,7 +35,6 @@ const AddTask = () => {
     // function to add task
     const addTaskDetails = async () => {
         await addTask(task);
-        console.log(task);
     }
 
     return ( 
@@ -74,7 +73,7 @@ const AddTask = () => {
                 </Select>
             </FormControl>
             <FormControl>
-                <InputLabel>Date Completed:</InputLabel>
+                <InputLabel>Date Allocated:</InputLabel>
                 <Input onChange={(e) => onValueChange(e)} name="date" />
             </FormControl>
             <FormControl>
