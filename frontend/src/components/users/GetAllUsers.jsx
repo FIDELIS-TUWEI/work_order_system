@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
 
-import { getUsers } from "../../api/api";
+import { getUsers, deleteUser } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
 // MUI custom styles
@@ -42,6 +42,12 @@ const GetAllUsers = () => {
         let response = await getUsers();
         setUsers(response.data)
     }
+
+    // function to delete user
+    const deleteUser = async (id) => {
+        await deleteUser(id);
+    }
+
     return ( 
         <StyledTable>
             <TableHead>
@@ -69,7 +75,13 @@ const GetAllUsers = () => {
                                 >
                                     Edit
                                 </Button>
-                                <Button variant="contained" color="error">Delete</Button>
+                                <Button 
+                                    variant="contained" 
+                                    color="error"
+                                    onClick={() => deleteUser(user._id)}
+                                >
+                                    Delete
+                                </Button>
                             </TableCell>
 
                         </TBody>
