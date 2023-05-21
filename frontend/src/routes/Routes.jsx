@@ -8,6 +8,7 @@ import GetAllUsers from "../components/users/GetAllUsers";
 import EditUser from "../components/users/EditUsers";
 import AllTasks from "../components/tasks/AllTasks";
 import UpdateTask from "../components/tasks/UpdateTask";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
     {
         path: '/login',
         element: <Login />
+    },
+    {
+        path: '/dashboard',
+        element: <Dashboard />
     },
     {
         path: '/addtasks',
