@@ -14,7 +14,7 @@ export const addTask = async (data) => {
 // get Tasks
 export const getTasks = async () => {
     try {
-        return await axios.get(`${URL}/tasks`)
+        return await axios.get(`${URL}/gettasks`)
     } catch (error) {
         console.log('Error while calling get Task Api', error);
     }
