@@ -43,7 +43,6 @@ export const deleteUser = async (id) => {
     try {
         return await axios.delete(`${URL}/${id}`);
     } catch (error) {
-        console.log('Error while calling deleteUser Api', error);
-        
+        console.log("Error while calling Delete user Api", error);
     }
 }

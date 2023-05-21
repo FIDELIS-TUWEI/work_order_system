@@ -48,7 +48,7 @@ const AllTasks = () => {
     const deleteTaskDetails = async (id) => {
         await deleteTask(id);
         refresh();
-        getTasks();
+        getAllTasks();
     }
 
 
