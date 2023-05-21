@@ -15,8 +15,19 @@ const addTask = asyncHandler( async (req, res) => {
     }
 });
 
+// get All Tasks
+const getTasks = asyncHandler( async (req, res) => {
+    try {
+        const tasks = await Task.find({});
+        res.status(200).json(tasks);
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+})
+
 
 
 module.exports = {
     addTask,
+    getTasks,
 }
