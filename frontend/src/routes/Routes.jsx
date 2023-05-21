@@ -7,6 +7,7 @@ import UsersPage from "../pages/UsersPage";
 import GetAllUsers from "../components/users/GetAllUsers";
 import EditUser from "../components/users/EditUsers";
 import AllTasks from "../components/tasks/AllTasks";
+import UpdateTask from "../components/tasks/UpdateTask";
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
     {
         path: '/alltasks',
         element: <AllTasks />
+    },
+    {
+        path: '/update/:id',
+        element: <UpdateTask />
     },
     {
         path: '/users',

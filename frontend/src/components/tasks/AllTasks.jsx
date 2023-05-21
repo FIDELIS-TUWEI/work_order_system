@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {  Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
 
 import { getTasks } from "../../api/taskApi";
+import { useNavigate } from "react-router-dom";
 
 // MUI custom styles
 const StyledTable = styled(Table) `
@@ -24,10 +25,11 @@ const TBody = styled(TableRow)`
     }
 `
 
-
 const AllTasks = () => {
     // state
     const [tasks, setTasks] = useState([]);
+
+    const navigate = useNavigate();
 
     // useEffect hook to mount data
     useEffect(() => {
@@ -60,11 +62,17 @@ const AllTasks = () => {
                         return <TBody key={task._id}>
                             <TableCell>{task._id}</TableCell>
                             <TableCell>{task.userAssigned}</TableCell>
+                            <TableCell>{task.issueIdentified}</TableCell>
+                            <TableCell>{task.location}</TableCell>
+                            <TableCell>{task.assignedBy}</TableCell>
+                            <TableCell>{task.status}</TableCell>
+
                             <TableCell>
                                 <Button 
                                     variant="contained" 
                                     color="success" 
                                     sx={{ mr: '10px' }}
+                                    onClick={() => navigate(`/update/${task._id}`)}
                                 >
                                     Edit
                                 </Button>
