@@ -5,8 +5,8 @@ const { addTask, getTasks, getTask, editTask } = require("../controllers/taskCon
 // routes
 router.post("/addtask", addTask);
 router.get("/gettasks", getTasks);
-router.get("/:id", getTask);
-router.put("/:id", editTask);
+router.get("/gettask/:id", getTask);
+router.put("/edittask/:id", editTask);
 
 
 module.exports = router;

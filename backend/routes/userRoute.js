@@ -8,8 +8,8 @@ const protect = require("../middleWare/authMiddleware");
 // user route
 router.post("/add", addUser);
 router.get("/all", getUsers);
-router.get("/:id", getUser);
-router.put("/:id", editUser);
-router.delete("/:id", deleteUser);
+router.get("/getuser/:id", getUser);
+router.put("/edituser/:id", editUser);
+router.delete("deletuser/:id", deleteUser);
 
 module.exports = router;

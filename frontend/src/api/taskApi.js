@@ -23,7 +23,7 @@ export const getTasks = async () => {
 // get a single Task with unique Id
 export const getTask = async (id) => {
     try {
-        return await axios.get(`${URL}/${id}`)
+        return await axios.get(`${URL}/gettask/${id}`)
     } catch (error) {
         console.log('Error while calling get single Task Api', error);
     }
@@ -32,7 +32,7 @@ export const getTask = async (id) => {
 // Edit task with unique Id
 export const editTask = async (task, id) => {
     try {
-        return await axios.put(`${URL}/${id}`, task);
+        return await axios.put(`${URL}/edittask/${id}`, task);
     } catch (error) {
         console.log('Error while calling edit Task Api', error);
     }
