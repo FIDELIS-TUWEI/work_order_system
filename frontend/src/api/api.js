@@ -28,3 +28,12 @@ export const getUser = async (id) => {
         console.log('Error while calling getUser Api', error);
     }
 }
+
+// Edit user with unique Id
+export const editUser = async (user, id) => {
+    try {
+        return await axios.post(`${URL}/${id}`, user);
+    } catch (error) {
+        console.log('Error while calling editUser Api', error);
+    }
+}
