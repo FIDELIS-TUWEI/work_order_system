@@ -64,4 +64,5 @@ module.exports = {
     getTasks,
     getTask,
     editTask,
+    deleteTask,
 }
