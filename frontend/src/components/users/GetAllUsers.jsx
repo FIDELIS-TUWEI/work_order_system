@@ -35,7 +35,6 @@ const GetAllUsers = () => {
     // useEffect hook to mount data
     useEffect(() => {
         getAllUsers();
-        deleteUserDetails();
     }, [])
 
     // function to get users fro database
