@@ -29,6 +29,7 @@ const getTasks = asyncHandler( async (req, res) => {
 const getTask = asyncHandler( async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
+        res.status(200).json(task);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
