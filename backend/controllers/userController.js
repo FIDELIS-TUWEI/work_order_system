@@ -39,11 +39,11 @@ const getUser = asyncHandler( async (req, res) => {
 // Edit User with Unique Id
 const editUser = asyncHandler( async (req, res) => {
     let user = req.body;
-    const editUser = new User(user);
+    const editUserDetails = new User(user);
 
     try {
-        await User.updateOne({ _id: req.params.id }, editUser);
-        res.status(201).json(editUser);
+        await User.updateOne({ _id: req.params.id }, editUserDetails);
+        res.status(201).json(editUserDetails);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
