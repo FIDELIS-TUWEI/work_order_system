@@ -1,23 +1,26 @@
 const mongoose = require("mongoose");
+const User = require("./userModel");
 
 // database schema & model
 const taskSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-    },
-    title:{
+    user: [{
+        _id: { type: [mongoose.Schema.Types.ObjectId], ref: User },
+        username: { type: String, ref: User }
+        
+    }],
+    issue:{
         type: String,
         required: true,
     },
-    text: {
+    status: {
         type: String,
         default: true
     },
     completed: {
         type: Boolean,
         default: false
-    }
+    },
+    date : Date
 }, {
     timestamps: true
 });
