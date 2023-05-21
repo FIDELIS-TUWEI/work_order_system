@@ -8,6 +8,7 @@ import GetAllUsers from "../components/users/GetAllUsers";
 import EditUser from "../components/users/EditUsers";
 import AllTasks from "../components/tasks/AllTasks";
 import UpdateTask from "../components/tasks/UpdateTask";
+import DeleteTask from "../components/tasks/DeleteTask";
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
     {
         path: '/update/:id',
         element: <UpdateTask />
+    },
+    {
+        path: '/deletetask',
+        element: <DeleteTask />
     },
     {
         path: '/users',
