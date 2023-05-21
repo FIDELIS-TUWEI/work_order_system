@@ -48,6 +48,15 @@ const editTask = asyncHandler( async (req, res) => {
     }
 });
 
+// Delete Task with unique Id
+const deleteTask = asyncHandler( async (req, res) => {
+    try {
+        await Task.deleteOne({ _id: req.params.id });
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+});
+
 
 
 module.exports = {

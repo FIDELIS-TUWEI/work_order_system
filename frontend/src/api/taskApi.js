@@ -37,3 +37,12 @@ export const editTask = async (task, id) => {
         console.log('Error while calling edit Task Api', error);
     }
 }
+
+// delete Task with unique Id
+export const deleteTask = async (id) => {
+    try {
+        return await axios.delete(`${URL}/${id}`);
+    } catch (error) {
+        console.log('Error while calling delete Task Api')
+    }
+}
