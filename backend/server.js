@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoute = require("./routes/userRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
-const Task = require("./models/taskModel");
 const taskRoutes = require("./routes/taskRoute");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/dbConnect");
@@ -24,10 +23,11 @@ app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use("/tasks", taskRoutes);
 
 // Routes Middleware
 app.use("/", userRoute);
+app.use("/", taskRoutes);
+
 
 // Routes
 app.get("/", (req, res) => {

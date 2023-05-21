@@ -27,7 +27,6 @@ const AddTask = () => {
     // state
     const [task, setTask] = useState(initialState);
 
-
     // function to handle input change
     const onValueChange = (e) => {
         setTask({ ...task, [e.target.name]: e.target.value })

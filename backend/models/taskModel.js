@@ -20,9 +20,11 @@ const taskSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: true
     },
-    date : Date
+    date: {
+        type: Date,
+        default: false
+    }
 }, {
     timestamps: true
 });
