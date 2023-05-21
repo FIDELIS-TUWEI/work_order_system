@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button, Select, MenuItem } from "@mui/material";
 
+import { addTask } from "../../api/taskApi";
 
 const Container = styled(FormGroup) `
     width: 50%;
@@ -34,7 +35,7 @@ const AddTask = () => {
 
     // function to add task
     const addTaskDetails = async () => {
-        console.log(task);
+        await addTask(task);
     }
 
     return ( 
