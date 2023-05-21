@@ -41,7 +41,7 @@ export const editUser = async (user, id) => {
 // Delete user with unique Id
 export const deleteUser = async (id) => {
     try {
-        return await axios.delete(`${URL}/${id}`);
+        return await axios.delete(`${URL}/delete/${id}`);
     } catch (error) {
         console.log("Error while calling Delete user Api", error);
     }

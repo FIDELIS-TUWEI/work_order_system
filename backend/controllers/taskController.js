@@ -52,6 +52,7 @@ const editTask = asyncHandler( async (req, res) => {
 const deleteTask = asyncHandler( async (req, res) => {
     try {
         await Task.deleteOne({ _id: req.params.id });
+        res.status(200).json({ message: "Task Deleted succesfully" });
     } catch (error) {
         res.status(409).json({ message: error.message })
     }

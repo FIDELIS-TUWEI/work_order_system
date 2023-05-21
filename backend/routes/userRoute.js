@@ -10,6 +10,6 @@ router.post("/add", addUser);
 router.get("/all", getUsers);
 router.get("/getuser/:id", getUser);
 router.put("/edituser/:id", editUser);
-router.delete("/:id", deleteUser);
+router.delete("/delete/:id", deleteUser);
 
 module.exports = router;
