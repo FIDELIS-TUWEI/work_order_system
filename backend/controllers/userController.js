@@ -51,7 +51,11 @@ const editUser = asyncHandler( async (req, res) => {
 
 // Delete User
 const deleteUser = asyncHandler( async (req, res) => {
-    res.send("User deleted");
+    try {
+        await User.deleteOne({ _id: req.params.id });
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
 });
 
 module.exports = {
