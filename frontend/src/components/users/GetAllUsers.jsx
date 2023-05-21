@@ -35,6 +35,7 @@ const GetAllUsers = () => {
     // useEffect hook to mount data
     useEffect(() => {
         getAllUsers();
+        deleteUserDetails();
     }, [])
 
     // function to get users fro database
@@ -44,8 +45,9 @@ const GetAllUsers = () => {
     }
 
     // function to delete user
-    const deleteUser = async (id) => {
+    const deleteUserDetails = async (id) => {
         await deleteUser(id);
+        getUsers();
     }
 
     return ( 
@@ -78,7 +80,7 @@ const GetAllUsers = () => {
                                 <Button 
                                     variant="contained" 
                                     color="error"
-                                    onClick={() => deleteUser(user._id)}
+                                    onClick={() => deleteUserDetails(user._id)}
                                 >
                                     Delete
                                 </Button>
