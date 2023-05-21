@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import {  Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
 
-import { getTasks } from "../../api/taskApi";
+import { deleteTask, getTasks } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
 
 // MUI custom styles
@@ -25,6 +25,8 @@ const TBody = styled(TableRow)`
     }
 `
 
+const refresh = () => window.location.reload(true);
+
 const AllTasks = () => {
     // state
     const [tasks, setTasks] = useState([]);
@@ -40,6 +42,13 @@ const AllTasks = () => {
     const getAllTasks = async () => {
         let response = await getTasks();
         setTasks(response.data);
+    }
+
+    // function to delete Task
+    const deleteTaskDetails = async (id) => {
+        await deleteTask(id);
+        refresh();
+        getTasks();
     }
 
 
@@ -79,6 +88,7 @@ const AllTasks = () => {
                                 <Button 
                                     variant="contained" 
                                     color="error"
+                                    onClick={() => deleteTaskDetails(task._id)}
                                 >
                                     Delete
                                 </Button>

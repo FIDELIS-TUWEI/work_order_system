@@ -1,5 +1,4 @@
 import AddTask from "./AddTask";
-import DeleteTask from "./DeleteTask";
 import UpdateTask from "./UpdateTask";
 
 const TaskList = () => {
@@ -7,7 +6,6 @@ const TaskList = () => {
         <>
             <AddTask />
             <UpdateTask />
-            <DeleteTask />
         </>
      );
 }
