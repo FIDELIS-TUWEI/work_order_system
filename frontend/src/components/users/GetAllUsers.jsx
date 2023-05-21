@@ -25,6 +25,9 @@ const TBody = styled(TableRow)`
     }
 `
 
+// reload window function
+const refresh = () => window.location.reload(true)
+
 const GetAllUsers = () => {
     // state 
     const [users, setUsers] = useState([]);
@@ -46,6 +49,7 @@ const GetAllUsers = () => {
     // function to delete user
     const deleteUserDetails = async (id) => {
         await deleteUser(id);
+        refresh();
         getUsers();
     }
 
