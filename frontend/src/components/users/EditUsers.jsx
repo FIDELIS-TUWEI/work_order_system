@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button } from "@mui/material";
 
-import { addUser, getUser } from "../../api/api";
+import { editUser, getUser } from "../../api/api";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup) `
@@ -38,7 +38,7 @@ const EditUser = () => {
     // function to load user details
     const loadUserDetails = async () => {
         const response = await getUser(id);
-        setUser(response.user);
+        setUser(response.data);
     }
 
 
@@ -47,9 +47,9 @@ const EditUser = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
-    // function to add user
-    const addUserDetails = async () => {
-        await addUser(user);
+    // function to edit user
+    const editUserDetails = async () => {
+        await editUser(user, id);
         navigate("/allusers");
     }
 
@@ -58,18 +58,18 @@ const EditUser = () => {
             <Typography variant="h5">Edit User</Typography>
             <FormControl>
                 <InputLabel>Name</InputLabel>
-                <Input onChange={(e) => onValueChange(e)} name="name" />
+                <Input onChange={(e) => onValueChange(e)} name="name" value={user.name} />
             </FormControl>
             <FormControl>
                 <InputLabel>Username</InputLabel>
-                <Input onChange={(e) => onValueChange(e)} name="username" />
+                <Input onChange={(e) => onValueChange(e)} name="username" value={user.username} />
             </FormControl>
             <FormControl>
                 <InputLabel>Password</InputLabel>
-                <Input onChange={(e) => onValueChange(e)} name="password" />
+                <Input onChange={(e) => onValueChange(e)} name="password" value={user.password} />
             </FormControl>
             <FormControl>
-                <Button variant="contained" onClick={() => addUserDetails()}>Update User</Button>
+                <Button variant="contained" onClick={() => editUserDetails()}>Update User</Button>
             </FormControl>
             
         </Container>
