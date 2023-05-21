@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { 
-    addUser, getUsers, getUser, editUser
+    addUser, getUsers, getUser, editUser, deleteUser
 } = require("../controllers/userController");
 const protect = require("../middleWare/authMiddleware");
 
@@ -9,6 +9,7 @@ const protect = require("../middleWare/authMiddleware");
 router.post("/add", addUser);
 router.get("/all", getUsers);
 router.get("/:id", getUser);
-router.post("/:id", editUser)
+router.put("/:id", editUser);
+router.delete("/:id", deleteUser);
 
 module.exports = router;
