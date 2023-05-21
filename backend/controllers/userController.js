@@ -53,6 +53,7 @@ const editUser = asyncHandler( async (req, res) => {
 const deleteUser = asyncHandler( async (req, res) => {
     try {
         await User.deleteOne({ _id: req.params.id });
+        res.status(200).json({ message: 'User Deleted succesfully' });
     } catch (error) {
         res.status(409).json({ message: error.message })
     }
