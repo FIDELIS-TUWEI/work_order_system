@@ -84,6 +84,7 @@ export default function Dashboard() {
             </IconButton>
             </Toolbar>
         </AppBar>
+        
         <SideBar {...{open, setOpen}} />
         </Box>
     </ThemeProvider>

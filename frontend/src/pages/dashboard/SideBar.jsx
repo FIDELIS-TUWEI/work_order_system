@@ -1,13 +1,16 @@
 import { 
   Assignment, ChevronLeft, Dashboard, 
   HowToReg, Login, 
+  Logout, 
   PeopleAlt 
 } from '@mui/icons-material';
 import { 
+  Avatar,
   Box, Divider, IconButton, 
   List, ListItem, ListItemButton, 
   ListItemIcon, ListItemText, 
   Tooltip, 
+  Typography, 
   styled 
 } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
@@ -144,6 +147,22 @@ const SideBar = ({ open, setOpen}) => {
                     ))}
                     </List>
                 <Divider />
+
+                <Box sx={{ mx: 'auto', mt: 3, mb: 1 }}>
+                  <Tooltip title='Admin'>
+                    <Avatar />
+                  </Tooltip>
+                </Box>
+
+                <Box sx={{ textAlign: 'center' }}>
+                  {open && <Typography>Admin</Typography>}
+
+                  <Tooltip title='logout' sx={{ mt: 1 }}>
+                    <IconButton>
+                      <Logout />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
             
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
@@ -154,6 +173,8 @@ const SideBar = ({ open, setOpen}) => {
                       <Link key={list.title} path={item.link} element={list.component} />
                     })}
                 </Link>
+
+                <Typography>Users</Typography>
             </Box>
         </>
     );
