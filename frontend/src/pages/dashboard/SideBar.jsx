@@ -7,6 +7,7 @@ import {
   Box, Divider, IconButton, 
   List, ListItem, ListItemButton, 
   ListItemIcon, ListItemText, 
+  Tooltip, 
   styled 
 } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
@@ -132,7 +133,10 @@ const SideBar = ({ open, setOpen}) => {
                                 justifyContent: 'center',
                             }}
                             >
+                              <Tooltip title={item.title}>
                             {item.icon}
+
+                              </Tooltip>
                             </ListItemIcon>
                             <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>
