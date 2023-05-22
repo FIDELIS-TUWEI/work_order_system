@@ -81,12 +81,12 @@ const SideBar = ({ open, setOpen}) => {
     { 
       title: 'Main', 
       icon: <Dashboard />, 
-      link: '/main', 
+      link: '/profile', 
       component: <Main /> },
     { 
       title: 'Users', 
       icon: <PeopleAlt />, 
-      link: '/people', 
+      link: '/allusers', 
       component: <Users /> },
     { 
       title: 'Tasks', 
