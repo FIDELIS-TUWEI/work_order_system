@@ -1,10 +1,6 @@
-import { useEffect } from "react";
 
-export default function Users({ setSelectedLink, link }) {
-  // useEffect hook
-  useEffect(() => {
-    setSelectedLink(link);
-  }, []);
+export default function Users() {
+  
   
   return (
     <div>Users</div>
