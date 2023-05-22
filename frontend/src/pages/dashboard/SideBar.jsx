@@ -10,7 +10,7 @@ import {
   styled 
 } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import Main from './Main/Main';
 import Users from './users/Users';
 import Tasks from './tasks/Tasks';
@@ -70,38 +70,35 @@ const openedMixin = (theme) => ({
     }),
   );
 
-// eslint-disable-next-line react/prop-types
 const SideBar = ({ open, setOpen}) => {
-  // state for selected links
-  const [selectedLink, setSelectedLink] = useState();
-  
+
   // List Icons
   const list = useMemo(() => [
     { 
       title: 'Main', 
       icon: <Dashboard />, 
-      link: '/profile', 
-      component: <Main { ...{setSelectedLink, link: '/profile'} } /> },
+      link: '/main', 
+      component: <Main /> },
     { 
       title: 'Users', 
       icon: <PeopleAlt />, 
-      link: '/allusers', 
-      component: <Users { ...{setSelectedLink, link: '/allusers'} } /> },
+      link: '/people', 
+      component: <Users /> },
     { 
       title: 'Tasks', 
       icon: <Assignment />, 
       link: '/alltasks', 
-      component: <Tasks { ...{setSelectedLink, link: '/alltasks'} } /> },
+      component: <Tasks /> },
     { 
       title: 'Login', 
       icon: <Login />, 
       link: '/login', 
-      component: <Auth { ...{setSelectedLink, link: '/login'} } /> },
+      component: <Auth  /> },
     { 
       title: 'Register', 
       icon: <HowToReg />, 
       link: '/register', 
-      component: <Register { ...{setSelectedLink, link: '/register'} } /> },
+      component: <Register /> },
 
   ], []);
 
@@ -127,7 +124,6 @@ const SideBar = ({ open, setOpen}) => {
                             px: 2.5,
                             }}
                             onClick={() => navigate(item.link)}
-                            selected={selectedLink === item.link}
                         >
                             <ListItemIcon
                             sx={{
@@ -156,7 +152,7 @@ const SideBar = ({ open, setOpen}) => {
                 </Link>
             </Box>
         </>
-     );
+    );
 }
- 
+
 export default SideBar;

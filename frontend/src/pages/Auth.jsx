@@ -1,9 +1,13 @@
+import { useEffect } from "react";
 import LoginComponent from "../components/auth/LoginComponent";
 
-const Login = () => {
+
+export default function Auth ({ setSelectedLink, link }) {
+    useEffect(() => {
+        setSelectedLink(link);
+    }, [])
     return ( 
         <LoginComponent />
      );
 }
  
-export default Login;
