@@ -16,6 +16,7 @@ import Users from './users/Users';
 import Tasks from './tasks/Tasks';
 import Auth from '../Auth';
 import Register from '../Register';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -74,12 +75,15 @@ const SideBar = ({ open, setOpen}) => {
   // List Icons
   const list = useMemo(() => [
     { title: 'Main', icon: <Dashboard />, link: '/profile', component: <Main /> },
-    { title: 'Users', icon: <PeopleAlt />, link: '/users', component: <Users /> },
+    { title: 'Users', icon: <PeopleAlt />, link: '/allusers', component: <Users /> },
     { title: 'Tasks', icon: <Assignment />, link: '/alltasks', component: <Tasks /> },
     { title: 'Login', icon: <Login />, link: '/login', component: <Auth /> },
     { title: 'Register', icon: <HowToReg />, link: '/register', component: <Register /> },
 
   ], []);
+
+  // navigate
+  const navigate = useNavigate();
 
     return ( 
         <>
@@ -99,6 +103,7 @@ const SideBar = ({ open, setOpen}) => {
                             justifyContent: open ? 'initial' : 'center',
                             px: 2.5,
                             }}
+                            onClick={() => navigate(item.link)}
                         >
                             <ListItemIcon
                             sx={{
@@ -120,6 +125,11 @@ const SideBar = ({ open, setOpen}) => {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 
+                <Link>
+                    {list.map(item => {
+                      <Link key={list.title} path={item.link} element={list.component} />
+                    })}
+                </Link>
             </Box>
         </>
      );
