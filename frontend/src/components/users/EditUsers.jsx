@@ -13,6 +13,9 @@ const Container = styled(FormGroup) `
     }
 `
 
+// function to refresh window
+const refresh = window.location.refresh(true);
+
 // initialState values
 const initialState = {
     name: "",
@@ -50,6 +53,7 @@ const EditUser = () => {
     // function to edit user
     const editUserDetails = async () => {
         await editUser(user, id);
+        refresh();
         navigate("/allusers");
     }
 
