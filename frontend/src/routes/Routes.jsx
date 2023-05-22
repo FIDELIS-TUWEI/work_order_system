@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import Register from "../pages/Register";
-import Login from "../pages/Login";
+import Auth from "../pages/Auth";
 import TasksPage from "../pages/TasksPage";
 import UsersPage from "../pages/UsersPage";
 import GetAllUsers from "../components/users/GetAllUsers";
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/login',
-        element: <Login />
+        element: <Auth />
     },
     {
         path: '/dashboard',

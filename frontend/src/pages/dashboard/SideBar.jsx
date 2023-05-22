@@ -1,6 +1,22 @@
-import { ChevronLeft, Inbox, Mail } from '@mui/icons-material';
-import { Box, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled } from '@mui/material';
+import { 
+  Assignment, ChevronLeft, Dashboard, 
+  HowToReg, Login, 
+  PeopleAlt 
+} from '@mui/icons-material';
+import { 
+  Box, Divider, IconButton, 
+  List, ListItem, ListItemButton, 
+  ListItemIcon, ListItemText, 
+  styled 
+} from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
+import { useMemo } from 'react';
+import Main from './Main/Main';
+import Users from './users/Users';
+import Tasks from './tasks/Tasks';
+import Auth from '../Auth';
+import Register from '../Register';
+
 
 
 const drawerWidth = 240;
@@ -55,6 +71,16 @@ const openedMixin = (theme) => ({
 
 // eslint-disable-next-line react/prop-types
 const SideBar = ({ open, setOpen}) => {
+  // List Icons
+  const list = useMemo(() => [
+    { title: 'Main', icon: <Dashboard />, link: '/profile', component: <Main /> },
+    { title: 'Users', icon: <PeopleAlt />, link: '/users', component: <Users /> },
+    { title: 'Tasks', icon: <Assignment />, link: '/alltasks', component: <Tasks /> },
+    { title: 'Login', icon: <Login />, link: '/login', component: <Auth /> },
+    { title: 'Register', icon: <HowToReg />, link: '/register', component: <Register /> },
+
+  ], []);
+
     return ( 
         <>
             <Drawer variant="permanent" open={open}>
@@ -65,8 +91,8 @@ const SideBar = ({ open, setOpen}) => {
                 </DrawerHeader>
                 <Divider />
                     <List>
-                    {['Users', 'Login', 'Register', 'Profile'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                    {list.map((item) => (
+                        <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
                         <ListItemButton
                             sx={{
                             minHeight: 48,
@@ -81,9 +107,9 @@ const SideBar = ({ open, setOpen}) => {
                                 justifyContent: 'center',
                             }}
                             >
-                            {index % 2 === 0 ? <Inbox /> : <Mail />}
+                            {item.icon}
                             </ListItemIcon>
-                            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                            <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0 }} />
                         </ListItemButton>
                         </ListItem>
                     ))}
