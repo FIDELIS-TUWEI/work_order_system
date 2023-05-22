@@ -24,8 +24,6 @@ const TBody = styled(TableRow)`
         font-size: 14px;
     }
 `
-// function to refresh window
-const refresh = window.location.reload(true);
 
 const GetAllUsers = () => {
     // state 
@@ -48,7 +46,6 @@ const GetAllUsers = () => {
     // function to delete user
     const deleteUserDetails = async (id) => {
         await deleteUser(id);
-        refresh();
         navigate("/users");
     }
 
