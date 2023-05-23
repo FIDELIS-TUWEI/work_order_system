@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useState } from 'react';
 import { ListItemIcon } from '@mui/material';
-import { Dashboard, Logout, Settings } from '@mui/icons-material';
+import { Dashboard, Logout } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -74,12 +74,7 @@ function UserMenu() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-            <MenuItem  onClick={() => navigate("/dashboard")}>
-                <ListItemIcon>
-                    <Settings fontSize='small' />
-                    Profile
-                </ListItemIcon>
-            </MenuItem>
+            
             <MenuItem  onClick={() => navigate("/dashboard")}>
                 <ListItemIcon>
                     <Dashboard fontSize='small' />

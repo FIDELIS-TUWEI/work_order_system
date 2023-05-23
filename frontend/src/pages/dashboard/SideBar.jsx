@@ -24,6 +24,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
+// MUI drawer
 const drawerWidth = 240;
 
 
@@ -81,7 +82,7 @@ const SideBar = ({ open, setOpen}) => {
     { 
       title: 'Main', 
       icon: <Dashboard />, 
-      link: '/profile', 
+      link: '/main', 
       component: <Main /> },
     { 
       title: 'Users', 
@@ -174,7 +175,6 @@ const SideBar = ({ open, setOpen}) => {
                     })}
                 </Link>
 
-                <Typography>Users</Typography>
             </Box>
         </>
     );
