@@ -9,7 +9,7 @@ import EditUser from "../components/users/EditUsers";
 import AllTasks from "../components/tasks/AllTasks";
 import UpdateTask from "../components/tasks/UpdateTask";
 import Dashboard from "../pages/dashboard/Dashboard";
-import Profile from "../components/users/Profile";
+import Main from "../pages/dashboard/Main/Main";
 
 
 export const router = createBrowserRouter([
@@ -42,8 +42,8 @@ export const router = createBrowserRouter([
         element: <UpdateTask />
     },
     {
-        path: '/profile',
-        element: <Profile />
+        path: '/main',
+        element: <Main />
     },
     {
         path: '/users',
