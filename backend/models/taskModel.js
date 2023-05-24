@@ -6,11 +6,11 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    issueStatus: {
+    workStatus: {
         type: String,
         required: true,
     },
-    issueIdentified: {
+    workIdentified: {
         type: String,
         required: true,
     },
