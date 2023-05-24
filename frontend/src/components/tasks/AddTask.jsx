@@ -2,10 +2,6 @@ import { useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button, Select, MenuItem } from "@mui/material";
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
 import { addTask } from "../../api/taskApi";
 import { useNavigate } from "react-router-dom";
 
@@ -90,9 +86,6 @@ const AddTask = () => {
             </FormControl>
             <FormControl>
                 <InputLabel>Date Allocated:</InputLabel>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker />
-                </LocalizationProvider>
                 <Input onChange={(e) => onValueChange(e)} name="date" />
             </FormControl>
             <FormControl>
