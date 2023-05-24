@@ -60,7 +60,6 @@ const AllTasks = () => {
         <StyledTable>
             <TableHead>
                 <THead>
-                    <TableCell>Id</TableCell>
                     <TableCell>Employee Assigned</TableCell>
                     <TableCell>Task</TableCell>
                     <TableCell>Location</TableCell>
@@ -73,7 +72,6 @@ const AllTasks = () => {
                 {
                     tasks.map(task => {
                         return <TBody key={task._id}>
-                            <TableCell>{task._id}</TableCell>
                             <TableCell>{task.userAssigned}</TableCell>
                             <TableCell>{task.issueIdentified}</TableCell>
                             <TableCell>{task.location}</TableCell>

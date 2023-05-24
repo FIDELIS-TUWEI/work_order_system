@@ -53,7 +53,6 @@ const GetAllUsers = () => {
         <StyledTable>
             <TableHead>
                 <THead>
-                    <TableCell>Id</TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Username</TableCell>
                     <TableCell>Action</TableCell>
@@ -64,7 +63,6 @@ const GetAllUsers = () => {
                 {
                     users.map(user => {
                         return <TBody key={user._id}>
-                            <TableCell>{user._id}</TableCell>
                             <TableCell>{user.name}</TableCell>
                             <TableCell>{user.username}</TableCell>
                             <TableCell>
