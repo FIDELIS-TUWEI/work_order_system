@@ -17,6 +17,7 @@ const Container = styled(FormGroup) `
 // initialState values
 const initialState = {
     userAssigned: "",
+    issueStatus: "",
     issueIdentified: "",
     location: "",
     assignedBy: "",
@@ -55,8 +56,16 @@ const AddTask = () => {
                     <MenuItem value="Bonventure">Bonventure</MenuItem>
                 </Select>
             </FormControl>
+            <FormControl variant="standard">
+                <InputLabel>Work Status:</InputLabel>
+                <Select onChange={(e) => onValueChange(e)} name="issueStatus" value={task.issueStatus}>
+                    <MenuItem value="fix">Fix</MenuItem>
+                    <MenuItem value="repair">Repair</MenuItem>
+                    <MenuItem value="Replace">Replace</MenuItem>
+                </Select>
+            </FormControl>
             <FormControl>
-                <InputLabel>issueIdentified:</InputLabel>
+                <InputLabel>Work Identified:</InputLabel>
                 <Input onChange={(e) => onValueChange(e)} name="issueIdentified" />
             </FormControl>
             <FormControl>

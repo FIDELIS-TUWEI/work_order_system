@@ -6,6 +6,10 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    issueStatus: {
+        type: String,
+        required: true,
+    },
     issueIdentified: {
         type: String,
         required: true,
@@ -22,7 +26,7 @@ const taskSchema = new mongoose.Schema({
         type: String,
     },
     date: {
-        type: String,
+        type: Date,
     }
 }, {
     timestamps: true
