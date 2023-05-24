@@ -66,6 +66,12 @@ const AddTask = () => {
             <FormControl variant="standard">
                 <InputLabel>Assigned By:</InputLabel>
                 <Select onChange={(e) => onValueChange(e)} name="assignedBy" value={task.assignedBy}>
+                    <MenuItem value="Supervisor">Edwin</MenuItem>
+                    <MenuItem value="Supervisor">Michael</MenuItem>
+                    <MenuItem value="Supervisor">Peter</MenuItem>
+                    <MenuItem value="Supervisor">Julius</MenuItem>
+                    <MenuItem value="Supervisor">David</MenuItem>
+                    <MenuItem value="Supervisor">Ezekiel</MenuItem>
                     <MenuItem value="Supervisor">Supervisor</MenuItem>
                     <MenuItem value="Solomon">Solomon</MenuItem>
                 </Select>
@@ -73,7 +79,7 @@ const AddTask = () => {
             <FormControl variant="standard">
                 <InputLabel>Status</InputLabel>
                 <Select onChange={(e) => onValueChange(e)} name="status" value={task.status}>
-                    <MenuItem value="pending">pending</MenuItem>
+                    <MenuItem value="pending">Pending</MenuItem>
                     <MenuItem value="complete">Complete</MenuItem>
                     <MenuItem value="inspected">Inspected</MenuItem>
                 </Select>
