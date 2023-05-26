@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoute = require("./routes/userRoute");
+const authRoute = require("./routes/authRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
 const taskRoutes = require("./routes/taskRoute");
 const cookieParser = require("cookie-parser");
@@ -28,6 +29,7 @@ app.use("/", taskRoutes);
 
 // Routes Middleware
 app.use("/", userRoute);
+app.use("/", authRoute);
 
 
 // Routes
