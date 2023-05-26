@@ -17,4 +17,19 @@ export const register = asyncHandler( async (req, res, next) => {
     } catch (err) {
         next(err);
     }
+});
+
+export const login = asyncHandler( async (req, res, next) => {
+    try {
+        const user = await User.findOne({ username: req.body.username });
+        if (!user) return next(createError(404, "User not found"));
+
+        const isPasswordCorrect = await bcrypt.compare(
+            req.body.password,
+            user.password
+        );
+        
+    } catch (error) {
+        
+    }
 })
