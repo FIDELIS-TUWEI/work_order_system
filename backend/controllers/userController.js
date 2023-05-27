@@ -23,20 +23,21 @@ const getUser = asyncHandler( async (req, res, next) => {
 });
 
 // Edit User with Unique Id
-const editUser = asyncHandler( async (req, res) => {
-    let user = req.body;
-    const editUserDetails = new User(user);
-
+const editUser = asyncHandler( async (req, res, next) => {
     try {
-        await User.updateOne({ _id: req.params.id }, editUserDetails);
+        const editUserDetails = await User.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        );
         res.status(201).json(editUserDetails);
     } catch (error) {
-        res.status(409).json({ message: error.message });
+        next(err);
     }
 });
 
 // Delete User
-const deleteUser = asyncHandler( async (req, res) => {
+const deleteUser = asyncHandler( async (req, res, next) => {
     try {
         await User.findByIdAndDelete({ _id: req.params.id });
         res.status(200).json({ message: "User deleted Succesfully" });
