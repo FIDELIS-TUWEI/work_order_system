@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
 
 // schema for storing & validating user data in mongoDB
 const userSchema = new mongoose.Schema({
