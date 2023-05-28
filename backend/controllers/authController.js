@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 
 
 // admin register user
-export const register = asyncHandler( async (req, res, next) => {
+const register = asyncHandler( async (req, res, next) => {
     try {
         const salt = bcrypt.genSalt(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
@@ -24,7 +24,7 @@ export const register = asyncHandler( async (req, res, next) => {
 });
 
 // login user with jwt token
-export const login = asyncHandler( async (req, res, next) => {
+const login = asyncHandler( async (req, res, next) => {
     try {
         const user = await User.findOne({ username: req.body.username });
         if (!user) return next(createError(404, "User not found"));
@@ -59,4 +59,9 @@ export const login = asyncHandler( async (req, res, next) => {
     } catch (err) {
        next(err); 
     }
-})
+});
+
+module.exports = {
+    register,
+    login,
+}
