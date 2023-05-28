@@ -15,10 +15,12 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please add a password"],
         minLength: [6, "Password must be 6 characters"]
     },
-    isAdmin: {
-        type: Boolean,
-        default: false,
-    }
+    roles: [
+        { 
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Role"
+        }
+    ]
 }, {
     timestamps: true
 });
