@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 // schema for storing & validating user data in mongoDB
 const userSchema = new mongoose.Schema({
@@ -19,6 +20,15 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+
+    // Encrypt password before saving
+    this.password = await bcrypt.hash(this.password, 12);
+
+    next();
+})
 
 
 const User = mongoose.model("User", userSchema);
