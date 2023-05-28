@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
+
+// admin register user
 export const register = asyncHandler( async (req, res, next) => {
     try {
         const salt = bcrypt.genSalt(10);
@@ -21,6 +23,7 @@ export const register = asyncHandler( async (req, res, next) => {
     }
 });
 
+// login user with jwt token
 export const login = asyncHandler( async (req, res, next) => {
     try {
         const user = await User.findOne({ username: req.body.username });
@@ -34,9 +37,11 @@ export const login = asyncHandler( async (req, res, next) => {
             return next(createError(400, "Wrong Password or username!"));
         }
 
+        // generate Token
         const token = jwt.sign(
             { id: user._id, isAdmin: user.isAdmin },
-            process.env.JWT
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
         );
 
         const { password, isAdmin, ...otherDetails } = user._doc;
