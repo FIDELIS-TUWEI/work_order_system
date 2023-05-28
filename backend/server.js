@@ -11,13 +11,9 @@ const PORT = process.env.PORT || 5000;
 
 // routes
 const userRoute = require("./routes/userRoute");
-const authRoute = require("./routes/authRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
 const taskRoutes = require("./routes/taskRoute");
 
-// models
-const db = require("./models");
-const Role = db.role;
 
 // init express
 const app = express();
@@ -37,7 +33,6 @@ app.use("/", taskRoutes);
 
 // Routes Middleware
 app.use("/", userRoute);
-app.use("/", authRoute);
 
 
 // Routes
@@ -53,42 +48,6 @@ mongoose.connection.once('open', () => {
     console.log('Connected to Database')
     app.listen(PORT, () => {
         console.log(`Server Running on port ${PORT}`)
-        initial();
     })
 });
 
-
-function initial() {
-    Role.estimatedDocumentCount((err, count) => {
-        if (!err && count === 0) {
-            new Role({
-                name: "user"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err);
-                }
-                console.log("added 'user' to roles collection");
-            });
-
-            new Role({
-                name: "hod"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err)
-                }
-                
-                console.log("added 'hod' to roles collection");
-            });
-
-            new Role({
-                name: "admin"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err)
-                }
-
-                console.log("added 'admin' to roles collection");
-            });
-        }
-    });
-}
