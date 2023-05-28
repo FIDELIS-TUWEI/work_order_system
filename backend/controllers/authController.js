@@ -6,18 +6,11 @@ const asyncHandler = require("express-async-handler");
 
 // admin register user
 const register = asyncHandler( async (req, res, next) => {
+    const { name, username, password } = req.body;
+
     try {
-    
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(req.body.password, salt);
-
-        const newUser = new User({
-            ...req.body,
-            password: hash,
-        });
-
-        await newUser.save();
-        res.status(200).send("User has been created");   
+          const user = await User.create({ name, username, password });
+          res.status(201).json(user);
     } catch (err) {
         next(err);
     }
