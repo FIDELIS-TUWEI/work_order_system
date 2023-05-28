@@ -28,11 +28,11 @@ app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use("/", taskRoutes);
+app.use("/hin", taskRoutes);
 
 
 // Routes Middleware
-app.use("/", userRoute);
+app.use("/hin", userRoute);
 
 
 // Routes
