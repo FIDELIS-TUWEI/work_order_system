@@ -7,6 +7,15 @@ const asyncHandler = require("express-async-handler");
 // admin register user
 const register = asyncHandler( async (req, res, next) => {
     try {
+        const { username } = req.body;
+        // Check if user exists
+        
+        const userExists = await User.findOne({ username });
+        if (userExists) {
+            res.status(400).json({ message: "Username is already registered!" })
+        }
+
+
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(req.body.password, salt);
 
@@ -16,7 +25,9 @@ const register = asyncHandler( async (req, res, next) => {
         });
 
         await newUser.save();
-        res.status(200).send("User has been created")
+        res.status(200).send("User has been created");
+
+        
     } catch (err) {
         next(err);
     }
@@ -60,7 +71,26 @@ const login = asyncHandler( async (req, res, next) => {
     }
 });
 
+// Logout logic
+const logout = asyncHandler( async(req, res, next) => {
+    try {
+        res
+            .cookie("access_token", "", {
+                path: "/",
+                httpOnly: true,
+                expires: new Date(0),
+                sameSite: "none",
+                secure: true
+            })
+            .status(200)
+            .json({ message: "Successfully logged Out!"})
+    } catch (error) {
+        next(err);
+    }
+});
+
 module.exports = {
     register,
     login,
+    logout,
 }
