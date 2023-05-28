@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        required: [true, "Please add a name"]
+        required: [true, "Please add a name"],
+        uppercae: true
     },
     password:{
         type: String,
