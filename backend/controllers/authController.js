@@ -1,5 +1,4 @@
 const User = require("../models/userModel");
-const createError = require("../utils/error");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
@@ -8,8 +7,8 @@ const asyncHandler = require("express-async-handler");
 // admin register user
 const register = asyncHandler( async (req, res, next) => {
     try {
-        const salt = bcrypt.genSalt(10);
-        const hash = bcrypt.hashSync(req.body.password, salt);
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hashSync(req.body.password, salt);
 
         const newUser = new User({
             ...req.body,
@@ -27,14 +26,14 @@ const register = asyncHandler( async (req, res, next) => {
 const login = asyncHandler( async (req, res, next) => {
     try {
         const user = await User.findOne({ username: req.body.username });
-        if (!user) return next(createError(404, "User not found"));
+        if (!user) return next(res.status(404).json({ message: "User not found" }));
 
         const isPasswordCorrect = await bcrypt.compare(
             req.body.password,
             user.password
         );
         if (!isPasswordCorrect) {
-            return next(createError(400, "Wrong Password or username!"));
+            return next(res.status(400).json({ message: "Wrong Password or username!"}) );
         }
 
         // generate Token
@@ -47,7 +46,7 @@ const login = asyncHandler( async (req, res, next) => {
         // send HTTP cookie
         const { password, isAdmin, ...otherDetails } = user._doc;
         res
-            .cookies("access_token", token, {
+            .cookie("access_token", token, {
                 path: "/",
                 httpOnly: true,
                 expires: new Date(Date.now() + 1000 * 86400), // 1 day
