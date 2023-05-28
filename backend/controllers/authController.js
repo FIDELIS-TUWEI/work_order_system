@@ -1,6 +1,21 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 
+// register user
+const register = asyncHandler( async (req, res, next) => {
+    try {
+        const newUser = await User.create(req.body);
+        res.status(201).json({
+            status: 'success',
+            data: {
+                user: newUser,
+            }
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
 // get All users
 const getUsers = asyncHandler( async (req, res, next) => {
     try {
@@ -47,6 +62,7 @@ const deleteUser = asyncHandler( async (req, res, next) => {
 })
 
 module.exports = {
+    register,
     getUsers,
     getUser,
     editUser,

@@ -10,7 +10,7 @@ const connectDB = require("./config/dbConnect");
 const PORT = process.env.PORT || 5000;
 
 // routes
-const userRoute = require("./routes/userRoute");
+const authRouter = require("./routes/authRouter");
 const errorHandler = require("./middleWare/errorMiddleware");
 const taskRoutes = require("./routes/taskRoute");
 
@@ -32,7 +32,7 @@ app.use("/hin", taskRoutes);
 
 
 // Routes Middleware
-app.use("/hin", userRoute);
+app.use("/hin", authRouter);
 
 
 // Routes
