@@ -9,8 +9,8 @@ const register = asyncHandler( async (req, res, next) => {
     const { name, username, password } = req.body;
 
     try {
-          const user = await User.create({ name, username, password });
-          res.status(201).json(user);
+        const user = await User.create({ name, username, password });
+        res.status(201).json(user);
     } catch (err) {
         next(err);
     }
