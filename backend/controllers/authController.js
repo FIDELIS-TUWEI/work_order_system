@@ -44,10 +44,15 @@ export const login = asyncHandler( async (req, res, next) => {
             { expiresIn: "1d" }
         );
 
+        // send HTTP cookie
         const { password, isAdmin, ...otherDetails } = user._doc;
         res
             .cookies("access_token", token, {
+                path: "/",
                 httpOnly: true,
+                expires: new Date(Date.now() + 1000 * 86400), // 1 day
+                sameSite: "none",
+                secure: true
             })
             .status(200)
             .json({ details: { ...otherDetails }, isAdmin })
