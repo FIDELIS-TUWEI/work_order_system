@@ -8,7 +8,7 @@ const asyncHandler = require("express-async-handler");
 const register = asyncHandler( async (req, res, next) => {
     try {
         const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hashSync(req.body.password, salt);
+        const hash = await bcrypt.hash(req.body.password, salt);
 
         const newUser = new User({
             ...req.body,
