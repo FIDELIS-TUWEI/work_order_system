@@ -7,15 +7,7 @@ const asyncHandler = require("express-async-handler");
 // admin register user
 const register = asyncHandler( async (req, res, next) => {
     try {
-        const { username } = req.body;
-        // Check if user exists
-        
-        const userExists = await User.findOne({ username });
-        if (userExists) {
-            res.status(400).json({ message: "Username is already registered!" })
-        }
-
-
+    
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(req.body.password, salt);
 
@@ -25,9 +17,7 @@ const register = asyncHandler( async (req, res, next) => {
         });
 
         await newUser.save();
-        res.status(200).send("User has been created");
-
-        
+        res.status(200).send("User has been created");   
     } catch (err) {
         next(err);
     }
