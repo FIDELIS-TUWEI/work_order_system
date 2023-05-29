@@ -82,7 +82,7 @@ const AddTask = () => {
                     <MenuItem value="David">David Njoroge</MenuItem>
                     <MenuItem value="Ezekiel">Ezekiel Meroka</MenuItem>
                     <MenuItem value="Supervisor">Supervisor</MenuItem>
-                    <MenuItem value="Solomon">Solomon Ouma</MenuItem>
+                    <MenuItem value="Solomon">Solomon Oum</MenuItem>
                 </Select>
             </FormControl>
             <FormControl variant="standard">
