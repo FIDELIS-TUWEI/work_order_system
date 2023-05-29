@@ -75,14 +75,14 @@ const AddTask = () => {
             <FormControl variant="standard">
                 <InputLabel>Assigned By:</InputLabel>
                 <Select onChange={(e) => onValueChange(e)} name="assignedBy" value={task.assignedBy}>
-                    <MenuItem value="Edwin">Edwin</MenuItem>
-                    <MenuItem value="Michael">Michael</MenuItem>
-                    <MenuItem value="Peter">Peter</MenuItem>
-                    <MenuItem value="Julius">Julius</MenuItem>
-                    <MenuItem value="David">David</MenuItem>
-                    <MenuItem value="Ezekiel">Ezekiel</MenuItem>
+                    <MenuItem value="Edwin">Edwin Waswa</MenuItem>
+                    <MenuItem value="Michael">Michael Mutisya</MenuItem>
+                    <MenuItem value="Peter">Peter Wangodi</MenuItem>
+                    <MenuItem value="Julius">Julius Ndula</MenuItem>
+                    <MenuItem value="David">David Njoroge</MenuItem>
+                    <MenuItem value="Ezekiel">Ezekiel Meroka</MenuItem>
                     <MenuItem value="Supervisor">Supervisor</MenuItem>
-                    <MenuItem value="Solomon">Solomon</MenuItem>
+                    <MenuItem value="Solomon">Solomon Ouma</MenuItem>
                 </Select>
             </FormControl>
             <FormControl variant="standard">
