@@ -29,9 +29,14 @@ const login = asyncHandler( async (req, res, next) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
-        const err = new Error('Please provide username & password for login!', 400);
+        const err = res.status(400).json({ message:'Please provide username & password for login!'});
         return next(err);
     }
+
+    res.status(200).json({
+        status: 'success',
+        token: ""
+    })
 })
 
 // get All users
