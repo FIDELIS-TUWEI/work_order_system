@@ -22,6 +22,16 @@ const register = asyncHandler( async (req, res, next) => {
     } catch (err) {
         next(err)
     }
+});
+
+// Login user
+const login = asyncHandler( async (req, res, next) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        const err = new Error('Please provide username & password for login!', 400);
+        return next(err);
+    }
 })
 
 // get All users
