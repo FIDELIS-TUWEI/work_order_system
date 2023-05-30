@@ -1,12 +1,20 @@
 const asyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 // register user
 const register = asyncHandler( async (req, res, next) => {
     try {
         const newUser = await User.create(req.body);
+
+        // jwt token
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.LOGIN_EXPIRES
+        } )
+
         res.status(201).json({
             status: 'success',
+            token,
             data: {
                 user: newUser,
             }
