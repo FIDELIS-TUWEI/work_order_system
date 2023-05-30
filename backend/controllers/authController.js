@@ -28,15 +28,22 @@ const register = asyncHandler( async (req, res, next) => {
 const login = asyncHandler( async (req, res, next) => {
     const { username, password } = req.body;
 
+    // check if email is present in the request body
     if (!username || !password) {
         const err = res.status(400).json({ message:'Please provide username & password for login!'});
         return next(err);
     }
 
+    // check if user exists 
+    const user = await User.findOne({ username });
+
     res.status(200).json({
         status: 'success',
-        token: ""
-    })
+        token: "",
+        user
+    });
+
+
 })
 
 // get All users
