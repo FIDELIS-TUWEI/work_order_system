@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: [true, "Please add a password"],
-        minLength: 8
+        minLength: 8,
+        select: false
     }
 }, {
     timestamps: true
@@ -28,8 +29,12 @@ userSchema.pre('save', async function(next) {
     this.password = await bcrypt.hash(this.password, 12);
 
     next();
-})
+});
 
+// compare password function
+userSchema.method.comparePasswordInDb = async function(password, passwordDb) {
+    return await bcrypt.compare(password, passwordDb);
+}
 
 const User = mongoose.model("User", userSchema);
 
