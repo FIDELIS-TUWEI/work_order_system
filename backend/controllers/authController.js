@@ -2,15 +2,20 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
+// SignInToken
+const signToken = id => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.LOGIN_EXPIRES
+    })
+}
+
 // register user
 const register = asyncHandler( async (req, res, next) => {
     try {
         const newUser = await User.create(req.body);
 
         // jwt token
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.LOGIN_EXPIRES
-        } )
+        const token = signToken(newUser._id);
 
         res.status(201).json({
             status: 'success',
@@ -35,11 +40,23 @@ const login = asyncHandler( async (req, res, next) => {
     }
 
     // check if user exists 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).select('+password');
+
+    //is password match in DB
+    //const isMatch = await user.comparePasswordInDb(password, user.password);
+
+    // check if user exists & password matches in Db
+    if (!user || !(await user.comparePasswordInDb(password, user.password))) {
+        const err = res.status(400).json({ message: 'Incorrect email or password!' });
+        return next(err);
+    }
+
+    // assign token
+    const token = signToken(user._id);
 
     res.status(200).json({
         status: 'success',
-        token: "",
+        token,
         user
     });
 
