@@ -54,7 +54,7 @@ const RegisterComponent = () => {
     // function to add user
     const addUserDetails = async () => {
         await addUser(user);
-        navigate("/allusers");
+        navigate("/dashboard");
     }
 
     return ( 
