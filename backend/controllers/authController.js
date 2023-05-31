@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const util = require("util");
 
 // SignInToken
 const signToken = id => {
@@ -109,29 +110,34 @@ const deleteUser = asyncHandler( async (req, res, next) => {
 
 // auth protect functionality
 const protect = asyncHandler( async (req, res, next) => {
-    //Read token & check if it exists
-    const testToken = req.headers.authorization;
-    let token;
+    try {
+      //Read token & check if it exists
+        const testToken = req.headers.authorization;
+        let token;
 
-    if (testToken && testToken.startsWith('bearer')) {
-        token = testToken.split(' ')[1];
-    }
+        if (testToken && testToken.startsWith('bearer')) {
+            token = testToken.split(' ')[1];
+        }
 
-    if (!token) {
-        const err = res.status(401).json({ message: 'You are not logged in!' })
-        next(err)
-    }
+        if (!token) {
+            const err = res.status(401).json({ message: 'You are not logged in!' })
+            next(err)
+        }
 
     //Validate token
+       const decodedToken = await util.promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
+       console.log(decodedToken);
     //if the user exists
 
     //If user changed password after token was issued
 
-    //Allow user to access route
-
-    next();
-})
+    //Allow user to access route  
+    } catch (err) {
+        next(err);
+        
+    }
+});
 
 module.exports = {
     register,
