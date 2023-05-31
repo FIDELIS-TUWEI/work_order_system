@@ -1,16 +1,17 @@
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { InputAdornment, IconButton } from '@mui/material';
+import { InputAdornment, IconButton, FormControl, InputLabel, Input } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addUser } from '../../api/api';
 
 function Copyright(props) {
     return (
@@ -27,16 +28,33 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
+// initialState values
+const initialState = {
+    name: "",
+    username: "",
+    password: ""
+}
+
 const RegisterComponent = () => {
     // usestate
     const [showPassword, setShowPassword] = useState();
+    const [user, setUser] = useState(initialState);
+
+    const navigate = useNavigate();
 
     // function to handle IconButton Event
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
-    // function to submit form
-    const handleSubmit = (e) => {
-        e.target.preventDefault();
+    
+     // function to handle input change
+     const onValueChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value })
+    }
+
+    // function to add user
+    const addUserDetails = async () => {
+        await addUser(user);
+        navigate("/allusers");
     }
 
     return ( 
@@ -57,24 +75,18 @@ const RegisterComponent = () => {
                     <Typography component="h1" variant="h5">
                         Register
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
+                    <FormControl>
+                        <InputLabel>Name</InputLabel>
+                        <Input onChange={(e) => onValueChange(e)} name="name" />
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel>Username</InputLabel>
+                        <Input onChange={(e) => onValueChange(e)} name="username" />
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel>Password</InputLabel>
+                        <Input 
+                            onChange={(e) => onValueChange(e)} name="password"
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position='end'>
@@ -89,17 +101,10 @@ const RegisterComponent = () => {
                                 )
                             }}
                         />
-                        
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            >
-                        Register
-                        </Button>
-                        
-                    </Box>
+                    </FormControl>
+                    <FormControl>
+                        <Button variant="contained" onClick={() => addUserDetails()}>Register User</Button>
+                    </FormControl>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
