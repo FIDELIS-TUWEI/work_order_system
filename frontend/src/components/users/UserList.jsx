@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
 
-import AddUser from "./AddUser";
 const UserList = () => {
     // navigate
     const navigate = useNavigate();
@@ -21,7 +20,6 @@ const UserList = () => {
                     <Button color="inherit" onClick={() => navigate("/allusers")}>Users</Button>
                 </Toolbar>
             </AppBar>
-            <AddUser />
         </>
             
     );
