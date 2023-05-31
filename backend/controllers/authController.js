@@ -105,6 +105,32 @@ const deleteUser = asyncHandler( async (req, res, next) => {
     } catch (error) {
         next(err);
     }
+});
+
+// auth protect functionality
+const protect = asyncHandler( async (req, res, next) => {
+    //Read token & check if it exists
+    const testToken = req.headers.authorization;
+    let token;
+
+    if (testToken && testToken.startsWith('bearer')) {
+        token = testToken.split(' ')[1];
+    }
+
+    if (!token) {
+        const err = res.status(401).json({ message: 'You are not logged in!' })
+        next(err)
+    }
+
+    //Validate token
+
+    //if the user exists
+
+    //If user changed password after token was issued
+
+    //Allow user to access route
+
+    next();
 })
 
 module.exports = {
@@ -114,4 +140,5 @@ module.exports = {
     getUser,
     editUser,
     deleteUser,
+    protect,
 };
