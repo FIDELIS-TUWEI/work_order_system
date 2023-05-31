@@ -1,4 +1,4 @@
-import { DoneAll, Group, ListAlt, Pending, PendingActions, Verified } from "@mui/icons-material";
+import { DoneAll, Group, ListAlt, PendingActions, Verified } from "@mui/icons-material";
 import { Box, Paper, Typography } from "@mui/material";
 
 export default function Main() {
