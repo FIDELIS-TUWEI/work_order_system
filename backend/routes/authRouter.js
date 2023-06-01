@@ -3,13 +3,14 @@ const router = express.Router();
 const { 
     register, login, getUsers, getUser, editUser, deleteUser
 } = require("../controllers/authController");
+const { protect } = require("../controllers/authController")
 
 // user route
-router.get("/all", getUsers);
-router.get("/getuser/:id", getUser);
-router.post("/register", register);
+router.get("/all", protect, getUsers);
+router.get("/getuser/:id", protect, getUser);
+router.post("/register", protect, register);
 router.post("/login", login);
-router.put("/edituser/:id", editUser);
-router.delete("/delete/:id", deleteUser);
+router.put("/edituser/:id", protect, editUser);
+router.delete("/delete/:id", protect, deleteUser);
 
 module.exports = router;
