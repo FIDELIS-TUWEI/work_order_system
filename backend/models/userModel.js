@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please add a password"],
         minLength: 8,
         select: false
-    }
+    },
+    passwordChangedAt: Date
 }, {
     timestamps: true
 });
@@ -34,7 +35,15 @@ userSchema.pre('save', async function(next) {
 // compare password function
 userSchema.methods.comparePasswordInDb = async function(password, passwordDb) {
     return await bcrypt.compare(password, passwordDb);
-}
+};
+
+// password changed JWT
+userSchema.methods.isPasswordChanged = (JWTTimestamp) => {
+    if (this.passwordChangedAt) {
+        console.log(this.passwordChangedAt, JWTTimestamp);
+    }
+    return false;
+};
 
 const User = mongoose.model("User", userSchema);
 
