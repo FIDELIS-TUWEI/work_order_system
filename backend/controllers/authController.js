@@ -129,7 +129,12 @@ const protect = asyncHandler( async (req, res, next) => {
 
        console.log(decodedToken);
     //if the user exists
+        const user = await User.findById(decodedToken.id);
 
+        if (!user) {
+            const err = res.status(401).json({ message: 'The user with the given token does not exist' });
+            next(err);
+        }
     //If user changed password after token was issued
 
     //Allow user to access route  
