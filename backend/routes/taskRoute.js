@@ -7,8 +7,8 @@ const { protect } = require("../controllers/authController");
 router.post("/addtask", addTask);
 router.get("/gettasks", protect, getTasks);
 router.get("/gettask/:id", getTask);
-router.put("/edittask/:id", editTask);
-router.delete("/:id", deleteTask)
+router.put("/edittask/:id", protect, editTask);
+router.delete("/:id", protect, deleteTask)
 
 
 module.exports = router;
