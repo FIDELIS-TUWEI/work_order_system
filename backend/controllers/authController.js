@@ -135,10 +135,18 @@ const protect = asyncHandler( async (req, res, next) => {
             const err = res.status(401).json({ message: 'The user with the given token does not exist' });
             next(err);
         }
+
+        const isPasswordChanged = await user.isPasswordChanged(decodedToken.iat)
     //If user changed password after token was issued
-        user.isPasswordChanged(decodedToken.iat);
-        
+       if (isPasswordChanged) {
+            const err = res.status(401).json({ 
+                message: 'The password has been changed recently.Please Login again!' 
+            });
+            return next(err);
+       };
+
     //Allow user to access route  
+        req.user = user;
     } catch (err) {
         next(err);
         
