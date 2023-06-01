@@ -136,7 +136,8 @@ const protect = asyncHandler( async (req, res, next) => {
             next(err);
         }
     //If user changed password after token was issued
-
+        user.isPasswordChanged(decodedToken.iat);
+        
     //Allow user to access route  
     } catch (err) {
         next(err);
