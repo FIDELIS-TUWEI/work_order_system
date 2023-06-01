@@ -40,8 +40,10 @@ userSchema.methods.comparePasswordInDb = async function(password, passwordDb) {
 // password changed JWT
 userSchema.methods.isPasswordChanged = async function (JWTTimestamp) {
     if (this.passwordChangedAt) {
-        const pswdChangedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000);
+        const pswdChangedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
         console.log(pswdChangedTimeStamp, JWTTimestamp);
+
+        return JWTTimestamp < pswdChangedTimeStamp;
     }
     return false;
 };
