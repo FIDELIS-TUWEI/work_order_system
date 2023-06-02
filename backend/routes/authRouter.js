@@ -8,7 +8,7 @@ const { protect } = require("../controllers/authController")
 // user route
 router.get("/all", protect, getUsers);
 router.get("/getuser/:id", protect, getUser);
-router.post("/register", protect, register);
+router.post("/register", register);
 router.post("/login", login);
 router.put("/edituser/:id", protect, editUser);
 router.delete("/delete/:id", protect, deleteUser);
