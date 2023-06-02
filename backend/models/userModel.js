@@ -18,7 +18,11 @@ const userSchema = new mongoose.Schema({
         minLength: 8,
         select: false
     },
-    passwordChangedAt: Date
+    passwordChangedAt: Date,
+    role: {
+        type: String,
+        enum: ['user', 'admin']
+    }
 }, {
     timestamps: true
 });
