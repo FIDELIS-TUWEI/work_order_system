@@ -154,15 +154,27 @@ const protect = asyncHandler( async (req, res, next) => {
 });
 
 // restricted route
-const restrict = (role) => {
+//const restrict = (role) => {
+   // return (req, res, next) => {
+   //     if (req.user.role !== role) {
+   //         const err = res.status(403).json({ message: 'You are not authorised to perform this action!' });
+    //        next(err);
+    //    }
+    //    next();
+   // }
+//}
+
+// Admin & HoD restricted route
+const restrict = (...role) => {
     return (req, res, next) => {
-        if (req.user.role !== role) {
+        if (!role.includes(req.user.role !== role)) {
             const err = res.status(403).json({ message: 'You are not authorised to perform this action!' });
             next(err);
         }
         next();
     }
 }
+
 module.exports = {
     register,
     login,
