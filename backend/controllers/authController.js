@@ -153,6 +153,12 @@ const protect = asyncHandler( async (req, res, next) => {
     }
 });
 
+// restricted route
+const restrict = (role) => {
+    return (req, res, next) => {
+        
+    }
+}
 module.exports = {
     register,
     login,
@@ -161,4 +167,5 @@ module.exports = {
     editUser,
     deleteUser,
     protect,
+    restrict,
 };
