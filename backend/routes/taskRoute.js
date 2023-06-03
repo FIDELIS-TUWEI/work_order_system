@@ -8,7 +8,7 @@ router.post("/addtask", addTask);
 router.get("/gettasks", protect, getTasks);
 router.get("/gettask/:id", getTask);
 router.put("/edittask/:id", protect, editTask);
-router.delete("/:id", protect, restrict('admin'), deleteTask);
+router.delete("/:id", protect, restrict('admin', 'hod'), deleteTask);
 
 
 module.exports = router;
