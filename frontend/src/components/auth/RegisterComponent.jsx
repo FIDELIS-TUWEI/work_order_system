@@ -11,7 +11,7 @@ import { InputAdornment, IconButton, FormControl, InputLabel, Input } from '@mui
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addUser } from '../../api/api';
+import { registerUser } from '../../api/api';
 
 function Copyright(props) {
     return (
@@ -53,7 +53,7 @@ const RegisterComponent = () => {
 
     // function to add user
     const addUserDetails = async () => {
-        await addUser(user);
+        await registerUser(user);
         navigate("/dashboard");
     }
 
