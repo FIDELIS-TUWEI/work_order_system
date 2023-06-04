@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import Register from "../pages/Register";
 import Auth from "../pages/Auth";
-import TasksPage from "../pages/TasksPage";
-import UsersPage from "../pages/UsersPage";
+import Tasks from "../pages/dashboard/tasks/Tasks";
+import Users from "../pages/dashboard/users/Users";
 import GetAllUsers from "../components/users/GetAllUsers";
 import EditUser from "../components/users/EditUsers";
 import AllTasks from "../components/tasks/AllTasks";
@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/addtasks',
-        element: <TasksPage />
+        element: <Tasks />
     },
     {
         path: '/alltasks',
@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/users',
-        element: <UsersPage />
+        element: <Users />
     },
     {
         path: '/allusers',
