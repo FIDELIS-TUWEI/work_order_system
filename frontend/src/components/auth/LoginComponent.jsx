@@ -48,7 +48,7 @@ const LoginComponent = () => {
     // function to login user
     const login = async () => {
         await loginUser(user);
-        navigate("/dashboard");
+        navigate("/alltasks");
     }
 
     return ( 
