@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // backend url endpoint
-const URL = 'http://localhost:5000'
+const URL = 'http://localhost:5000/hin'
 
 export const addTask = async (data) => {
     try {
