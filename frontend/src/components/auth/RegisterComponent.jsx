@@ -7,8 +7,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { InputAdornment, IconButton, FormControl, InputLabel, Input } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { FormControl, InputLabel, Input } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../api/api';
@@ -87,23 +86,10 @@ const RegisterComponent = () => {
                         <InputLabel>Password</InputLabel>
                         <Input 
                             onChange={(e) => onValueChange(e)} name="password"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position='end'>
-                                        <IconButton
-                                            aria-label='toggle password visibility'
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                        >
-                                            { showPassword ? <Visibility /> : <VisibilityOff /> }
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}
                         />
                     </FormControl>
                     <FormControl>
-                        <Button variant="contained" onClick={() => addUserDetails()}>Register User</Button>
+                        <Button variant="contained" onClick={() => addUserDetails()} sx={{ mt: 4 }}>Register User</Button>
                     </FormControl>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
