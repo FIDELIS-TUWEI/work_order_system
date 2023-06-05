@@ -10,12 +10,21 @@ import AllTasks from "../components/tasks/AllTasks";
 import UpdateTask from "../components/tasks/UpdateTask";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Main from "../pages/dashboard/Main/Main";
+import AdminHome from "../pages/AdminHome";
+import UserHome from "../pages/UserHome";
 
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <HomePage />
+    },
+    {
+        path: '/admin-home',
+        element: <AdminHome />
+    },{
+        path: '/user-home',
+        element: <UserHome />
     },
     {
         path: '/register',

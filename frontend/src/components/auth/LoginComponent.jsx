@@ -48,7 +48,12 @@ const LoginComponent = () => {
     // function to login user
     const login = async () => {
         await loginUser(user);
-        navigate("/alltasks");
+        if (user.role === 'admin') {
+            navigate("/admin-home");
+        } else if (user.role === 'user') {
+            navigate("/users-home");
+        }
+        
     }
 
     return ( 
