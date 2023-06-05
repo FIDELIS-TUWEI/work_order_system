@@ -36,15 +36,10 @@ const initialState = {
 
 const RegisterComponent = () => {
     // usestate
-    const [showPassword, setShowPassword] = useState();
     const [user, setUser] = useState(initialState);
 
     const navigate = useNavigate();
 
-    // function to handle IconButton Event
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
-    const handleMouseDownPassword = () => setShowPassword(!showPassword);
-    
      // function to handle input change
      const onValueChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value })

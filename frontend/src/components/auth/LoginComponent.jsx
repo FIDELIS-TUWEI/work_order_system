@@ -1,16 +1,17 @@
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { InputAdornment, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { FormControl, InputLabel, Input } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../../api/authApi';
+
 
 function Copyright(props) {
     return (
@@ -28,16 +29,26 @@ function Copyright(props) {
 // Mui theme
 const defaultTheme = createTheme();
 
+const initialState = {
+    username: "",
+    password: ""
+}
+
 const LoginComponent = () => {
     // usestate
-    const [showPassword, setShowPassword] = useState();
+    const [user, setUser] = useState(initialState);
 
-    // function to handle IconButton Event
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
-    const handleMouseDownPassword = () => setShowPassword(!showPassword);
-    // function to submit form
-    const handleSubmit = (e) => {
-        e.target.preventDefault();
+    const navigate = useNavigate();
+
+    // function to handle input change
+    const onValueChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value })
+    }
+
+    // function to login user
+    const login = async () => {
+        await loginUser(user);
+        navigate("/dashboard");
     }
 
     return ( 
@@ -58,47 +69,21 @@ const LoginComponent = () => {
                     <Typography component="h1" variant="h5">
                         Login
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoFocus
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <FormControl>
+                        <InputLabel>Username</InputLabel>
+                        <Input onChange={(e) => onValueChange(e)} name="username" />
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel>Password</InputLabel>
+                        <Input 
+                            onChange={(e) => onValueChange(e)} name="password"
                         />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position='end'>
-                                        <IconButton
-                                            aria-label='toggle password visibility'
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                        >
-                                            { showPassword ? <Visibility /> : <VisibilityOff /> }
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
+                    </FormControl>
                         
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
-                            >
-                        Login
-                        </Button>
+                    <FormControl>
+                        <Button variant="contained" onClick={() => login()} sx={{ mt: 4 }}>Login</Button>
+                    </FormControl>
                         
                     </Box>
                 </Box>
