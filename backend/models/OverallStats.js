@@ -28,8 +28,7 @@ const overallStatSchema = new mongoose.Schema({
         }
     ],
     tasksByCatergoty: {
-        type: Map,
-        of: Number
+        type: { type: mongoose.Types.ObjectId, ref: "Task" },
     },
 },
 { timestamps: true }
