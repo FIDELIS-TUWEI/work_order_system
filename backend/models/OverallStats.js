@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-const tasksStatSchema = new mongoose.Schema({
-    taskId: {
-        type: [mongoose.Types.ObjectId],
-    },
-    userAssigned: { type: mongoose.Types.ObjectId, ref: "User" },
+const overallStatSchema = new mongoose.Schema({
+    totalTasksAssigned: Number,
     year: Number,
     monthlyData: [
         {
@@ -30,10 +27,14 @@ const tasksStatSchema = new mongoose.Schema({
             totalCompletedTasks: Number,
         }
     ],
+    tasksByCatergoty: {
+        type: Map,
+        of: Number
+    },
 },
 { timestamps: true }
 );
 
-const TasksStats = mongoose.model("TasksStats", tasksStatSchema);
+const OverallStat = mongoose.model("OverallStat", overallStatSchema);
 
-module.exports = TasksStats;
+module.exports = OverallStat;
