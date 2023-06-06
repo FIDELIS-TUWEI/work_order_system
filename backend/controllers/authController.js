@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-const util = require("util");
 
 // SignInToken
 const signToken = id => {
@@ -13,6 +12,11 @@ const signToken = id => {
 // register user
 const register = asyncHandler( async (req, res, next) => {
     try {
+        const userExists = User.findOne(req.body);
+
+        if (userExists) {
+            res.status(400).json({ message: 'Username is already registered' });
+        }
         const newUser = await User.create(req.body);
 
         // jwt token
@@ -42,6 +46,7 @@ const login = asyncHandler( async (req, res, next) => {
 
     // check if user exists 
     const user = await User.findOne({ username }).select('+password');
+    
 
     //is password match in DB
     //const isMatch = await user.comparePasswordInDb(password, user.password);
