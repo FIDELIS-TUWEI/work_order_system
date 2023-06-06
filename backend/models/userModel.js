@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "Please add a name"],
-        uppercae: true
+        uppercase: true
     },
     password:{
         type: String,
@@ -19,11 +19,6 @@ const userSchema = new mongoose.Schema({
         select: false
     },
     passwordChangedAt: Date,
-    role: {
-        type: String,
-        enum: ['user', 'admin', 'hod'],
-        default: 'user'
-    }
 }, {
     timestamps: true
 });
