@@ -18,6 +18,14 @@ const tasksStatSchema = new mongoose.Schema({
             totalCompletedTasks: Number,
         }
     ],
+    weeklyData: [
+        {
+            week: String,
+            totalTasks: Number,
+            totalPendingTasks: Number,
+            totalCompletedTasks: Number,
+        }
+    ],
 },
 { timestamps: true }
 );
