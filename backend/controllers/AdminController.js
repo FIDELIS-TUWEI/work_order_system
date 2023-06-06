@@ -5,12 +5,13 @@ const asyncHandler = require("express-async-handler");
 const AdminAuth = asyncHandler( async (req, res, next) => {
     const { username} = req.body;
     try {
-        const admin = await Admin.findOne({ username }).select('+password');
 
-        if (!admin) {
-            res.status(400).json({ message: 'Unauthorised Access!' });
+        if (!username) {
+            const err = res.status(400).json({ message: 'Unauthorised Access!' });
             return next(err);
         }
+
+        const admin = await Admin.findOne({ username }).select('+password');
         
         // check if user exists & password matches in Db
     if (!admin || !(await Admin.comparePasswordInDb(password, Admin.password))) {

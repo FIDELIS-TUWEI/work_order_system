@@ -13,6 +13,7 @@ const PORT = process.env.PORT || 5000;
 const authRouter = require("./routes/authRouter");
 const errorHandler = require("./middleWare/errorMiddleware");
 const taskRoutes = require("./routes/taskRoute");
+const adminRoute = require("./routes/adminRoute");
 
 
 // init express
@@ -33,6 +34,7 @@ app.use("/hin", taskRoutes);
 
 // Routes Middleware
 app.use("/hin", authRouter);
+app.use("/hin", adminRoute);
 
 
 // Routes
