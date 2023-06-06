@@ -189,4 +189,5 @@ module.exports = {
     deleteUser,
     protect,
     restrict,
+    signToken,
 };
