@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const tasksStatSchema = new mongoose.Schema({
-    taskId: String,
+    taskId: {
+        type: [mongoose.Types.ObjectId],
+    },
+    userAssigned: { type: mongoose.Types.ObjectId, ref: "User" },
     monthlyData: [
         {
             month: String,
