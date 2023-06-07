@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const createHttpError = require("http-errors");
 
 // Db connection
 const connectDB = require("./config/dbConnect");
@@ -11,7 +12,6 @@ const PORT = process.env.PORT || 5000;
 
 // routes
 const authRouter = require("./routes/authRouter");
-const errorHandler = require("./middleWare/errorMiddleware");
 const taskRoutes = require("./routes/taskRoute");
 
 
@@ -41,7 +41,15 @@ app.get("/", (req, res) => {
 });
 
 // Error middleware
-app.use(errorHandler);
+app.use((req, res, next) => {
+    next(createHttpError.NotFound())
+});
+
+app.use((error, req, res, next) => {
+    error.status = error.status;
+    res.status(error.status);
+    res.send(error);
+})
 
 // connect to mongodb DB and start Server
 mongoose.connection.once('open', () => {
