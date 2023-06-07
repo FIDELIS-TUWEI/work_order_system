@@ -11,8 +11,8 @@ const connectDB = require("./config/dbConnect");
 const PORT = process.env.PORT || 5000;
 
 // routes
-const userRouter = require("./routes/User-Router");
-const taskRoutes = require("./routes/taskRoute");
+const userRouter = require("./routes/User-route");
+const taskRoutes = require("./routes/Task-Route");
 
 
 // init express
