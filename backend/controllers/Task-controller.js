@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Task = require("../models/taskModel");
+const Task = require("../models/Task");
 
 // addTask Controller
 const addTask = asyncHandler( async (req, res) => {

@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 const User = require("../models/User");
 
 // Register
@@ -38,10 +36,13 @@ const registerUser = asyncHandler( async (req, res, next) => {
 
         jwt.sign(
             payload,
-            config.get("JWT_SECRET"),
-            { expiresIn: config.get("LOGIN_EXPIRES") },
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.LOGIN_EXPIRES },
             (err, token) => {
-                if (err) throw err;
+                if (err) {
+                    const err = res.status(400).json({ message: 'Error communicating to server!' });
+                    return next(err)
+                };
                 res.json({ token });
             }
         )
