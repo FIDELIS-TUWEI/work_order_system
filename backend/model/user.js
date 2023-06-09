@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const validate  = require("validatorjs");
+const validator  = require("validatorjs");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -39,6 +40,27 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true }
 );
+
+// Mongoose Document middleware
+userSchema.pre("save", async function(next) {
+    try {
+       // check if password is modified
+        if (!this.isModified("password")) {
+            return next();
+        }
+
+        // Hash passord
+        if (this.isNew) {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(this.password, salt);
+            this.password = hashedPassword 
+        }
+        
+    } catch (error) {
+        next(error);
+    }
+    
+})
 
 const User = mongoose.model('user', userSchema);
 
