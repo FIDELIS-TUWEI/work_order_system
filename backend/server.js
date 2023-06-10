@@ -1,30 +1,35 @@
 const express = require('express');
-const connectDB = require("./config/connectDB");
+const app = express();
+require("dotenv").config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const connectDB = require("./config/connectDB");
+const errorHandler = require("./middleware/error");
 
-const User = require("./model/user");
-const userRoute = require("./routes/user-routes");
 
-const app = express();
 
 // Middleware
+app.use(morgan('dev'));
 app.use(express.json());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({
+    limit: '100mb',
+    extended: true
+}));
+app.use(cookieParser());
 app.use(cors());
-app.use(express.urlencoded({extended: false}));
 
-// Routes
-app.get("/", (req, res) => {
-    res.send("Home Page");
-});
 
-app.use("/hin", userRoute);
+// Routes Middleware
+app.use("/hin", authRoutes);
+
+
+// Error Middleware
+app.use(errorHandler);
+
 
 const PORT = process.env.PORT || 5000
-
-
 // start server
 const startServer = async () => {
     try {
