@@ -10,6 +10,8 @@ const errorHandler = require("./middleware/error");
 
 // Import Routes
 const authRoutes = require("./routes/auth-routes");
+const taskRoutes = require("./routes/task-routes");
+const categoryRoutes = require("./routes/category-routes");
 
 // Middleware
 app.use(morgan('dev'));
@@ -25,6 +27,8 @@ app.use(cors());
 
 // Routes Middleware
 app.use("/hin", authRoutes);
+app.use("/hin", taskRoutes);
+app.use("/hin", categoryRoutes);
 
 
 // Error Middleware

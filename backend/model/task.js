@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const {ObjectId} = mongoose.Schema;
 
 const taskSchema = new mongoose.Schema({
     workIdentified: {
@@ -16,7 +15,7 @@ const taskSchema = new mongoose.Schema({
         maxlength: 500
     },
     category: {
-        type: ObjectId,
+        type: String,
         ref: "Category",
         required: [true, "Work identified must belong to a category"]
     },
@@ -26,11 +25,10 @@ const taskSchema = new mongoose.Schema({
         required: [true, "Please enter an a Employee to assign"]
     },
     manager: {
-        type: ObjectId,
+        type: String,
         ref: "User",
         required: [true, "Please enter your name"],
-        // Condition to reference only users with a specific role
-        match: { role: 1 }
+        
     },
     workStatus: {
         type: String,

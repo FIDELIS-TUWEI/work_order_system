@@ -25,7 +25,7 @@ const isAuthenticated = asyncHandler (async (req, res, next) => {
 
 // Admin middleware
 const isAdmin = asyncHandler (async (req, res, next) => {
-    if (req.user.role === 0) {
+    if (req.user.role === "user") {
         return next(new ErrorResponse("Access Denied! You are not authorised to access this Resource", 401));
     }
     next();
