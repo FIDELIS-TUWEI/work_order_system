@@ -25,6 +25,50 @@ const signUp = asyncHandler (async (req, res, next) => {
     }
 });
 
+const signIn = asyncHandler( async (req, res, next) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password) {
+            return next(new ErrorResponse("Username and password is required", 400));
+        }
+
+        // check for username in DB
+        const user = await User.findOne({username});
+        if (!user) {
+            return next(new ErrorResponse("Invalid credentials", 400));
+        }
+
+        // verify user password
+        const isMatched = await User.comparePassword(password);
+        if (!isMatched) {
+            return next(new ErrorResponse("Invalid credentials", 400));
+        }
+
+        // generateToken
+        generateToken(User, 200, res)
+    } catch (error) {
+        console.log(error);
+
+        next(new ErrorResponse("Cannot Login, check your credentials!", 400));
+    }
+});
+
+// generate Token logic
+const generateToken = async (User, statusCode, res) => {
+    const token = await User.jwtGenerateToken();
+
+    const options = {
+        httpOnly: true,
+        expires: new Date(Date.now() + process.env.LOGIN_EXPIRES)
+    };
+
+    res
+    .status(statusCode)
+    .cookie("token", token, options)
+    .json({ success: true, token })
+}
+
 module.exports = {
     signUp,
+    signIn
 }
