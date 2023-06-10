@@ -61,7 +61,7 @@ const generateToken = async (user, statusCode, res) => {
 
    const options = {
        httpOnly: true,
-       expires: new Date(Date.now() + process.env.LOGIN_EXPIRES)
+       expiresIn: new Date(Date.now() + process.env.LOGIN_EXPIRES)
    };
 
    res
