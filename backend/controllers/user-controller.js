@@ -46,7 +46,7 @@ const signIn = asyncHandler( async (req, res, next) => {
 
         // generateToken
         generateToken(user, 200, res);
-        
+
     } catch (error) {
         console.log(error);
 
@@ -67,9 +67,19 @@ const generateToken = async (user, statusCode, res) => {
     .status(statusCode)
     .cookie("token", token, options)
     .json({ success: true, token })
-}
+};
+
+// Logout User logic
+const logout = (req, res, next) => {
+    res.clearCookie("token");
+    res.status(200).json({
+        success: true,
+        message: "Logged Out"
+    });
+};
 
 module.exports = {
     signUp,
-    signIn
+    signIn,
+    logout
 }
