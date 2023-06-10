@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const validator  = require("validatorjs");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -14,19 +14,12 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Please enter a password"],
+        required: [true, "Password must have atleast six characters"],
         minLength: 6,
-        select: false
-    },
-    passwordConfirm: {
-        type: String,
-        required: [true, "Please fill your password to confirm"],
-        validate: {
-            validator: function(el) {
-                return el === this.password
-            },
-            message: "Your password and confirmation password are not the same!",
-        },
+        match: [
+            /^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/,
+            'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and a special characters'
+        ]
     },
     role: {
         type: String,
@@ -41,7 +34,7 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true }
 );
 
-// Mongoose Document middleware
+// Encrypt password
 userSchema.pre("save", async function(next) {
     try {
        // check if password is modified
@@ -60,7 +53,19 @@ userSchema.pre("save", async function(next) {
         next(error);
     }
     
-})
+});
+
+// verify password
+userSchema.methods.comparePassword = async function (password){
+    return await bcrypt.compare(password, this.password);
+};
+
+// get Token
+userSchema.methods.jwtGenerateToken = function() {
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.LOGIN_EXPIRES
+    });
+}
 
 const User = mongoose.model('user', userSchema);
 
