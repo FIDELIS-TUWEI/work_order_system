@@ -108,5 +108,6 @@ module.exports = {
    signUp,
    signIn,
    logout,
+   userProfile,
    singleUser,
 }

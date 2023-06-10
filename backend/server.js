@@ -7,7 +7,8 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
 const errorHandler = require("./middleware/error");
 
-
+// Import Routes
+const authRoutes = require("./routes/auth-routes");
 
 // Middleware
 app.use(morgan('dev'));
