@@ -39,13 +39,14 @@ const signIn = asyncHandler( async (req, res, next) => {
         }
 
         // verify user password
-        const isMatched = await User.comparePassword(password);
+        const isMatched = await user.comparePassword(password);
         if (!isMatched) {
             return next(new ErrorResponse("Invalid credentials", 400));
         }
 
         // generateToken
-        generateToken(User, 200, res)
+        generateToken(user, 200, res);
+        
     } catch (error) {
         console.log(error);
 
@@ -54,8 +55,8 @@ const signIn = asyncHandler( async (req, res, next) => {
 });
 
 // generate Token logic
-const generateToken = async (User, statusCode, res) => {
-    const token = await User.jwtGenerateToken();
+const generateToken = async (user, statusCode, res) => {
+    const token = await user.jwtGenerateToken();
 
     const options = {
         httpOnly: true,
