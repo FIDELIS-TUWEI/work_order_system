@@ -78,8 +78,24 @@ const logout = (req, res, next) => {
     });
 };
 
+
+// SingleUser
+const singleUser = asyncHandler (async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.status(200).json({
+            success: true,
+            user
+        });
+    } catch (error) {
+        next(error);
+
+    }
+})
+
 module.exports = {
     signUp,
     signIn,
-    logout
+    logout,
+    singleUser,
 }
