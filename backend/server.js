@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
 const errorHandler = require("./middleware/error");
