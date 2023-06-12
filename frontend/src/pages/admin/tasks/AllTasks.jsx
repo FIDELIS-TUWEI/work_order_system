@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import {  Box, Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
 
-import { deleteTask, getTasks } from "../../api/taskApi";
+import { deleteTask, getTasks } from "../../../api/taskApi";
 import { useNavigate } from "react-router-dom";
 
 // MUI custom styles

@@ -4,7 +4,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import UsersDashboard from "../pages/admin/users/UsersDashboard";
 
 import Register from "../pages/auth/Register"
-import Login from "../pages/auth"
+import Login from "../pages/auth/Login"
 
 import AddTask from "../pages/admin/tasks/AddTask";
 import AllTasks from "../pages/admin/tasks/AllTasks";

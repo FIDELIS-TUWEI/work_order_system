@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControl, InputLabel, Input } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../../api/authApi/registerUser';
+import { registerUser } from '../../api/authApi';
 
 function Copyright(props) {
     return (

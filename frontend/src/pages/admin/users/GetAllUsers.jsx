@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Button, Table, TableBody, TableCell, TableHead, TableRow, styled } from "@mui/material";
 
-import { getUsers, deleteUser } from "../../api/api";
+import { getUsers, deleteUser } from "../../../api/api";
 import { useNavigate } from "react-router-dom";
 
 // MUI custom styles

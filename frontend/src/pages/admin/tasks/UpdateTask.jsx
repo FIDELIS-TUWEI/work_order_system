@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Typography, styled, Button, Select, MenuItem } from "@mui/material";
 
-import { editTask, getTask } from "../../api/taskApi";
+import { editTask, getTask } from "../../../api/taskApi";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup) `

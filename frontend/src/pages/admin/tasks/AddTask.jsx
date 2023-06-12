@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button, Select, MenuItem } from "@mui/material";
 
-import { addTask } from "../../api/taskApi";
+import { addTask } from "../../../api/taskApi";
 import { useNavigate } from "react-router-dom";
 
 
