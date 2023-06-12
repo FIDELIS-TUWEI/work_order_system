@@ -48,11 +48,7 @@ const Login = () => {
     // function to login user
     const login = async () => {
         await loginUser(user);
-        if (user.role === 'admin') {
-            navigate("/admin-home");
-        } else if (user.role === 'user') {
-            navigate("/users-home");
-        }
+        navigate("/user-dashboard")
         
     }
 
