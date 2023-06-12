@@ -8,8 +8,10 @@ import Login from "../pages/auth"
 
 import AddTask from "../pages/admin/tasks/AddTask";
 import AllTasks from "../pages/admin/tasks/AllTasks";
+import UpdateTask from "../pages/admin/tasks/UpdateTask";
 
 import EditUser from "../pages/admin/users/EditUsers";
+import GetAllUsers from "../pages/admin/users/GetAllUsers";
 
 
 export const router = createBrowserRouter([
@@ -43,10 +45,6 @@ export const router = createBrowserRouter([
     {
         path: '/update/:id',
         element: <UpdateTask />
-    },
-    {
-        path: '/users',
-        element: <Users />
     },
     {
         path: '/allusers',
