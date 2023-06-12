@@ -8,7 +8,6 @@ import GetAllUsers from "../components/users/GetAllUsers";
 import EditUser from "../components/users/EditUsers";
 import AllTasks from "../components/tasks/AllTasks";
 import UpdateTask from "../components/tasks/UpdateTask";
-import Dashboard from "../pages/dashboard/Dashboard";
 import Main from "../pages/dashboard/Main/Main";
 import AdminHome from "../pages/AdminHome";
 import UserHome from "../pages/UserHome";
@@ -33,10 +32,6 @@ export const router = createBrowserRouter([
     {
         path: '/login',
         element: <Auth />
-    },
-    {
-        path: '/dashboard',
-        element: <Dashboard />
     },
     {
         path: '/addtasks',
