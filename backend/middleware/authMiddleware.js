@@ -24,25 +24,25 @@ const isAuthenticated = asyncHandler (async (req, res, next) => {
 });
 
 // Admin middleware
-const isAdmin = asyncHandler (async (req, res, next) => {
-    if (req.user.role === "user") {
-        return next(new ErrorResponse("Access Denied! You are not authorised to access this Resource", 401));
-    }
-    next();
-})
+//const isAdmin = asyncHandler (async (req, res, next) => {
+//    if (req.user.role === "user") {
+//        return next(new ErrorResponse("Access Denied! You are not authorised to access this Resource", 401));
+//    }
+//    next();
+//})
 
 // Protected route
-//const isAdmin = (permissions) => {
-//    return (req, res, next) => {
-//        const authRole = req.body.role
-//        if (permissions.includes(authRole)) {
-//            res.status(200).json({ message: "Action successful" })
-//            next();
-//        } else {
-//            return res.status(401).json({ message: "Access Denied!" });
-//        }
-//    }
-//}
+const isAdmin = (permissions) => {
+    return (req, res, next) => {
+        const authRole = req.body.role
+        if (permissions.includes(authRole)) {
+            res.status(200).json({ message: "Action successful" })
+            next();
+        } else {
+            return res.status(401).json({ message: "Access Denied!" });
+        }
+    }
+}
 
 module.exports = {
     isAuthenticated,
