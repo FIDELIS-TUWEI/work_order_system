@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { FormControl, FormGroup, InputLabel, Input, Typography, styled, Button } from "@mui/material";
 
-import { editUser, getUser } from "../../api/api";
+import { editUser, getUser } from "../../../api/api";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled(FormGroup) `
