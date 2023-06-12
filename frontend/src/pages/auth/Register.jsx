@@ -34,7 +34,7 @@ const initialState = {
     password: ""
 }
 
-const RegisterComponent = () => {
+const Register = () => {
     // usestate
     const [user, setUser] = useState(initialState);
 
@@ -93,4 +93,4 @@ const RegisterComponent = () => {
      );
 }
  
-export default RegisterComponent;
+export default Register;

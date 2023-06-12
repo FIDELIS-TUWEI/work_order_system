@@ -1,29 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import Register from "../pages/Register";
-import Auth from "../pages/Auth";
-import Tasks from "../pages/dashboard/tasks/Tasks";
-import Users from "../pages/dashboard/users/Users";
-import GetAllUsers from "../components/users/GetAllUsers";
-import EditUser from "../components/users/EditUsers";
-import AllTasks from "../components/tasks/AllTasks";
-import UpdateTask from "../components/tasks/UpdateTask";
-import Main from "../pages/dashboard/Main/Main";
-import AdminHome from "../pages/AdminHome";
-import UserHome from "../pages/UserHome";
+import Home from "../components/Home"
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import UsersDashboard from "../pages/admin/users/UsersDashboard";
+
+import Register from "../pages/auth/Register"
+import Login from "../pages/auth"
+
+import AddTask from "../pages/admin/tasks/AddTask";
+import AllTasks from "../pages/admin/tasks/AllTasks";
+
+import EditUser from "../pages/admin/users/EditUsers";
 
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <HomePage />
+        element: <Home />
     },
     {
-        path: '/admin-home',
-        element: <AdminHome />
+        path: '/admin-dashboard',
+        element: <AdminDashboard />
     },{
-        path: '/user-home',
-        element: <UserHome />
+        path: '/user-dashboard',
+        element: <UsersDashboard />
     },
     {
         path: '/register',
@@ -31,11 +30,11 @@ export const router = createBrowserRouter([
     },
     {
         path: '/login',
-        element: <Auth />
+        element: <Login />
     },
     {
         path: '/addtasks',
-        element: <Tasks />
+        element: <AddTask />
     },
     {
         path: '/alltasks',
@@ -44,10 +43,6 @@ export const router = createBrowserRouter([
     {
         path: '/update/:id',
         element: <UpdateTask />
-    },
-    {
-        path: '/main',
-        element: <Main />
     },
     {
         path: '/users',

@@ -34,7 +34,7 @@ const initialState = {
     password: ""
 }
 
-const LoginComponent = () => {
+const Login = () => {
     // usestate
     const [user, setUser] = useState(initialState);
 
@@ -98,4 +98,4 @@ const LoginComponent = () => {
      );
 }
  
-export default LoginComponent;
+export default Login;
