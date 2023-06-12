@@ -31,6 +31,19 @@ const isAdmin = asyncHandler (async (req, res, next) => {
     next();
 })
 
+// Protected route
+//const isAdmin = (permissions) => {
+//    return (req, res, next) => {
+//        const authRole = req.body.role
+//        if (permissions.includes(authRole)) {
+//            res.status(200).json({ message: "Action successful" })
+//            next();
+//        } else {
+//            return res.status(401).json({ message: "Access Denied!" });
+//        }
+//    }
+//}
+
 module.exports = {
     isAuthenticated,
     isAdmin,
