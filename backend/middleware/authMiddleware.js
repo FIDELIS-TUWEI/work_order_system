@@ -31,7 +31,7 @@ const isAuthenticated = asyncHandler (async (req, res, next) => {
 //    next();
 //})
 
-// Protected route
+ Protected route
 const isAdmin = (permissions) => {
     return (req, res, next) => {
         const authRole = req.body.role
