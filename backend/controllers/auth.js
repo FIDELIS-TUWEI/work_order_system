@@ -102,6 +102,19 @@ const singleUser = asyncHandler (async (req, res) => {
        next(error);
 
    }
+});
+
+// Get All users
+const getAllUsers = asyncHandler (async (req, res,) => {
+    try {
+        // retriev users from database
+        const users = await User.find();
+
+        // return users response
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Error occured while getting users" });
+    }
 })
 
 module.exports = {
@@ -110,4 +123,5 @@ module.exports = {
    logout,
    userProfile,
    singleUser,
+   getAllUsers
 }
