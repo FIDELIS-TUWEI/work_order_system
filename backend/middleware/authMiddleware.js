@@ -39,7 +39,7 @@ const isAuthenticated = asyncHandler (async (req, res, next) => {
 //            res.status(200).json({ message: "Action successful" })
 //            next();
 //        } else {
-//            return res.status(401).json({ message: "Access Denied!" });
+//            return res.status(403).json({ message: "Forbidden" });
 //        }
 //    }
 //}
