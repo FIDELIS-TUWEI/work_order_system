@@ -23,6 +23,20 @@ const isAuthenticated = asyncHandler (async (req, res, next) => {
     }
 });
 
+// isAdmin middleware
+const isAdmin = (req, res, next) => {
+    // Check if user is authenticated and has admin role
+    if (req.user && req.user.isAdmin) {
+      // User is an admin, proceed to the next middleware or route handler
+      next();
+    } else {
+      // User is not an admin, return unauthorized error
+      res.status(401).json({ message: 'Unauthorized' });
+    }
+  };
+
+
 module.exports = {
     isAuthenticated,
+    isAdmin,
 }
