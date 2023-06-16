@@ -31,37 +31,22 @@ const isAuthenticated = asyncHandler (async (req, res, next) => {
 //    next();
 //})
 
-// Protected route
-//const isAdmin = (permissions) => {
-//    return (req, res, next) => {
-//        const authRole = req.body.role
-//        if (permissions.includes(authRole)) {
-//            res.status(200).json({ message: "Action successful" })
-//            next();
-//        } else {
-//            return res.status(403).json({ message: "Forbidden" });
-//        }
-//    }
-//}
-
-
-//Middleware function to authorize users based on roles
-const authorizeUser = (roles) => {
+ //Protected route
+const isAdmin = (permissions) => {
     return (req, res, next) => {
-        // check if user has specified role
-        if (req.session && req.session.user && roles.includes(req.session.user.role)) {
-            // user is authorized, proceed to the next middleware
+        const authRole = req.body.role
+        if (permissions.includes(authRole)) {
+            res.status(200).json({ message: "Action successful" })
             next();
         } else {
-            // Send error if user is not authorized
-            res.status(403).json({ message: "Forbidden" })
+            return res.status(403).json({ message: "Forbidden" });
         }
     }
 }
 
 
+
 module.exports = {
     isAuthenticated,
-    //isAdmin,
-    authorizeUser,
+    isAdmin,
 }
