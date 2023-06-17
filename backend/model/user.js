@@ -60,11 +60,11 @@ userSchema.methods.comparePassword = async function (password){
 };
 
 // get Token
-userSchema.methods.jwtGenerateToken = function() {
-    return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.LOGIN_EXPIRES
-    });
-}
+//userSchema.methods.jwtGenerateToken = function() {
+//    return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
+//        expiresIn: process.env.LOGIN_EXPIRES
+//    });
+//}
 
 const User = mongoose.model('user', userSchema);
 

@@ -10,7 +10,9 @@ const getAuthToken = (user) => {
             username: user.username,
             isAdmin: user.isAdmin
         },
-        secretKey
+        secretKey, {
+            expiresIn: process.env.LOGIN_EXPIRES
+        }
     );
 
     return token;
