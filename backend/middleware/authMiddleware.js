@@ -4,45 +4,68 @@ const User = require("../model/user");
 const ErrorResponse = require("../utils/errorResponse");
 
 // check if user is authenticated
-const isAuthenticated = asyncHandler (async (req, res, next) => {
-    const {token} = req.cookies;
+//const isAuthenticated = asyncHandler (async (req, res, next) => {
+//    const {token} = req.cookies;
 
     // make sure token exists
+//    if (!token) {
+//        return next(new ErrorResponse("You must be logged in to access this Resource", 401));
+//    }
+
+//    try {
+        // verify token
+//        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//        req.user = await User.findById(decoded.id);
+ //       next();
+
+//    } catch (error) {
+ //       return next(new ErrorResponse("You must login to access this Resource", 401));
+//    }
+//});
+
+const auth = (req, res, next) => {
+    const token = req.headers("x-auth-token");
+
     if (!token) {
-        return next(new ErrorResponse("You must be logged in to access this Resource", 401));
+        return res.status(401).json({ message: "Access Denied. Not authenticated!" });
     }
 
     try {
-        // verify token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findById(decoded.id);
+        const jwtSecretKey = process.env.JWT_SECRET;
+        const decoded = jwt.verify(token, jwtSecretKey);
+
+        req.user = decoded;
         next();
-
     } catch (error) {
-        return next(new ErrorResponse("You must login to access this Resource", 401));
-    }
-});
-
-//Middleware to check user's role
-const isAdmin = (access) => {
-    return (req, res, next) => {
-        const userRole = req.user.role;
-
-        try {
-            const hasPermission = access.some((permissions) => {
-                userRole.permissions.includes(permission);
-            });
-       
-            if (!hasPermission) {
-                return res.status(403).json({ message: "Forbidden" });
-            }
-        } catch (error) {
-            return next(new ErrorResponse("Contact your Admin", 401));
-        }
+        return next(new ErrorResponse("Invalid request, please login", 401));
     }
 }
 
+// user profile
+const isUser = (req, res, next) => {
+    auth(req, res, () => {
+        if (req.user._id === req.params.id || req.user.isAdmin) {
+            next();
+        } else {
+            res.status(403).json({ message: "Access Denied! You are not authorized "})
+        }
+    });
+};
+
+// Admin
+const isAdmin = (req, res, next) => {
+    auth(req, res, () => {
+        if (req.user.isAdmin) {
+            next();
+        } else {
+            res.status(403).json({ message: "Forbidden! Contact your Admin" })
+        }
+    })
+}
+
 module.exports = {
-    isAuthenticated,
+    //isAuthenticated,
+    auth,
+    isUser,
     isAdmin,
 }
