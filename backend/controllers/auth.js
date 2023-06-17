@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require('../model/user');
 const ErrorResponse = require("../utils/errorResponse");
+const generateAuthToken = require("../utils/generateAuthToken");
 
 
 const signUp = asyncHandler (async (req, res, next) => {
@@ -57,7 +58,7 @@ const signIn = asyncHandler( async (req, res, next) => {
 
 // generate Token logic
 const generateToken = async (user, statusCode, res) => {
-   const token = await user.jwtGenerateToken();
+   const token = generateAuthToken(user);
 
    const options = {
        httpOnly: true,
