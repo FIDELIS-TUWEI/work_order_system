@@ -23,6 +23,26 @@ const isAuthenticated = asyncHandler (async (req, res, next) => {
     }
 });
 
+//Middleware to check user's role
+const isAdmin = (access) => {
+    return (req, res, next) => {
+        const userRole = req.user.role;
+
+        try {
+            const hasPermission = access.some((permissions) => {
+                userRole.permissions.includes(permission);
+            });
+       
+            if (!hasPermission) {
+                return res.status(403).json({ message: "Forbidden" });
+            }
+        } catch (error) {
+            return next(new ErrorResponse("Contact your Admin", 401));
+        }
+    }
+}
+
 module.exports = {
     isAuthenticated,
+    isAdmin,
 }
