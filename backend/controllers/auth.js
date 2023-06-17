@@ -97,13 +97,37 @@ const singleUser = asyncHandler (async (req, res) => {
 // Get All users
 const getAllUsers = asyncHandler (async (req, res,) => {
     try {
-        // retriev users from database
+        // retrieve users from database
         const users = await User.find();
 
         // return users response
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: "Error occured while getting users" });
+    }
+});
+
+// Update user
+const updateUser = asyncHandler (async (req, res, next) => {
+    try {
+        const { name, username, role } = req.body
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.name = name
+        user.username = username
+        user.role = role
+
+        // save updated User
+        await user.save();
+
+        // Return updated user 
+        return res.status(200).json(user);
+    } catch (error) {
+        return next(new ErrorResponse("Internal Server Error", 500));
     }
 })
 
@@ -112,5 +136,6 @@ module.exports = {
    signIn,
    logout,
    singleUser,
-   getAllUsers
+   getAllUsers,
+   updateUser,
 }
