@@ -3,10 +3,10 @@ const ErrorResponse = require("../utils/errorResponse");
 
 // check if user is authenticated
 const auth = (req, res, next) => {
-    const token = req.header("x-auth-token");
+    const { token }= req.cookies;
 
     if (!token) {
-        return res.status(401).json({ message: "Access Denied. Not authenticated!" });
+        return res.status(401).send("Access Denied. Not authenticated!");
     }
 
     try {
@@ -26,7 +26,7 @@ const isUser = (req, res, next) => {
         if (req.user._id === req.params.id || req.user.isAdmin) {
             next();
         } else {
-            res.status(403).json({ message: "Access Denied! You are not authorized "})
+            res.status(403).send("Access Denied! You are not authorized ")
         }
     });
 };
@@ -37,7 +37,7 @@ const isAdmin = (req, res, next) => {
         if (req.user.isAdmin) {
             next();
         } else {
-            res.status(403).json({ message: "Forbidden! Not Authorized" })
+            res.status(403).send("Forbidden! Not Authorized")
         }
     })
 }
