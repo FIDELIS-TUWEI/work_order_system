@@ -8,8 +8,6 @@ router.post('/signin', signIn);
 router.get("/logout", logout);
 router.get("/all-users", isAdmin, getAllUsers);
 router.get("/user/:id", isUser, singleUser);
-router.patch("update-user/:id", auth, isAdmin, updateUser);
-
 
 
 module.exports = router;

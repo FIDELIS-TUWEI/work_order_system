@@ -107,35 +107,10 @@ const getAllUsers = asyncHandler (async (req, res,) => {
     }
 });
 
-// Update user
-const updateUser = asyncHandler (async (req, res, next) => {
-    try {
-        const { name, username, role } = req.body
-        const user = await User.findById(req.params.id);
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        user.name = name
-        user.username = username
-        user.role = role
-
-        // save updated User
-        await user.save();
-
-        // Return updated user 
-        return res.status(200).json(user);
-    } catch (error) {
-        return next(new ErrorResponse("Internal Server Error", 500));
-    }
-})
-
 module.exports = {
    signUp,
    signIn,
    logout,
    singleUser,
    getAllUsers,
-   updateUser,
 }
