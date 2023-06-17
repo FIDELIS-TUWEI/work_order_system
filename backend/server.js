@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
@@ -14,13 +15,12 @@ const taskRoutes = require("./routes/task-routes");
 const categoryRoutes = require("./routes/category-routes");
 
 // Middleware
-app.use(morgan('dev'));
 app.use(express.json());
-app.use(bodyParser.json({ limit: '100mb' }));
-app.use(bodyParser.urlencoded({
-    limit: '100mb',
-    extended: true
-}));
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(morgan('common'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
