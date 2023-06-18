@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    mode: "dark"
+    mode: "dark",
 };
 
 export const globalSlice = createSlice({
@@ -9,9 +9,9 @@ export const globalSlice = createSlice({
     initialState,
     reducers: {
         setMode: (state) => {
-            state.mode = state.mode === "light" ? "dark" : "dark"
-        }
-    }
+            state.mode = state.mode === "light" ? "dark" : "light"
+        },
+    },
 });
 
 export const { setMode } = globalSlice.actions;
