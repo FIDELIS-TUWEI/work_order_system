@@ -89,7 +89,7 @@ const singleUser = asyncHandler (async (req, res) => {
            user
        });
    } catch (error) {
-       next(error);
+       res.status(404).json({ message: error.message });
 
    }
 });
