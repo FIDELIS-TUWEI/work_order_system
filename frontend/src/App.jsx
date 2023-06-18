@@ -2,7 +2,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { themeSettings } from "theme";
+import { RouterProvider } from "react-router-dom";
+import { themeSettings } from "./theme";
+import { router } from "./routes/Routes";
 
 function App() {
     // redux state
@@ -10,9 +12,11 @@ function App() {
     const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
 
   return <div>
-    <ThemeProvider theme={theme}>
-        <CssBaseline />
-    </ThemeProvider>
+    <RouterProvider router={router}>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+        </ThemeProvider>
+    </RouterProvider>
   </div>
 }
 
