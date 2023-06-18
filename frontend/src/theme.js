@@ -64,7 +64,7 @@ export const themeSettings = (mode) => {
   return {
     palette: {
       mode: mode,
-      ...(mode === "dark"
+      ...(mode === 'dark'
         ? {
             // palette values for dark mode
             primary: {
