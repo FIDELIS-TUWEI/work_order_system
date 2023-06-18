@@ -8,7 +8,7 @@ import {
 } from "@mui/icons-material";
 import FlexBetween from "../components/FlexBetween";
 import { useDispatch } from "react-redux";
-import { setMode } from "state";
+import { setMode } from "../state/index";
 import { AppBar, IconButton, InputBase, Toolbar, useTheme } from "@mui/material";
 
 const Navbar = () => {

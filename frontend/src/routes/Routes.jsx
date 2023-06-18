@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../scenes/layout/Layout";
+import Layout from "../scenes/layout";
 import Dashboard from "../scenes/dashboard/Dashboard";
 import AdminDashboard from "../scenes/dashboard/AdminDashboard";
 
