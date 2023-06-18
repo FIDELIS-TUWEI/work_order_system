@@ -7,13 +7,14 @@ import {
     SettingsOutlined
 } from "@mui/icons-material";
 import FlexBetween from "../components/FlexBetween";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setMode } from "../state/index";
-import { AppBar, IconButton, InputBase, Toolbar, useTheme } from "@mui/material";
+import { AppBar, IconButton, InputBase, Toolbar, Typography, useTheme } from "@mui/material";
 
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const userId = useSelector((state) => state.user.userId)
   return (
     <AppBar
         sx={{
@@ -55,6 +56,8 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 <IconButton>
                     <SettingsOutlined sx={{ fontSize: "25px" }} />
                 </IconButton>
+
+                <Typography variant="small">{userId}</Typography>
             </FlexBetween>
         </Toolbar>
     </AppBar>

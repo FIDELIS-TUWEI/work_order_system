@@ -5,11 +5,13 @@ import App from './App';
 
 import { configureStore } from "@reduxjs/toolkit"
 import globalReducer from "./state/index";
+import userReducer from './state/userSlice';
 import { Provider } from 'react-redux';
 
 const store = configureStore({
   reducer: {
     global: globalReducer,
+    user: userReducer,
   },
 });
 
