@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
-import { themeSettings } from "./theme";
+import { themeSettings } from "theme";
 import { router } from "./routes/Routes";
 
 function App() {
@@ -20,4 +20,4 @@ function App() {
   </div>
 }
 
-export default App
+export default App;
