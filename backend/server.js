@@ -13,8 +13,8 @@ const errorHandler = require("./middleware/error");
 connectDB();
 
 // Import Routes
-const authRoutes = require("./routes/auth-routes");
-const taskRoutes = require("./routes/task-routes");
+const authRoutes = require("./routes/authRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 // Middleware
 app.use(express.json());
