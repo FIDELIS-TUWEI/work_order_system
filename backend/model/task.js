@@ -1,28 +1,23 @@
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
     workIdentified: {
         type: String,
-        required: [true, "Please add work identified"]
+        required: true, 
     },
     location: {
         type: String,
-        required: [true, "Please add a work location"]
+        required: true, 
     },
     description: {
         type: String,
-        required: [true, "Please add a description"],
+        required: true,
         maxlength: 500
-    },
-    category: {
-        type: String,
-        ref: "Category",
-        required: [true, "Work identified must belong to a category"]
-    },
-    employeeAssigned: {
-        type: String,
-        ref: "User",
-        required: [true, "Please enter an a Employee to assign"]
     },
     manager: {
         type: String,
@@ -30,15 +25,11 @@ const taskSchema = new mongoose.Schema({
         required: [true, "Please enter your name"],
         
     },
-    workStatus: {
+    completed: {
         type: String,
         enum: ["Pending", "Complete"],
         required: true,
         default: "Pending"
-    },
-    date: {
-        type: String,
-        required: [true, "Please enter a date work was issued"]
     }
 },
 { timestamps: true }
