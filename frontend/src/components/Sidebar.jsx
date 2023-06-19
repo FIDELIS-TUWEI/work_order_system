@@ -15,6 +15,7 @@ import {
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import profileImage from "../assets/avatar.png"
 
 const navItems = [
     {
@@ -73,10 +74,10 @@ const navItems = [
 
 const Sidebar = ({
     user,
-    isNonMobile,
     drawerWidth,
     isSidebarOpen,
     setIsSidebarOpen,
+    isNonMobile,
 }) => {
     const { pathname } = useLocation();
     const [active, setActive] = useState("");
@@ -166,17 +167,18 @@ const Sidebar = ({
                                     )}
                                 </ListItemButton>
                             </ListItem>
-                        )
+                        );
                     })}
                 </List>
             </Box>
 
-            <Box position="absolute" bottom="2rem">
+            <Box position="relative" bottom="1rem">
                 <Divider />
                 <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
                     <Box
                         component="img"
                         alt="profile"
+                        src={profileImage}
                         height="40px"
                         width="40px"
                         borderRadius="50%"
@@ -194,8 +196,8 @@ const Sidebar = ({
                 </FlexBetween>
             </Box>
         </Drawer>
-    )}
+    )};
   </Box>
-}
+};
 
 export default Sidebar
