@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
+const baseUrl = `http://localhost:5000/hin`
+
 export const api = createApi({
-    // eslint-disable-next-line no-undef
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
+    baseQuery: fetchBaseQuery({ baseUrl }),
     reducerPath: "adminApi",
     tagTypes: ["User"],
     endpoints: (build) => ({
         singleUser: build.query({
-            query: (id) => `hin/user/${id}`,
+            query: (id) => `/user/${id}`,
             providesTags: ["User"]
         })
     })
