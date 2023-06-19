@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const AutoIncrement = require("mongoose-sequence")("mongoose");
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const taskSchema = new mongoose.Schema({
     user: {

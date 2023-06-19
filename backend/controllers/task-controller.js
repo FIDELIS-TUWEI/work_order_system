@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Task = require("../model/task");
-const Category = require("../model/category");
 
 // create task
 const createTask = asyncHandler (async (req, res, next) => {

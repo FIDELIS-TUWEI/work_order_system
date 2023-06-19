@@ -7,7 +7,10 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
+const mongoose = require("mongoose");
 const errorHandler = require("./middleware/error");
+
+connectDB();
 
 // Import Routes
 const authRoutes = require("./routes/auth-routes");
@@ -35,18 +38,17 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 // start server
-const startServer = async () => {
-    try {
-        await connectDB();
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+});
 
-startServer();
+mongoose.connection.on('error', err => {
+    console.log(err)
+});
+
 
 
 
