@@ -5,16 +5,12 @@ const jwt = require("jsonwebtoken");
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Please fill your name"],
-        min: 4,
-        max: 15
+        required: [true, "Please fill your name"]
     },
     username: {
         type: String,
         required: [true, "Please enter a Username"],
-        uppercase: true,
-        min: 4,
-        max: 10
+        uppercase: true
     },
     password: {
         type: String,
@@ -25,19 +21,11 @@ const userSchema = new mongoose.Schema({
             'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and a special characters'
         ]
     },
-    city: String,
-    country: String,
-    occupation: String,
-    phoneNumber: String,
-    assignedTasks: {
-        type: String,
-        ref: "Task"
-    },
-    role: {
+    role: [{
         type: String,
         enum: ["user", "admin", "superadmin"],
-        default: "admin"
-    },
+        default: "user"
+    }],
     isAdmin: {
         type: Boolean,
         default: false
