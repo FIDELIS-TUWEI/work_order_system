@@ -1,101 +1,45 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../model/user");
-const ErrorResponse = require("../utils/errorResponse");
-
-const signUp = asyncHandler (async (req, res, next) => {
-    // check if username exists
-    const { username } = req.body;
-    const userExists = await User.findOne({username});
-
-    if (userExists) {
-        return next(new ErrorResponse("Username is already registered!", 400));
-    }
-
-    // create new user
-    try {
-        const user = await User.create(req.body);
-        res.status(201).json({
-            success: true,
-            user
-        });
-
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-});
-
-const signIn = asyncHandler( async (req, res, next) => {
-    try {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            return next(new ErrorResponse("Username and password is required", 400));
-        }
-
-        // check for username in DB
-        const user = await User.findOne({username});
-        if (!user) {
-            return next(new ErrorResponse("Invalid credentials", 400));
-        }
-
-        // verify user password
-        const isMatched = await user.comparePassword(password);
-        if (!isMatched) {
-            return next(new ErrorResponse("Invalid credentials", 400));
-        }
-
-        // generateToken
-        generateToken(user, 200, res);
-
-    } catch (error) {
-        console.log(error);
-
-        next(new ErrorResponse("Cannot Login, check your credentials!", 400));
-    }
-});
-
-// generate Token logic
-const generateToken = async (user, statusCode, res) => {
-    const token = await user.jwtGenerateToken();
-
-    const options = {
-        httpOnly: true,
-        expires: new Date(Date.now() + process.env.LOGIN_EXPIRES)
-    };
-
-    res
-    .status(statusCode)
-    .cookie("token", token, options)
-    .json({ success: true, token })
-};
-
-// Logout User logic
-const logout = (req, res, next) => {
-    res.clearCookie("token");
-    res.status(200).json({
-        success: true,
-        message: "Logged Out"
-    });
-};
-
-
-// SingleUser GET
-const singleUser = asyncHandler (async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        res.status(200).json({
-            success: true,
-            user
-        });
-    } catch (error) {
-        next(error);
-
-    }
-});
+const bcrypt = require("bcryptjs");
 
 // get All Users GET
 const getAllUsers = asyncHandler ( async (req, res) => {
     const users = await User.find().select("-password").lean();
+    if (!users) {
+        return res.status(400).json({ message: "No users Found!" });
+    }
+    res.json(users);
+});
+
+// Create New User
+const createNewUser = asyncHandler (async (req, res) => { 
+    const { username, password, role } = req.body;
+
+    // confirm data
+    if (!username || !password || !Array.isArray(role) || !role.length) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // check for duplicate user
+    const duplicate = await User.findOne({ username }).lean().exec();
+
+    if (duplicate) {
+        return res.status(409).json({ message: "Duplicate Username" });
+    }
+
+    // Hash Password
+    const hashedPswd = await bcrypt.hash(password, 10) // salt rounds
+
+    const userObject = { username, "password": hashedPswd, role };
+
+    // Create and store user
+    const user = await User.create(userObject);
+
+    if (user) {
+        return res.status(201).json({ message: `New user ${username} created` });
+    } else {
+        res.status(400).json({ message: "Invalid user data received" });
+    }
 })
 
 // Update User PATCH 
@@ -108,10 +52,8 @@ const deleteUser = asyncHandler (async (req, res) => {
 });
 
 module.exports = {
-    signUp,
-    signIn,
-    logout,
-    singleUser,
+    getAllUsers,
+    createNewUser,
     updateUser,
     deleteUser,
 }
