@@ -91,11 +91,22 @@ const singleUser = asyncHandler (async (req, res) => {
         next(error);
 
     }
-})
+});
+
+// Update User PATCH 
+const updateUser = asyncHandler (async (req, res) => {
+
+});
+
+const deleteUser = asyncHandler (async (req, res) => {
+
+});
 
 module.exports = {
     signUp,
     signIn,
     logout,
     singleUser,
+    updateUser,
+    deleteUser,
 }
