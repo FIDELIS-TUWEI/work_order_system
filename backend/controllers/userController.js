@@ -79,7 +79,7 @@ const logout = (req, res, next) => {
 };
 
 
-// SingleUser
+// SingleUser GET
 const singleUser = asyncHandler (async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
@@ -92,6 +92,11 @@ const singleUser = asyncHandler (async (req, res) => {
 
     }
 });
+
+// get All Users GET
+const getAllUsers = asyncHandler ( async (req, res) => {
+    const users = await User.find().select("-password").lean();
+})
 
 // Update User PATCH 
 const updateUser = asyncHandler (async (req, res) => {

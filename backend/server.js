@@ -13,7 +13,7 @@ const errorHandler = require("./middleware/error");
 connectDB();
 
 // Import Routes
-const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 
 // Middleware
@@ -28,7 +28,7 @@ app.use(cors());
 
 
 // Routes Middleware
-app.use("/hin", authRoutes);
+app.use("/hin", userRoutes);
 app.use("/hin", taskRoutes);
 
 
