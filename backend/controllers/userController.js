@@ -14,10 +14,10 @@ const getAllUsers = asyncHandler ( async (req, res) => {
 
 // Create New User
 const createNewUser = asyncHandler (async (req, res) => { 
-    const { username, password, role } = req.body;
+    const { name, username, password, role } = req.body;
 
     // confirm data
-    if (!username || !password || !Array.isArray(role) || !role.length) {
+    if (!name || !username || !password || !Array.isArray(role) || !role.length) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -31,7 +31,7 @@ const createNewUser = asyncHandler (async (req, res) => {
     // Hash Password
     const hashedPswd = await bcrypt.hash(password, 10) // salt rounds
 
-    const userObject = { username, "password": hashedPswd, role };
+    const userObject = { name, username, "password": hashedPswd, role };
 
     // Create and store user
     const user = await User.create(userObject);
@@ -87,9 +87,9 @@ const deleteUser = asyncHandler (async (req, res) => {
         return res.status(400).json({ message: "User ID required" });
     }
 
-    const tasks = await Task.findOne({ user: id }).lean().exec();
+    const task = await Task.findOne({ user: id }).lean().exec();
 
-    if (tasks?.length) {
+    if (task) {
         return res.status(400).json({ message: "User has assigned Tasks" });
     }
 
