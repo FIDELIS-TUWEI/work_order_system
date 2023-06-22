@@ -44,11 +44,25 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
 });
 
 const singleUser = asyncHandler (async (req, res, next) => {
-    res.send("Single User");
+    try {
+        // find user by ID
+        const user = await User.findById(req.params.id).select("-password").lean();
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            user
+        })
+    } catch (error) {
+        next(error);
+    }
 });
 
 const updateUser = asyncHandler (async (req, res, next) => {
-    res.send("User updated")
+    
 });
 
 const deleteUser = asyncHandler (async (req, res, next) => {
