@@ -7,6 +7,11 @@ const createNewUser = asyncHandler (async (req, res, next) => {
     try {
         const { name, username, password } = req.body;
 
+        // Validate request
+        if (!name || !username || !password) {
+            return res.status(400).json({ message: "All fields are required" })
+        }
+
         // check if user exists
         const userExists = await User.findOne({ username });
         if (userExists) {
@@ -24,9 +29,13 @@ const createNewUser = asyncHandler (async (req, res, next) => {
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
         // Return Token
-        res.status(201).json({token});
+        res.status(201).json({
+            success: true,
+            user,
+            token,
+        });
     } catch (error) {
-        
+        next(error);
     }
 });
 

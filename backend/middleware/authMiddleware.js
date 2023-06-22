@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const ErrorResponse = require("../utils/errorResponse");
 
 // check if user is authenticated
 const auth = (req, res, next) => {
