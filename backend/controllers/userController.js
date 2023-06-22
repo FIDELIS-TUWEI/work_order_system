@@ -1,4 +1,5 @@
 const User = require("../model/user");
+const Task = require("../model/task");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -40,7 +41,15 @@ const createNewUser = asyncHandler (async (req, res, next) => {
 });
 
 const getAllUsers = asyncHandler (async (req, res, next) => {
-    res.send("All users");
+    try {
+        const users = await User.find({}).select("-password");
+        res.status(200).json({
+            success: true,
+            data: users
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 
 const singleUser = asyncHandler (async (req, res, next) => {
@@ -72,20 +81,16 @@ const updateUser = asyncHandler (async (req, res, next) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        res.status(200).json({ message: `Username ${userUpdate.username} updated succesfully` });
+        res.status(200).json({ message: `User with Username: ${userUpdate.username} updated succesfully` });
     } catch (error) {
         next(error);
     }
 });
 
-const deleteUser = asyncHandler (async (req, res, next) => {
-    res.send("User deleted")
-});
 
 module.exports = {
     createNewUser,
     getAllUsers,
     singleUser,
     updateUser,
-    deleteUser,
 };
