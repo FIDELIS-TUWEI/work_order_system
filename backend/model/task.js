@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const taskSchema = new mongoose.Schema({
-    //user: {
-    //    type: mongoose.Schema.Types.ObjectId,
-    //    required: true,
-    //    ref: "User"
-    //},
     workIdentified: {
         type: String,
         required: true, 
@@ -15,18 +10,23 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: true, 
     },
+    //user: {
+    //    type: mongoose.Schema.Types.ObjectId,
+    //    ref: "User",
+    //    required: true
+    //},
     description: {
         type: String,
         required: true,
         maxlength: 500
     },
-    manager: {
+    assignedBy: {
         type: String,
-        ref: "User",
+        //ref: "User",
         required: [true, "Please enter your name"],
         
     },
-    completed: {
+    status: {
         type: String,
         enum: ["Pending", "Complete"],
         required: true,

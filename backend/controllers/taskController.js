@@ -1,22 +1,38 @@
 const asyncHandler = require("express-async-handler");
 const Task = require("../model/task");
+const User = require("../model/user");
 
 // create task
 const createTask = asyncHandler (async (req, res, next) => {
     
+
     try {
-        const task = await Task.create(req.body);
+        const { workIdentified, location, description, assignedBy } = req.body;
+
+        // create Task 
+        const task = await Task({
+            workIdentified,
+            location,
+            description,
+            assignedBy,
+        });
+
+        // save the Task
+        await task.save();
+
+        // Return created Task
         res.status(201).json({
             success: true,
             data: {
-                task
+                task,
             }
         });
 
+        
     } catch (error) {
-        console.log(error);
         next(error);
     }
+    
 
 });
 
