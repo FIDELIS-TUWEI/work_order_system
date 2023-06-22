@@ -3,22 +3,14 @@ const Task = require("../model/task");
 
 // create task
 const createTask = asyncHandler (async (req, res, next) => {
-    const { workIdentified, location, description, category, employeeAssigned, manager, workStatus, date } = req.body;
-
+    
     try {
-        const task = await Task.create({
-            workIdentified,
-            location,
-            description,
-            category,
-            employeeAssigned,
-            manager,
-            workStatus,
-            date
-        });
+        const task = await Task.create(req.body);
         res.status(201).json({
             success: true,
-            task
+            data: {
+                task
+            }
         });
 
     } catch (error) {
