@@ -46,7 +46,10 @@ const taskSchema = new mongoose.Schema({
     assignedBy: {
         type: String,
         required: [true, "Please enter your name"],
-        
+    },
+    assignedTo: {
+        type: String,
+        required: [true, "Please enter an employee name to assign Task."]
     }
 },
 { timestamps: true }
