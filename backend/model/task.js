@@ -2,35 +2,51 @@ const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const taskSchema = new mongoose.Schema({
-    workIdentified: {
+    date: {
+        type: String,
+        required: true
+    },
+    issueIdentified: {
+        // Door/ Lock
         type: String,
         required: true, 
     },
-    location: {
+    requestedBy: {
+        // Name
+        type: String,
+        required: [true, "Enter your name"]
+    },
+    WorkLocation: {
+        // Rooms, open places, Back office
         type: String,
         required: true, 
     },
-    //user: {
-    //    type: mongoose.Schema.Types.ObjectId,
-    //    ref: "User",
-    //    required: true
-    //},
+    priority: {
+        // High, medium, Low
+        type: String,
+        required: true
+    },
+    workState: {
+        // Fix, repair replace
+        type: String,
+        required: true
+    },
     description: {
+        // Additional Information of the work
         type: String,
         required: true,
         maxlength: 500
     },
+    
+    status: {
+        // pending complete
+        type: String,
+        required: true,
+    },
     assignedBy: {
         type: String,
-        //ref: "User",
         required: [true, "Please enter your name"],
         
-    },
-    status: {
-        type: String,
-        enum: ["Pending", "Complete"],
-        required: true,
-        default: "Pending"
     }
 },
 { timestamps: true }
