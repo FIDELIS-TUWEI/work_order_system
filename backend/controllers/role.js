@@ -16,4 +16,21 @@ const assignRole = asyncHandler (async (req, res, next) => {
     }
 });
 
-module.exports = {assignRole};
+// update Role
+const updateRole = asyncHandler (async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { role } = req.body;
+
+        const updateRole = await Role.findByIdAndUpdate(id, { role });
+        if (!updateRole) {
+            return res.status(404).json({ message: "No role found" })
+        }
+
+        res.status(200).json({ message: "Role Updated" });
+    } catch (error) {
+        next(error);
+    }
+})
+
+module.exports = {assignRole, updateRole};
