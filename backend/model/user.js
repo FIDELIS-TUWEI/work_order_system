@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: [true, "Please fill your name"]
-    },
-    lastName: {
+    name: {
         type: String,
         required: [true, "Please fill your name"]
     },
@@ -18,10 +14,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Password must have atleast six characters"],
         minLength: 6,
-        match: [
-            /^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/,
-            'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and a special characters'
-        ]
+        //match: [
+        //    /^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/,
+        //    'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and a special characters'
+        //]
     },
     isAdmin: {
         type: Boolean,
