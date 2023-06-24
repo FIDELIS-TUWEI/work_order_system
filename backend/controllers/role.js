@@ -16,4 +16,4 @@ const assignRole = asyncHandler (async (req, res, next) => {
     }
 });
 
-module.exports = assignRole;
+module.exports = {assignRole};

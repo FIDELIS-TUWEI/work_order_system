@@ -15,6 +15,7 @@ connectDB();
 // Import Routes
 const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const roleRoutes = require("./routes/roleRoutes");
 
 // Middleware
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use(cors());
 // Routes Middleware
 app.use("/hin", userRoutes);
 app.use("/hin", taskRoutes);
+app.use("/hin", roleRoutes);
 
 
 // Error Middleware
