@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 
 // Login User
-const login = asyncHandler (async (req, res, next) => {
+const login = asyncHandler (async (req, res) => {
     const { username, password } = req.body;
 
     // check requirements
@@ -54,6 +54,48 @@ const login = asyncHandler (async (req, res, next) => {
     res.json({accessToken, message: "Login Success"});
 });
 
+// refresh token
+const refresh = asyncHandler (async (req, res) => {
+    const cookies = req.cookies
+
+    if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" });
+
+    const refreshToken = cookies.jwt
+
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        asyncHandler( async (err, decoded) => {
+            if (err) return res.status(403).json({ message: "Forbidden" })
+
+            const foundUser = await User.findOne({ username: decoded.username }).exec()
+            if (!foundUser) return res.status(401).json({ message: "Unauthorized" })
+
+            const accessToken = jwt.sign({
+                "UserInfo": {
+                    "username": foundUser.username,
+                    "isAdmin": foundUser.isAdmin
+                }
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '15min'}
+            )
+
+            res.json({ accessToken })
+        })
+    )
+});
+
+// Logout
+const logout = (req, res) => {
+    const cookies = req.cookies
+    if (!cookies) return res.status(204) // No content
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })
+    res.json({ message: "Successfully Logged" })
+}
+
 module.exports = {
     login,
+    refresh,
+    logout
 }
