@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const taskSchema = new mongoose.Schema({
     date: {
@@ -16,7 +15,7 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: [true, "Enter your name"]
     },
-    WorkLocation: {
+    workLocation: {
         // Rooms, open places, Back office
         type: String,
         required: true, 
@@ -37,7 +36,6 @@ const taskSchema = new mongoose.Schema({
         required: true,
         maxlength: 500
     },
-    
     status: {
         // pending complete
         type: String,
@@ -54,12 +52,6 @@ const taskSchema = new mongoose.Schema({
 },
 { timestamps: true }
 );
-
-taskSchema.plugin(AutoIncrement, {
-    inc_field: 'ticket',
-    id: 'ticketNums',
-    start_seq: 100
-})
 
 const Task = mongoose.model("task", taskSchema);
 
