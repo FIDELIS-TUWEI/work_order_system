@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");
 
 const createNewUser = asyncHandler (async (req, res, next) => {
     try {
-        const { name, username, password } = req.body;
+        const { firstName, lastName, username, password } = req.body;
 
         // Validate request
-        if (!name || !username || !password) {
+        if (!firstName || !lastName || !username || !password) {
             return res.status(400).json({ message: "All fields are required" })
         }
 
@@ -22,11 +22,12 @@ const createNewUser = asyncHandler (async (req, res, next) => {
         const hashedPswd = await bcrypt.hash(password, 10);
 
         // Create new user
-        const user = new User({ name, username, password: hashedPswd });
-        await user.save();
+        const user = await User.create(req.body, { password: hashedPswd });
 
         // Generate Token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.LOGIN_EXPIRES
+        });
 
         // Return Token
         res.status(201).json({
