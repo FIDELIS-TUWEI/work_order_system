@@ -20,7 +20,7 @@ const newTask = asyncHandler (async (req, res, next) => {
 const updateTask = asyncHandler (async (req, res, next) => {
     try {
        const {id} = req.params
-       const task = await Task.findByIdAndUpdate({ _id: id }, req.body, {new: true});
+       const task = await Task.findByIdAndUpdate({ _id: id }, req.body, {new: true, runValidators: true});
        res.status(200).json({
         success: true,
         data: {
@@ -31,9 +31,28 @@ const updateTask = asyncHandler (async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+// delete task logic
+const deleteTask = asyncHandler (async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const task = await Task.findByIdAndDelete(id);
+        if (!task) {
+            return res.status(400).json(`No task with id: ${id} exists`)
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Task deleted"
+        })
+    } catch (error) {
+        next(error);
+    }
 })
 
 module.exports = {
     newTask,
     updateTask,
+    deleteTask,
 }
