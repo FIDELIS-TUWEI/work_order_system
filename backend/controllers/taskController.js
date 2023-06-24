@@ -34,7 +34,7 @@ const getTasks = asyncHandler (async (req, res, next) => {
 // update Task logic
 const updateTask = asyncHandler (async (req, res, next) => {
     try {
-       const {id} = req.params
+       const {id} = req.params;
        const task = await Task.findByIdAndUpdate({ _id: id }, req.body, {new: true, runValidators: true});
        res.status(200).json({
         success: true,
