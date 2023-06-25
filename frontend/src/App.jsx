@@ -1,6 +1,8 @@
 import { colorModeContext, useMode } from "./theme"
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import TopBar from "./scenes/global/TopBar";
+import Sidebar from "./scenes/global/Sidebar";
+import Dashboard from "./scenes/dashboard";
 
 function App() {
     // hook
