@@ -1,9 +1,6 @@
 import { colorModeContext, useMode } from "./theme"
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
-import { colorModeContext, themeSettings } from "./theme";
-import { router } from "./routes/Routes";
-import TopBar from "scenes/global/TopBar";
+import TopBar from "./scenes/global/TopBar";
 
 function App() {
     // hook
@@ -18,8 +15,6 @@ function App() {
           <main className="context">
             <TopBar />
           </main>
-          <RouterProvider router={router}>
-          </RouterProvider>
         </div>
     </ThemeProvider>
 
