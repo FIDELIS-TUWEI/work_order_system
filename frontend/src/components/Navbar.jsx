@@ -101,7 +101,7 @@ function Navbar() {
 
           <WorkIcon sx={{ display: {xs: 'flex', md: 'none'}, mr: 1 }} />
           <Typography
-            variant='h6'
+            variant='h5'
             noWrap
             component='a'
             href=""
@@ -111,9 +111,9 @@ function Navbar() {
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.2rem',
+              letterSpacing: '.3rem',
               color: 'inherit',
-              textDecoration: 'none'
+              textDecoration: 'none',
             }}
           >
             WORK ORDER SYSTEM
