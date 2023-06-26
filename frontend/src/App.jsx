@@ -1,10 +1,8 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { colorModeContext, useMode } from "./theme"
-import { CssBaseline, ThemeProvider } from "@mui/material";
 import TopBar from "./scenes/global/TopBar";
 import SideBar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-import { useState } from "react";
 //import Users from "./scenes/users";
 //import Tasks from "./scenes/tasks";
 //import Reports from "./scenes/reports";
@@ -14,6 +12,9 @@ import { useState } from "react";
 //import Line from "./scenes/line";
 //import Pie from "./scenes/pie";
 //import Calendar from "./scenes/calendar"
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { colorModeContext, useMode } from "./theme"
+
 
 function App() {
     // hook
@@ -44,9 +45,8 @@ function App() {
           </main>
         </div>
     </ThemeProvider>
-
   </colorModeContext.Provider>
-  )
+  );
 }
 
 export default App;
