@@ -4,6 +4,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import TopBar from "./scenes/global/TopBar";
 import SideBar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
+import { useState } from "react";
 //import Users from "./scenes/users";
 //import Tasks from "./scenes/tasks";
 //import Reports from "./scenes/reports";
@@ -17,6 +18,7 @@ import Dashboard from "./scenes/dashboard";
 function App() {
     // hook
     const [theme, colorMode] = useMode();
+    const [isSidebar, setIsSidebar] = useState(true);
 
   
   return ( 
@@ -24,9 +26,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <SideBar />
+          <SideBar isSidebar={isSidebar} />
           <main className="context">
-            <TopBar />
+            <TopBar setIsSidebar={setIsSidebar} />
             <Routes>
               <Route path="/" element={<Dashboard />} />
               {/*<Route path="/users" element={<Users />} /> */}
