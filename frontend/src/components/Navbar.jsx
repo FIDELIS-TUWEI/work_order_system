@@ -15,8 +15,8 @@ import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+const pages = ["Home", "Log In"];
 
 function Navbar() {
     const { palette } = useTheme();
@@ -41,6 +41,7 @@ function Navbar() {
   return (
     <AppBar position="static">
       <Container>
+        {/*Principal Menu */}
         <Toolbar disableGutters>
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -62,6 +63,63 @@ function Navbar() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <WorkIcon sx={{ display: {xs: 'flex', md: 'none'}, mr: 1 }} />
+          <Typography
+            variant='h6'
+            noWrap
+            component='a'
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.2rem',
+              color: 'inherit',
+              textDecoration: 'none'
+            }}
+          >
+            WORK ORDER SYSTEM
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             {/*MENU DESKTOP ONLY */}
 
             <Button
@@ -77,9 +135,9 @@ function Navbar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="../assets/avatar.png" />
-              </IconButton>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="" />
+                </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
@@ -98,16 +156,22 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center"><Link style={{ 
-                    textDecoration: "none",
-                    color: palette.primary.main
-                    }} to="/admin/dashboard">Dashboard</Link>
-                </Typography>
-                <Typography textAlign="center"><Link style={{ 
-                    textDecoration: "none",
-                    color: palette.primary.main
-                    }} to="/login">Log In</Link>
-                </Typography>
+                  <Typography textAlign="center"><Link style={{ 
+                      textDecoration: "none",
+                      color: palette.primary.main
+                      }} to="/admin/dashboard">Dashboard</Link>
+                  </Typography>
+              </MenuItem>
+
+              <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center"><Link style={{ 
+                      textDecoration: "none",
+                      color: palette.primary.main
+                      }} to="/login">Log In</Link>
+                  </Typography>
+              </MenuItem>
+
+              <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center"><Link style={{ 
                     textDecoration: "none",
                     color: palette.primary.main
