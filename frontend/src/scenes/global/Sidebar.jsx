@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 //import "react-pro-sidebar/dist/css/styles.css";
-import { Box, IconButton, ListItemButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -18,6 +18,25 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import profileImage from "../../assets/avatar.png";
 
 
+const Item = ({ title, to, icon, selected, setSelected }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode)
+  return (
+    <MenuItem
+      active={selected === title}
+      style={{
+        color: colors.grey[100],
+      }}
+      onClick={() => setSelected(title)}
+      icon={icon}
+    >
+      <Typography>{title}</Typography>
+      <Link to={to} />
+    </MenuItem>
+  )
+}
+
+
 const SideBar = () => {
   // state hook
   const theme = useTheme();
@@ -27,19 +46,20 @@ const SideBar = () => {
   return (
     <Box
       sx={{
-        "& .sidebar-inner": {
+        "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`
         },
-        "& .icon-wrapper": {
+        "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important"
         },
-        "& .inner-item": {
-          color: "5px 35px 5px 20px !important"
+        "& .pro-inner-item": {
+          padding: "5px 35px 5px 20px !important",
+          //color: "inherit !important"
         },
-        "& .inner-item:hover": {
+        "& .pro-inner-item:hover": {
           color: "#868dfb !important"
         },
-        "& .menu-item.active": {
+        "& .pro-menu-item.active": {
           color: "#6870fa !important"
         },
       }}
@@ -100,8 +120,7 @@ const SideBar = () => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Dashboard"
               to="/"
               icon={<HomeOutlinedIcon />}
@@ -112,8 +131,7 @@ const SideBar = () => {
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
               Users
             </Typography>
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Manage Users"
               to="/users"
               icon={<PeopleOutlinedIcon />}
@@ -124,8 +142,7 @@ const SideBar = () => {
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
               Tasks
             </Typography>
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Manage Tasks"
               to="/tasks"
               icon={<TaskOutlinedIcon />}
@@ -133,8 +150,7 @@ const SideBar = () => {
               setselected={setSelected}
             />
 
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Calendar"
               to="/calendar"
               icon={<CalendarTodayOutlinedIcon />}
@@ -145,8 +161,7 @@ const SideBar = () => {
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
               Register
             </Typography>
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Register User"
               to="/register"
               icon={<AppRegistrationOutlinedIcon />}
@@ -157,8 +172,7 @@ const SideBar = () => {
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
               Login
             </Typography>
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Login"
               to="/login"
               icon={<LoginOutlinedIcon />}
@@ -169,8 +183,7 @@ const SideBar = () => {
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
               Reports
             </Typography>
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Tasks Overview"
               to="/reports"
               icon={<SummarizeOutlinedIcon />}
@@ -181,24 +194,21 @@ const SideBar = () => {
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 20px" }}>
               Stats
             </Typography>
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Bar Chart"
               to="/bar"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setselected={setSelected}
             />
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Pie Chart"
               to="/pie"
               icon={<PieChartOutlinedIcon />}
               selected={selected}
               setselected={setSelected}
             />
-            <ListItemButton
-              component="a" 
+            <Item 
               title="Line Chart"
               to="/line"
               icon={<TimelineOutlinedIcon />}
