@@ -10,38 +10,38 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import WorkIcon from "@mui/icons-material/Work"
+import WorkIcon from '@mui/icons-material/WorkHistoryRounded';
 import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-
 const pages = ["Home", "Log In"];
 
 function Navbar() {
-    const { palette } = useTheme();
-    const [anchorElNav, setAnchorElNav] = useState(null);
-    const [anchorElUser, setAnchorElUser] = useState(null);
+  const { palette } = useTheme();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   return (
     <AppBar position="static">
-      <Container>
+      <Container maxWidth="xl">
         {/*Principal Menu */}
+
         <Toolbar disableGutters>
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -59,7 +59,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            WORK ORDER SYSTEM
+            WORK ORDER
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -98,12 +98,11 @@ function Navbar() {
               ))}
             </Menu>
           </Box>
-
-          <WorkIcon sx={{ display: {xs: 'flex', md: 'none'}, mr: 1 }} />
+          <WorkIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
-            variant='h5'
+            variant="h5"
             noWrap
-            component='a'
+            component="a"
             href=""
             sx={{
               mr: 2,
@@ -116,28 +115,22 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            WORK ORDER SYSTEM
+            wORK ORDER
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            {/*MENU DESKTOP ONLY */}
-
-            <Button
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color:'white', display: 'block' }}
-            >
-                <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>
-                    Home
-                </Link>
-            </Button>
-
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
+              </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="" />
-                </IconButton>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="User" src="" />
+              </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
@@ -156,28 +149,15 @@ function Navbar() {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center"><Link style={{ 
-                      textDecoration: "none",
-                      color: palette.primary.main
-                      }} to="/admin/dashboard">Dashboard</Link>
-                  </Typography>
+                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/admin/dashboard">Dashboard</Link></Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/login">Log In</Link></Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center" style={{ textDecoration: 'none', color: palette.primary.main }}>Log Out</Typography>
               </MenuItem>
 
-              <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center"><Link style={{ 
-                      textDecoration: "none",
-                      color: palette.primary.main
-                      }} to="/login">Log In</Link>
-                  </Typography>
-              </MenuItem>
-
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center"><Link style={{ 
-                    textDecoration: "none",
-                    color: palette.primary.main
-                    }}>Log Out</Link>
-                </Typography>
-              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
