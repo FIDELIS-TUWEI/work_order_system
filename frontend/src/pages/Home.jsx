@@ -1,5 +1,5 @@
 import { Box, Card, Container, Stack, Typography, useTheme } from "@mui/material";
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Header from "../components/Header"
 import Navbar from "../components/Navbar"
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { taskLoadAction } from "../redux/actions/workAction";
 import { useParams } from "react-router-dom";
 
 const Home = () => {
+  const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
   const { palette } = useTheme();
   const dispatch = useDispatch();
 const {keyword, location} = useParams()
