@@ -1,7 +1,19 @@
+import { Box, styled } from "@mui/material"
 
 const Header = () => {
+
+  const StyleHeader = styled(Box)({
+    padding: "10px",
+    backgroundColor: "red",
+    minHeight: "400px"
+  })
+
   return (
-    <div>Header</div>
+    <>
+      <StyleHeader>
+
+      </StyleHeader>
+    </>
   )
 }
 
