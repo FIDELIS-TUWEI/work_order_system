@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/material";
-import headerImage from "../assets/workOrder.png"
+import headerImage from "../assets/header.png"
 
 const Header = () => {
 
@@ -10,7 +10,7 @@ const Header = () => {
       minHeight: 400,
       backgroundImage: `url(${headerImage})`,
       backgroundSize: 'contain',
-      backgroundRepeat: 'none',
+      backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundColor: theme.palette.secondary.main,
     }
