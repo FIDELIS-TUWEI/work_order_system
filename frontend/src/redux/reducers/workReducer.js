@@ -1,3 +1,4 @@
+import { WORK_LOAD_FAIL, WORK_LOAD_REQUEST, WORK_LOAD_RESET, WORK_LOAD_SUCCESS } from "../constants/workConstants"
 
 
 export const loadWorkReducer = (state = { tasks:[] }, action) => {
