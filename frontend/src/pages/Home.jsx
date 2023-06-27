@@ -1,9 +1,24 @@
-import { Box, Card, Container, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Card, Container, Stack, Typography, useTheme } from "@mui/material";
+import { useDispatch } from "react-redux"
 import Header from "../components/Header"
 import Navbar from "../components/Navbar"
+import { useEffect, useState } from "react";
+import { taskLoadAction } from "../redux/actions/workAction";
+import { useParams } from "react-router-dom";
 
 const Home = () => {
   const { palette } = useTheme();
+  const dispatch = useDispatch();
+const {keyword, location} = useParams()
+
+  const [page, setPage] = useState(1);
+  const [cat, setCat] = useState("");
+
+
+  useEffect(() => {
+    dispatch(taskLoadAction(page, keyword, cat, location));
+  }, [page, keyword, cat, location]);
+
   return (
     <>
     <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
