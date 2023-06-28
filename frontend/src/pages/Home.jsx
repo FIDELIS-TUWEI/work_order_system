@@ -1,4 +1,8 @@
-import { Box, Card, Container, ListItemIcon, MenuItem, MenuList, Pagination, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Card, Container, 
+  ListItemIcon, MenuItem, MenuList, 
+  Pagination, Stack, Typography, useTheme 
+} from "@mui/material";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useDispatch, useSelector } from "react-redux"
 import Header from "../components/Header"
 import Navbar from "../components/Navbar"
@@ -66,7 +70,7 @@ const Home = () => {
                       setUniqueLocation && setUniqueLocation.map((location, i) => (
                         <MenuItem key={i}>
                           <ListItemIcon>
-                            <LocacationOnIcon sx={{ color: palette.secondary.main, fontSize: 18 }} />
+                            <LocationOnIcon sx={{ color: palette.secondary.main, fontSize: 18 }} />
                           </ListItemIcon>
                           <Link to={`/search/location/${location}`}>{location}</Link>
                         </MenuItem>
