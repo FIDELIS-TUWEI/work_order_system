@@ -14,7 +14,7 @@ const Footer = () => {
         }}
       >
         <Box component='span' sx={{ color: palette.primary.main }}>
-          &copy; All rights Reserved. Holiday Inn&trade; WORK ORDER - 2023.
+          &copy; All rights Reserved. Holiday Inn-Nairobi&trade; WORK ORDER - 2023.
         </Box>
       </Box>
     </>
