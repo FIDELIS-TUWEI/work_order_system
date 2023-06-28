@@ -10,7 +10,7 @@ const Home = () => {
   const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
   const { palette } = useTheme();
   const dispatch = useDispatch();
-const {keyword, location} = useParams()
+  const {keyword, location} = useParams()
 
   const [page, setPage] = useState(1);
   const [cat, setCat] = useState("");
@@ -38,9 +38,16 @@ const {keyword, location} = useParams()
                     Filter Tasks by Category
                   </Typography>
                 </Box>
+
               </Card>
             </Box>
-            <Box sx={{ flex: 5, p:2 }}></Box>
+            <Box sx={{ flex: 5, p:2 }}>
+              {
+                tasks && tasks.map(task => (
+                  <h1 key={tasks}>{task.title}</h1>
+                ))
+              }
+            </Box>
           </Stack>
         </Container>
     </Box>
