@@ -2,10 +2,12 @@ import { configureStore, combineReducers, applyMiddleware } from "@reduxjs/toolk
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { loadWorkReducer } from "./reducers/workReducer";
+import { loadWorkTypeReducer } from "./reducers/taskTypeReducer";
 
 // combine reducers
 const reducers = combineReducers({
-    loadTasks: loadWorkReducer
+    loadTasks: loadWorkReducer,
+    taskType: loadWorkTypeReducer
 });
 
 // Initial State
