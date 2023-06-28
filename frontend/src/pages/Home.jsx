@@ -7,6 +7,7 @@ import { taskLoadAction } from "../redux/actions/workAction";
 import { useParams } from "react-router-dom";
 import CardElement from "../components/CardElement";
 import Footer from "../components/Footer";
+import LoadingBox from "../components/LoadingBox";
 
 const Home = () => {
   const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
@@ -45,6 +46,22 @@ const Home = () => {
             </Box>
             <Box sx={{ flex: 5, p:2 }}>
               {
+                loading ? 
+                <LoadingBox /> :
+                tasks && tasks.length === 0 ?
+                <>
+                  <Box
+                    sx={{
+                      minHeight: '350px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <h2>No  results Found!</h2>
+                  </Box>
+                </> :
+
                 tasks && tasks.map((task, i) => (
                   <CardElement
                     key={i}

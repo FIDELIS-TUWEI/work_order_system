@@ -115,7 +115,7 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            wORK ORDER
+            WORK ORDER
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button
