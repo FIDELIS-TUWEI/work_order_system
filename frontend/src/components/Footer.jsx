@@ -1,7 +1,23 @@
+import { Box, useTheme } from "@mui/material"
 
 const Footer = () => {
+  const { palette } = useTheme();
   return (
-    <div>Footer</div>
+    <>
+      <Box
+        sx={{
+          height: '70px',
+          bgcolor: palette.secondary.midNightBlue,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Box component='span' sx={{ color: palette.primary.main }}>
+          &copy; All rights Reserved. Holiday Inn&trade; WORK ORDER - 2023.
+        </Box>
+      </Box>
+    </>
   )
 }
 
