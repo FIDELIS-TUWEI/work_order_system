@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { taskLoadAction } from "../redux/actions/workAction";
 import { useParams } from "react-router-dom";
 import CardElement from "../components/CardElement";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
@@ -63,6 +64,7 @@ const Home = () => {
           </Stack>
         </Container>
     </Box>
+    <Footer />
     </>
   )
 }
