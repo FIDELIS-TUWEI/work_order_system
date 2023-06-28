@@ -1,10 +1,11 @@
-import { Box, Card, Container, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Card, Container, Pagination, Stack, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux"
 import Header from "../components/Header"
 import Navbar from "../components/Navbar"
 import { useEffect, useState } from "react";
 import { taskLoadAction } from "../redux/actions/workAction";
 import { useParams } from "react-router-dom";
+import CardElement from "../components/CardElement";
 
 const Home = () => {
   const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
@@ -43,10 +44,21 @@ const Home = () => {
             </Box>
             <Box sx={{ flex: 5, p:2 }}>
               {
-                tasks && tasks.map(task => (
-                  <h1 key={tasks}>{task.title}</h1>
+                tasks && tasks.map((task, i) => (
+                  <CardElement
+                    key={i}
+                    id={task._id}
+                    taskTitle={task.title}
+                    description={task.description}
+                    category={task.taskType ? task.taskType.taskTypeName : "No category"}
+                    location={task.location}
+                  />
                 ))
               }
+
+              <Stack spacing={2}>
+                <Pagination page={page} count={pages === 0 ? 1 : pages} onChange={(e, value) => setPage(value)} />
+              </Stack>
             </Box>
           </Stack>
         </Container>
@@ -55,4 +67,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
