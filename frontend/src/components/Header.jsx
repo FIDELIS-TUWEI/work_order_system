@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
 import headerImage from "../assets/header.png"
+import SearchInputEl from "./SearchInputEl";
 
 const Header = () => {
 
@@ -19,7 +20,7 @@ const Header = () => {
   return (
     <>
       <StyleHeader>
-
+        <SearchInputEl />
       </StyleHeader>
     </>
   )
