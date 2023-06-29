@@ -16,9 +16,45 @@ const SearchInputEl = () => {
     const onSubmit = (value, actions) => {
         // alert(values.search)
         const { search } = values;
+        if (search.trim()) {
+          navigate(`/search/${search}`);
+        } else {
+          navigate('/');
+        }
+        actions.resetForm()
     }
+
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, isSubmitting } = useFormik({
+      initialValues: {
+        search: ','
+      },
+      validationSchema: validationSchema,
+      onSubmit
+    });
+
   return (
-    <div>SearchInputEl</div>
+    <form onSubmit={handleSubmit} style={{ width: '50%' }}>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        {/*search*/}
+
+        <InputBase 
+          sx={{ bgcolor: 'white', padding: '10px' }}
+          fullWidth={true}
+          id="search"
+          name="search"
+          label="search"
+          placeholder="ex: fix, repair, replace"
+          values={values.search}
+          onChange={handleChange}
+          error={touched.search && Boolean(errors.search)}
+        />
+
+        <Button color="primary" variant="contained" type="submit" disabled={isSubmitting} >
+          Search
+        </Button>
+      </Box>
+      <Box component='span' sx={{ color: 'orange' }}>{touched.search && errors.search}</Box>
+    </form>
   )
 }
 
