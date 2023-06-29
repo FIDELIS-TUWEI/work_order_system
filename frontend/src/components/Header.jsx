@@ -8,6 +8,7 @@ const Header = () => {
     {
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
       minHeight: 400,
       backgroundImage: `url(${headerImage})`,
       backgroundSize: 'contain',
