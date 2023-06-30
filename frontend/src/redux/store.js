@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { loadWorkReducer } from "./reducers/workReducer";
 import { loadWorkTypeReducer } from "./reducers/taskTypeReducer";
+import { userReducerSignIn } from "./reducers/userReducer";
 
 // combine reducers
 const reducers = combineReducers({
     loadTasks: loadWorkReducer,
-    taskType: loadWorkTypeReducer
+    taskType: loadWorkTypeReducer,
+    signIn: userReducerSignIn
 });
 
 // Initial State
