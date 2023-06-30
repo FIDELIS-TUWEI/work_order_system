@@ -3,10 +3,13 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <>
+        <ToastContainer toast={toast} />
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Routes>
