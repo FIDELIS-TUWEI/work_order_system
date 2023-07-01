@@ -13,7 +13,7 @@ import { useEffect } from "react";
 const validationSchema = yup.object({
     username: yup
         .string("Enter your Username")
-        .username("Enter a valid username")
+        .matches(/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/, "Enter a valid username")
         .required("Username is required"),
 
     password: yup
@@ -42,7 +42,8 @@ const LogIn = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values, actions) => {
-            dispatch(userSignInAction(values));
+            alert(JSON.stringify(values, null, 2))
+            //dispatch(userSignInAction(values));
             actions.resetForm();
         }
     })
@@ -51,7 +52,7 @@ const LogIn = () => {
         <Navbar />
         <Box sx={{ height: "81vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
-                <Box sx={{ display: "flex", flexDirection: column, alignItems: "center", width: "100%" }}>
+                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
                     <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
                         <LockClockOutlined />
                     </Avatar>

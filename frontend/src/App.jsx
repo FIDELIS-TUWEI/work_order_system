@@ -5,6 +5,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LogIn from "./pages/LogIn";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/search/location/:location" element={<Home />} />
                 <Route path="/search/:keyword" element={<Home />} />
+                <Route path="/login" element={<LogIn />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </ThemeProvider>
