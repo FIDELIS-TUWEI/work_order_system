@@ -17,7 +17,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/search/location/:location" element={<Home />} />
                 <Route path="/search/:keyword" element={<Home />} />
-                <Route path="/login" element={<LogIn />} /
+                <Route path="/login" element={<LogIn />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </ThemeProvider>
