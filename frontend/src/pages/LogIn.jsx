@@ -1,10 +1,51 @@
-import { Avatar, Box, Button, TextField } from "@mui/material"
-import LockClockOutlined from '@mui/icons-material/LockClockOutlined'
-import Footer from "../components/Footer"
-import Navbar from "../components/Navbar"
-import { useFormik } from "formik"
+import { Avatar, Box, Button, TextField } from "@mui/material";
+import LockClockOutlined from '@mui/icons-material/LockClockOutlined';
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignInAction } from "../redux/actions/userAction";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+// Yup form validation Schema
+const validationSchema = yup.object({
+    username: yup
+        .string("Enter your Username")
+        .username("Enter a valid username")
+        .required("Username is required"),
+
+    password: yup
+        .string("Enter your password")
+        .min(8, "Password should be of minimum 8 characters length")
+        .required("Password is required")
+});
 
 const LogIn = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useSelector(state => state.signIn);
+
+    // useEffect hook
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/user/dashboard");
+        }
+    }, [isAuthenticated]);
+
+    // formik
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: ""
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values, actions) => {
+            dispatch(userSignInAction(values));
+            actions.resetForm();
+        }
+    })
   return (
     <>
         <Navbar />
