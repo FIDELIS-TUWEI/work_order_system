@@ -1,4 +1,8 @@
-import { USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_RESET, USER_SIGNIN_SUCCESS } from "../constants/userConstant"
+import { USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, 
+    USER_SIGNIN_RESET, USER_SIGNIN_SUCCESS,
+    USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS,
+    USER_LOGOUT_FAIL, USER_LOGOUT_RESET
+ } from "../constants/userConstant"
 
 // Log In Reducer
 export const userReducerSignIn = (state = {}, action ) => {
