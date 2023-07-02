@@ -20,6 +20,9 @@ import { userLogoutAction } from '../redux/actions/userAction';
 const pages = ["Home", "Log In"];
 
 const Navbar = () => {
+  // show / hide Login Button
+  const { userInfo } = useSelector(state => state.signIn);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { palette } = useTheme();
@@ -164,12 +167,18 @@ const Navbar = () => {
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/admin/dashboard">Dashboard</Link></Typography>
               </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/login">Log In</Link></Typography>
-              </MenuItem>
-              <MenuItem onClick={logoutUser}>
-                <Typography textAlign="center" style={{ textDecoration: 'none', color: palette.primary.main }}>Log Out</Typography>
-              </MenuItem>
+
+              {/* Condition to check if user is Logged In */}
+              {
+                !userInfo ?
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/login">Log In</Link></Typography>
+                  </MenuItem>
+                :
+                  <MenuItem onClick={logoutUser}>
+                    <Typography textAlign="center" style={{ textDecoration: 'none', color: palette.primary.main }}>Log Out</Typography>
+                  </MenuItem>
+              }
 
             </Menu>
           </Box>
