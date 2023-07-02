@@ -13,11 +13,15 @@ import MenuItem from '@mui/material/MenuItem';
 import WorkIcon from '@mui/icons-material/Work';
 import { useState } from 'react';
 import { useTheme } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogoutAction } from '../redux/actions/userAction';
 
 const pages = ["Home", "Log In"];
 
-function Navbar() {
+const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { palette } = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -36,6 +40,15 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  // Function to Logout User
+  const logoutUser = () => {
+    dispatch(userLogoutAction());
+    window.location.reload(true);
+    setTimeout(() => {
+      navigate("/");
+    }, 500)
+  }
 
   return (
     <AppBar position="static">
@@ -154,7 +167,7 @@ function Navbar() {
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/login">Log In</Link></Typography>
               </MenuItem>
-              <MenuItem>
+              <MenuItem onClick={logoutUser}>
                 <Typography textAlign="center" style={{ textDecoration: 'none', color: palette.primary.main }}>Log Out</Typography>
               </MenuItem>
 
