@@ -1,7 +1,7 @@
 class ErrorResponse extends Error {
-    constructor(message, statusCode){
+    constructor(message, codeStatus){
         super(message);
-        this.statusCode = statusCode
+        this.codeStatus = codeStatus;
     }
 }
 
