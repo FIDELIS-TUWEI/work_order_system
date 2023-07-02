@@ -14,7 +14,8 @@ export const userSignInAction = (user) => async(dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST })
 
     try {
-        const { data } = await axios.post(`/hin/login`, user)
+        const { data } = await axios.post(`/hin/login`, user);
+        localStorage.setItem("userInfo", JSON.stringify(data));
         dispatch({
             type: USER_SIGNIN_SUCCESS,
             payload: data
