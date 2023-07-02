@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import SidebarAdmin from "./SidebarAdmin";
+import SidebarAdmin from "./Sidebar";
 import HeaderTop from "./HeaderTop";
 
 
