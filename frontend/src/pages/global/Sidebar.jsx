@@ -1,4 +1,4 @@
-import { Menu, MenuItem, Sidebar, menuClasses } from "react-pro-sidebar";
+import { Menu, MenuItem, Sidebar, menuClasses, useProSidebar } from "react-pro-sidebar";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { Box,  useTheme } from "@mui/material";
@@ -7,7 +7,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import Person3Icon from "@mui/icons-material/Person3";
 import Avatar from "@mui/material/Avatar";
-import logoDashboard from "../../assets/work-icon.png";
+import logoDashboard from "../../assets/organization.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogoutAction } from "../../redux/actions/userAction";
@@ -18,7 +18,7 @@ import LoginIcon from "@mui/icons-material/Login";
 const SidebarAdmin = () => {
   const { userInfo } = useSelector(state => state.signIn);
   const { palette } = useTheme();
-  const { collapsed } = Sidebar();
+  const { collapsed } = useProSidebar();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

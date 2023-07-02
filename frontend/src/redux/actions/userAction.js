@@ -9,12 +9,14 @@ import {
     USER_LOGOUT_SUCCESS
 } from "../constants/userConstant";
 
+const url = "http://localhost:5000"
+
 // User Login Action
-export const userSignInAction = (user) => async(dispatch) => {
+export const userSignInAction = (user) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST })
 
     try {
-        const { data } = await axios.post(`/hin/login`, user);
+        const { data } = await axios.post(`${url}/hin/login`, user);
         localStorage.setItem("userInfo", JSON.stringify(data));
         dispatch({
             type: USER_SIGNIN_SUCCESS,

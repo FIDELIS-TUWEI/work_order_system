@@ -9,7 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 
 // import sidebar hook
-import { Sidebar } from "react-pro-sidebar";
+import { Sidebar, useProSidebar } from "react-pro-sidebar";
 
 // search styles
 const Search = styled("Box")(({ theme }) => ({
@@ -57,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const HeaderTop = () => {
-  const { collapseSidebar } = Sidebar();
+  const { collapseSidebar } = useProSidebar();
 
   return (
     <Box sx={{ flexGrow: 1 }}>

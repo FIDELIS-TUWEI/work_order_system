@@ -10,6 +10,7 @@ import LogIn from "./pages/LogIn";
 import UserDashboard from "./pages/user/UserDashboard";
 import UserRoute from "./components/UserRoute";
 import Layout from "./pages/global/Layout";
+import { ProSidebarProvider } from "react-pro-sidebar";
 
 // Higher Order Component
 const UserDashboardHOC = Layout(UserDashboard);
@@ -20,6 +21,7 @@ function App() {
         <ToastContainer />
         <ThemeProvider theme={theme}>
             <CssBaseline />
+            <ProSidebarProvider>
               <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/search/location/:location" element={<Home />} />
@@ -28,6 +30,7 @@ function App() {
                   <Route path="/user/dashboard" element={<UserRoute><UserDashboardHOC /></UserRoute>} />
                   <Route path="*" element={<NotFound />} />
               </Routes>
+              </ProSidebarProvider>
         </ThemeProvider>
     </>
   )
