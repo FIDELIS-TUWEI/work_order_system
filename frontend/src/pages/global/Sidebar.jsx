@@ -22,6 +22,15 @@ const SidebarAdmin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Function to Log Out User
+  const logOut = () => {
+    dispatch(userLogoutAction());
+    window.location.reload(true);
+    setTimeout(() => {
+      navigate("/");
+    }, 500)
+  }
+
   return (
     <>
       <Sidebar backgroundColor="#003366" style={{ borderRightStyle: "none" }}>
@@ -100,7 +109,7 @@ const SidebarAdmin = () => {
                   }
                 },
               }}
-              
+
             >
               <MenuItem onClick={logOut} icon={<LoginIcon />}> Log Out </MenuItem>
             </Menu>
