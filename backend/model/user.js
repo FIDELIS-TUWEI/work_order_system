@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -12,17 +14,17 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Password must have atleast six characters"],
-        minLength: 6,
-        //match: [
-        //    /^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/,
-        //    'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and a special characters'
-        //]
+        required: [true, "Password is required"],
+        minLength: [6, "Password must have at least (6) characters"],
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
+    role: {
+        type: Number,
+        default: 0
     },
+    //isAdmin: {
+    //    type: Boolean,
+    //    default: false
+    //},
     active: {
         type: Boolean,
         default: true,
@@ -30,6 +32,25 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true }
 );
+
+// Encrypt Password before Saving to DB
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        next();
+    }
+});
+
+// Compare User Password in DB
+userSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password)
+}
+
+// Return a JWT Token
+userSchema.methods.getJwtToken = function () {
+    return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.LOGIN_EXPIRES
+    });
+}
 
 const User = mongoose.model('user', userSchema);
 
