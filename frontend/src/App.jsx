@@ -21,7 +21,7 @@ function App() {
                 <Route path="/search/location/:location" element={<Home />} />
                 <Route path="/search/:keyword" element={<Home />} />
                 <Route path="/login" element={<LogIn />} />
-                <Route path="/user/dashboard" element={<UserRoute> <UserDashboard /> </UserRoute>} />
+                <Route path="/user/dashboard" element={<UserRoute><UserDashboard /></UserRoute>} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </ThemeProvider>
