@@ -13,7 +13,7 @@ import { useEffect } from "react";
 const validationSchema = yup.object({
     username: yup
         .string("Enter your Username")
-        .matches(/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/, "Enter a valid username")
+        .matches(/^[a-zA-Z0-9_]+$/, "Enter a valid username")
         .required("Username is required"),
 
     password: yup
@@ -42,8 +42,8 @@ const LogIn = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values, actions) => {
-            alert(JSON.stringify(values, null, 2))
-            //dispatch(userSignInAction(values));
+            //alert(JSON.stringify(values, null, 2))
+            dispatch(userSignInAction(values));
             actions.resetForm();
         }
     })
