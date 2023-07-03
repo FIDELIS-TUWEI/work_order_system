@@ -52,7 +52,7 @@ const SidebarAdmin = () => {
                   [`&.${menuClasses.button}`]: {
                     color: "#fafafa",
                   },
-                  [`&.$[menuClasses.disabled]`]: {
+                  [`&.${menuClasses.disabled}`]: {
                     color: "green",
                   },
                   "&:hover": {
@@ -62,7 +62,7 @@ const SidebarAdmin = () => {
                 },
 
                 icon: {
-                  [`&.$[menuClasses.icon]`]: {
+                  [`&.${menuClasses.icon}`]: {
                     // color: "blue",
                     color: palette.primary.main,
                   }
@@ -92,7 +92,7 @@ const SidebarAdmin = () => {
             <Menu
               menuItemStyles={{
                 button: {
-                  [`&.$[menuClasses.button]`]: {
+                  [`&.${menuClasses.button}`]: {
                     color: "#fafafa",
                   },
 
@@ -103,7 +103,7 @@ const SidebarAdmin = () => {
                 },
 
                 icon: {
-                  [`&.$[menuClasses.icon]`]: {
+                  [`&.${menuClasses.icon}`]: {
                     // color: "blue",
                     color: palette.primary.main,
                   }
