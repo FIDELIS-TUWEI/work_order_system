@@ -7,7 +7,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import Person3Icon from "@mui/icons-material/Person3";
 import Avatar from "@mui/material/Avatar";
-import logoDashboard from "../../assets/organization.png";
+import logoDashboard from "../../assets/progress.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogoutAction } from "../../redux/actions/userAction";
