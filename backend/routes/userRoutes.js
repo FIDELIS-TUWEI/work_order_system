@@ -4,7 +4,7 @@ const { updateUser, getAllUsers, singleUser } = require('../controllers/userCont
 const { isAuthenticated, isAdmin } = require('../middleware/authMiddleware');
 
 router.get("/all-users", isAuthenticated, isAdmin, getAllUsers);
-router.get("/user/:id", singleUser);
+router.get("/user/:id",isAuthenticated, singleUser);
 router.put("/update-user/:id", updateUser);
 
 
