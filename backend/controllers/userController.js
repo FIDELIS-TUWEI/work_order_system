@@ -43,18 +43,18 @@ const singleUser = asyncHandler (async (req, res, next) => {
     }
 });
 
-const updateUser = asyncHandler (async (req, res, next) => {
+const editUser = asyncHandler (async (req, res, next) => {
     try {
-        const {id} = req.params;
-        const { username, role, active } = req.body;
-
         // update user
-        const userUpdate = await User.findByIdAndUpdate(id, {username, role, active});
-        if (!userUpdate) {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        res.status(200).json({ message: `User with Username: ${userUpdate.username} updated succesfully` });
+        res.status(200).json({ 
+            success: true,
+            message: `User with Username: ${user} updated succesfully` 
+        });
     } catch (error) {
         next(error);
     }
@@ -64,5 +64,5 @@ const updateUser = asyncHandler (async (req, res, next) => {
 module.exports = {
     getAllUsers,
     singleUser,
-    updateUser,
+    editUser,
 };
