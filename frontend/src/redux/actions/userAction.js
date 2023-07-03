@@ -6,7 +6,10 @@ import {
     USER_SIGNIN_FAIL, 
     USER_LOGOUT_FAIL, 
     USER_LOGOUT_REQUEST, 
-    USER_LOGOUT_SUCCESS
+    USER_LOGOUT_SUCCESS,
+    USER_LOAD_REQUEST,
+    USER_LOAD_SUCCESS,
+    USER_LOAD_FAIL
 } from "../constants/userConstant";
 
 const url = "http://localhost:5000"
@@ -29,6 +32,23 @@ export const userSignInAction = (user) => async (dispatch) => {
             payload: error.response.data.error
         });
         toast.error(error.response.data.error)
+    }
+}
+
+// User Profile Action
+export const userProfileAction = () => async (dispatch) => {
+    dispatch({ type: USER_LOAD_REQUEST });
+    try {
+        const { data } = await axios.get(`${url}/hin/me`);
+        dispatch({
+            type: USER_LOAD_SUCCESS,
+            payload: data
+        });
+    } catch (error) {
+        dispatch({
+            type: USER_LOAD_FAIL,
+            payload: error.response.data.error
+        });
     }
 }
 
