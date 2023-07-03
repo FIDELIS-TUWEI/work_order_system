@@ -71,7 +71,7 @@ const deleteUser = asyncHandler (async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            user
+            message: `User with username ${user.username} deleted`
         });
         next();
     } catch (error) {
