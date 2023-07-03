@@ -60,9 +60,30 @@ const editUser = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Delete User
+const deleteUser = asyncHandler (async (req, res, next) => {
+    try {
+        const user = await User.findByIdAndRemove(req.params.id);
+
+        if (!user) {
+            return res.status(500).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            user
+        });
+        next();
+    } catch (error) {
+        return next(error);
+    }
+    
+})
+
 
 module.exports = {
     getAllUsers,
     singleUser,
     editUser,
+    deleteUser
 };
