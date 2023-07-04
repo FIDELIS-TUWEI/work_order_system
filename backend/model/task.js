@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const taskSchema = new mongoose.Schema({
-    date: {
-        type: String,
-        required: true
-    },
+    //date: {
+    //    type: String,
+    //    required: true
+    //},
     title: {
         // Door/ Lock
         type: String,
@@ -19,11 +19,11 @@ const taskSchema = new mongoose.Schema({
         required: [true, "Description is required"],
         maxlength: 500
     },
-    requestedBy: {
+    //requestedBy: {
         // Name
-        type: String,
-        required: [true, "Enter your name"]
-    },
+    //    type: String,
+    //    required: [true, "Enter your name"]
+    //},
     location: {
         // Rooms, open places, Back office
         type: String,

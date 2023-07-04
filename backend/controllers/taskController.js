@@ -2,10 +2,19 @@ const Task = require("../model/task");
 const asyncHandler = require("express-async-handler");
 
 // create Task logic
-const newTask = asyncHandler (async (req, res, next) => {
+const createTask = asyncHandler (async (req, res, next) => {
     try {
-        const task = await Task.create(req.body);
-        res.status(200).json({
+        const task = await Task.create({
+            title: req.body.title,
+            description: req.body.description,
+            location: req.body.location,
+            priority: req.body.priority,
+            taskType: req.body.taskType,
+            status: req.body.status,
+            assignedTo: req.body.assignedTo,
+            user: req.body.id
+        });
+        res.status(201).json({
             success: true,
             data: {
                 task
@@ -87,7 +96,7 @@ const getTask = asyncHandler (async (req, res, next) => {
 });
 
 module.exports = {
-    newTask,
+    createTask,
     getTasks,
     updateTask,
     deleteTask,
