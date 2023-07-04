@@ -46,11 +46,11 @@ const taskSchema = new mongoose.Schema({
         default: false,
         required: true,
     },
-    assignedBy: {
+    assignedTo: {
         type: String,
         required: [true, "Please enter your name"],
     },
-    assignedTo: {
+    assignedBy: {
         type: ObjectId,
         ref: "User",
         required: true
