@@ -5,7 +5,7 @@ const { isAuthenticated, isAdmin } = require('../middleware/authMiddleware');
 
 router.get("/all-users", isAuthenticated, isAdmin, getAllUsers);
 router.get("/user/:id",isAuthenticated, singleUser);
-router.put("/edit/:id", isAuthenticated, isAdmin, editUser);
+router.put("/edit/:id",  editUser);
 router.delete("/admin/user/delete/:id", isAuthenticated, isAdmin, deleteUser);
 
 

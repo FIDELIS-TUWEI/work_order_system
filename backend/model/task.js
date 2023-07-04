@@ -50,7 +50,7 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter your name"],
     },
-    assignedBy: {
+    user: {
         type: ObjectId,
         ref: "User",
         required: true
