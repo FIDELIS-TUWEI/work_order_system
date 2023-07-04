@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const taskTypeSchema = new mongoose.Schema({
-    taskType: {
+    taskTypeName: {
         // Fix, repair replace
         type: String,
         trim: true,
