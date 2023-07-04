@@ -16,6 +16,7 @@ connectDB();
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const taskTypeRoutes = require("./routes/taskTypeRoutes");
 
 // Middleware
 app.use(express.json());
@@ -35,6 +36,7 @@ app.use(cors());
 app.use("/hin", authRoutes);
 app.use("/hin", userRoutes);
 app.use("/hin", taskRoutes);
+app.use("/hin", taskTypeRoutes);
 
 
 // Error Middleware
