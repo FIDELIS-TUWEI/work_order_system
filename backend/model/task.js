@@ -23,7 +23,6 @@ const taskSchema = new mongoose.Schema({
     priority: {
         // High, medium, Low
         type: String,
-        ref: "TaskType",
         required: true
     },
     taskType: {
