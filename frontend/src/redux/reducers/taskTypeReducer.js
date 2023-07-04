@@ -2,7 +2,7 @@ import { WORK_TYPE_LOAD_FAIL, WORK_TYPE_LOAD_REQUEST, WORK_TYPE_LOAD_RESET, WORK
 
 
 
-export const loadWorkTypeReducer = (state = { taskType:[] }, action) => {
+export const loadWorkTypeReducer = (state = { TaskType:[] }, action) => {
     switch (action.type) {
         case WORK_TYPE_LOAD_REQUEST:
             return {loading:true}

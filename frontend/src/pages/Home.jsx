@@ -104,9 +104,9 @@ const Home = () => {
                   <CardElement
                     key={i}
                     id={task._id}
-                    taskTitle={task.title}
+                    title={task.title}
                     description={task.description}
-                    category={task.taskType ? task.taskType.taskTypeName : "No category"}
+                    taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
                     location={task.location}
                   />
                 ))

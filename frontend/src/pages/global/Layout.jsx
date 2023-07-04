@@ -4,6 +4,7 @@ import HeaderTop from "./HeaderTop";
 
 
 const Layout = (Component) => ({ ...props }) => {
+
   return (
     <>
         <div style={{ display: "flex", minHeight: "100vh" }}>
