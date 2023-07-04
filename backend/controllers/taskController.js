@@ -12,7 +12,7 @@ const createTask = asyncHandler (async (req, res, next) => {
             taskType: req.body.taskType,
             status: req.body.status,
             assignedTo: req.body.assignedTo,
-            user: req.body.id
+            user: req.user.id
         });
         res.status(201).json({
             success: true,
