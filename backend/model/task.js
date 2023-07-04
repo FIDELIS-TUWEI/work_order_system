@@ -1,21 +1,30 @@
 const mongoose = require("mongoose");
+const { ObjectId } = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true
     },
-    issueIdentified: {
+    title: {
         // Door/ Lock
         type: String,
+        trim: true,
         required: true, 
+    },
+    description: {
+        // Additional Information of the work
+        type: String,
+        trim: true,
+        required: [true, "Description is required"],
+        maxlength: 500
     },
     requestedBy: {
         // Name
         type: String,
         required: [true, "Enter your name"]
     },
-    workLocation: {
+    location: {
         // Rooms, open places, Back office
         type: String,
         required: true, 
@@ -25,20 +34,15 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    workState: {
+    taskType: {
         // Fix, repair replace
         type: String,
         required: true
     },
-    description: {
-        // Additional Information of the work
-        type: String,
-        required: true,
-        maxlength: 500
-    },
     status: {
         // pending complete
-        type: String,
+        type: Boolean,
+        default: false,
         required: true,
     },
     assignedBy: {
@@ -46,13 +50,14 @@ const taskSchema = new mongoose.Schema({
         required: [true, "Please enter your name"],
     },
     assignedTo: {
-        type: String,
-        required: [true, "Please enter an employee name to assign Task."]
+        type: ObjectId,
+        ref: "User",
+        required: true
     }
 },
 { timestamps: true }
 );
 
-const Task = mongoose.model("task", taskSchema);
+const Task = mongoose.model("Task", taskSchema);
 
 module.exports = Task;
