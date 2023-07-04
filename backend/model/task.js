@@ -36,7 +36,8 @@ const taskSchema = new mongoose.Schema({
     },
     taskType: {
         // Fix, repair replace
-        type: String,
+        type: ObjectId,
+        ref: "TaskType",
         required: true
     },
     status: {
