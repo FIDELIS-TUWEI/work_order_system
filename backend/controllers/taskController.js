@@ -73,6 +73,16 @@ const showTaskType = asyncHandler (async (req, res, next) => {
         }
     } : {}
 
+    // Filter tasks Category by IDs
+    let ids = [];
+    const taskTypeCategory = await TaskType.find({}, {_id: 1});
+    taskTypeCategory.forEach(cat => {
+        ids.push(cat._id);
+    })
+
+    let cat = req.query.cat;
+    let categ = cat !== undefined ? cat : ids;
+
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
