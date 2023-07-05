@@ -65,13 +65,22 @@ const updateTask = asyncHandler (async (req, res, next) => {
 // Show tasks Logic
 const showTasks = asyncHandler (async (req, res, next) => {
 
+    // Enable Search Query
+    const keyword = req.query.keyword ? {
+        title: {
+            $regex: req.query.keyword,
+            $options: "i"
+        }
+    } : {}
+
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
-    const count = await Task.find({}).estimatedDocumentCount();
+    //const count = await Task.find({}).estimatedDocumentCount();
+    const count = await Task.find({ ...keyword }).countDocuments();
 
     try {
-        const tasks = await Task.find().skip(pageSize *  (page - 1)).limit(pageSize);
+        const tasks = await Task.find({ ...keyword }).skip(pageSize *  (page - 1)).limit(pageSize);
 
         if (!tasks) {
             return next(new ErrorResponse("No Tasks Found!", 403));
