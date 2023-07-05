@@ -51,10 +51,24 @@ const updateTaskType = asyncHandler (async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+// Delete Task Type
+const deleteTaskType = asyncHandler (async (req, res, next) => {
+    try {
+        const taskT = await TaskType.findByIdAndRemove(req.params.type_id);
+        res.status(200).json({
+            success: true,
+            message: "Task Type Deleted"
+        })
+    } catch (error) {
+        next(new ErrorResponse("Server Error", 500));
+    }
 })
 
 module.exports = {
     createTasktype,
     allTaskType,
-    updateTaskType
+    updateTaskType,
+    deleteTaskType
 }
