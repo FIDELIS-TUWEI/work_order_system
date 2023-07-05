@@ -81,16 +81,16 @@ const showTaskType = asyncHandler (async (req, res, next) => {
     })
 
     let cat = req.query.cat;
-    let categ = cat !== undefined ? cat : ids;
+    let categ = cat !== "" ? cat : ids;
 
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     //const count = await TaskType.find({}).estimatedDocumentCount();
-    const count = await TaskType.find({ ...keyword }).countDocuments();
+    const count = await TaskType.find({ ...keyword, taskType: categ }).countDocuments();
 
     try {
-        const tasks = await TaskType.find({ ...keyword }).skip(pageSize *  (page - 1)).limit(pageSize);
+        const tasks = await TaskType.find({ ...keyword, taskType: categ }).skip(pageSize *  (page - 1)).limit(pageSize);
 
         if (!tasks) {
             return next(new ErrorResponse("No Tasks Found!", 403));
@@ -100,7 +100,7 @@ const showTaskType = asyncHandler (async (req, res, next) => {
             data: tasks,
             page,
             pages: Math.ceil(count / pageSize),
-            count
+            count,
         })
     } catch (error) {
         next(error);
