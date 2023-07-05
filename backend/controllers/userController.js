@@ -1,4 +1,5 @@
 const User = require("../model/user");
+const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 
 
@@ -78,6 +79,38 @@ const deleteUser = asyncHandler (async (req, res, next) => {
         return next(error);
     }
     
+});
+
+// Task History
+const createTaskHistory = asyncHandler (async (req, res, next) => {
+    const { title, description, location, completedDate, taskStatus } = req.body;
+
+    try {
+        const currentUser = await User.findOne({ _id: req.user._id });
+
+        if (!currentUser) {
+            return next(new ErrorResponse("You must Log In", 401));
+        } else {
+            const addTaskHistory = {
+                title,
+                description,
+                location,
+                completedDate,
+                taskStatus,
+                user: req.user._id
+            }
+
+            currentUser.taskHistory.push(addTaskHistory);
+            await currentUser.save();
+        }
+
+        res.status(200).json({
+            success: true,
+            data: currentUser
+        })
+    } catch (error) {
+        return next(error)
+    }
 })
 
 
@@ -85,5 +118,6 @@ module.exports = {
     getAllUsers,
     singleUser,
     editUser,
-    deleteUser
+    deleteUser,
+    createTaskHistory
 };
