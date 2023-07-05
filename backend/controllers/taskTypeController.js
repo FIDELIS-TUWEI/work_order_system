@@ -38,9 +38,23 @@ const allTaskType = asyncHandler (async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+// Update Task Type
+const updateTaskType = asyncHandler (async (req, res, next) => {
+    try {
+        const taskT = await TaskType.findByIdAndUpdate(req.params.type_id, req.body, { new: true, runValidators: true });
+        res.status(200).json({
+            success: true,
+            data: taskT
+        })
+    } catch (error) {
+        next(error);
+    }
 })
 
 module.exports = {
     createTasktype,
-    allTaskType
+    allTaskType,
+    updateTaskType
 }
