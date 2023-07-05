@@ -29,7 +29,7 @@ const createTask = asyncHandler (async (req, res, next) => {
 // get Task logic
 const singleTask = asyncHandler (async (req, res, next) => {
     try {
-        const task = await Task.findById(req.params.id);
+        const task = await Task.findById(req.params.id).populate("taskType", "taskTypeName").populate("user", "name");
         if (!task) {
             return res.status(404).json({ message: `No task with ID: ${id} found` });
         }
