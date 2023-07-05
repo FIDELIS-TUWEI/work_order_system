@@ -62,25 +62,25 @@ const updateTask = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Show tasks Logic
-const showTasks = asyncHandler (async (req, res, next) => {
+// Show taskType Logic
+const showTaskType = asyncHandler (async (req, res, next) => {
 
     // Enable Search Query
     const keyword = req.query.keyword ? {
-        title: {
+        taskTypeName: {
             $regex: req.query.keyword,
-            $options: "i"
+            $options: 'i'
         }
     } : {}
 
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
-    //const count = await Task.find({}).estimatedDocumentCount();
-    const count = await Task.find({ ...keyword }).countDocuments();
+    //const count = await TaskType.find({}).estimatedDocumentCount();
+    const count = await TaskType.find({ ...keyword }).countDocuments();
 
     try {
-        const tasks = await Task.find({ ...keyword }).skip(pageSize *  (page - 1)).limit(pageSize);
+        const tasks = await TaskType.find({ ...keyword }).skip(pageSize *  (page - 1)).limit(pageSize);
 
         if (!tasks) {
             return next(new ErrorResponse("No Tasks Found!", 403));
@@ -136,5 +136,5 @@ module.exports = {
     updateTask,
     deleteTask,
     singleTask,
-    showTasks,
+    showTaskType,
 }
