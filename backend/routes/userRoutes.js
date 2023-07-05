@@ -7,7 +7,7 @@ router.get("/all-users", isAuthenticated, isAdmin, getAllUsers);
 router.get("/user/:id",isAuthenticated, singleUser);
 router.put("/edit/:id",  editUser);
 router.delete("/admin/user/delete/:id", isAuthenticated, isAdmin, deleteUser);
-router.post("/user/taskHistory", isAuthenticated, createTaskHistory);
+router.post("/user/taskhistory", isAuthenticated, createTaskHistory);
 
 
 module.exports = router;

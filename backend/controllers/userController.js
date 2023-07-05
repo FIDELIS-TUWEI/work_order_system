@@ -83,7 +83,7 @@ const deleteUser = asyncHandler (async (req, res, next) => {
 
 // Task History
 const createTaskHistory = asyncHandler (async (req, res, next) => {
-    const { title, description, location, completedDate, taskStatus } = req.body;
+    const { title, description, location} = req.body;
 
     try {
         const currentUser = await User.findOne({ _id: req.user._id });
@@ -95,8 +95,7 @@ const createTaskHistory = asyncHandler (async (req, res, next) => {
                 title,
                 description,
                 location,
-                completedDate,
-                taskStatus,
+                //taskStatus,
                 user: req.user._id
             }
 
