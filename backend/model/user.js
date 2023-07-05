@@ -1,6 +1,37 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+
+// Task History
+const taskHistorySchema = new mongoose.Schema({
+    title: {
+        type: String,
+        trim: true
+    },
+    description: {
+        type: String,
+        trim: true
+    },
+    location: {
+        type: String,
+    },
+    completedDate: {
+        type: Date,
+    },
+    taskStatus: {
+        type: String,
+        enum: ["Pending", "Completed", "Inspected"],
+        default: "Pending"
+    },
+    user: {
+        type: ObjectId,
+        ref: "User",
+        required: true
+    }
+}, { timestamps: true }
+);
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -17,14 +48,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minLength: [6, "Password must have at least (6) characters"],
     },
+    taskHistory: [taskHistorySchema],
     role: {
         type: Number,
         default: 0
     },
-    //isAdmin: {
-    //    type: Boolean,
-    //    default: false
-    //},
     active: {
         type: Boolean,
         default: true,
