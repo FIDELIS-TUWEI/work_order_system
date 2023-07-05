@@ -18,6 +18,6 @@ const Layout = (Component) => ({ ...props }) => {
         </div>
     </>
   )
-}
+};
 
 export default Layout

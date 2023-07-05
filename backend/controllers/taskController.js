@@ -76,10 +76,9 @@ const deleteTask = asyncHandler (async (req, res, next) => {
 });
 
 // get Task logic
-const getTask = asyncHandler (async (req, res, next) => {
+const singleTask = asyncHandler (async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const task = await Task.findById(id);
+        const task = await Task.findById(req.params.id);
         if (!task) {
             return res.status(404).json({ message: `No task with ID: ${id} found` });
         }
@@ -100,5 +99,5 @@ module.exports = {
     getTasks,
     updateTask,
     deleteTask,
-    getTask,
+    singleTask,
 }
