@@ -69,8 +69,9 @@ const showTasks = asyncHandler (async (req, res, next) => {
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Task.find({}).estimatedDocumentCount();
+
     try {
-        const tasks = await Task.find();
+        const tasks = await Task.find().skip(pageSize *  (page - 1)).limit(pageSize);
 
         if (!tasks) {
             return next(new ErrorResponse("No Tasks Found!", 403));
