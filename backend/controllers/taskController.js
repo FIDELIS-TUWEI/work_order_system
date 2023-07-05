@@ -1,5 +1,6 @@
 const Task = require("../model/task");
 const TaskType = require("../model/taskType");
+const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 
 // create Task logic
@@ -61,6 +62,31 @@ const updateTask = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Show tasks Logic
+const showTasks = asyncHandler (async (req, res, next) => {
+
+    // Enable Pagination
+    const pageSize = 5;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Task.find({}).estimatedDocumentCount();
+    try {
+        const tasks = await Task.find();
+
+        if (!tasks) {
+            return next(new ErrorResponse("No Tasks Found!", 403));
+        }
+        res.status(200).json({
+            success: true,
+            data: tasks,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        })
+    } catch (error) {
+        next(error);
+    }
+})
+
 // get Tasks Logic
 const getTasks = asyncHandler (async (req, res, next) => {
     try {
@@ -100,4 +126,5 @@ module.exports = {
     updateTask,
     deleteTask,
     singleTask,
+    showTasks,
 }
