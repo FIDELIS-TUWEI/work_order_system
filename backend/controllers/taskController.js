@@ -90,14 +90,19 @@ const showTaskType = asyncHandler (async (req, res, next) => {
         locations.push(val.location);
     });
 
+    // set Unique Location
+    let setUniqueLocation = [...new Set(locations)];
+    let location = req.query.location;
+    let locationFilter = location !== "" ? location : setUniqueLocation
+
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     //const count = await TaskType.find({}).estimatedDocumentCount();
-    const count = await TaskType.find({ ...keyword, taskType: categ }).countDocuments();
+    const count = await TaskType.find({ ...keyword, taskType: categ, location: locationFilter }).countDocuments();
 
     try {
-        const tasks = await TaskType.find({ ...keyword, taskType: categ }).skip(pageSize *  (page - 1)).limit(pageSize);
+        const tasks = await TaskType.find({ ...keyword, taskType: categ, location: locationFilter }).sort({ createdAt: -1 }).skip(pageSize *  (page - 1)).limit(pageSize);
 
         if (!tasks) {
             return next(new ErrorResponse("No Tasks Found!", 403));
@@ -108,7 +113,7 @@ const showTaskType = asyncHandler (async (req, res, next) => {
             page,
             pages: Math.ceil(count / pageSize),
             count,
-            locations
+            setUniqueLocation
         })
     } catch (error) {
         next(error);
