@@ -83,6 +83,13 @@ const showTaskType = asyncHandler (async (req, res, next) => {
     let cat = req.query.cat;
     let categ = cat !== "" ? cat : ids;
 
+    // Filter Tasks by location
+    let locations = [];
+    const taskByLocation = await Task.find({}, { location: 1 });
+    taskByLocation.forEach(val => {
+        locations.push(val.location);
+    });
+
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
@@ -101,6 +108,7 @@ const showTaskType = asyncHandler (async (req, res, next) => {
             page,
             pages: Math.ceil(count / pageSize),
             count,
+            locations
         })
     } catch (error) {
         next(error);
