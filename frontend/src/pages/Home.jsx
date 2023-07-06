@@ -16,27 +16,27 @@ import SelectComponent from "../components/SelectComponent";
 import { taskTypeLoadAction } from "../redux/actions/taskTypeAction";
 
 const Home = () => {
-  //const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
-  //const { palette } = useTheme();
-  //const dispatch = useDispatch();
-  //const {keyword, location} = useParams()
+  const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
+  const { palette } = useTheme();
+  const dispatch = useDispatch();
+  const {keyword, location} = useParams()
 
-  //const [page, setPage] = useState(1);
-  //const [cat, setCat] = useState("");
+  const [page, setPage] = useState(1);
+  const [cat, setCat] = useState("");
 
 
-  //useEffect(() => {
-  //  dispatch(taskLoadAction(page, keyword, cat, location));
-  //}, [page, keyword, cat, location]);
+  useEffect(() => {
+    dispatch(taskLoadAction(page, keyword, cat, location));
+  }, [page, keyword, cat, location]);
 
-  //useEffect(() => {
-  //  dispatch(taskTypeLoadAction());
-  //}, []);
+  useEffect(() => {
+    dispatch(taskTypeLoadAction());
+  }, []);
 
   // function to handle change category
-  //const handleChangeCategory = (e) => {
-  //  setCat(e.target.value)
-  //}
+  const handleChangeCategory = (e) => {
+    setCat(e.target.value)
+  }
 
   return (
     <>
@@ -44,7 +44,7 @@ const Home = () => {
         <Navbar />
         <Header />
 
-        {/*<Container>
+        <Container>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -81,7 +81,7 @@ const Home = () => {
                 <SelectComponent handleChangeCategory={handleChangeCategory} cat={cat} />
 
               </Card>
-            </Box>/}
+            </Box>
             <Box sx={{ flex: 5, p:2 }}>
               {
                 loading ? 
@@ -106,8 +106,8 @@ const Home = () => {
                     id={task._id}
                     title={task.title}
                     description={task.description}
-                    //taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
-                    //location={task.location}
+                    taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
+                    location={task.location}
                   />
                 ))
               }
@@ -117,7 +117,7 @@ const Home = () => {
               </Stack>
             </Box>
           </Stack>
-            </Container>*/}
+            </Container>
     </Box>
     <Footer />
     </>

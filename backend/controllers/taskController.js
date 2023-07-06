@@ -74,26 +74,26 @@ const showTaskType = asyncHandler (async (req, res, next) => {
     } : {}
 
     // Filter tasks Category by IDs
-    //let ids = [];
-    //const taskTypeCategory = await TaskType.find({}, {_id: 1});
-    //taskTypeCategory.forEach(cat => {
-    //    ids.push(cat._id);
-    //})
+    let ids = [];
+    const taskTypeCategory = await TaskType.find({}, {_id: 1});
+    taskTypeCategory.forEach(cat => {
+        ids.push(cat._id);
+    })
 
-    //let cat = req.query.cat;
-    //let categ = cat !== "" ? cat : ids;
+    let cat = req.query.cat;
+    let categ = cat !== "" ? cat : ids;
 
     // Filter Tasks by location
-    //let locations = [];
-    //const taskByLocation = await Task.find({}, { location: 1 });
-    //taskByLocation.forEach(val => {
-    //    locations.push(val.location);
-    //});
+    let locations = [];
+    const taskByLocation = await Task.find({}, { location: 1 });
+    taskByLocation.forEach(val => {
+        locations.push(val.location);
+    });
 
     // set Unique Location
-    //let setUniqueLocation = [...new Set(locations)];
-    //let location = req.query.location;
-    //let locationFilter = location !== "" ? location : setUniqueLocation
+    let setUniqueLocation = [...new Set(locations)];
+    let location = req.query.location;
+    let locationFilter = location !== "" ? location : setUniqueLocation
 
     // Enable Pagination
     const pageSize = 5;
@@ -102,7 +102,7 @@ const showTaskType = asyncHandler (async (req, res, next) => {
     const count = await Task.find({ ...keyword }).countDocuments();
 
     try {
-        const tasks = await Task.find({ ...keyword }).skip(pageSize *  (page - 1)).limit(pageSize);//, taskType: categ, location: locationFilter }).sort({ createdAt: -1 })
+        const tasks = await Task.find({ ...keyword, taskType: categ, location: locationFilter }).sort({ createdAt: -1 }).skip(pageSize *  (page - 1)).limit(pageSize);// })
 
         res.status(200).json({
             success: true,
