@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import Box from "@mui/material/Box"
+import { Typography } from "@mui/material";
 import { useEffect } from "react";
 //import { userProfileAction } from "../../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +12,7 @@ const UserTasksHistory = () => {
   return (
     <>
         <Box>
-            <Typography variant="h4" sx={{ color: "#fafafa" }}> Tasks History </Typography>
+            <Typography variant="h4" sx={{ color: "#000" }}> Tasks History </Typography>
 
             <Box>
                 {

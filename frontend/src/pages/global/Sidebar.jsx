@@ -25,7 +25,7 @@ const SidebarAdmin = () => {
 
   useEffect(() => {
     dispatch(userProfileAction());
-}, []);
+  }, []);
 
   // Function to Log Out User
   const logOut = () => {
