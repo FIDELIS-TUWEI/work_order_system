@@ -39,7 +39,7 @@ export const userSignInAction = (user) => async (dispatch) => {
 export const userProfileAction = () => async (dispatch) => {
     dispatch({ type: USER_LOAD_REQUEST });
     try {
-        const { data } = await axios.get(`${url}/hin/me`);
+        const { data } = await axios.get(`${url}/hin/info`);
         dispatch({
             type: USER_LOAD_SUCCESS,
             payload: data
