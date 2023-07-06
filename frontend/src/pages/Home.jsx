@@ -1,42 +1,31 @@
-import { Box, Card, Container, 
-  ListItemIcon, MenuItem, MenuList, 
-  Pagination, Stack, Typography, useTheme 
+import { Box, Container, 
+  Pagination, Stack
 } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useDispatch, useSelector } from "react-redux"
 import Header from "../components/Header"
 import Navbar from "../components/Navbar"
 import { useEffect, useState } from "react";
 import { taskLoadAction } from "../redux/actions/workAction";
-import { Link, useParams } from "react-router-dom";
 import CardElement from "../components/CardElement";
 import Footer from "../components/Footer";
 import LoadingBox from "../components/LoadingBox";
-import SelectComponent from "../components/SelectComponent";
 import { taskTypeLoadAction } from "../redux/actions/taskTypeAction";
 
 const Home = () => {
-  const { tasks, setUniqueLocation, pages, loading } = useSelector(state => state.loadTasks);
-  const { palette } = useTheme();
+  const { tasks, pages, loading } = useSelector(state => state.loadTasks);
   const dispatch = useDispatch();
-  const {keyword, location} = useParams()
 
   const [page, setPage] = useState(1);
-  const [cat, setCat] = useState("");
 
 
   useEffect(() => {
-    dispatch(taskLoadAction(page, keyword, cat, location));
-  }, [page, keyword, cat, location]);
+    dispatch(taskLoadAction(page));
+  }, [page]);
 
   useEffect(() => {
     dispatch(taskTypeLoadAction());
   }, []);
 
-  // function to handle change category
-  const handleChangeCategory = (e) => {
-    setCat(e.target.value)
-  }
 
   return (
     <>
@@ -49,7 +38,7 @@ const Home = () => {
             direction={{ xs: 'column', sm: 'row' }}
             spacing={{ xs: 1, sm: 2, md: 4 }}
           >
-            <Box sx={{ flex: 2, p:2 }}>
+            {/*<Box sx={{ flex: 2, p:2 }}>
               <Card sx={{ minWidth:150, mb: 3, mt: 3, p: 2 }}>
                 <Box sx={{ pb: 2 }}>
                   <Typography component="h4" sx={{ color: palette.secondary.main, fontWeight: 600 }}>
@@ -77,11 +66,11 @@ const Home = () => {
                       ))
                     }
                   </MenuList>
-                </Box>
+                  </Box>
                 <SelectComponent handleChangeCategory={handleChangeCategory} cat={cat} />
 
               </Card>
-            </Box>
+            </Box>*/}
             <Box sx={{ flex: 5, p:2 }}>
               {
                 loading ? 
@@ -104,10 +93,10 @@ const Home = () => {
                   <CardElement
                     key={i}
                     id={task._id}
-                    title={task.title}
-                    description={task.description}
-                    taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
-                    location={task.location}
+                    taskType={task.taskType}
+                    //description={task.description}
+                    //taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
+                    //location={task.location}
                   />
                 ))
               }

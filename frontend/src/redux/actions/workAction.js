@@ -3,11 +3,11 @@ import { WORK_LOAD_REQUEST, WORK_LOAD_SUCCESS, WORK_LOAD_FAIL } from "../constan
 
 const url = "http://localhost:5000"
 
-export const taskLoadAction = (pageNumber, keyword = '', cat = '', location = '') => async(dispatch) => {
+export const taskLoadAction = (pageNumber) => async(dispatch) => {
     dispatch({ type: WORK_LOAD_REQUEST })
 
     try {
-        const { data } = await axios.get(`${url}/hin/tasks/show/?pageNumber=${pageNumber}&keyword=${keyword}&cat=${cat}&location=${location}`)
+        const { data } = await axios.get(`${url}/hin/tasks/show/?pageNumber=${pageNumber}`)
         dispatch({
             type: WORK_LOAD_SUCCESS,
             payload: data
