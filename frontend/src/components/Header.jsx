@@ -9,7 +9,7 @@ const Header = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: 400,
+      minHeight: "100vh",
       backgroundImage: `url(${headerImage})`,
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <>
       <StyleHeader>
-        <SearchInputEl />
+        {/*<SearchInputEl />*/}
       </StyleHeader>
     </>
   )
