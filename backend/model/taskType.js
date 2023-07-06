@@ -7,7 +7,7 @@ const taskTypeSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: [true, "Task category is required"],
-        maxlength: 8
+        maxlength: 40
     },
     user: {
         type: ObjectId,

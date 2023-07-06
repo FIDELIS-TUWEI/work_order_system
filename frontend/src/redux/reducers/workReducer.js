@@ -1,7 +1,7 @@
 import { WORK_LOAD_FAIL, WORK_LOAD_REQUEST, WORK_LOAD_RESET, WORK_LOAD_SUCCESS } from "../constants/workConstants"
 
 
-export const loadWorkReducer = (state = { tasks:[] }, action) => {
+export const loadWorkReducer = (state = { tasks: [] }, action) => {
     switch (action.type) {
         case WORK_LOAD_REQUEST:
             return {loading:true}
@@ -13,7 +13,7 @@ export const loadWorkReducer = (state = { tasks:[] }, action) => {
             page: action.payload.page,
             pages: action.payload.pages,
             count: action.payload.count,
-            setUniqueLocation: action.payload.setUniqueLocation,
+            //setUniqueLocation: action.payload.setUniqueLocation,
             tasks: action.payload.tasks
         } 
         case WORK_LOAD_FAIL: 

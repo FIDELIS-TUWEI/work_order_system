@@ -106,8 +106,8 @@ const Home = () => {
                     id={task._id}
                     title={task.title}
                     description={task.description}
-                    taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
-                    location={task.location}
+                    //taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
+                    //location={task.location}
                   />
                 ))
               }
