@@ -76,7 +76,7 @@ const logout = (req, res, next) => {
 
 // User Profile
 const userProfile = asyncHandler (async (req, res, next) => {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.username).select('-password');
 
     res.status(200).json({
         success: true,

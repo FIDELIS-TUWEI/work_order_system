@@ -26,24 +26,24 @@ export const userReducerSignIn = (state = {}, action ) => {
 };
 
 // User Profile
-export const userReducerProfile = (state = { user: null }, action) => {
+{/*export const userReducerProfile = (state = { user: {} }, action) => {
     switch (action.type) {
         case USER_LOAD_REQUEST:
             return { loading: true, user: null }
         case USER_LOAD_SUCCESS:
             return {
                 loading: false,
-                user: action.payload.user,
+                user: action.payload
             }
         case USER_LOAD_FAIL:
-            return { loading: false, user: null, error: action.payload }
+            return { loading: false, error: action.payload }
         case USER_LOAD_RESET:
             return {}
 
         default:
             return state;
     }
-}
+}*/}
 
 // Log Out Reducer
 export const userReducerLogout = (state = {}, action) => {
