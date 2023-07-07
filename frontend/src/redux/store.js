@@ -8,7 +8,7 @@ import { userReducerLogout, userReducerProfile, userReducerSignIn } from "./redu
 // combine reducers
 const reducers = combineReducers({
     loadTasks: loadWorkReducer,
-    taskType: loadWorkTypeReducer,
+    //taskType: loadWorkTypeReducer,
     signIn: userReducerSignIn,
     logOut: userReducerLogout,
     userProfile: userReducerProfile

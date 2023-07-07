@@ -9,10 +9,10 @@ import { taskLoadAction } from "../redux/actions/workAction";
 import CardElement from "../components/CardElement";
 import Footer from "../components/Footer";
 import LoadingBox from "../components/LoadingBox";
-import { taskTypeLoadAction } from "../redux/actions/taskTypeAction";
+//import { data.tasksTypeLoadAction } from "../redux/actions/data.tasksTypeAction";
 
 const Home = () => {
-  const { tasks, pages, loading } = useSelector(state => state.loadTasks);
+  const { data, pages, loading } = useSelector(state => state.loadTasks);
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
@@ -22,9 +22,9 @@ const Home = () => {
     dispatch(taskLoadAction(page));
   }, [page]);
 
-  useEffect(() => {
-    dispatch(taskTypeLoadAction());
-  }, []);
+  //useEffect(() => {
+  //  dispatch(data.tasksTypeLoadAction());
+  //}, []);
 
 
   return (
@@ -42,7 +42,7 @@ const Home = () => {
               <Card sx={{ minWidth:150, mb: 3, mt: 3, p: 2 }}>
                 <Box sx={{ pb: 2 }}>
                   <Typography component="h4" sx={{ color: palette.secondary.main, fontWeight: 600 }}>
-                    Filter Tasks by Category
+                    Filter data.taskss by Category
                   </Typography>
                 </Box>
                 <SelectComponent handleChangeCategory={handleChangeCategory} cat={cat} />
@@ -52,7 +52,7 @@ const Home = () => {
               <Card sx={{ minWidth:150, mb: 3, mt: 3, p: 2 }}>
                 <Box sx={{ pb: 2 }}>
                   <Typography component="h4" sx={{ color: palette.secondary.main, fontWeight: 600 }}>
-                    Filter Tasks by Location
+                    Filter data.taskss by Location
                   </Typography>
                   <MenuList>
                     {
@@ -75,7 +75,7 @@ const Home = () => {
               {
                 loading ? 
                 <LoadingBox /> :
-                tasks && tasks.length === 0 ?
+                data && data.length === 0 ?
                 <>
                   <Box
                     sx={{
@@ -89,14 +89,14 @@ const Home = () => {
                   </Box>
                 </> :
 
-                tasks && tasks.map((task, i) => (
+                data && data.map((tasks, i) => (
                   <CardElement
                     key={i}
-                    id={task._id}
-                    taskType={task.taskType}
-                    //description={task.description}
-                    //taskType={task.taskType ? task.taskType.taskTypeName : "No category"}
-                    //location={task.location}
+                    id={data.tasks._id}
+                    title={data.tasks.title}
+                    description={data.tasks.description}
+                    //data.tasksType={data.data.tasksType ? data.data.tasksType.data.tasksTypeName : "No category"}
+                    location={data.tasks.location}
                   />
                 ))
               }

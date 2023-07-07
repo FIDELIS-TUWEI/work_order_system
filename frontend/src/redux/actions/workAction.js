@@ -11,7 +11,7 @@ export const taskLoadAction = (pageNumber) => async(dispatch) => {
         dispatch({
             type: WORK_LOAD_SUCCESS,
             payload: data
-        })
+       })
     } catch (error) {
         dispatch({
             type: WORK_LOAD_FAIL,
@@ -19,3 +19,4 @@ export const taskLoadAction = (pageNumber) => async(dispatch) => {
         })
     }
 }
+

@@ -107,7 +107,9 @@ const showTaskType = asyncHandler (async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            data: tasks,
+            data: {
+                tasks
+            },
             page,
             pages: Math.ceil(count / pageSize),
             count,
