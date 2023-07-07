@@ -36,7 +36,7 @@ export const userSignInAction = (user) => async (dispatch) => {
 }
 
 // User Profile Action
-export const userProfileAction = () => async (dispatch) => {
+{/*export const userProfileAction = () => async (dispatch) => {
     dispatch({ type: USER_LOAD_REQUEST });
     try {
         const { data } = await axios.get(`${url}/hin/info`);
@@ -50,7 +50,7 @@ export const userProfileAction = () => async (dispatch) => {
             payload: error.response.data.error
         });
     }
-}
+}*/}
 
 // User Logout Action
 export const userLogoutAction = () => async(dispatch) => {
