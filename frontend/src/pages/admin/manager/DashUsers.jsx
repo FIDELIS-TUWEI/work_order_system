@@ -1,7 +1,7 @@
 import { Box, Button, Paper, Typography } from "@mui/material"
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../../components/Footer";
 import Navbar from "../../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +15,14 @@ const URL = 'http://localhost:5000/hin'
 const DashUsers = () => {
 
   const dispatch = useDispatch();
-  const users = useSelector(state => state.users.users)
+  const users = useSelector(state => state.users.users);
+
+  const navigate = useNavigate();
+
+  // function to handle onclick event to create user
+  const handleCreateUser = () => {
+    navigate("/users/create");
+  }
 
   // hook to get all users from DB
   useEffect(() => {
@@ -83,7 +90,7 @@ const DashUsers = () => {
           Users List
         </Typography>
         <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-          <Button variant="contained" color="success" startIcon={<AddIcon />}> <Link style={{ color: "white", textDecoration: "none" }} to={`/users/create`}>Create User</Link></Button>
+          <Button onClick={handleCreateUser} variant="contained" color="success" startIcon={<AddIcon />}> <Link style={{ color: "white", textDecoration: "none" }}>Create User</Link></Button>
         </Box>
         <Paper sx={{ bgcolor: "secondary.midNightBlue" }}>
 
