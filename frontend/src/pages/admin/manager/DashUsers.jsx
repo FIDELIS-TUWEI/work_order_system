@@ -15,7 +15,7 @@ const URL = 'http://localhost:5000/hin'
 const DashUsers = () => {
 
   const dispatch = useDispatch();
-  const {users, loading} = useSelector(state => state.users);
+  const users = useSelector(state => state.users.users);
 
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ const DashUsers = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${URL}/all-users`);
-        if(users.length == 0) dispatch(getUser(response.data))
+        if(users.length === 0) dispatch(getUser(response.data))
       } catch (error) {
         console.log(error)
       }

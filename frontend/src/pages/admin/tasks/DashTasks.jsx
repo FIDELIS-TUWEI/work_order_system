@@ -1,16 +1,45 @@
 import { Box, Button, Paper, Typography } from "@mui/material"
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../../components/Footer";
 import Navbar from "../../../components/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import axios from "axios";
+import { getTasks } from "../../../redux/slice/taskSlice";
 
+// backend url endpoint
+const URL = 'http://localhost:5000/hin'
 
 const DashTasks = () => {
+
+  const dispatch = useDispatch();
+  const tasks = useSelector(state => state.tasks.tasks);
+
+  const navigate = useNavigate();
+
+  // function to handle onclick event to create task
+  const handleCreateTask = () => {
+    navigate("/tasks/create");
+  }
+
+  // hook to fetch all tasks from DB
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${URL}/tasks/getall`);
+        if(tasks.length === 0) dispatch(getTasks(response.data))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  }, []);
   
   const columns = [
     {
-      field: "_id",
+      field: "id",
       headerName: "TASK ID",
       width: 150,
       editable: true,
@@ -26,6 +55,11 @@ const DashTasks = () => {
       width: 150,
     },
     {
+      field: "description",
+      headerName: "Description",
+      width: 150,
+    },
+    {
       field: "location",
       headerName: "Location",
       width: 150,
@@ -36,7 +70,13 @@ const DashTasks = () => {
       width: 150,
     },
     {
-      field: "taskStatus",
+      field: "user",
+      headerName: "Requested By",
+      width: 150,
+      valueGutter: (tasks) => tasks.row.user.name
+    },
+    {
+      field: "status",
       headerName: "Task Status",
       width: 150,
     },
@@ -60,13 +100,15 @@ const DashTasks = () => {
           Task List
         </Typography>
         <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-          <Button variant="contained" color="success" startIcon={<AddIcon />}> <Link style={{ color: "white", textDecoration: "none" }} to={`/tasks/create`}>Create Task</Link></Button>
+          <Button onClick={handleCreateTask} variant="contained" color="success" startIcon={<AddIcon />}> <Link style={{ color: "white", textDecoration: "none" }}>Create Task</Link></Button>
         </Box>
         <Paper sx={{ bgcolor: "secondary.midNightBlue" }}>
 
           <Box sx={{ height:400, width: "100%" }}>
             <DataGrid
-              getRowId={(row) => row._id}
+              rows={tasks}
+              columns={columns}
+              getRowId={(row) => row.id}
               sx={{
                 "& .MuiTablePagination-displayedRows": {
                   color: "white",
@@ -80,8 +122,7 @@ const DashTasks = () => {
                 }
 
               }}
-              rows=""
-              columns={columns}
+              
               pageSize={5}
               rowsPerpageOptions={[5]}
               checkboxSelection
@@ -94,4 +135,4 @@ const DashTasks = () => {
   )
 }
 
-export default DashTasks
+export default DashTasks;
