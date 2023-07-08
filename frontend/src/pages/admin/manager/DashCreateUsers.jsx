@@ -1,6 +1,7 @@
-import { Box } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Navbar from "../../../components/Navbar";
@@ -38,13 +39,13 @@ const DashCreateUsers = () => {
 
   return (
     <>
-    <Navbar />
+      <Navbar />
       <Box sx={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", pt: 4, mb: 3 }}>
         <Box component="form" className="form_style border_style">
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-            <Typography variant="h5" component="h2" sx={{ pb:2 }}>
-              Register a User
-            </Typography>
+              <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
+                  <LockOutlinedIcon />
+              </Avatar>
 
             <TextField sx={{ mb: 3 }}
               fullWidth
@@ -98,7 +99,7 @@ const DashCreateUsers = () => {
           </Box>
         </Box>
       </Box>
-    <Footer />
+      <Footer />
     </>
   )
 }
