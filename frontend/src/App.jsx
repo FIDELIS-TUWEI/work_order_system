@@ -15,6 +15,7 @@ import UserTasksHistory from "./pages/user/UserTasksHistory";
 import UserInfoDashboard from "./pages/user/UserInfoDashboard";
 import DashCreateTask from "./pages/admin/tasks/DashCreateTask";
 import DashTasks from "./pages/admin/tasks/DashTasks";
+import DashCreateUsers from "./pages/admin/manager/DashCreateUsers";
 
 // Higher Order Component
 const UserDashboardHOC = Layout(UserDashboard);
@@ -38,6 +39,7 @@ function App() {
                   <Route path="/user/info" element={<UserRoute><UserInfoDashboardHOC /></UserRoute>} />
                   <Route path="/tasks/create" element={<DashCreateTask />} />
                   <Route path="/tasks/list" element={<DashTasks />} />
+                  <Route path="/users/create" element={<DashCreateUsers />} />
                   <Route path="*" element={<NotFound />} />
               </Routes>
               </ProSidebarProvider>
