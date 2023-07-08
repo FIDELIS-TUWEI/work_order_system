@@ -24,7 +24,6 @@ const validationSchema = yup.object({
 });
 
 const DashCreateUsers = () => {
-  
 
   const formik = useFormik({
     initialValues: {
@@ -42,8 +41,8 @@ const DashCreateUsers = () => {
   return (
     <>
       <Navbar />
-      <Box sx={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", pt: 4, mb: 3 }}>
-        <Box component="form" className="form_style border_style">
+      <Box sx={{ height: "81vh", display: "flex", alignItems: "center", justifyContent: "center", pt: 4, mb: 3 }}>
+        <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
               <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
                   <LockOutlinedIcon />
