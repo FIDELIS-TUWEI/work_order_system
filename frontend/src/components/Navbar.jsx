@@ -44,6 +44,11 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  //function to handle onclick event to Log In user
+  const handleLogin = () => {
+    navigate("/login");
+  }
+
   // Function to Logout User
   const logoutUser = () => {
     dispatch(userLogoutAction());
@@ -175,7 +180,7 @@ const Navbar = () => {
               {
                 !userInfo ?
                   <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/login">Log In</Link></Typography>
+                    <Typography textAlign="center"><Button onClick={handleLogin}><Link style={{ textDecoration: "none", color: palette.primary.main }}>Log In</Link></Button></Typography>
                   </MenuItem>
                 :
                   <MenuItem onClick={logoutUser}>

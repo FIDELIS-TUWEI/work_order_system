@@ -15,7 +15,7 @@ const URL = 'http://localhost:5000/hin'
 const DashUsers = () => {
 
   const dispatch = useDispatch();
-  const users = useSelector(state => state.users.users);
+  const {users, loading} = useSelector(state => state.users);
 
   const navigate = useNavigate();
 
