@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 
+
 // Validation Schema 
 const validationSchema = yup.object({
   name: yup
@@ -20,9 +21,10 @@ const validationSchema = yup.object({
       .min(8, "Password should be of minimum 8 characters long")
       .required("Password is required")
 
-})
+});
 
 const DashCreateUsers = () => {
+  
 
   const formik = useFormik({
     initialValues: {

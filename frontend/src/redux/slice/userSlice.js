@@ -7,9 +7,11 @@ const userSlice = createSlice({
         users: []
     },
     reducers: {
+        getUser : (state, action) => {
 
+        }
     }
 })
 
-export const {} = userSlice.actions;
+export const {getUser} = userSlice.actions;
 export default userSlice.reducer;
