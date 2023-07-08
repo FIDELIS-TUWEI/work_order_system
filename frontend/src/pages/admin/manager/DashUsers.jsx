@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { getUser } from "../../../redux/slice/userSlice";
+import moment from "moment"
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -69,6 +70,9 @@ const DashUsers = () => {
       field: "createdAt",
       headerName: "Created At",
       width: 150,
+      renderCell: (params) => (
+        moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
+      )
     },
     {
       field: "Actions",
