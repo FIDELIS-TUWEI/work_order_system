@@ -6,7 +6,14 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../../redux/slice/userSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
 
+
+// backend url endpoint
+const URL = 'http://localhost:5000/hin'
 
 // Validation Schema 
 const validationSchema = yup.object({
@@ -24,6 +31,22 @@ const validationSchema = yup.object({
 });
 
 const DashCreateUsers = () => {
+  const dispatch = useDispatch();
+  
+
+  // function to register user
+  const onSubmit = async (values, actions) => {
+    const { ...data } = values;
+    try {
+      const response = await axios.post(`${URL}/register`, data)
+      //console.log(addUser(response.data))
+      dispatch(addUser(response.data))
+      toast.success("User Registered succesfully")
+      actions.resetForm()
+    } catch (error) {
+      toast.error(error.data.error)
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -31,11 +54,9 @@ const DashCreateUsers = () => {
       username: "",
       password: ""
     },
+    validateOnBlur: true,
     validationSchema: validationSchema,
-    onSubmit: (values, actions) => {
-      dispatch((values))
-      actions.resetForm()
-    }
+    onSubmit
   })
 
   return (
