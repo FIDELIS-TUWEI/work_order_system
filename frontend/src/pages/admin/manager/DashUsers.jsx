@@ -75,7 +75,9 @@ const DashUsers = () => {
       width: 200,
       renderCell: () => (
         <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-          <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/edit/user`}>Edit</Link></Button>
+          <Button variant="contained">
+            <Link style={{ color: "white", textDecoration: "none" }} to={`/edit/user`}>Edit</Link>
+          </Button>
           <Button variant="contained" color="error">Delete</Button>
         </Box>
       )
@@ -90,7 +92,9 @@ const DashUsers = () => {
           Users List
         </Typography>
         <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-          <Button onClick={handleCreateUser} variant="contained" color="success" startIcon={<AddIcon />}> <Link style={{ color: "white", textDecoration: "none" }}>Create User</Link></Button>
+          <Button onClick={handleCreateUser} variant="contained" color="success" startIcon={<AddIcon />} sx={{ mr: 3 }}>
+            <Link style={{ color: "white", textDecoration: "none" }}>Create User</Link>
+          </Button>
         </Box>
         <Paper sx={{ bgcolor: "secondary.midNightBlue" }}>
 
