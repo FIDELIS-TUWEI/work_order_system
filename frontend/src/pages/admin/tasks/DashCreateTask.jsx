@@ -5,6 +5,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Footer from "../../../components/Footer";
 import Navbar from "../../../components/Navbar";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../../redux/slice/taskSlice";
+import { toast } from "react-toastify";
+
+// backend url endpoint
+const URL = 'http://localhost:5000/hin'
 
 // Validation Schema
 const validationSchema = yup.object({
@@ -30,6 +36,21 @@ const validationSchema = yup.object({
 });
 
 const DashCreateTask = () => {
+  const dispatch = useDispatch();
+
+  // Function to create Tasks
+  const onSubmit = async (values, actions) => {
+    const { ...data } = values;
+
+    try {
+      const response = await axios.post(`${URL}/task/create`, data)
+      console.log(addTask(response.data))
+      toast.success("Task Added Succesfully")
+      actions.resetForm();
+    } catch (error) {
+      toast.error(error.data.error)
+    }
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -40,12 +61,11 @@ const DashCreateTask = () => {
       taskType: "",
       assignedTo: ""
     },
+    validateOnBlur: true,
     validationSchema: validationSchema,
-    onSubmit: (values, actions) => {
-      dispatch((values))
-      actions.resetForm()
-    }
-  }) 
+    onSubmit
+  });
+
   return (
     <>
     <Navbar />
@@ -129,7 +149,7 @@ const DashCreateTask = () => {
                 shrink: true,
               }}
               placeholder="Category: Fix, Repair, Replace"
-              value={formik.values.title}
+              value={formik.values.taskType}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.taskType && Boolean(formik.errors.taskType)}
@@ -145,7 +165,7 @@ const DashCreateTask = () => {
                 shrink: true,
               }}
               placeholder="Enter name to Assign"
-              value={formik.values.title}
+              value={formik.values.assignedTo}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.assignedTo && Boolean(formik.errors.assignedTo)}
