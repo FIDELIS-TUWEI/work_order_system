@@ -1,4 +1,4 @@
-import { WORK_LOAD_FAIL, WORK_LOAD_REQUEST, WORK_LOAD_RESET, WORK_LOAD_SUCCESS } from "../constants/workConstants"
+import { ADD_TASK_FAIL, ADD_TASK_REQUEST, ADD_TASK_RESET, ADD_TASK_SUCCESS, WORK_LOAD_FAIL, WORK_LOAD_REQUEST, WORK_LOAD_RESET, WORK_LOAD_SUCCESS } from "../constants/workConstants"
 
 
 export const loadWorkReducer = (state = { data:  []}, action) => {
@@ -27,18 +27,18 @@ export const loadWorkReducer = (state = { data:  []}, action) => {
     }
 }
 
-export const registerWorkReducer = (state = {}, action) => {
+export const addWorkReducer = (state = {}, action) => {
     switch (action.type) {
-        case REGISTER_JOB_REQUEST:
+        case ADD_TASK_REQUEST:
             return { loading: true }
-        case REGISTER_JOB_SUCCESS:
+        case ADD_TASK_SUCCESS:
             return {
                 loading: false,
                 task: action.payload
             }
-        case REGISTER_JOB_FAIL:
+        case ADD_TASK_FAIL:
             return{ loading: false, error: action.payload }
-        case REGISTER_JOB_RESET:
+        case ADD_TASK_RESET:
             return {}
 
         default:
