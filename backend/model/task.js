@@ -27,8 +27,9 @@ const taskSchema = new mongoose.Schema({
     },
     taskType: {
         // Fix, repair replace
-        type: ObjectId,
-        ref: "TaskType",
+        //type: ObjectId,
+        type: String,
+        //ref: "TaskType",
         required: true
     },
     status: {
@@ -41,11 +42,11 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter your name"],
     },
-    user: {
-        type: ObjectId,
-        ref: "User",
-        required: true
-    }
+    //user: {
+    //    type: ObjectId,
+    //    ref: "User",
+    //    required: true
+    //}
 },
 { timestamps: true }
 );

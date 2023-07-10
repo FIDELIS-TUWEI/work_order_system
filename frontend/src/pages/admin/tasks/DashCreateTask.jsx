@@ -8,6 +8,8 @@ import Navbar from "../../../components/Navbar";
 import { useDispatch } from "react-redux";
 import { addTask } from "../../../redux/slice/taskSlice";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -37,16 +39,18 @@ const validationSchema = yup.object({
 
 const DashCreateTask = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Function to create Tasks
   const onSubmit = async (values, actions) => {
     const { ...data } = values;
 
     try {
-      const response = await axios.post(`${URL}/task/create`, data)
-      console.log(addTask(response.data))
-      toast.success("Task Added Succesfully")
+      const response = await axios.post(`${URL}/tasks/create`, data)
+      dispatch(addTask(response.data))
+      //toast.success("Task Added Succesfully")
       actions.resetForm();
+      //navigate("/tasks/list")
     } catch (error) {
       toast.error(error.data.error)
     }
