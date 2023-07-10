@@ -6,7 +6,6 @@ import * as yup from "yup";
 import Footer from "../../../components/Footer";
 import Navbar from "../../../components/Navbar";
 import { useDispatch } from "react-redux";
-import { addTask } from "../../../redux/slice/taskSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
