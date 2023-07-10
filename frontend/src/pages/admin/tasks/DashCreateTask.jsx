@@ -49,7 +49,6 @@ const DashCreateTask = () => {
       dispatch(addTask(response.data))
       //toast.success("Task Added Succesfully")
       actions.resetForm();
-      //navigate("/tasks/list")
     } catch (error) {
       toast.error(error.data.error)
     }
