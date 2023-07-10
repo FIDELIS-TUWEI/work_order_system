@@ -26,3 +26,22 @@ export const loadWorkReducer = (state = { data:  []}, action) => {
             return state;
     }
 }
+
+export const registerWorkReducer = (state = {}, action) => {
+    switch (action.type) {
+        case REGISTER_JOB_REQUEST:
+            return { loading: true }
+        case REGISTER_JOB_SUCCESS:
+            return {
+                loading: false,
+                task: action.payload
+            }
+        case REGISTER_JOB_FAIL:
+            return{ loading: false, error: action.payload }
+        case REGISTER_JOB_RESET:
+            return {}
+
+        default:
+            return state;
+    }
+}
