@@ -17,11 +17,13 @@ import DashCreateTask from "./pages/admin/tasks/DashCreateTask";
 import DashTasks from "./pages/admin/tasks/DashTasks";
 import DashCreateUsers from "./pages/admin/manager/DashCreateUsers";
 import DashUsers from "./pages/admin/manager/DashUsers";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 // Higher Order Component
 const UserDashboardHOC = Layout(UserDashboard);
 const UserTasksHistoryHOC = Layout(UserTasksHistory);
 const UserInfoDashboardHOC = Layout(UserInfoDashboard);
+const AdminDashboardHOC = Layout(AdminDashboard);
 
 function App() {
   return (
@@ -35,6 +37,7 @@ function App() {
                   <Route path="/search/location/:location" element={<Home />} />
                   <Route path="/search/:keyword" element={<Home />} />
                   <Route path="/login" element={<LogIn />} />
+                  <Route path="/admin/dashboard" element={<AdminDashboardHOC />} />
                   <Route path="/user/dashboard" element={<UserRoute><UserDashboardHOC /></UserRoute>} />
                   <Route path="/user/tasks" element={<UserRoute><UserTasksHistoryHOC /></UserRoute>} />
                   <Route path="/user/info" element={<UserRoute><UserInfoDashboardHOC /></UserRoute>} />
