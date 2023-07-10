@@ -21,11 +21,11 @@ export const taskLoadAction = (pageNumber) => async(dispatch) => {
     }
 }
 
-export const addTaskAction = (task) => async (dispatch) => {
+{/*export const addTaskAction = (task) => async (dispatch) => {
     dispatch({ type: ADD_TASK_REQUEST })
 
     try {
-        const { data } = await axios.post(`${url}/tasks/create`, data)
+        const { data } = await axios.post(`${url}/tasks/create`, task)
         dispatch({
             type: ADD_TASK_SUCCESS,
             payload: data
@@ -39,5 +39,5 @@ export const addTaskAction = (task) => async (dispatch) => {
         })
         toast.error(error.response.data.error)
     }
-}
+}*/}
 

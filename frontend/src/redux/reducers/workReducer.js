@@ -27,7 +27,7 @@ export const loadWorkReducer = (state = { data:  []}, action) => {
     }
 }
 
-export const addWorkReducer = (state = {}, action) => {
+{/*export const addTaskReducer = (state = {}, action) => {
     switch (action.type) {
         case ADD_TASK_REQUEST:
             return { loading: true }
@@ -44,4 +44,4 @@ export const addWorkReducer = (state = {}, action) => {
         default:
             return state;
     }
-}
+}*/}
