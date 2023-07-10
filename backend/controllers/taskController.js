@@ -14,7 +14,7 @@ const createTask = asyncHandler (async (req, res, next) => {
             taskType: req.body.taskType,
             status: req.body.status,
             assignedTo: req.body.assignedTo,
-            //user: req.user.id
+            user: req.user.id
         });
         res.status(201).json({
             success: true,
@@ -73,29 +73,6 @@ const showTaskType = asyncHandler (async (req, res, next) => {
         }
     } : {}
 
-    // Filter tasks Category by IDs
-    {/*let ids = [];
-    const taskTypeCategory = await TaskType.find({}, {_id: 1});
-    taskTypeCategory.forEach(cat => {
-        ids.push(cat._id);
-    })
-
-    let cat = req.query.cat;
-    let categ = cat !== undefined ? cat : ids;
-
-    // Filter Tasks by location
-    let locations = [];
-    const taskByLocation = await Task.find({}, { location: 1 });
-    taskByLocation.forEach(val => {
-        locations.push(val.location);
-    });
-
-    // set Unique Location
-    let setUniqueLocation = [...new Set(locations)];
-    let location = req.query.location;
-    let locationFilter = location !== "" ? location : setUniqueLocation
-*/}
-
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
@@ -113,7 +90,6 @@ const showTaskType = asyncHandler (async (req, res, next) => {
             page,
             pages: Math.ceil(count / pageSize),
             count,
-            //setUniqueLocation
         })
     } catch (error) {
         next(error);
@@ -123,7 +99,7 @@ const showTaskType = asyncHandler (async (req, res, next) => {
 // get Tasks Logic
 const getTasks = asyncHandler (async (req, res, next) => {
     try {
-       const tasks = await Task.find().populate("taskType", "taskTypeName")//.populate("user", "name");
+       const tasks = await Task.find().populate("taskType", "taskTypeName").populate("user", "name");
        res.status(200).json({
         success: true,
         data: {
