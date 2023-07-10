@@ -6,7 +6,7 @@ const StatComponent = ({ icon, description }) => {
 
   return (
     <>
-        <Card sx={{ bgcolor: palette.secondary.midNightBlue, width: "100%" }}>
+        <Card sx={{ bgcolor: palette.secondary.main, width: "100%" }}>
             <CardContent>
                 <IconButton sx={{ bgcolor: palette.primary.main, mb: 2 }}>
                     {icon}
