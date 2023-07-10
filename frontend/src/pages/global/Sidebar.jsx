@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import logoDashboard from "../../assets/progress.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogoutAction } from "../../redux/actions/userAction";
+import { userLogoutAction } from "../../utils/redux/actions/userAction";
 import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 

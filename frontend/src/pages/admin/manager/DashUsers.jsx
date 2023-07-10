@@ -7,7 +7,7 @@ import Navbar from "../../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
-import { getUser } from "../../../redux/slice/userSlice";
+import { getUser } from "../../../utils/redux/slice/userSlice";
 import moment from "moment"
 
 // backend url endpoint

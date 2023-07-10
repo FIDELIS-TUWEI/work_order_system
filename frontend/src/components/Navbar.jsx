@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { useTheme } from '@emotion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogoutAction } from '../redux/actions/userAction';
+import { userLogoutAction } from '../utils/redux/actions/userAction';
 
 const pages = ["Home", "Log In"];
 

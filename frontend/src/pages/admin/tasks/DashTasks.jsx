@@ -7,7 +7,7 @@ import Navbar from "../../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
-import { getTasks } from "../../../redux/slice/taskSlice";
+import { getTasks } from "../../../utils/redux/slice/taskSlice";
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'

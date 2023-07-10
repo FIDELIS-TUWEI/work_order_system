@@ -7,7 +7,7 @@ import { theme } from "./theme";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProSidebarProvider } from "react-pro-sidebar";
-import LogIn from "./pages/LogIn";
+import LogIn from "./features/LogIn";
 import UserDashboard from "./pages/user/UserDashboard";
 import UserRoute from "./components/UserRoute";
 import Layout from "./pages/global/Layout";
