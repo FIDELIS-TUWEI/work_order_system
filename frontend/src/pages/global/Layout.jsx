@@ -3,7 +3,7 @@ import HeaderTop from "./HeaderTop";
 import SidebarAdmin from "./Sidebar";
 
 
-const Layout = (Component) => ({ ...props }) => {
+const Layout = Component => ({ ...props }) => {
 
   return (
     <>

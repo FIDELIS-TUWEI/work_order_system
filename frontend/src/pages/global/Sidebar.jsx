@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 
 
-const SidebarAdmin = () => {
+const SidebarAdmin = ({children}) => {
   const { userInfo } = useSelector(state => state.signIn);
   const { palette } = useTheme();
   const { collapsed } = useProSidebar();
@@ -37,6 +37,7 @@ const SidebarAdmin = () => {
 
   return (
     <>
+    {children}
       <Sidebar backgroundColor="#003366" style={{ borderRightStyle: "none" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", flexDirection: "column", height: "100%" }}>
           <Box>
