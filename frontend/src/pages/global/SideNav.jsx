@@ -20,6 +20,7 @@ import Home from '../Home';
 import DashUsers from '../admin/manager/DashUsers';
 import DashTasks from '../admin/tasks/DashTasks';
 import LogIn from '../../features/LogIn';
+import { useState } from 'react';
 
 const drawerWidth = 240;
 
@@ -81,7 +82,7 @@ const SideNav = ({ open, setOpen }) => {
 //    { title: "Profile", icon: <Person3Icon />, link: "/info", component: <LogIn/> },
 //], [])
 
-
+const [menuData, setMenuData] = useState("Home")
   const navigate = useNavigate();
 
     // function to handle logout
@@ -125,14 +126,14 @@ const SideNav = ({ open, setOpen }) => {
             </ListItem>
         </List>
         <List>
-            <ListItem  disablePadding sx={{ display: 'block' }}>
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Users")}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                onClick={() => navigate("/users/list")}
+                //onClick={() => navigate("/users/list")}
               >
                 <ListItemIcon
                   sx={{
@@ -148,14 +149,14 @@ const SideNav = ({ open, setOpen }) => {
             </ListItem>
         </List>
         <List>
-            <ListItem  disablePadding sx={{ display: 'block' }}>
+            <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Tasks")}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                onClick={() => navigate("/tasks/list")}
+                //onClick={() => navigate("/tasks/list")}
               >
                 <ListItemIcon
                   sx={{
@@ -188,12 +189,9 @@ const SideNav = ({ open, setOpen }) => {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Routes>
-                <Route path="" element={<Home />} />
-                <Route path="/users/list" element={<DashUsers />} />
-                <Route path="/tasks/list" element={<WorkIcon />} />
-
-        </Routes>
+        {menuData == "Home" && <Home />}
+        {menuData == "Users" && <DashUsers />}
+        {menuData == "Tasks" && <DashTasks />}
       </Box>
     </>
   )
