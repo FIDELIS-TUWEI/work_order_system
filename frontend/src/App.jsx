@@ -21,10 +21,10 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import Dashboard from "./pages/global/Dashboard";
 
 // Higher Order Component
-const UserDashboardHOC = Layout(UserDashboard);
-const UserTasksHistoryHOC = Layout(UserTasksHistory);
-const UserInfoDashboardHOC = Layout(UserInfoDashboard);
-const AdminDashboardHOC = Layout(AdminDashboard);
+//const UserDashboardHOC = Layout(UserDashboard);
+//const UserTasksHistoryHOC = Layout(UserTasksHistory);
+//const UserInfoDashboardHOC = Layout(UserInfoDashboard);
+//const AdminDashboardHOC = Layout(AdminDashboard);
 
 function App() {
   return (
@@ -35,13 +35,13 @@ function App() {
             <ProSidebarProvider>
               <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/dashboard/*" element={<Dashboard />} />
                   <Route path="/search/:keyword" element={<Home />} />
                   <Route path="/login" element={<LogIn />} />
-                  <Route path="/admin/dashboard" element={<AdminDashboardHOC />} />
-                  <Route path="/user/dashboard" element={<UserRoute><UserDashboardHOC /></UserRoute>} />
-                  <Route path="/user/tasks" element={<UserRoute><UserTasksHistoryHOC /></UserRoute>} />
-                  <Route path="/user/info" element={<UserRoute><UserInfoDashboardHOC /></UserRoute>} />
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  <Route path="/user/dashboard" element={<UserRoute><UserDashboard /></UserRoute>} />
+                  <Route path="/user/tasks" element={<UserRoute><UserTasksHistory /></UserRoute>} />
+                  <Route path="/user/info" element={<UserRoute><UserInfoDashboard /></UserRoute>} />
                   <Route path="/tasks/create" element={<DashCreateTask />} />
                   <Route path="/tasks/list" element={<DashTasks />} />
                   <Route path="/users/create" element={<DashCreateUsers />} />

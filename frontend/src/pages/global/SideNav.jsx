@@ -7,9 +7,19 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { Box, Typography, styled } from '@mui/material';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import Person3Icon from "@mui/icons-material/Person3";
+import WorkIcon from "@mui/icons-material/Work";
+import { Avatar, Box, Tooltip, Typography, styled } from '@mui/material';
+import Logout from "@mui/icons-material/Logout";
+import { useDispatch } from 'react-redux';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
+import Home from '../Home';
+import DashUsers from '../admin/manager/DashUsers';
+import DashTasks from '../admin/tasks/DashTasks';
+import LogIn from '../../features/LogIn';
 
 const drawerWidth = 240;
 
@@ -61,6 +71,28 @@ const openedMixin = (theme) => ({
   );
 
 const SideNav = ({ open, setOpen }) => {
+    
+  const dispatch = useDispatch();
+
+const list = useMemo(() => [
+    { title: "Main", icon: <DashboardIcon />, link: "", component: <Home/> },
+    { title: "Users", icon: <GroupAddIcon />, link: "/users/list", component: <DashUsers/> },
+    { title: "Tasks", icon: <WorkIcon />, link: "tasks/list", component: <DashTasks/> },
+    { title: "Profile", icon: <Person3Icon />, link: "/info", component: <LogIn/> },
+], [])
+
+
+  const navigate = useNavigate();
+
+    // function to handle logout
+    const handleLogout = () => {
+        dispatch(userLogoutAction());
+        window.location.reload(true);
+        setTimeout(() => {
+        navigate("/");
+        }, 500)
+    };
+
   return (
     <>
      <Drawer variant="permanent" open={open}>
@@ -71,14 +103,15 @@ const SideNav = ({ open, setOpen }) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          {list.map((item) => (
+            <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
+                onClick={() => navigate(item.link)}
               >
                 <ListItemIcon
                   sx={{
@@ -87,68 +120,36 @@ const SideNav = ({ open, setOpen }) => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <Box sx={{ mx: "auto", mt: 3, mb: 1 }}>
+            <Tooltip title="current user">
+                <Avatar {...open && {sx:{width:100, height:100}}}/>
+            </Tooltip>
+        </Box>
+        <Box sx={{ textAlign: "center" }}>
+            {open && <Typography>current user: Ftuwei</Typography>}
+            <Typography variant='body2'>role: admin</Typography>
+            <Tooltip title="logout" sx={{ mt: 1 }}>
+                <IconButton onClick={handleLogout}>
+                    <Logout />
+                </IconButton>
+            </Tooltip>
+        </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        <Routes>
+            {list.map(item => {
+                <Route key={item.title} path={item.link} element={item.component} />
+            })}
+        </Routes>
       </Box>
     </>
   )
