@@ -74,12 +74,12 @@ const SideNav = ({ open, setOpen }) => {
     
   const dispatch = useDispatch();
 
-const list = useMemo(() => [
-    { title: "Main", icon: <DashboardIcon />, link: "", component: <Home/> },
-    { title: "Users", icon: <GroupAddIcon />, link: "/users/list", component: <DashUsers/> },
-    { title: "Tasks", icon: <WorkIcon />, link: "tasks/list", component: <DashTasks/> },
-    { title: "Profile", icon: <Person3Icon />, link: "/info", component: <LogIn/> },
-], [])
+//const list = useMemo(() => [
+//    { title: "Main", icon: <DashboardIcon />, link: "", component: <Home/> },
+//    { title: "Users", icon: <GroupAddIcon />, link: "/users/list", component: <DashUsers/> },
+//    { title: "Tasks", icon: <WorkIcon />, link: "tasks/list", component: <DashTasks/> },
+//    { title: "Profile", icon: <Person3Icon />, link: "/info", component: <LogIn/> },
+//], [])
 
 
   const navigate = useNavigate();
@@ -103,15 +103,13 @@ const list = useMemo(() => [
         </DrawerHeader>
         <Divider />
         <List>
-          {list.map((item) => (
-            <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
+            <ListItem  disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                onClick={() => navigate(item.link)}
               >
                 <ListItemIcon
                   sx={{
@@ -120,12 +118,11 @@ const list = useMemo(() => [
                     justifyContent: 'center',
                   }}
                 >
-                    {item.icon}
+                    <DashboardIcon />
                 </ListItemIcon>
-                <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary="Main" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          ))}
         </List>
         <Divider />
         <Box sx={{ mx: "auto", mt: 3, mb: 1 }}>
@@ -146,9 +143,7 @@ const list = useMemo(() => [
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Routes>
-            {list.map(item => {
-                <Route key={item.title} path={item.link} element={item.component} />
-            })}
+                <Route path="" element={<Home />} />
         </Routes>
       </Box>
     </>
