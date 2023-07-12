@@ -124,6 +124,52 @@ const SideNav = ({ open, setOpen }) => {
               </ListItemButton>
             </ListItem>
         </List>
+        <List>
+            <ListItem  disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+                onClick={() => navigate("/users/list")}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                    <GroupAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Users" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+        </List>
+        <List>
+            <ListItem  disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+                onClick={() => navigate("/tasks/list")}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                    <WorkIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+        </List>
         <Divider />
         <Box sx={{ mx: "auto", mt: 3, mb: 1 }}>
             <Tooltip title="current user">
@@ -144,6 +190,9 @@ const SideNav = ({ open, setOpen }) => {
         <DrawerHeader />
         <Routes>
                 <Route path="" element={<Home />} />
+                <Route path="/users/list" element={<DashUsers />} />
+                <Route path="/tasks/list" element={<WorkIcon />} />
+
         </Routes>
       </Box>
     </>
