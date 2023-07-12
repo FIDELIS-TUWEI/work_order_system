@@ -1,5 +1,4 @@
 import MuiDrawer from '@mui/material/Drawer';
-import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -10,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { styled } from '@mui/material';
+import { Box, Typography, styled } from '@mui/material';
 
 const drawerWidth = 240;
 

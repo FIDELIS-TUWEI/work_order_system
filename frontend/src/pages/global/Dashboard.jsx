@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import SideNav from './SideNav';
+import { IconButton } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -30,7 +31,7 @@ const AppBar = styled(MuiAppBar, {
 
 
 
-export default function MiniDrawer() {
+export default function Dashboard() {
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -55,7 +56,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            Work Order System
           </Typography>
         </Toolbar>
       </AppBar>

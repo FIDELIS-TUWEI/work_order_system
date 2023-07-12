@@ -18,6 +18,7 @@ import DashTasks from "./pages/admin/tasks/DashTasks";
 import DashCreateUsers from "./pages/admin/manager/DashCreateUsers";
 import DashUsers from "./pages/admin/manager/DashUsers";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import Dashboard from "./pages/global/Dashboard";
 
 // Higher Order Component
 const UserDashboardHOC = Layout(UserDashboard);
@@ -34,7 +35,7 @@ function App() {
             <ProSidebarProvider>
               <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/search/location/:location" element={<Home />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/search/:keyword" element={<Home />} />
                   <Route path="/login" element={<LogIn />} />
                   <Route path="/admin/dashboard" element={<AdminDashboardHOC />} />
