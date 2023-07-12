@@ -35,7 +35,7 @@ function App() {
             <ProSidebarProvider>
               <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/dashboard/*" element={<Dashboard />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/search/:keyword" element={<Home />} />
                   <Route path="/login" element={<LogIn />} />
                   <Route path="/admin/dashboard" element={<AdminDashboard />} />

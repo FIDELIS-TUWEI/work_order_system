@@ -173,7 +173,7 @@ const Navbar = () => {
                 <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/admin/dashboard">Admin Dashboard</Link></Typography>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/user/dashboard">User Dashboard</Link></Typography>
+                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/dashboard">User Dashboard</Link></Typography>
               </MenuItem>
 
               {/* Condition to check if user is Logged In */}
