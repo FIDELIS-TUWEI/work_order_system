@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import LogIn from "../features/LogIn";
+import Tasks from "../pages/admin/Tasks";
+import Users from "../pages/admin/Users";
 
 
 const router = createBrowserRouter([
@@ -18,12 +20,12 @@ const router = createBrowserRouter([
         element: <LogIn />
     },
     {
-        path: "/",
-        element: <Home />
+        path: "/tasks/list",
+        element: <Tasks />
     },
     {
-        path: "/",
-        element: <Home />
+        path: "/users/list",
+        element: <Users />
     },
 ]);
 
