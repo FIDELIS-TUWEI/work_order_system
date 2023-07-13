@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema;
 
 const taskSchema = new mongoose.Schema({
     title: {
@@ -25,25 +24,32 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        // fix, repair, replace
+        type: String,
+        required: true
+    },
     taskType: {
-        // Fix, repair replace
-        type: ObjectId,
-        ref: "TaskType",
+        // Door , Bulb, Wi-Fi
+        type: String,
         required: true
     },
     status: {
         // pending complete
-        type: Boolean,
-        default: false,
-        //required: true,
+        type: String,
+        enum: ["pending", "complete", "Inspected"],
+        default: "Pending",
     },
     assignedTo: {
         type: String,
-        required: [true, "Please enter your name"],
+        required: [true, "Please enter employee name to assign"],
     },
-    user: {
-        type: ObjectId,
-        ref: "User",
+    assignedBy: {
+        type: String,
+        required: [true, "Enter your name"]
+    },
+    date: {
+        type: Date,
         required: true
     }
 },
