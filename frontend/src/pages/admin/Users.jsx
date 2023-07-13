@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { getUser } from "../../utils/redux/slice/userSlice";
 import dayjs from "dayjs"
@@ -70,7 +70,7 @@ const Users = () => {
       field: "createdAt",
       headerName: "Created At",
       width: 150,
-      valueFormatter: params => dayjs(params.value).format("DD/MM/YYYY")
+      renderCell: params => dayjs(params.row.date).format("DD/MM/YYYY")
     },
     {
       field: "Actions",
@@ -104,6 +104,8 @@ const Users = () => {
               rows={users}
               columns={columns}
               getRowId={(row) => row.id}
+              //rowsPerpageOptions={[5,10,20]}
+              //pageSize={pageSize}
               sx={{
                 "& .MuiTablePagination-displayedRows": {
                   color: "white",
@@ -119,7 +121,7 @@ const Users = () => {
               }}
               
               pageSize={5}
-              rowsPerpageOptions={[5]}
+              rowsPerpageOptions={[5, 10, 25]}
               checkboxSelection
             />
           </Box>
