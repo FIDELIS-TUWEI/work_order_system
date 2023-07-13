@@ -1,32 +1,35 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
+import Dashboard from "../pages/global/Dashboard"
 import NotFound from "../pages/NotFound";
 import LogIn from "../features/LogIn";
 import Tasks from "../pages/admin/Tasks";
 import Users from "../pages/admin/Users";
 
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />
+        element: <Home />,
     },
     {
-        path: "*",
-        element: <NotFound />
+        path: "/dashboard",
+        element: <Dashboard />,
     },
     {
         path: "/login",
-        element: <LogIn />
+        element: <LogIn />,
     },
     {
         path: "/tasks/list",
-        element: <Tasks />
+        element: <Tasks />,
     },
     {
         path: "/users/list",
-        element: <Users />
+        element: <Users />,
+    },
+    {
+        path: "*",
+        element: <NotFound />,
     },
 ]);
-
-export default router;
