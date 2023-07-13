@@ -70,9 +70,7 @@ const Users = () => {
       field: "createdAt",
       headerName: "Created At",
       width: 150,
-      renderCell: (params) => (
-        moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
-      )
+      renderCell: params => moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
     },
     {
       field: "Actions",
