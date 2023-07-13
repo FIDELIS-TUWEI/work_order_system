@@ -90,7 +90,6 @@ const Users = () => {
 
   return (
     <>
-    <Navbar />
       <Box sx={{ mb: 3 }}>
         <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
           Users List
@@ -128,7 +127,6 @@ const Users = () => {
           </Box>
         </Paper>
       </Box>
-      <Footer />
     </>
   )
 }
