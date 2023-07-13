@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { getUser } from "../../utils/redux/slice/userSlice";
-import moment from "moment"
+import dayjs from "dayjs"
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -70,7 +70,7 @@ const Users = () => {
       field: "createdAt",
       headerName: "Created At",
       width: 150,
-      renderCell: params => moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
+      valueFormatter: params => dayjs(params.value).format("DD/MM/YYYY")
     },
     {
       field: "Actions",
