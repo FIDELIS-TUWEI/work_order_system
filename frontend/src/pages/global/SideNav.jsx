@@ -9,17 +9,12 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
-import Person3Icon from "@mui/icons-material/Person3";
 import WorkIcon from "@mui/icons-material/Work";
 import { Avatar, Box, Tooltip, Typography, styled } from '@mui/material';
 import Logout from "@mui/icons-material/Logout";
-import { useDispatch } from 'react-redux';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useMemo } from 'react';
 import Home from '../Home';
 import DashUsers from '../admin/manager/DashUsers';
 import DashTasks from '../admin/tasks/DashTasks';
-import LogIn from '../../features/LogIn';
 import { useState } from 'react';
 
 const drawerWidth = 240;
@@ -72,27 +67,9 @@ const openedMixin = (theme) => ({
   );
 
 const SideNav = ({ open, setOpen }) => {
-    
-  const dispatch = useDispatch();
-
-//const list = useMemo(() => [
-//    { title: "Main", icon: <DashboardIcon />, link: "", component: <Home/> },
-//    { title: "Users", icon: <GroupAddIcon />, link: "/users/list", component: <DashUsers/> },
-//    { title: "Tasks", icon: <WorkIcon />, link: "tasks/list", component: <DashTasks/> },
-//    { title: "Profile", icon: <Person3Icon />, link: "/info", component: <LogIn/> },
-//], [])
 
 const [menuData, setMenuData] = useState("Home")
-  const navigate = useNavigate();
 
-    // function to handle logout
-    const handleLogout = () => {
-        dispatch(userLogoutAction());
-        window.location.reload(true);
-        setTimeout(() => {
-        navigate("/");
-        }, 500)
-    };
 
   return (
     <>
@@ -133,7 +110,6 @@ const [menuData, setMenuData] = useState("Home")
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                //onClick={() => navigate("/users/list")}
               >
                 <ListItemIcon
                   sx={{
@@ -156,7 +132,6 @@ const [menuData, setMenuData] = useState("Home")
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                //onClick={() => navigate("/tasks/list")}
               >
                 <ListItemIcon
                   sx={{
@@ -181,7 +156,7 @@ const [menuData, setMenuData] = useState("Home")
             {open && <Typography>current user: Ftuwei</Typography>}
             <Typography variant='body2'>role: admin</Typography>
             <Tooltip title="logout" sx={{ mt: 1 }}>
-                <IconButton onClick={handleLogout}>
+                <IconButton>
                     <Logout />
                 </IconButton>
             </Tooltip>
