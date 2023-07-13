@@ -34,7 +34,7 @@ const validationSchema = yup.object({
   .required("Description is required"),
 });
 
-const DashCreateTask = () => {
+const CreateTask = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -181,4 +181,4 @@ const DashCreateTask = () => {
   )
 }
 
-export default DashCreateTask
+export default CreateTask

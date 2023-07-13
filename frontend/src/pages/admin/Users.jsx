@@ -13,7 +13,7 @@ import moment from "moment"
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
 
-const DashUsers = () => {
+const Users = () => {
 
   const dispatch = useDispatch();
   const users = useSelector(state => state.users.users);
@@ -133,4 +133,4 @@ const DashUsers = () => {
   )
 }
 
-export default DashUsers
+export default Users

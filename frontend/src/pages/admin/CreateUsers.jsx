@@ -30,7 +30,7 @@ const validationSchema = yup.object({
 
 });
 
-const DashCreateUsers = () => {
+const CreateUsers = () => {
   const dispatch = useDispatch();
   
 
@@ -126,4 +126,4 @@ const DashCreateUsers = () => {
   )
 }
 
-export default DashCreateUsers;
+export default CreateUsers;

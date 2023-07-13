@@ -12,7 +12,7 @@ import { getTasks } from "../../utils/redux/slice/taskSlice";
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
 
-const DashTasks = () => {
+const Tasks = () => {
 
   const dispatch = useDispatch();
   const tasks = useSelector(state => state.tasks.tasks);
@@ -139,4 +139,4 @@ const DashTasks = () => {
   )
 }
 
-export default DashTasks;
+export default Tasks;
