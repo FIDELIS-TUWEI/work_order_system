@@ -98,7 +98,7 @@ const showTaskType = asyncHandler (async (req, res, next) => {
 // get Tasks Logic
 const getTasks = asyncHandler (async (req, res, next) => {
     try {
-       const tasks = await Task.find().populate("taskType", "taskTypeName").populate("user", "name");
+       const tasks = await Task.find();
        res.status(200).json({
         success: true,
         data: {
