@@ -7,7 +7,7 @@ import Tasks from "../pages/admin/Tasks";
 import Users from "../pages/admin/Users";
 
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
@@ -31,5 +31,7 @@ export const router = createBrowserRouter([
     {
         path: "*",
         element: <NotFound />,
-    },
+    }
 ]);
+
+export default router;
