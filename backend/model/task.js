@@ -7,13 +7,6 @@ const taskSchema = new mongoose.Schema({
         trim: true,
         required: true, 
     },
-    description: {
-        // Additional Information of the work
-        type: String,
-        trim: true,
-        required: [true, "Description is required"],
-        maxlength: 500
-    },
     location: {
         // Rooms, open places, Back office
         type: String,
@@ -37,7 +30,7 @@ const taskSchema = new mongoose.Schema({
     status: {
         // pending complete
         type: String,
-        enum: ["pending", "complete", "Inspected"],
+        enum: ["Pending", "Complete", "Inspected"],
         default: "Pending",
     },
     assignedTo: {
@@ -49,7 +42,7 @@ const taskSchema = new mongoose.Schema({
         required: [true, "Enter your name"]
     },
     date: {
-        type: Date,
+        type: String,
         required: true
     }
 },

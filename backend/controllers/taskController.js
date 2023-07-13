@@ -6,7 +6,6 @@ const createTask = asyncHandler (async (req, res, next) => {
     try {
         const task = await Task.create({
             title: req.body.title,
-            description: req.body.description,
             location: req.body.location,
             priority: req.body.priority,
             category: req.body.category,
