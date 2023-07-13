@@ -1,6 +1,4 @@
 const Task = require("../model/task");
-const TaskType = require("../model/taskType");
-const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 
 // create Task logic
@@ -11,10 +9,12 @@ const createTask = asyncHandler (async (req, res, next) => {
             description: req.body.description,
             location: req.body.location,
             priority: req.body.priority,
+            category: req.body.category,
             taskType: req.body.taskType,
             status: req.body.status,
             assignedTo: req.body.assignedTo,
-            user: req.user.id
+            assignedBy: req.body.assignedBy,
+            date: req.body.date
         });
         res.status(201).json({
             success: true,
@@ -30,7 +30,7 @@ const createTask = asyncHandler (async (req, res, next) => {
 // get Task logic
 const singleTask = asyncHandler (async (req, res, next) => {
     try {
-        const task = await Task.findById(req.params.id).populate("taskType", "taskTypeName").populate("user", "name");
+        const task = await Task.findById(req.params.id).populate("category", "taskType").populate("assignedBy").populate("date");
         if (!task) {
             return res.status(404).json({ message: `No task with ID: ${id} found` });
         }
