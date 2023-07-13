@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import WorkIcon from "@mui/icons-material/Work";
+import Analytics from "@mui/icons-material/Analytics"
 import { Avatar, Box, Tooltip, Typography, styled } from '@mui/material';
 import Logout from "@mui/icons-material/Logout";
 import Home from '../Home';
@@ -143,6 +144,28 @@ const [menuData, setMenuData] = useState("Home")
                     <WorkIcon />
                 </ListItemIcon>
                 <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+        </List>
+        <List>
+            <ListItem  disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                    <Analytics />
+                </ListItemIcon>
+                <ListItemText primary="Analysis" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
         </List>

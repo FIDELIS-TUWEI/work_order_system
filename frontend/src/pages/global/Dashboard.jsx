@@ -59,17 +59,13 @@ export default function Dashboard() {
     <ThemeProvider theme={darkTheme}>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => {setOpen(!open)}}
             edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
           >
             <MenuIcon />
           </IconButton>
