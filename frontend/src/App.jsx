@@ -7,22 +7,12 @@ import { theme } from "./theme";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LogIn from "./features/LogIn";
-import UserDashboard from "./pages/user/UserDashboard";
-import UserRoute from "./components/UserRoute";
-import UserTasksHistory from "./pages/user/UserTasksHistory";
-import UserInfoDashboard from "./pages/user/UserInfoDashboard";
 import DashCreateTask from "./pages/admin/tasks/DashCreateTask";
 import DashTasks from "./pages/admin/tasks/DashTasks";
 import DashCreateUsers from "./pages/admin/manager/DashCreateUsers";
 import DashUsers from "./pages/admin/manager/DashUsers";
-import AdminDashboard from "./pages/admin/AdminDashboard";
 import Dashboard from "./pages/global/Dashboard";
 
-// Higher Order Component
-//const UserDashboardHOC = Layout(UserDashboard);
-//const UserTasksHistoryHOC = Layout(UserTasksHistory);
-//const UserInfoDashboardHOC = Layout(UserInfoDashboard);
-//const AdminDashboardHOC = Layout(AdminDashboard);
 
 function App() {
   return (
@@ -33,7 +23,6 @@ function App() {
               <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/search/:keyword" element={<Home />} />
                   <Route path="/login" element={<LogIn />} />
                   <Route path="/tasks/create" element={<DashCreateTask />} />
                   <Route path="/tasks/list" element={<DashTasks />} />
