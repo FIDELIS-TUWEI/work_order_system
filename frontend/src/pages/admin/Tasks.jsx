@@ -3,12 +3,11 @@ import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { getTasks } from "../../utils/redux/slice/taskSlice";
-import dayjs from "dayjs"
+//import dayjs from "dayjs"
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -52,6 +51,11 @@ const Tasks = () => {
     },
     {
       field: "taskType",
+      headerName: "Task Type",
+      width: 150,
+    },
+    {
+      field: "category",
       headerName: "Category",
       width: 150,
     },
@@ -74,7 +78,7 @@ const Tasks = () => {
       field: "date",
       headerName: "Date Assigned",
       width: 150,
-      valueFormatter: params => dayjs(params.value).format("DD/MM/YYYY")
+      //valueFormatter: params => dayjs(params.value).format("DD/MM/YYYY")
     },
     {
       field: "Actions",

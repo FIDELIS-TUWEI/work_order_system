@@ -11,13 +11,14 @@ const taskSlice = createSlice({
             state.tasks = action.payload.data.tasks.map((task) => {
                 return { id: task._id,
                     title: task.title,
-                    description: task.description,
                     location: task.location,
                     priority: task.priority,
+                    category: task.category,
                     taskType: task.taskType,
                     status: task.status,
                     assignedTo: task.assignedTo,
-                    user: task.user 
+                    assignedBy: task.assignedBy,
+                    date: task.date 
                 }
             })
         }
