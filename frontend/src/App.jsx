@@ -7,10 +7,10 @@ import { theme } from "./theme";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LogIn from "./features/LogIn";
-import DashCreateTask from "./pages/admin/DashCreateTask";
-import DashTasks from "./pages/admin/DashTasks";
-import DashCreateUsers from "./pages/admin/DashCreateUsers";
-import DashUsers from "./pages/admin/DashUsers";
+import DashCreateTask from "./pages/admin/CreateTask";
+import DashTasks from "./pages/admin/Tasks";
+import DashCreateUsers from "./pages/admin/CreateUsers";
+import DashUsers from "./pages/admin/Users";
 import Dashboard from "./pages/global/Dashboard";
 
 

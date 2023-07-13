@@ -13,8 +13,8 @@ import WorkIcon from "@mui/icons-material/Work";
 import { Avatar, Box, Tooltip, Typography, styled } from '@mui/material';
 import Logout from "@mui/icons-material/Logout";
 import Home from '../Home';
-import DashUsers from '../admin/DashUsers';
-import DashTasks from '../admin/DashTasks';
+import DashUsers from '../admin/Users';
+import DashTasks from '../admin/Tasks';
 import { useState } from 'react';
 
 const drawerWidth = 240;
