@@ -4,10 +4,10 @@ import Button from "@mui/material/Button";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/Footer";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../../utils/redux/slice/userSlice"
+import { addUser } from "../../utils/redux/slice/userSlice"
 import axios from "axios";
 import { toast } from "react-toastify";
 

@@ -3,8 +3,8 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Footer from "../../../components/Footer";
-import Navbar from "../../../components/Navbar";
+import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
