@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { getTasks } from "../../utils/redux/slice/taskSlice";
+import dayjs from "dayjs"
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -55,11 +56,6 @@ const Tasks = () => {
       width: 150,
     },
     {
-      field: "description",
-      headerName: "Description",
-      width: 150,
-    },
-    {
       field: "location",
       headerName: "Location",
       width: 150,
@@ -70,15 +66,15 @@ const Tasks = () => {
       width: 150,
     },
     {
-      field: "user",
-      headerName: "Requested By",
-      width: 150,
-      valueGutter: (tasks) => tasks.row.user.name
-    },
-    {
       field: "status",
       headerName: "Task Status",
       width: 150,
+    },
+    {
+      field: "date",
+      headerName: "Date Assigned",
+      width: 150,
+      valueFormatter: params => dayjs(params.value).format("DD/MM/YYYY")
     },
     {
       field: "Actions",
