@@ -30,7 +30,7 @@ const LogIn = () => {
     // useEffect hook
     useEffect(() => {
         if (isAuthenticated) {
-            navigate("/user/dashboard");
+            navigate("/dashboard");
         }
     }, [isAuthenticated]);
 
