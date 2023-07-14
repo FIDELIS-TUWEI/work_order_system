@@ -10,7 +10,6 @@ const createTask = asyncHandler (async (req, res, next) => {
             priority: req.body.priority,
             category: req.body.category,
             taskType: req.body.taskType,
-            status: req.body.status,
             assignedTo: req.body.assignedTo,
             assignedBy: req.body.assignedBy,
             date: req.body.date

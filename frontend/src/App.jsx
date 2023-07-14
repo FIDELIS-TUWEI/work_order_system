@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import Tasks from "./pages/admin/Tasks";
 import Users from "./pages/admin/Users";
 import CreateUsers from "./pages/admin/CreateUsers";
+import CreateTask from "./pages/admin/CreateTask";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path="/tasks/list" element={<Tasks />} />
               <Route path="/users/list" element={<Users />} />
               <Route path="/users/create" element={<CreateUsers />} />
+              <Route path="/tasks/create" element={<CreateTask />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
         </ThemeProvider>

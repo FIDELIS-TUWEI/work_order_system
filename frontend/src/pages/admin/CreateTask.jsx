@@ -169,22 +169,6 @@ const CreateTask = () => {
 
             <TextField sx={{ mb: 3 }}
               fullWidth
-              id="status"
-              label="Status"
-              name="status"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              placeholder="Status"
-              value={formik.values.status}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.status && Boolean(formik.errors.status)}
-              helperText={formik.touched.status && formik.errors.status}
-            />
-
-            <TextField sx={{ mb: 3 }}
-              fullWidth
               id="assignedTo"
               label="Assigned To"
               name="assignedTo"
