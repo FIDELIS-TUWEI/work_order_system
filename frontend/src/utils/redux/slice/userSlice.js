@@ -13,7 +13,8 @@ const userSlice = createSlice({
                     name: user.name, 
                     username: user.username,
                     role: user.role,
-                    active: user.active 
+                    active: user.active,
+                    date: user.date 
                 }
             })
         },
