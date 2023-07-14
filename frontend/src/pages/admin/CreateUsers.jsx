@@ -26,7 +26,10 @@ const validationSchema = yup.object({
   password: yup
       .string("Enter you password")
       .min(8, "Password should be of minimum 8 characters long")
-      .required("Password is required")
+      .required("Password is required"),
+  date: yup
+      .string("Enter date")
+      .required("Today's date is required")
 
 });
 
@@ -52,7 +55,8 @@ const CreateUsers = () => {
     initialValues: {
       name: "",
       username: "",
-      password: ""
+      password: "",
+      date: ""
     },
     validateOnBlur: true,
     validationSchema: validationSchema,
@@ -115,6 +119,22 @@ const CreateUsers = () => {
               onBlur={formik.handleBlur}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
+            />
+            
+            <TextField sx={{ mb: 3 }}
+              fullWidth
+              id="date"
+              label="Date"
+              name="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Enter today's date"
+              value={formik.values.date}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.date && Boolean(formik.errors.date)}
+              helperText={formik.touched.date && formik.errors.date}
             />
 
             <Button fullWidth variant="contained" type="submit">Register User</Button>
