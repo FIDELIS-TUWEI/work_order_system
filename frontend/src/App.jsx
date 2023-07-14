@@ -10,6 +10,7 @@ import Dashboard from "./pages/global/Dashboard";
 import NotFound from "./pages/NotFound";
 import Tasks from "./pages/admin/Tasks";
 import Users from "./pages/admin/Users";
+import CreateUsers from "./pages/admin/CreateUsers";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path="/login" element={<LogIn />} />
               <Route path="/tasks/list" element={<Tasks />} />
               <Route path="/users/list" element={<Users />} />
+              <Route path="/users/create" element={<CreateUsers />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
         </ThemeProvider>
