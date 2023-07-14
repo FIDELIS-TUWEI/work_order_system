@@ -87,7 +87,7 @@ const Users = () => {
   return (
     <>
       <Box sx={{ mb: 3 }}>
-        <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
+        <Typography variant="h4" sx={{ color: "white", pb: 3, display: "flex", justifyContent: "center", alignItems: "center" }}>
           Users List
         </Typography>
         <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
