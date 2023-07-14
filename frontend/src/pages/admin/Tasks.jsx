@@ -101,8 +101,8 @@ const Tasks = () => {
   return (
     <>
       <Box sx={{ mb: 3 }}>
-        <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
-          Task List
+        <Typography variant="h4" sx={{ color: "white", pb: 3, display: "flex", justifyContent: "center", alignItems: "center" }}>
+          Tasks List
         </Typography>
         <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
           <Button onClick={handleCreateTask} variant="contained" color="success" startIcon={<AddIcon />} sx={{ mr: 3 }}> 
