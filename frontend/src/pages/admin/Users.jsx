@@ -2,10 +2,10 @@ import { Box, Button, Paper, Typography } from "@mui/material"
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
+//import Footer from "../../components/Footer";
+//import Navbar from "../../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { getUser } from "../../utils/redux/slice/userSlice";
 import dayjs from "dayjs"

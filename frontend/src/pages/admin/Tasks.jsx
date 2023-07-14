@@ -70,6 +70,11 @@ const Tasks = () => {
       width: 150,
     },
     {
+      field: "assignedBy",
+      headerName: "Assigned By",
+      width: 150,
+    },
+    {
       field: "status",
       headerName: "Task Status",
       width: 150,
