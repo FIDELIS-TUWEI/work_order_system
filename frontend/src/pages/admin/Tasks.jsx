@@ -83,7 +83,6 @@ const Tasks = () => {
       field: "date",
       headerName: "Date Assigned",
       width: 150,
-      //valueFormatter: params => dayjs(params.value).format("DD/MM/YYYY")
     },
     {
       field: "Actions",

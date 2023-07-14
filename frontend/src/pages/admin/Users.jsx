@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { getUser } from "../../utils/redux/slice/userSlice";
-import dayjs from "dayjs"
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -67,10 +66,9 @@ const Users = () => {
       renderCell: (values) => values.row.active ? "true" : "false"
     },
     {
-      field: "createdAt",
-      headerName: "Created At",
+      field: "date",
+      headerName: "Date Created",
       width: 150,
-      renderCell: params => dayjs(params.row.date).format("DD/MM/YYYY")
     },
     {
       field: "Actions",
