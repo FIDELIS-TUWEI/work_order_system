@@ -16,22 +16,30 @@ const validationSchema = yup.object({
   title: yup
       .string("Enter Task Title")
       .required("Task Title is required"),
-  description: yup
-      .string("Enter a description")
-      .min(6, "Description should be a minimum of 6 characters")
-      .required("Description is required"),
   location: yup
       .string("Enter a Location")
       .required("Location is required"),
   priority: yup
       .string("Enter a Priority Level")
       .required("Priority Level is required"),
+  category: yup
+      .string("Enter Task Category")
+      .required("Task Category is required"),
   taskType: yup
-      .string("Enter Category")
-      .required("Task Category is Required"),
+      .string("Enter Task Type")
+      .required("Task Type is Required"),
   assignedTo: yup
-  .string("Enter a description")
-  .required("Description is required"),
+      .string("Enter employee name")
+      .required("Employee name is required"),
+  assignedBy: yup
+      .string("Enter your name")
+      .required("Supervisor's name is required"),
+  status: yup
+      .string("Enter Task Status")
+      .required("Task Status is required"),
+  date: yup
+      .string("Enter Date Task was assigned")
+      .required("Date is required"),
 });
 
 const CreateTask = () => {
@@ -55,11 +63,14 @@ const CreateTask = () => {
   const formik = useFormik({
     initialValues: {
       title: "",
-      description: "",
+      category: "",
       location: "",
       priority: "",
       taskType: "",
-      assignedTo: ""
+      assignedTo: "",
+      assignedBy: "",
+      status: "",
+      date: ""
     },
     validateOnBlur: true,
     validationSchema: validationSchema,
@@ -94,22 +105,6 @@ const CreateTask = () => {
 
             <TextField sx={{ mb: 3 }}
               fullWidth
-              id="description"
-              label="Description"
-              name="description"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              placeholder="Description"
-              value={formik.values.description}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.description && Boolean(formik.errors.description)}
-              helperText={formik.touched.description && formik.errors.description}
-            />
-
-            <TextField sx={{ mb: 3 }}
-              fullWidth
               id="location"
               label="Location"
               name="location"
@@ -139,6 +134,22 @@ const CreateTask = () => {
               error={formik.touched.priority && Boolean(formik.errors.priority)}
               helperText={formik.touched.priority && formik.errors.priority}
             />
+
+            <TextField sx={{ mb: 3 }}
+              fullWidth
+              id="category"
+              label="Task Category"
+              name="category"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Category"
+              value={formik.values.category}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.category && Boolean(formik.errors.category)}
+              helperText={formik.touched.category && formik.errors.category}
+            />
             
             <TextField sx={{ mb: 3 }}
               fullWidth
@@ -158,18 +169,66 @@ const CreateTask = () => {
 
             <TextField sx={{ mb: 3 }}
               fullWidth
+              id="status"
+              label="Status"
+              name="status"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Status"
+              value={formik.values.status}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.status && Boolean(formik.errors.status)}
+              helperText={formik.touched.status && formik.errors.status}
+            />
+
+            <TextField sx={{ mb: 3 }}
+              fullWidth
               id="assignedTo"
               label="Assigned To"
               name="assignedTo"
               InputLabelProps={{
                 shrink: true,
               }}
-              placeholder="Enter name to Assign"
+              placeholder="Enter employee name to Assign"
               value={formik.values.assignedTo}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.assignedTo && Boolean(formik.errors.assignedTo)}
               helperText={formik.touched.assignedTo && formik.errors.assignedTo}
+            />
+            
+            <TextField sx={{ mb: 3 }}
+              fullWidth
+              id="assignedBy"
+              label="Assigned By"
+              name="assignedBy"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Enter your name"
+              value={formik.values.assignedBy}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.assignedBy && Boolean(formik.errors.assignedBy)}
+              helperText={formik.touched.assignedBy && formik.errors.assignedBy}
+            />
+
+            <TextField sx={{ mb: 3 }}
+              fullWidth
+              id="date"
+              label="Date"
+              name="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Date Task Assigned"
+              value={formik.values.date}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.date && Boolean(formik.errors.date)}
+              helperText={formik.touched.date && formik.errors.date}
             />
 
             <Button fullWidth variant="contained" type="submit">Create Task</Button>
