@@ -21,9 +21,10 @@ const taskSlice = createSlice({
                     date: task.date 
                 }
             })
-        }
+        },
+        addTask
     }
 });
 
-export const { getTasks } = taskSlice.actions;
+export const { getTasks, addTask } = taskSlice.actions;
 export default taskSlice.reducer;
