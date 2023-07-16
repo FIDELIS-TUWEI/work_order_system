@@ -9,7 +9,7 @@ const taskSlice = createSlice({
     reducers: {
         getTasks : (state, action) => {
             state.tasks = action.payload.data.tasks.map((task) => {
-                return { id: task._id,
+                return { _id: task._id,
                     title: task.title,
                     location: task.location,
                     priority: task.priority,
