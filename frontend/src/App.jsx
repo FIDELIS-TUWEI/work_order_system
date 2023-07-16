@@ -18,23 +18,33 @@ import EditUser from "./pages/admin/EditUser";
 function App() {
   return (
     <>
-        <ToastContainer />
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/login" element={<LogIn />} />
-              <Route path="/tasks/list" element={<Tasks />} />
-              <Route path="/users/list" element={<Users />} />
-              <Route path="/users/create" element={<CreateUsers />} />
-              <Route path="/tasks/create" element={<CreateTask />} />
-              <Route path="/users/edit" element={<EditUser />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-        </ThemeProvider>
+      <ToastContainer />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes>
+          {renderRoutes()}
+        </Routes>
+      </ThemeProvider>
     </>
-  )
+  );
+
+  function renderRoutes() {
+    const routes = [
+      { path: "/", element: <Home /> },
+      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/login", element: <LogIn /> },
+      { path: "/tasks/list", element: <Tasks /> },
+      { path: "/users/list", element: <Users /> },
+      { path: "/users/create", element: <CreateUsers /> },
+      { path: "/tasks/create", element: <CreateTask /> },
+      { path: "/users/edit", element: <EditUser /> },
+      { path: "*", element: <NotFound /> },
+    ];
+
+    return routes.map((route, index) => (
+      <Route key={index} path={route.path} element={route.element} />
+    ));
+  }
 }
 
 export default App;

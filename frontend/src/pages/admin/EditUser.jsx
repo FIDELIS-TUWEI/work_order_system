@@ -18,16 +18,6 @@ const URL = 'http://localhost:5000/hin'
 
 // Validation Schema 
 const validationSchema = yup.object({
-  //name: yup
-  //    .string("Enter Fullname")
-  //    .required("Fullname is required"),
-  //username: yup
-  //    .string("Enter a username")
-  //    .required("Username is required"),
-  //password: yup
-  //    .string("Enter you password")
-  //    .min(8, "Password should be of minimum 8 characters long")
-  //    .required("Password is required"),
   role: yup
       .string("Enter role")
       .required("Role is required"),
@@ -38,27 +28,24 @@ const validationSchema = yup.object({
 });
 
 const EditUser = () => {
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const users = useSelector(state => state.users.users);
-    const user = users.find(u => u._id === id);
-    const navigate = useNavigate();
-  
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const users = useSelector(state => state.users.users);
+  const user = users.find(u => u._id === id);
+  const navigate = useNavigate();
 
-const onSubmit = async (values, actions) => {
-  const data = values;
-  try {
-    const response = await axios.put(`${URL}/edit/${id}`, data);
-    dispatch(editUser(response.data));
-    toast.success("User Updated successfully");
-    actions.resetForm();
-    navigate("/users/list");
-  } catch (error) {
-    toast.error(error.data.error);
+  const onSubmit = async (values, actions) => {
+    try {
+      const response = await axios.put(`${URL}/edit/${id}`, values);
+      dispatch(editUser(response.data));
+      toast.success("User Updated successfully");
+      actions.resetForm();
+      navigate("/users/list");
+    } catch (error) {
+      toast.error(error.data.error);
+    }
   }
-}
 
-// Formik initial values
   const formik = useFormik({
     initialValues: {
       role: "",
@@ -75,11 +62,12 @@ const onSubmit = async (values, actions) => {
       <Box sx={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", pt: 4, mb: 3 }}>
         <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-              <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
-                  <BorderColorOutlinedIcon />
-              </Avatar>
+            <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
+              <BorderColorOutlinedIcon />
+            </Avatar>
 
-            <TextField sx={{ mb: 3 }}
+            <TextField
+              sx={{ mb: 3 }}
               fullWidth
               id="role"
               label="Role"
@@ -94,8 +82,9 @@ const onSubmit = async (values, actions) => {
               error={formik.touched.role && Boolean(formik.errors.role)}
               helperText={formik.touched.role && formik.errors.role}
             />
-            
-            <TextField sx={{ mb: 3 }}
+
+            <TextField
+              sx={{ mb: 3 }}
               fullWidth
               id="date"
               label="Date"
