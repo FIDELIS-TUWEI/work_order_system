@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/redux/slice/userSlice"
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 // backend url endpoint
@@ -35,6 +36,7 @@ const validationSchema = yup.object({
 
 const CreateUsers = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
 
   // function to register user
@@ -46,6 +48,7 @@ const CreateUsers = () => {
       dispatch(addUser(response.data))
       toast.success("User Registered succesfully")
       actions.resetForm()
+      navigate("/users/list")
     } catch (error) {
       toast.error(error.data.error)
     }

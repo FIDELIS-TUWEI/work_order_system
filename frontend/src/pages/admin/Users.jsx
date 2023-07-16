@@ -39,7 +39,7 @@ const Users = () => {
   
   const columns = [
     {
-      field: "_id",
+      field: "id",
       headerName: "USER ID",
       width: 150,
       editable: true,
@@ -101,9 +101,7 @@ const Users = () => {
             <DataGrid
               rows={users}
               columns={columns}
-              getRowId={(row) => row._id}
-              //rowsPerpageOptions={[5,10,20]}
-              //pageSize={pageSize}
+              getRowId={(row) => row.id}
               sx={{
                 "& .MuiTablePagination-displayedRows": {
                   color: "white",
@@ -119,7 +117,7 @@ const Users = () => {
               }}
               
               pageSize={5}
-              rowsPerpageOptions={[5, 10, 25]}
+              rowsPerpageOptions={[5]}
               checkboxSelection
             />
           </Box>

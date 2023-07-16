@@ -9,7 +9,7 @@ const userSlice = createSlice({
     reducers: {
         getUser : (state, action) => {
             state.users = action.payload.data.map((user) => {
-                return { _id: user._id, 
+                return { id: user._id, 
                     name: user.name, 
                     username: user.username,
                     role: user.role,
