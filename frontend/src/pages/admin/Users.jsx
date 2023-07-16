@@ -39,7 +39,7 @@ const Users = () => {
   
   const columns = [
     {
-      field: "id",
+      field: "_id",
       headerName: "USER ID",
       width: 150,
       editable: true,
@@ -101,7 +101,7 @@ const Users = () => {
             <DataGrid
               rows={users}
               columns={columns}
-              getRowId={(row) => row.id}
+              getRowId={(row) => row._id}
               sx={{
                 "& .MuiTablePagination-displayedRows": {
                   color: "white",
