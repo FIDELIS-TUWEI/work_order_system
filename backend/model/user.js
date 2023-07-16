@@ -1,38 +1,8 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-
-// Task History
-const taskHistorySchema = new mongoose.Schema({
-    title: {
-        type: String,
-        trim: true
-    },
-    description: {
-        type: String,
-        trim: true
-    },
-    location: {
-        type: String,
-    },
-    completedDate: {
-        type: Date,
-    },
-    taskStatus: {
-        type: String,
-        enum: ["Pending", "Completed", "Inspected"],
-        default: "Pending"
-    },
-    user: {
-        type: ObjectId,
-        ref: "User",
-        required: true
-    }
-}, { timestamps: true }
-);
-
+// User Schema
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -48,7 +18,6 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minLength: [6, "Password must have at least (6) characters"],
     },
-    taskHistory: [taskHistorySchema],
     role: {
         type: Number,
         default: 0
@@ -72,16 +41,17 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
 });
 
-// Compare User Password in DB
-userSchema.methods.comparePassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password)
+// Compare user password in the database
+userSchema.methods.comparePassword = async function(enteredPassword) {
+    const isMatch = await bcrypt.compare(enteredPassword, this.password);
+    return isMatch;
 }
 
-// Return a JWT Token
 userSchema.methods.getJwtToken = function () {
-    return jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.LOGIN_EXPIRES
-    });
+    const payload = { id: this.id };
+    const secret = process.env.JWT_SECRET;
+    const expiresIn = process.env.LOGIN_EXPIRES;
+    return jwt.sign(payload, secret, { expiresIn });
 };
 
 module.exports = mongoose.model('User', userSchema);

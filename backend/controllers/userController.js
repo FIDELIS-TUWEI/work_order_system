@@ -54,7 +54,7 @@ const editUser = asyncHandler (async (req, res, next) => {
 
         res.status(200).json({ 
             success: true,
-            message: `User with Username: ${user.username} updated succesfully` 
+            message: `User updated succesfully` 
         });
     } catch (error) {
         next(error);

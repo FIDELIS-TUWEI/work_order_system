@@ -75,7 +75,7 @@ const Users = () => {
       width: 200,
       renderCell: () => (
         <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-          <Button variant="contained">
+          <Button variant="contained" onClick={() => navigate("/users/edit")}>
             <Link style={{ color: "white", textDecoration: "none" }} to={`/edit/user`}>Edit</Link>
           </Button>
           <Button variant="contained" color="error">Delete</Button>
