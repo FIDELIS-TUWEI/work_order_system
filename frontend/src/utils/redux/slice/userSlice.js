@@ -21,17 +21,18 @@ const userSlice = createSlice({
         addUser : (state, action) => {
             state.users.push(action.payload)
         },
-        editUser : (state, action) => {
-            const index = state.users.findIndex(user => user._id === action.payload._id)
-            state.users[index] = {
-                _id: action.payload._id,
-                name: action.payload.name,
-                username: action.payload.username,
-                role: action.payload.role,
-                //active: action.payload.active,
-                date: action.payload.date
-            }
-        }
+editUser: (state, action) => {
+    const updatedUser = {
+        _id: action.payload._id,
+        name: action.payload.name,
+        username: action.payload.username,
+        role: action.payload.role,
+        date: action.payload.date
+    };
+    
+    const index = state.users.findIndex(user => user._id === action.payload._id);
+    state.users[index] = updatedUser;
+}
     }
 })
 
