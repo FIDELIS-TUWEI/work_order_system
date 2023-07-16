@@ -1,15 +1,14 @@
-import { Avatar, Box } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { Avatar, Box, Button, TextField  } from "@mui/material";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import axios from "axios";
+
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/redux/slice/userSlice"
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { validationSchemaUsers } from "../../utils/formik/validationSchema";
 
 
