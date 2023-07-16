@@ -48,7 +48,7 @@ const EditUser = () => {
 const onSubmit = async (values, actions) => {
   const data = values;
   try {
-    const response = await axios.put(`${URL}/edit/` + id, data);
+    const response = await axios.put(`${URL}/edit/${id}`, data);
     dispatch(editUser(response.data));
     toast.success("User Updated successfully");
     actions.resetForm();
@@ -58,10 +58,9 @@ const onSubmit = async (values, actions) => {
   }
 }
 
+// Formik initial values
   const formik = useFormik({
     initialValues: {
-      //name: user.name,
-      //username: user.username,
       role: "",
       date: ""
     },
