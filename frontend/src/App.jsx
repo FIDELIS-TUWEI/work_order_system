@@ -12,6 +12,7 @@ import Tasks from "./pages/admin/Tasks";
 import Users from "./pages/admin/Users";
 import CreateUsers from "./pages/admin/CreateUsers";
 import CreateTask from "./pages/admin/CreateTask";
+import EditUser from "./pages/admin/EditUser";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
               <Route path="/users/list" element={<Users />} />
               <Route path="/users/create" element={<CreateUsers />} />
               <Route path="/tasks/create" element={<CreateTask />} />
+              <Route path="/users/edit" element={<EditUser />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
         </ThemeProvider>
