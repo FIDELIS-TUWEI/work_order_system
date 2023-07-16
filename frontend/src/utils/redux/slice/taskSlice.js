@@ -24,8 +24,7 @@ const taskSlice = createSlice({
         },
         addTask : (state, action) => {
             //console.log(action)
-            state.push(action.payload);
-            //return state;
+            state.tasks.push(action.payload);
         }
     }
 });
