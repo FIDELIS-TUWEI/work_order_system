@@ -22,16 +22,18 @@ const userSlice = createSlice({
             state.users.push(action.payload)
         },
 editUser: (state, action) => {
-    const updatedUser = {
-        _id: action.payload._id,
-        name: action.payload.name,
-        username: action.payload.username,
-        role: action.payload.role,
-        date: action.payload.date
-    };
-    
-    const index = state.users.findIndex(user => user._id === action.payload._id);
-    state.users[index] = updatedUser;
+  const updatedUser = {
+    ...action.payload,
+  };
+
+  const updatedUsers = state.users.map(user =>
+    user._id === action.payload._id ? updatedUser : user
+  );
+
+  return {
+    ...state,
+    users: updatedUsers,
+  };
 }
     }
 })
