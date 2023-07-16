@@ -8,6 +8,8 @@ import Navbar from "../../components/Navbar";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addTask } from "../../utils/redux/slice/taskSlice";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -35,9 +37,9 @@ const validationSchema = yup.object({
   assignedBy: yup
       .string("Enter your name")
       .required("Supervisor's name is required"),
-  status: yup
-      .string("Enter Task Status")
-      .required("Task Status is required"),
+  //status: yup
+  //    .string("Enter Task Status")
+  //    .required("Task Status is required"),
   date: yup
       .string("Enter Date Task was assigned")
       .required("Date is required"),
@@ -57,7 +59,8 @@ const CreateTask = () => {
       //toast.success("Task Added Succesfully")
       actions.resetForm();
     } catch (error) {
-      toast.error(error.data.error)
+      console.log(error)
+      //toast.error(error.data.error)
     }
   }
 
@@ -70,7 +73,7 @@ const CreateTask = () => {
       taskType: "",
       assignedTo: "",
       assignedBy: "",
-      status: "",
+      //status: "",
       date: ""
     },
     validateOnBlur: true,
@@ -82,7 +85,7 @@ const CreateTask = () => {
     <>
     <Navbar />
       <Box sx={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", pt: 4, mb: 3 }}>
-        <Box component="form" className="form_style border_style">
+        <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
             <Typography variant="h5" component="h2" sx={{ pb:2 }}>
               Register a Task
