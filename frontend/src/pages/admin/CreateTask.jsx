@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
@@ -9,12 +8,14 @@ import axios from 'axios';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { addTask } from '../../utils/redux/slice/taskSlice';
-import { validationSchema } from '../../utils/formik/validationSchema';
+import { validationSchemaTasks } from '../../utils/formik/validationSchema';
+
+// backend url endpoint
+const URL = 'http://localhost:5000/hin'
 
 const CreateTask = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formError, setFormError] = useState(null);
 
   const onSubmit = async (values, actions) => {
     const { ...data } = values;
@@ -27,7 +28,6 @@ const CreateTask = () => {
       actions.resetForm();
     } catch (error) {
       console.error(error);
-      setFormError("An error occurred while creating the task.");
     }
   };
 
@@ -43,7 +43,7 @@ const CreateTask = () => {
       date: ""
     },
     validateOnBlur: true,
-    validationSchema: validationSchema,
+    validationSchema: validationSchemaTasks,
     onSubmit
   });
 
@@ -76,35 +76,79 @@ const CreateTask = () => {
             <Typography variant="h5" component="h2" sx={{ pb: 2 }}>
               Register a Task
             </Typography>
-
-            <TextField
-              sx={{ mb: 3 }}
-              fullWidth
-              id="title"
-              label="Title"
-              name="title"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              placeholder="Task Title"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
-            />
-
-            {/* Other text fields go here */}
+            
+            {[
+              {
+                id: "title",
+                label: "Task Title",
+                name: "title",
+                placeholder: "Eg. Wi-Fi connection, Gas Leak, Paint"
+              },
+              {
+                id: "location",
+                label: "Task Location",
+                name: "location",
+                placeholder: "Eg. Room323, Victoria Hall, Admin Office"
+              },
+              {
+                id: "category",
+                label: "Category",
+                name: "category",
+                placeholder: "Eg. fix, repair, replace"
+              },
+              {
+                id: "priority",
+                label: "Priority",
+                name: "priority",
+                placeholder: "Eg. High, Medium, Low"
+              },
+              {
+                id: "taskType",
+                label: "Task Type",
+                name: "taskType",
+                placeholder: "Eg. Door/Handle, Light/Bulb, Wi-Fi/Connection"
+              },
+              {
+                id: "assignedTo",
+                label: "Assigned To",
+                name: "assignedTo",
+                placeholder: "Eg. Victor, Tito"
+              },
+              {
+                id: "assignedBy",
+                label: "Assigned By",
+                name: "assignedBy",
+                placeholder: "Enter your name"
+              },
+              {
+                id: "date",
+                label: "Date",
+                name: "date",
+                placeholder: "Eg. 14-07-2023"
+              }
+            ].map((input) => (
+              <TextField
+                key={input.id}
+                sx={{ mb: 3 }}
+                fullWidth
+                id={input.id}
+                label={input.label}
+                name={input.name}
+                InputLabelProps={{
+                  shrink: true
+                }}
+                placeholder={input.placeholder}
+                value={formik.values[input.name]}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched[input.name] && Boolean(formik.errors[input.name])}
+                helperText={formik.touched[input.name] && formik.errors[input.name]}
+              />
+            ))}
 
             <Button fullWidth variant="contained" type="submit">
               Create Task
             </Button>
-
-            {formError && (
-              <Typography variant="body2" color="error" sx={{ mt: 2 }}>
-                {formError}
-              </Typography>
-            )}
           </Box>
         </Box>
       </Box>

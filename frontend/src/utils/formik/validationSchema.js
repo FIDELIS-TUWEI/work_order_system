@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 // Validation Schema
-export const validationSchema = yup.object({
+export const validationSchemaTasks = yup.object({
     title: yup
         .string("Enter Task Title")
         .required("Task Title is required"),
@@ -23,11 +23,26 @@ export const validationSchema = yup.object({
     assignedBy: yup
         .string("Enter your name")
         .required("Supervisor's name is required"),
-    //status: yup
-    //    .string("Enter Task Status")
-    //    .required("Task Status is required"),
     date: yup
         .string("Enter Date Task was assigned")
         .required("Date is required"),
+  });
+
+ // Validation Schema 
+export const validationSchemaUsers = yup.object({
+    name: yup
+        .string("Enter Fullname")
+        .required("Fullname is required"),
+    username: yup
+        .string("Enter a username")
+        .required("Username is required"),
+    password: yup
+        .string("Enter you password")
+        .min(8, "Password should be of minimum 8 characters long")
+        .required("Password is required"),
+    date: yup
+        .string("Enter date")
+        .required("Today's date is required")
+  
   });
   
