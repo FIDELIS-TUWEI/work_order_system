@@ -1,13 +1,13 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Button, Paper, Typography } from "@mui/material"
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import AddIcon from "@mui/icons-material/Add";
-import { Link, useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import axios from "axios";
+
+import Footer from "../../components/Footer";
 import { getTasks } from "../../utils/redux/slice/taskSlice";
-//import dayjs from "dayjs"
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -26,14 +26,14 @@ const Tasks = () => {
 
   // hook to fetch all tasks from DB
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${URL}/tasks/getall`);
-        if(tasks.length === 0) dispatch(getTasks(response.data))
-      } catch (error) {
-        console.log(error)
-      }
-    }
+const fetchData = async () => {
+  try {
+    const response = await axios.get(`${URL}/tasks/getall`);
+      dispatch(getTasks(response.data));
+  } catch (error) {
+    console.error(error);
+  }
+};
     fetchData()
   }, []);
   
@@ -87,14 +87,30 @@ const Tasks = () => {
     {
       field: "Actions",
       width: 200,
-      renderCell: () => (
-        <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-          <Button variant="contained">
-            <Link style={{ color: "white", textDecoration: "none" }} to={`/edit/task`}>Edit</Link>
-          </Button>
-          <Button variant="contained" color="error">Delete</Button>
-        </Box>
-      )
+renderCell: () => (
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "space-between",
+      width: "170px"
+    }}
+  >
+    <Button variant="contained">
+      <Link
+        style={{
+          color: "white",
+          textDecoration: "none"
+        }}
+        to={`/edit/task`}
+      >
+        Edit
+      </Link>
+    </Button>
+    <Button variant="contained" color="error">
+      Delete
+    </Button>
+  </Box>
+)
     },
   ]
 

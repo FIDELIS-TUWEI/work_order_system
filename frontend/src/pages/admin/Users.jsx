@@ -5,7 +5,9 @@ import { Box, Button, Typography, Paper } from "@mui/material"
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import AddIcon from "@mui/icons-material/Add";
 import axios from 'axios';
+
 import { getUser } from '../../utils/redux/slice/userSlice';
+import Footer from '../../components/Footer';
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -120,6 +122,7 @@ renderCell() {
           </Box>
         </Paper>
       </Box>
+      <Footer />
     </>
   );
 };
