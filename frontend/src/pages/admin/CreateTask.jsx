@@ -56,7 +56,8 @@ const CreateTask = () => {
     try {
       const response = await axios.post(`${URL}/tasks/create`, data)
       dispatch(addTask(response.data))
-      //toast.success("Task Added Succesfully")
+      toast.success("Task Added Succesfully")
+      navigate("/tasks/list")
       actions.resetForm();
     } catch (error) {
       console.log(error)
