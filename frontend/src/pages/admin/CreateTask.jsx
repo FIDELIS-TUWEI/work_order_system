@@ -91,16 +91,16 @@ const CreateTask = () => {
                 placeholder: "Eg. Room323, Victoria Hall, Admin Office"
               },
               {
-                id: "category",
-                label: "Category",
-                name: "category",
-                placeholder: "Eg. fix, repair, replace"
-              },
-              {
                 id: "priority",
                 label: "Priority",
                 name: "priority",
                 placeholder: "Eg. High, Medium, Low"
+              },
+              {
+                id: "category",
+                label: "Category",
+                name: "category",
+                placeholder: "Eg. fix, repair, replace"
               },
               {
                 id: "taskType",
