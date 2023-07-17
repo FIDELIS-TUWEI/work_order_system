@@ -30,7 +30,8 @@ const validationSchema = yup.object({
 const EditUser = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const users = useSelector(state => state.users.users);
+  const users = useSelector((state) => state.users);
+  const existingUser = users.filter(f => f.id === id)
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
