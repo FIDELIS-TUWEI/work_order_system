@@ -31,7 +31,6 @@ const EditUser = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const users = useSelector(state => state.users.users);
-  const user = users.find(u => u._id === id);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
@@ -48,6 +47,7 @@ const EditUser = () => {
 
   const formik = useFormik({
     initialValues: {
+      _id: "",
       role: "",
       date: ""
     },
@@ -65,6 +65,23 @@ const EditUser = () => {
             <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
               <BorderColorOutlinedIcon />
             </Avatar>
+
+            <TextField
+              sx={{ mb: 3 }}
+              fullWidth
+              id="id"
+              label="User ID"
+              name="id"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="User ID"
+              value={formik.values.id}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.id && Boolean(formik.errors.id)}
+              helperText={formik.touched.id && formik.errors.id}
+            />
 
             <TextField
               sx={{ mb: 3 }}
@@ -100,7 +117,7 @@ const EditUser = () => {
               helperText={formik.touched.date && formik.errors.date}
             />
 
-            <Button fullWidth variant="contained" type="submit">Register User</Button>
+            <Button fullWidth variant="contained" type="submit">Edit User</Button>
           </Box>
         </Box>
       </Box>
