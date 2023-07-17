@@ -72,8 +72,8 @@ const fetchData = async () => {
 renderCell() {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '170px' }}>
-      <Button variant="contained" onClick={() => navigate('/users/edit')}>
-        <Link style={{ color: 'white', textDecoration: 'none' }} to={`/edit/user`}>
+      <Button variant="contained" onClick={() => navigate(`/users/edit/${users._id}`)}>
+        <Link style={{ color: 'white', textDecoration: 'none' }} to="">
           Edit
         </Link>
       </Button>

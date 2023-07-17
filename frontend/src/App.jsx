@@ -37,7 +37,7 @@ function App() {
       { path: "/users/list", element: <Users /> },
       { path: "/users/create", element: <CreateUsers /> },
       { path: "/tasks/create", element: <CreateTask /> },
-      { path: "/users/edit", element: <EditUser /> },
+      { path: "/users/edit/:id", element: <EditUser /> },
       { path: "*", element: <NotFound /> },
     ];
 

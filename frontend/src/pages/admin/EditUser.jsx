@@ -14,7 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 
 // backend url endpoint
-const URL = process.env.REACT_APP_SERVER_URL
+const URL = 'http://localhost:5000/hin'
 
 // Validation Schema 
 const validationSchema = yup.object({
@@ -35,7 +35,7 @@ const EditUser = () => {
 
   const onSubmit = async (values, actions) => {
     try {
-      const response = await axios.put(`${URL}/edit`, values);
+      const response = await axios.put(`${URL}/edit/:id`+ id, values);
       dispatch(editUser(response.data));
       toast.success("User Updated successfully");
       actions.resetForm();
@@ -47,7 +47,7 @@ const EditUser = () => {
 
   const formik = useFormik({
     initialValues: {
-      _id: "",
+      //_id: "",
       role: "",
       date: ""
     },
@@ -66,22 +66,7 @@ const EditUser = () => {
               <BorderColorOutlinedIcon />
             </Avatar>
 
-            <TextField
-              sx={{ mb: 3 }}
-              fullWidth
-              id="id"
-              label="User ID"
-              name="id"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              placeholder="User ID"
-              value={formik.values.id}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.id && Boolean(formik.errors.id)}
-              helperText={formik.touched.id && formik.errors.id}
-            />
+            
 
             <TextField
               sx={{ mb: 3 }}
