@@ -35,13 +35,13 @@ const EditUser = () => {
 
   const onSubmit = async (values, actions) => {
     try {
-      const response = await axios.put(`${URL}/edit/${id}`, values);
+      const response = await axios.put(`${URL}/edit`, values);
       dispatch(editUser(response.data));
       toast.success("User Updated successfully");
       actions.resetForm();
       navigate("/users/list");
     } catch (error) {
-      toast.error(error.data.error);
+      console.error(error);
     }
   }
 
