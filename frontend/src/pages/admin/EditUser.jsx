@@ -14,7 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 
 // backend url endpoint
-const URL = 'http://localhost:5000/hin'
+const URL = process.env.REACT_APP_SERVER_URL
 
 // Validation Schema 
 const validationSchema = yup.object({
