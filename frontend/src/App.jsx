@@ -13,6 +13,7 @@ import Users from "./pages/admin/Users";
 import CreateUsers from "./pages/admin/CreateUsers";
 import CreateTask from "./pages/admin/CreateTask";
 import EditUser from "./pages/admin/EditUser";
+import EditTask from "./pages/admin/EditTask";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
       { path: "/users/create", element: <CreateUsers /> },
       { path: "/tasks/create", element: <CreateTask /> },
       { path: "/users/edit/:id", element: <EditUser /> },
+      { path: "/tasks/edit/:id", element: <EditTask /> },
       { path: "*", element: <NotFound /> },
     ];
 
