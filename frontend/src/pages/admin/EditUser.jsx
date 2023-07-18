@@ -31,12 +31,11 @@ const EditUser = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-  const existingUser = users.filter(f => f.id === id)
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     try {
-      const response = await axios.put(`${URL}/edit/:id`+ id, values);
+      const response = await axios.put(`${URL}/edit/${id}`, values);
       dispatch(editUser(response.data));
       toast.success("User Updated successfully");
       actions.resetForm();
@@ -48,7 +47,8 @@ const EditUser = () => {
 
   const formik = useFormik({
     initialValues: {
-      //_id: "",
+      name: users.name,
+      username: users.username,
       role: "",
       date: ""
     },
@@ -66,6 +66,40 @@ const EditUser = () => {
             <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
               <BorderColorOutlinedIcon />
             </Avatar>
+
+            <TextField
+              sx={{ mb: 3 }}
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Your Name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+            />
+
+            <TextField
+              sx={{ mb: 3 }}
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              placeholder="Your Username"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={formik.touched.username && formik.errors.username}
+            />
 
             
 
