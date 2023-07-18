@@ -1,4 +1,4 @@
-import { Avatar, Box } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
@@ -18,6 +18,12 @@ const URL = 'http://localhost:5000/hin'
 
 // Validation Schema 
 const validationSchema = yup.object({
+  name: yup
+      .string("Enter name")
+      .required("Name is required"),
+  username: yup
+      .string("Enter username")
+      .required("Username is required"),
   role: yup
       .string("Enter role")
       .required("Role is required"),
@@ -63,7 +69,7 @@ const EditUser = () => {
       <Box sx={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", pt: 4, mb: 3 }}>
         <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-            <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
+            <Avatar sx={{ m: 1, bgcolor: "primary", mb: 3 }}>
               <BorderColorOutlinedIcon />
             </Avatar>
 
@@ -100,8 +106,6 @@ const EditUser = () => {
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
             />
-
-            
 
             <TextField
               sx={{ mb: 3 }}
