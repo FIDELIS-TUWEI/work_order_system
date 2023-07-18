@@ -37,16 +37,16 @@ const Users = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-const fetchData = async () => {
-  try {
-    const response = await axios.get(`${URL}/all-users`);
-    dispatch(getUser(response.data));
-  } catch (error) {
-    console.log(error);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${URL}/all-users`);
+      dispatch(getUser(response.data));
+    } catch (error) {
+      console.log(error);
+    }
   }
-};
-    fetchData();
-  }, []);
+      fetchData();
+    }, []);
 
 
   return (

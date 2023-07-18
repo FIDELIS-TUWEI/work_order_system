@@ -4,7 +4,7 @@ const { getAllUsers, singleUser, editUser, deleteUser, createTaskHistory } = req
 const { isAuthenticated, isAdmin } = require('../middleware/authMiddleware');
 
 router.get("/all-users", getAllUsers);
-router.get("/user/:id",isAuthenticated, singleUser);
+router.get("/user/:id", singleUser);
 router.put("/edit/:id",  editUser);
 router.delete("/admin/user/delete/:id", isAuthenticated, isAdmin, deleteUser);
 router.post("/user/taskhistory", isAuthenticated, createTaskHistory);
