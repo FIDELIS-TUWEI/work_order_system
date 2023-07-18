@@ -77,8 +77,8 @@ const fetchData = async () => {
               <TableCell>{user.username}</TableCell>
               <TableCell>{user._id}</TableCell>
               <TableCell>{user.date}</TableCell>
-              <TableCell sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
-                <Button variant='contained' color='primary' onClick={() => navigate(`/users/edit/${user._id}`)}>Edit</Button>
+              <TableCell sx={{ gap: 2 }}>
+                <Button variant='contained' color='primary' style={{ marginRight: 10 }} onClick={() => navigate(`/users/edit/${user._id}`)}>Edit</Button>
                 <Button variant='contained' color='error' onClick={() => navigate(`/users/delete/${user._id}`)}>Delete</Button>
                 </TableCell>
             </TRow>
