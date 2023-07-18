@@ -35,13 +35,7 @@ const Tasks = () => {
 
   const dispatch = useDispatch();
   const tasks = useSelector(state => state.tasks.tasks);
-
   const navigate = useNavigate();
-
-  // function to handle onclick event to create task
-  const handleCreateTask = () => {
-    navigate("/tasks/create");
-  }
 
   // hook to fetch all tasks from DB
   useEffect(() => {
@@ -63,7 +57,7 @@ const fetchData = async () => {
           Tasks List
       </Typography>
       <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-        <Button onClick={handleCreateTask} variant="contained" color="success" startIcon={<AddIcon />} sx={{ mr: 3 }}> 
+        <Button onClick={() => navigate("/tasks/create")} variant="contained" color="success" startIcon={<AddIcon />} sx={{ mr: 3 }}> 
           <Link style={{ color: "white", textDecoration: "none" }}>Create Task</Link>
         </Button>
       </Box>
@@ -95,7 +89,7 @@ const fetchData = async () => {
               <TableCell>{task.assignedBy}</TableCell>
               <TableCell>{task.date}</TableCell>
               <TableCell sx={{ gap: 2 }}>
-                <Button variant="contained" color="primary" style={{ marginRight: 10 }}>
+                <Button variant="contained" color="primary" style={{ marginRight: 10 }} onClick={() => navigate(`/tasks/edit/${task._id}`)}>
                   Edit
                 </Button>
               </TableCell>
