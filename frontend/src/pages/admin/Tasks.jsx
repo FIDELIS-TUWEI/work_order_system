@@ -1,13 +1,32 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Button, Paper, Typography } from "@mui/material"
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
+import { Box, Typography } from "@mui/material";
+import { Table, TableHead, TableCell, Paper, TableRow, TableBody, Button, styled } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
 import Footer from "../../components/Footer";
 import { getTasks } from "../../utils/redux/slice/taskSlice";
+
+const StyledTable = styled(Table)`
+  width: '90%',
+  margin: '50px 0 0 50px',
+`
+
+const THead = styled(TableRow)`
+  & > th {
+    font-size: 20px,
+    background: #000000,
+    color: #FFFFFF
+  }
+`;
+
+const TRow = styled(TableRow)`
+  & > td {
+    font-size: 18px,
+  }
+`;
 
 // backend url endpoint
 const URL = 'http://localhost:5000/hin'
@@ -37,122 +56,53 @@ const fetchData = async () => {
     fetchData()
   }, []);
   
-  const columns = [
-    {
-      field: "_id",
-      headerName: "TASK ID",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "title",
-      headerName: "Task Name",
-      width: 150,
-    },
-    {
-      field: "taskType",
-      headerName: "Task Type",
-      width: 150,
-    },
-    {
-      field: "category",
-      headerName: "Category",
-      width: 150,
-    },
-    {
-      field: "location",
-      headerName: "Location",
-      width: 150,
-    },
-    {
-      field: "assignedTo",
-      headerName: "Assigned To",
-      width: 150,
-    },
-    {
-      field: "assignedBy",
-      headerName: "Assigned By",
-      width: 150,
-    },
-    {
-      field: "status",
-      headerName: "Task Status",
-      width: 150,
-    },
-    {
-      field: "date",
-      headerName: "Date Assigned",
-      width: 150,
-    },
-    {
-      field: "Actions",
-      width: 200,
-renderCell: () => (
-  <Box
-    sx={{
-      display: "flex",
-      justifyContent: "space-between",
-      width: "170px"
-    }}
-  >
-    <Button variant="contained">
-      <Link
-        style={{
-          color: "white",
-          textDecoration: "none"
-        }}
-        to={`/edit/task`}
-      >
-        Edit
-      </Link>
-    </Button>
-    <Button variant="contained" color="error">
-      Delete
-    </Button>
-  </Box>
-)
-    },
-  ]
 
   return (
     <>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="h4" sx={{ color: "white", pb: 3, display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <Typography variant="h4" sx={{ color: "white", pb: 3, display: "flex", justifyContent: "center", alignItems: "center" }}>
           Tasks List
-        </Typography>
-        <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-          <Button onClick={handleCreateTask} variant="contained" color="success" startIcon={<AddIcon />} sx={{ mr: 3 }}> 
-            <Link style={{ color: "white", textDecoration: "none" }}>Create Task</Link>
-          </Button>
-        </Box>
-        <Paper sx={{ bgcolor: "secondary.midNightBlue" }}>
-
-          <Box sx={{ height:400, width: "100%" }}>
-            <DataGrid
-              rows={tasks}
-              columns={columns}
-              getRowId={(row) => row._id}
-              sx={{
-                "& .MuiTablePagination-displayedRows": {
-                  color: "white",
-                },
-                color: "white",
-                [`& .${gridClasses.row}`]: {
-                  bgcolor: (theme) => theme.palette.secondary.main
-                },
-                button: {
-                  color: "#ffffff",
-                }
-
-              }}
-              
-              pageSize={5}
-              rowsPerpageOptions={[5]}
-              checkboxSelection
-            />
-          </Box>
-        </Paper>
+      </Typography>
+      <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
+        <Button onClick={handleCreateTask} variant="contained" color="success" startIcon={<AddIcon />} sx={{ mr: 3 }}> 
+          <Link style={{ color: "white", textDecoration: "none" }}>Create Task</Link>
+        </Button>
       </Box>
+      <StyledTable>
+        <TableHead>
+          <THead>
+            <TableCell>Title</TableCell>
+            <TableCell>Type</TableCell>
+            <TableCell>Category</TableCell>
+            <TableCell>Location</TableCell>
+            <TableCell>Priority</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell>Assigned To</TableCell>
+            <TableCell>Assigned By</TableCell>
+            <TableCell>Date Created</TableCell>
+            <TableCell>Actions</TableCell>
+          </THead>
+        </TableHead>
+        <TableBody>
+          {tasks.map((task) => (
+            <TRow key={task._id}>
+              <TableCell>{task.title}</TableCell>
+              <TableCell>{task.taskType}</TableCell>
+              <TableCell>{task.category}</TableCell>
+              <TableCell>{task.location}</TableCell>
+              <TableCell>{task.priority}</TableCell>
+              <TableCell>{task.status}</TableCell>
+              <TableCell>{task.assignedTo}</TableCell>
+              <TableCell>{task.assignedBy}</TableCell>
+              <TableCell>{task.date}</TableCell>
+              <TableCell sx={{ gap: 2 }}>
+                <Button variant="contained" color="primary" style={{ marginRight: 10 }}>
+                  Edit
+                </Button>
+              </TableCell>
+            </TRow>
+          ))}
+        </TableBody>
+      </StyledTable>
       <Footer />
     </>
   )
