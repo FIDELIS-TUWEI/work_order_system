@@ -47,7 +47,7 @@ const singleTask = asyncHandler (async (req, res, next) => {
 // update Task logic
 const updateTask = asyncHandler (async (req, res, next) => {
     try {
-       const task = await Task.findByIdAndUpdate(req.params.task_id, req.body, {new: true, runValidators: true}).populate("taskType", "taskTypeName").populate("user", "name");
+       const task = await Task.findByIdAndUpdate(req.params.task_id, req.body, {new: true, runValidators: true});
        res.status(200).json({
         success: true,
         data: {

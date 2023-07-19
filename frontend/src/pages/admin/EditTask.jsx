@@ -7,7 +7,6 @@ import * as yup from "yup";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser } from "../../utils/redux/slice/userSlice"
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,9 +18,7 @@ const URL = 'http://localhost:5000/hin'
 
 // Validation Schema 
 const validationSchema = yup.object({
-  title: yup
-      .string("Enter title")
-      .required("Task Title is required"),
+ 
   status: yup
       .string("Enter status")
       .required("Task Status is required"),
@@ -39,7 +36,7 @@ const EditTask = () => {
 
   const onSubmit = async (values, actions) => {
     try {
-      const response = await axios.put(`${URL}/edit/${id}`, values);
+      const response = await axios.put(`${URL}/task/update/${id}`, values);
       dispatch(editTask(response.data));
       toast.success("Task Updated successfully");
       actions.resetForm();
@@ -51,7 +48,6 @@ const EditTask = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: tasks.title,
       status: "",
       date: ""
     },
@@ -70,22 +66,7 @@ const EditTask = () => {
               <BorderColorOutlinedIcon />
             </Avatar>
 
-            <TextField
-              sx={{ mb: 3 }}
-              fullWidth
-              id="title"
-              label="Title"
-              name="title"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              placeholder="Task Title"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
-            />
+           
 
             <TextField
               sx={{ mb: 3 }}
