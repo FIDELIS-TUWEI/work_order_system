@@ -99,5 +99,4 @@ module.exports = {
     updateTask,
     deleteTask,
     singleTask,
-    showTaskType,
 }
