@@ -28,7 +28,7 @@ const createTask = asyncHandler (async (req, res, next) => {
 // get Task logic
 const singleTask = asyncHandler (async (req, res, next) => {
     try {
-        const task = await Task.findById(req.params.id).populate("category", "taskType").populate("assignedBy").populate("date");
+        const task = await Task.findById(req.params.id);
         if (!task) {
             return res.status(404).json({ message: `No task with ID: ${id} found` });
         }
@@ -59,40 +59,6 @@ const updateTask = asyncHandler (async (req, res, next) => {
         next(error);
     }
 });
-
-// Show taskType Logic
-const showTaskType = asyncHandler (async (req, res, next) => {
-
-    // Enable Search Query
-    const keyword = req.query.keyword ? {
-        title: {
-            $regex: req.query.keyword,
-            $options: 'i'
-        }
-    } : {}
-
-    // Enable Pagination
-    const pageSize = 5;
-    const page = Number(req.query.pageNumber) || 1;
-    //const count = await Task.find({}).estimatedDocumentCount();
-    const count = await Task.find({ ...keyword }).countDocuments();
-
-    try {
-        const tasks = await Task.find({ ...keyword }).sort({ createdAt: -1 }).skip(pageSize *  (page - 1)).limit(pageSize);
-
-        res.status(200).json({
-            success: true,
-            data: {
-                tasks
-            },
-            page,
-            pages: Math.ceil(count / pageSize),
-            count,
-        })
-    } catch (error) {
-        next(error);
-    }
-})
 
 // get Tasks Logic
 const getTasks = asyncHandler (async (req, res, next) => {
