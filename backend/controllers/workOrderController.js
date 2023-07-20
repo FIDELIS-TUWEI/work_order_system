@@ -7,6 +7,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const createWorkOrder = asyncHandler (async (req, res, next) => {
     const { priority, title, location, serviceType, category, status, date, reviewed } = req.body;
     const { userId } = req.params;
+
     try {
         const manager = await Manager.findById(userId);
         const newWorkOrder = await Workorder({
@@ -20,12 +21,13 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             date,
             reviewed
         });
-        const workorder = await newWorkOrder.save();
-        manager.workorder.push(newWorkOrder);
+
+        const workorders = await newWorkOrder.save();
+        manager.workorders.push(newWorkOrder);
         return res.status(201).json({
             success: true,
             data: {
-                workorder
+                workorders
             }
         })
     } catch (error) {
