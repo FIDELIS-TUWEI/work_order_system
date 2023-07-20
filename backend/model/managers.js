@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
 const { ObjectId } = mongoose.Schema;
 
 const managerSchema = new mongoose.Schema({
@@ -34,6 +34,10 @@ const managerSchema = new mongoose.Schema({
             ref: "Workorder"
         },
     ],
+    date: {
+        type: String,
+        required: true,
+    }
 }, 
 
 { 
@@ -62,4 +66,4 @@ managerSchema.methods.comparePasswords = function (password) {
     return bcrypt.compare(password, manager.password);
 };
 
-module.export = mongoose.model("Managers", managerSchema);
+module.export = mongoose.model("Manager", managerSchema);
