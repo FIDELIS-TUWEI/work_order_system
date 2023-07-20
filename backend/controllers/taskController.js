@@ -1,10 +1,37 @@
 const Task = require("../model/task");
 const asyncHandler = require("express-async-handler");
+const nodemailer = require("nodemailer");
 
 // create Task logic
 const createTask = asyncHandler (async (req, res, next) => {
 
     try {
+        // send email notification to cheif engineer
+        // Configure gmail smtp
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: "fideliofidel9@gmail.com",
+                pass: "37369573Fi*",
+            },
+        });
+
+        // Function to send Email
+        async function sendMail(task) {
+            try {
+                const mailOptions = {
+                    from: "fideliofidel9@gmail.com",
+                    to: "fidel.tuwei@holidayinnnairobi.com",
+                    subject: "New Work Order created",
+                    html: `<p>A new task was created:</p><p>${task}</p>`,
+                };
+                const info = await transporter.sendMail(mailOptions);
+                console.log("Email sent: " + info.response);
+            } catch (error) {
+                console.log("Error sending email:", error)
+            }
+        }
+
         const task = await Task.create({
             title: req.body.title,
             location: req.body.location,
@@ -21,6 +48,7 @@ const createTask = asyncHandler (async (req, res, next) => {
                 task
             }
         });
+        sendMail(task);
     } catch (error) {
         next(error);
     }
