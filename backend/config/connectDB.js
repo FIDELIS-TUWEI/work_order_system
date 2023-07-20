@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
+const { MONGO_URI } = require("../utils/env");
 
-const uri = `mongodb+srv://holidayinn:tYKBJbotsd27ijkS@workorderhin.opfay3d.mongodb.net/Work-Order?retryWrites=true&w=majority`
-
+// Database connection
 const connectDB = async () => {
     try {
-        await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-        //await mongoose.connect(process.env.MONGO_URI, { 
-        //    useNewUrlParser: true, 
-        //    useUnifiedTopology: true
-        //});
+        await mongoose.connect(MONGO_URI, { 
+            useNewUrlParser: true, 
+            useUnifiedTopology: true
+        });
     } catch (err) {
         console.log(err);
         process.exit(1)

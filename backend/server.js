@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
 const mongoose = require("mongoose");
 const errorHandler = require("./middleware/error");
+const { SERVER_PORT } = require("./utils/env");
 
 connectDB();
 
@@ -41,7 +42,7 @@ app.use("/hin", taskRoutes);
 app.use(errorHandler);
 
 
-const PORT = process.env.PORT || 5000
+const PORT = SERVER_PORT || 5000
 // start server
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
