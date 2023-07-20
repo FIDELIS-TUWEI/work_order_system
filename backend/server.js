@@ -18,6 +18,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const workOrderRoutes = require("./routes/workOrderRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 // Middleware
 app.use(express.json());
@@ -38,6 +39,7 @@ app.use("/hin", authRoutes);
 app.use("/hin", userRoutes);
 app.use("/hin", taskRoutes);
 app.use("/hin", workOrderRoutes);
+app.use("/hin", adminRoutes);
 
 
 // Error Middleware
