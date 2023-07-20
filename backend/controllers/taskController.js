@@ -1,21 +1,8 @@
 const Task = require("../model/task");
 const asyncHandler = require("express-async-handler");
-const nodemailer = require("nodemailer");
 
 // create Task logic
 const createTask = asyncHandler (async (req, res, next) => {
-
-
-    // notify Chief Engineer
-    let config = {
-        service: 'gmail',
-        auth: {
-            user: '',
-            pass: ''
-        }
-    }
-
-    let transporter = nodemailer.createTransport(config)
 
     try {
         const task = await Task.create({
