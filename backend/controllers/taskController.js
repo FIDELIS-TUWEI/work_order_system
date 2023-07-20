@@ -1,6 +1,7 @@
 const Task = require("../model/task");
 const asyncHandler = require("express-async-handler");
 const nodemailer = require("nodemailer");
+const { USER, PASS } = require("../utils/env");
 
 // create Task logic
 const createTask = asyncHandler (async (req, res, next) => {
@@ -11,8 +12,8 @@ const createTask = asyncHandler (async (req, res, next) => {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: process.env.USER,
-                pass: process.env.PASS,
+                user: USER,
+                pass: PASS,
             },
         });
 
