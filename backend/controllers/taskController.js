@@ -11,8 +11,8 @@ const createTask = asyncHandler (async (req, res, next) => {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "fideliofidel9@gmail.com",
-                pass: "arlomazbhzbjwurj",
+                user: process.env.USER,
+                pass: process.env.PASS,
             },
         });
 
