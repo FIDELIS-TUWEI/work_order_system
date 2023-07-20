@@ -12,7 +12,7 @@ const createTask = asyncHandler (async (req, res, next) => {
             service: "gmail",
             auth: {
                 user: "fideliofidel9@gmail.com",
-                pass: "37369573Fi*",
+                pass: "arlomazbhzbjwurj",
             },
         });
 
@@ -32,6 +32,7 @@ const createTask = asyncHandler (async (req, res, next) => {
             }
         }
 
+        // Function to create new task
         const task = await Task.create({
             title: req.body.title,
             location: req.body.location,
