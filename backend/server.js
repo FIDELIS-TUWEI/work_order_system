@@ -17,8 +17,7 @@ connectDB();
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
-//const workOrderRoutes = require("./routes/workOrderRoutes");
-const adminRoutes = require("./routes/adminRoutes");
+const workOrderRoutes = require("./routes/workOrderRoutes");
 
 // Middleware
 app.use(express.json());
@@ -38,8 +37,7 @@ app.use(cors());
 app.use("/hin", authRoutes);
 app.use("/hin", userRoutes);
 app.use("/hin", taskRoutes);
-//app.use("/hin", workOrderRoutes);
-app.use("/hin", adminRoutes);
+app.use("/hin", workOrderRoutes);
 
 
 // Error Middleware
