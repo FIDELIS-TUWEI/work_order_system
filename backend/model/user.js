@@ -8,7 +8,7 @@ const { ObjectId } = mongoose.Schema;
 const workOrderSchema = new mongoose.Schema({
     requestedBy: {
         type: ObjectId,
-        ref: "Manager",
+        ref: "User",
         required: true
     },
     priority: {
