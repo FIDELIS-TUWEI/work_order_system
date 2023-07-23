@@ -7,6 +7,7 @@ const userSlice = createSlice({
         users: []
     },
     reducers: {
+        // Get all users reducer
         getUser: (state, action) => {
             const { data } = action.payload;
             state.users = data.map(user => ({
@@ -19,11 +20,13 @@ const userSlice = createSlice({
             }));
         },
 
+        // Register user reducer
         addUser: (state, action) => ({
         ...state,
         users: [...state.users, action.payload],
         }),
 
+        // Edit user reducer
         editUser: (state, action) => {
         const updatedUser = {
             ...action.payload,
@@ -39,6 +42,7 @@ const userSlice = createSlice({
         };
         },
 
+        // Single user reducer
         singleUser: (state, action) => {
             return {
                 ...state,
@@ -46,6 +50,7 @@ const userSlice = createSlice({
             };
         },
 
+        // Delete user reducer
         deleteUser: (state, action) => {
             return {
                 ...state,

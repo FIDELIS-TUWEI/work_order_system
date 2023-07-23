@@ -5,9 +5,11 @@ import { userReducerLogout, userReducerSignIn } from "./reducers/userReducer";
 import userSlice from "./slice/userSlice";
 //import { addTaskReducer } from "./reducers/workReducer";
 import taskSlice from "./slice/taskSlice";
+import loadingSlice from "./slice/loadingSlice";
 
 // combine reducers
 const reducers = combineReducers({
+    loading: loadingSlice,
     signIn: userReducerSignIn,
     logOut: userReducerLogout,
     users: userSlice,
