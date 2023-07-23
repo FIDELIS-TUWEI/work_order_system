@@ -81,42 +81,10 @@ const deleteUser = asyncHandler (async (req, res, next) => {
     
 });
 
-// Task History
-const createTaskHistory = asyncHandler (async (req, res, next) => {
-    const { title, description, location} = req.body;
-
-    try {
-        const currentUser = await User.findOne({ _id: req.user._id });
-
-        if (!currentUser) {
-            return next(new ErrorResponse("You must Log In", 401));
-        } else {
-            const addTaskHistory = {
-                title,
-                description,
-                location,
-                //taskStatus,
-                user: req.user._id
-            }
-
-            currentUser.taskHistory.push(addTaskHistory);
-            await currentUser.save();
-        }
-
-        res.status(200).json({
-            success: true,
-            data: currentUser
-        })
-    } catch (error) {
-        return next(error)
-    }
-})
-
 
 module.exports = {
     getAllUsers,
     singleUser,
     editUser,
     deleteUser,
-    createTaskHistory
 };
