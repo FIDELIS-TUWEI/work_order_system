@@ -84,6 +84,25 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
+});
+
+// Delete Work Order
+const deleteWorkOrder = asyncHandler (async (req, res, next) => {
+    try {
+        const workOrderId = req.params.id;
+        const workOrder = await WorkOrder.findByIdAndDelete(workOrderId).populate("requestedBy", "name username");
+        if (!workOrder) {
+            return next(new ErrorResponse("Work Order not found", 404));
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Work Order deleted"
+        });
+        
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 })
 
 module.exports = {
@@ -91,4 +110,5 @@ module.exports = {
     updateWorkOrder,
     getAllWorkOrders,
     getSingleWorkOrder,
+    deleteWorkOrder
 }
