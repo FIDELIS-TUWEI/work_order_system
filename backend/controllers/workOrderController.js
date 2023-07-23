@@ -20,10 +20,10 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         });
 
         const savedWorkorder = await newWorkOrder.save();
+
         // push savedWorkOrder to the user's workOrders array
         await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id } });
-        //await User.findByIdAndUpdate(req.params.id).updateOne({ $push: { workOrders: savedWorkorder } });
-        //user.workOrders.push(newWorkOrder);
+        
         return res.status(201).json({
             success: true,
             data: {
@@ -37,9 +37,23 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
 // Update Work Order
 const updateWorkOrder = asyncHandler (async (req, res, next) => {
-    const { id } = req.params;
-    const { userId, status, assignedTo, dateCompleted, reviewed, reviewedBy, dateReviewed } = req.body;
 
+    try {
+        const workOrderId = req.params.id;
+        const updates = req.body;
+        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {new: true, runValidators: true}).populate("requestedBy", "name username");
+
+        if (!updatedWorkorder) {
+            return next(new ErrorResponse("Work Order not found", 404));
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: updatedWorkorder
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 })
 
 module.exports = {
