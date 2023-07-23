@@ -10,7 +10,6 @@ import LockClockOutlined from '@mui/icons-material/LockClockOutlined';
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { userSignInAction } from "../utils/redux/actions/userAction";
-//import { showLoading, hideLoading } from "../utils/redux/slice/loadingSlice";
 
 // Yup form validation Schema
 const validationSchema = yup.object({
@@ -46,10 +45,8 @@ const LogIn = () => {
         validationSchema: validationSchema,
         onSubmit: (values, actions) => {
             //alert(JSON.stringify(values, null, 2))
-            //dispatch(showLoading());
             dispatch(userSignInAction(values));
             actions.resetForm();
-            //dispatch(hideLoading());
         }
     })
   return (
