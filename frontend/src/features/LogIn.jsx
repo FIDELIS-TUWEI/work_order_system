@@ -55,7 +55,7 @@ const LogIn = () => {
         <Box sx={{ height: "81vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-                    <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
+                    <Avatar sx={{ m: 1, bgcolor: "green", mb: 3 }}>
                         <LockClockOutlined />
                     </Avatar>
 
@@ -93,7 +93,7 @@ const LogIn = () => {
                         helperText={formik.touched.password && formik.errors.password}
                     />
 
-                    <Button fullWidth variant="contained" type="submit">Log In</Button>
+                    <Button fullWidth variant="contained" type="submit" color="success">Log In</Button>
                 </Box>
             </Box>
         </Box>

@@ -45,7 +45,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ bgcolor: 'green' }}>
       <Container>
         <Toolbar disableGutters>
           <WorkIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
