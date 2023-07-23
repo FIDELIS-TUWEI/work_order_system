@@ -16,6 +16,8 @@ import EditTask from "./pages/admin/EditTask";
 
 import { useSelector } from "react-redux";
 import LoadingBox from "./components/LoadingBox";
+import PublicRoute from "./components/PublicRoute";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
   const { loading } = useSelector(state => state.loading);
@@ -35,15 +37,15 @@ function App() {
 
   function renderRoutes() {
     const routes = [
-      { path: "/", element: <Home /> },
-      { path: "/dashboard", element: <Dashboard /> },
-      { path: "/login", element: <LogIn /> },
-      { path: "/tasks/list", element: <Tasks /> },
-      { path: "/users/list", element: <Users /> },
-      { path: "/users/create", element: <CreateUsers /> },
-      { path: "/tasks/create", element: <CreateTask /> },
-      { path: "/users/edit/:id", element: <EditUser /> },
-      { path: "/tasks/edit/:id", element: <EditTask /> },
+      { path: "/", element: <PublicRoute> <Home /> </PublicRoute> },
+      { path: "/dashboard", element: <PrivateRoute> <Dashboard /> </PrivateRoute> },
+      { path: "/login", element: <PrivateRoute> <LogIn /> </PrivateRoute> },
+      { path: "/tasks/list", element: <PrivateRoute> <Tasks /> </PrivateRoute> },
+      { path: "/users/list", element: <PrivateRoute> <Users /> </PrivateRoute> },
+      { path: "/users/create", element: <PrivateRoute> <CreateUsers /> </PrivateRoute> },
+      { path: "/tasks/create", element: <PrivateRoute> <CreateTask /> </PrivateRoute> },
+      { path: "/users/edit/:id", element: <PrivateRoute> <EditUser /> </PrivateRoute> },
+      { path: "/tasks/edit/:id", element: <PrivateRoute> <EditTask /> </PrivateRoute> },
       { path: "*", element: <NotFound /> },
     ];
 
