@@ -7,10 +7,11 @@ import {
     USER_LOGOUT_FAIL, 
     USER_LOGOUT_REQUEST, 
     USER_LOGOUT_SUCCESS,
-    USER_LOAD_REQUEST,
-    USER_LOAD_SUCCESS,
-    USER_LOAD_FAIL
+    //USER_LOAD_REQUEST,
+    //USER_LOAD_SUCCESS,
+    //USER_LOAD_FAIL
 } from "../constants/userConstant";
+import { hideLoading, showLoading } from "../slice/loadingSlice";
 
 const url = "http://localhost:5000"
 
@@ -19,7 +20,9 @@ export const userSignInAction = (user) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST })
 
     try {
+        dispatch(showLoading());
         const { data } = await axios.post(`${url}/hin/login`, user);
+        dispatch(hideLoading());
         localStorage.setItem("userInfo", JSON.stringify(data));
         dispatch({
             type: USER_SIGNIN_SUCCESS,
@@ -27,6 +30,7 @@ export const userSignInAction = (user) => async (dispatch) => {
         });
         toast.success("Login Succesful")
     } catch (error) {
+        dispatch(hideLoading());
         dispatch({
             type: USER_SIGNIN_FAIL,
             payload: error.response.data.error
@@ -58,7 +62,9 @@ export const userLogoutAction = () => async(dispatch) => {
     dispatch({ type: USER_LOGOUT_REQUEST });
 
     try {
+        dispatch(showLoading());
         const { data } = await axios.get(`${url}/hin/logout`);
+        dispatch(hideLoading());
         localStorage.removeItem("userInfo");
         dispatch({
             type: USER_LOGOUT_SUCCESS,
@@ -66,6 +72,7 @@ export const userLogoutAction = () => async(dispatch) => {
         });
         toast.success("Log Out Succesfully!");
     } catch (error) {
+        dispatch(hideLoading());
         dispatch({
             type: USER_LOGOUT_FAIL,
             payload: error.response.data.error

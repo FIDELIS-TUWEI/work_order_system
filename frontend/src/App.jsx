@@ -15,16 +15,23 @@ import CreateTask from "./pages/admin/CreateTask";
 import EditUser from "./pages/admin/EditUser";
 import EditTask from "./pages/admin/EditTask";
 
+import { useSelector } from "react-redux";
+import LoadingBox from "./components/LoadingBox";
 
 function App() {
+  const { loading } = useSelector(state => state.loading);
   return (
     <>
       <ToastContainer />
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        { loading ? (
+          <LoadingBox />
+        ) : (
         <Routes>
           {renderRoutes()}
         </Routes>
+        )}
       </ThemeProvider>
     </>
   );
