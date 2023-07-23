@@ -44,9 +44,11 @@ const workOrderSchema = new mongoose.Schema({
     },
     assignedTo: {
         type: String,
+        default: ""
     },
     dateCompleted: {
         type: String,
+        default: ""
     },
     reviewed: {
         type: Boolean,
@@ -54,9 +56,11 @@ const workOrderSchema = new mongoose.Schema({
     },
     reviewedBy: {
         type: String,
+        default: ""
     },
     dateReviewed: {
         type: String,
+        default: ""
     }
 },
 
