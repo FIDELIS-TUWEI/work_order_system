@@ -51,7 +51,7 @@ export default function Dashboard() {
   );
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpen(!open);
   };
 
   const navigate = useNavigate();

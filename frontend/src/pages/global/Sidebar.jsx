@@ -26,14 +26,14 @@ const SidebarAdmin = () => {
   //  dispatch(userProfileAction());
   //}, []);
 
-  // Function to Log Out User
-  const logOut = () => {
-    dispatch(userLogoutAction());
+// Function to Log Out User
+const logOut = () => {
+  dispatch(userLogoutAction());
+  setTimeout(() => {
     window.location.reload(true);
-    setTimeout(() => {
-      navigate("/");
-    }, 500)
-  }
+    navigate("/");
+  }, 500);
+};
 
   return (
     <>

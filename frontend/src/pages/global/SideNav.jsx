@@ -17,6 +17,10 @@ import Home from '../Home';
 import DashUsers from '../admin/Users';
 import DashTasks from '../admin/Tasks';
 import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { userLogoutAction } from '../../utils/redux/actions/userAction';
+import { useNavigate } from 'react-router-dom';
+
 
 const drawerWidth = 240;
 
@@ -68,9 +72,19 @@ const openedMixin = (theme) => ({
   );
 
 const SideNav = ({ open, setOpen }) => {
+  const { userInfo } = useSelector(state => state.signIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const [menuData, setMenuData] = useState("Home")
+  const [menuData, setMenuData] = useState("Home")
 
+  const logOut = () => {
+    dispatch(userLogoutAction());
+    setTimeout(() => {
+      window.location.reload(true);
+      navigate("/");
+    }, 500);
+  };
 
   return (
     <>
@@ -81,94 +95,122 @@ const [menuData, setMenuData] = useState("Home")
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-            <ListItem  disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+        {userInfo && userInfo.role === 1 ?
+        <>
+          <List>
+              <ListItem  disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                    <DashboardIcon />
-                </ListItemIcon>
-                <ListItemText primary="Main" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-        </List>
-        <List>
-            <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Users")}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                      <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Main" sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+          </List>
+          <List>
+              <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Users")}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                    <GroupAddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Users" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-        </List>
-        <List>
-            <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Tasks")}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                      <GroupAddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Users" sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+          </List>
+          <List>
+              <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Tasks")}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                    <WorkIcon />
-                </ListItemIcon>
-                <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-        </List>
-        <List>
-            <ListItem  disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                      <WorkIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+          </List>
+          <List>
+              <ListItem  disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
                 >
-                    <Analytics />
-                </ListItemIcon>
-                <ListItemText primary="Analysis" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-        </List>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                      <Analytics />
+                  </ListItemIcon>
+                  <ListItemText primary="Analysis" sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+          </List>
+        </> :
+        <>
+          <List>
+              <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Tasks")}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                      <WorkIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+          </List>
+        </>
+      }
         <Divider />
         <Box sx={{ mx: "auto", mt: 3, mb: 1 }}>
             <Tooltip title="current user">
@@ -179,7 +221,7 @@ const [menuData, setMenuData] = useState("Home")
             {open && <Typography>current user: Ftuwei</Typography>}
             <Typography variant='body2'>role: admin</Typography>
             <Tooltip title="logout" sx={{ mt: 1 }}>
-                <IconButton>
+                <IconButton onClick={logOut}>
                     <Logout />
                 </IconButton>
             </Tooltip>
