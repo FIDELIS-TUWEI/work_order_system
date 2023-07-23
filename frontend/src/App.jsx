@@ -21,38 +21,37 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const { loading } = useSelector(state => state.loading);
+
   return (
     <>
       <ToastContainer />
-        <CssBaseline />
-        { loading ? (
-          <LoadingBox />
-        ) : (
-        <Routes>
-          {renderRoutes()}
-        </Routes>
-        )}
+      <CssBaseline />
+      {loading ? (
+        <LoadingBox />
+      ) : (
+        <Routes>{renderRoutes()}</Routes>
+      )}
     </>
   );
+}
 
-  function renderRoutes() {
-    const routes = [
-      { path: "/", element: <PublicRoute> <Home /> </PublicRoute> },
-      { path: "/dashboard", element: <PrivateRoute> <Dashboard /> </PrivateRoute> },
-      { path: "/login", element: <PrivateRoute> <LogIn /> </PrivateRoute> },
-      { path: "/tasks/list", element: <PrivateRoute> <Tasks /> </PrivateRoute> },
-      { path: "/users/list", element: <PrivateRoute> <Users /> </PrivateRoute> },
-      { path: "/users/create", element: <PrivateRoute> <CreateUsers /> </PrivateRoute> },
-      { path: "/tasks/create", element: <PrivateRoute> <CreateTask /> </PrivateRoute> },
-      { path: "/users/edit/:id", element: <PrivateRoute> <EditUser /> </PrivateRoute> },
-      { path: "/tasks/edit/:id", element: <PrivateRoute> <EditTask /> </PrivateRoute> },
-      { path: "*", element: <NotFound /> },
-    ];
+function renderRoutes() {
+  const routes = [
+    { path: "/", element: <PublicRoute> <Home /> </PublicRoute> },
+    { path: "/dashboard", element: <PrivateRoute> <Dashboard /> </PrivateRoute> },
+    { path: "/login", element: <PublicRoute> <LogIn /> </PublicRoute> },
+    { path: "/tasks/list", element: <PrivateRoute> <Tasks /> </PrivateRoute> },
+    { path: "/users/list", element: <PrivateRoute> <Users /> </PrivateRoute> },
+    { path: "/users/create", element: <PrivateRoute> <CreateUsers /> </PrivateRoute> },
+    { path: "/tasks/create", element: <PrivateRoute> <CreateTask /> </PrivateRoute> },
+    { path: "/users/edit/:id", element: <PrivateRoute> <EditUser /> </PrivateRoute> },
+    { path: "/tasks/edit/:id", element: <PrivateRoute> <EditTask /> </PrivateRoute> },
+    { path: "*", element: <NotFound /> },
+  ];
 
-    return routes.map((route, index) => (
-      <Route key={index} path={route.path} element={route.element} />
-    ));
-  }
+  return routes.map((route, index) => (
+    <Route key={index} path={route.path} element={route.element} />
+  ));
 }
 
 export default App;

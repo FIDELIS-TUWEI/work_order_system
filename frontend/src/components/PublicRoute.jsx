@@ -1,9 +1,9 @@
-import { Navigate } from "react-router-dom";
+const { Navigate } = "react-router-dom";
 
 const PublicRoute = ({ children }) => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
-        return <Navigate to="/" />;
+        return <Navigate to="/" />
     }
     return children;
 }
