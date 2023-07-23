@@ -64,7 +64,7 @@ export default function Dashboard() {
     <ThemeProvider theme={darkTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed">
+        <AppBar position="fixed" sx={{ bgcolor: 'green' }}>
           <Toolbar>
             <IconButton
               color="inherit"

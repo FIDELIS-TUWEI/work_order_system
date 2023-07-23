@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { Box, Typography } from "@mui/material";
-import { Table, TableHead, TableCell, Paper, TableRow, TableBody, Button, styled } from '@mui/material'
+import { Table, TableHead, TableCell,TableRow, TableBody, Button, styled } from '@mui/material'
 import AddIcon from "@mui/icons-material/Add";
 import axios from 'axios';
 
@@ -78,9 +78,9 @@ const Users = () => {
               <TableCell>{user._id}</TableCell>
               <TableCell>{user.date}</TableCell>
               <TableCell sx={{ gap: 2 }}>
-                <Button variant='contained' color='primary' style={{ marginRight: 10 }} onClick={() => navigate(`/users/edit/${user._id}`)}>Edit</Button>
+                <Button variant='contained' color='success' style={{ marginRight: 10 }} onClick={() => navigate(`/users/edit/${user._id}`)}>Edit</Button>
                 <Button variant='contained' color='error' onClick={() => navigate(`/users/delete/${user._id}`)}>Delete</Button>
-                </TableCell>
+              </TableCell>
             </TRow>
           ))}
         </TableBody>

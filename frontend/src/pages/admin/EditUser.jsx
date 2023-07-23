@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
@@ -7,7 +7,7 @@ import * as yup from "yup";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, editUser } from "../../utils/redux/slice/userSlice"
+import { editUser } from "../../utils/redux/slice/userSlice"
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
@@ -69,7 +69,7 @@ const EditUser = () => {
       <Box sx={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", pt: 4, mb: 3 }}>
         <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
           <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-            <Avatar sx={{ m: 1, bgcolor: "primary", mb: 3 }}>
+            <Avatar sx={{ m: 1, bgcolor: "green", mb: 3 }}>
               <BorderColorOutlinedIcon />
             </Avatar>
 
@@ -141,7 +141,7 @@ const EditUser = () => {
               helperText={formik.touched.date && formik.errors.date}
             />
 
-            <Button fullWidth variant="contained" type="submit">Edit User</Button>
+            <Button fullWidth variant="contained" type="submit" color="success">Edit User</Button>
           </Box>
         </Box>
       </Box>
