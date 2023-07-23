@@ -73,7 +73,7 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
 const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
-        const workOrder = await WorkOrder.findById(workOrderId);
+        const workOrder = await WorkOrder.findById(workOrderId).populate("requestedBy", "name username");
         if (!workOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         }
