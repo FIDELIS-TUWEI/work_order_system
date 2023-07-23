@@ -35,6 +35,14 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Update Work Order
+const updateWorkOrder = asyncHandler (async (req, res, next) => {
+    const { id } = req.params;
+    const { userId, status, assignedTo, dateCompleted, reviewed, reviewedBy, dateReviewed } = req.body;
+
+})
+
 module.exports = {
     createWorkOrder,
+    updateWorkOrder,
 }

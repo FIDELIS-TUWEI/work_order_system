@@ -42,9 +42,21 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    assignedTo: {
+        type: String,
+    },
+    dateCompleted: {
+        type: String,
+    },
     reviewed: {
         type: Boolean,
         default: false
+    },
+    reviewedBy: {
+        type: String,
+    },
+    dateReviewed: {
+        type: String,
     }
 },
 
