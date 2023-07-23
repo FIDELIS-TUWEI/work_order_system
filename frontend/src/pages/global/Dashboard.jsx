@@ -36,54 +36,59 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 
-
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(true);
 
-  // Dark theme with useMemo
-  const darkTheme = useMemo(() => createTheme({
-    palette: {
-        mode: dark ? "dark" : "light"
-    }
-  }), [dark]);
+  const darkTheme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: dark ? "dark" : "light",
+        },
+      }),
+    [dark]
+  );
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
-  // navigate hook
   const navigate = useNavigate();
+
+  const handleDarkToggle = () => {
+    setDark(!dark);
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => {setOpen(!open)}}
-            edge="start"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Tooltip title="Go back home">
-            <IconButton sx={{ mr: 1 }} onClick={() => navigate("/")}>
-                <HomeIcon />
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar position="fixed">
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+            >
+              <MenuIcon />
             </IconButton>
-          </Tooltip>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Work Order System
-          </Typography>
-          <IconButton onClick={() => setDark(!dark)}>
-            { dark ? <Brightness7 /> : <Brightness4 /> }
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <SideNav {...{open, setOpen}}/>
-    </Box>
+            <Tooltip title="Go back home">
+              <IconButton sx={{ mr: 1 }} onClick={() => navigate("/")}>
+                <HomeIcon />
+              </IconButton>
+            </Tooltip>
+            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+              Work Order System
+            </Typography>
+            <IconButton onClick={handleDarkToggle}>
+              {dark ? <Brightness7 /> : <Brightness4 />}
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <SideNav {...{ open, setOpen }} />
+      </Box>
     </ThemeProvider>
   );
 }
