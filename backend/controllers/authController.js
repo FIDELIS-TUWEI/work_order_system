@@ -1,4 +1,5 @@
 const User = require("../model/user");
+const WorkOrder = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 
@@ -76,12 +77,21 @@ const logout = (req, res, next) => {
 
 // User Profile
 const userProfile = asyncHandler (async (req, res, next) => {
-    const user = await User.findById(req.user.username).select('-password');
+    try {
+        const user = await User.findById(req.params.id).select("-password").populate("workOrders");
 
-    res.status(200).json({
-        success: true,
-        user
-    })
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            user
+        })
+
+    } catch (error) {
+        next(error);
+    }
 })
 
 // Login User

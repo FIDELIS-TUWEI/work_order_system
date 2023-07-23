@@ -35,11 +35,14 @@ const userSchema = new mongoose.Schema({
     workOrders: [
         {
             type: ObjectId,
-            ref: "WorkOrder",
+            ref: "Workorder",
             required: true
         }
     ],
-}, { timestamps: true }
+}, 
+{ 
+    timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" }, 
+}
 );
 
 // Encrypt Password before Saving to DB

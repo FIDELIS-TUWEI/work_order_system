@@ -6,6 +6,6 @@ const { isAuthenticated, isAdmin } = require("../middleware/authMiddleware");
 router.post("/register", register);
 router.post("/login", login);
 router.get("/logout", logout);
-router.get("/info", isAuthenticated, userProfile);
+router.get("/:id/info", userProfile);
 
 module.exports = router;
