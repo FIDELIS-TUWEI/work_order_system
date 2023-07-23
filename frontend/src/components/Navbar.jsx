@@ -1,130 +1,59 @@
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import WorkIcon from '@mui/icons-material/Work';
 import { useState } from 'react';
-import { useTheme } from '@emotion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogoutAction } from '../utils/redux/actions/userAction';
-
-const pages = ["Home", "Log In"];
+import WorkIcon from '@mui/icons-material/Work';
+import {
+  AppBar,
+  Container,
+  Toolbar,
+  Typography,
+  Box,
+  Button,
+  Tooltip,
+  IconButton,
+  Avatar,
+  Menu,
+  MenuItem,
+} from '@mui/material';
 
 const Navbar = () => {
-  // show / hide Login Button
   const { userInfo } = useSelector(state => state.signIn);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { palette } = useTheme();
-  const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleOpenUserMenu = event => {
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
-  //function to handle onclick event to Log In user
   const handleLogin = () => {
-    navigate("/login");
-  }
+    navigate('/login');
+  };
 
-  // Function to Logout User
   const logoutUser = () => {
     dispatch(userLogoutAction());
     window.location.reload(true);
     setTimeout(() => {
-      navigate("/");
-    }, 500)
-  }
+      navigate('/');
+    }, 500);
+  };
 
   return (
     <AppBar position="static">
       <Container>
-        {/*Principal Menu */}
-
         <Toolbar disableGutters>
-          <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.2rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            WORK ORDER
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
           <WorkIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href=""
+            component={Link}
+            to=""
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -139,14 +68,15 @@ const Navbar = () => {
             WORK ORDER
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
-              </Button>
+            <Button
+              sx={{ my: 2, color: 'white', display: 'block' }}
+              component={Link}
+              to="/"
+              style={{ color: 'white', textDecoration: 'none' }}
+            >
+              Home
+            </Button>
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -169,30 +99,26 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/admin/dashboard">Admin Dashboard</Link></Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/dashboard">User Dashboard</Link></Typography>
-              </MenuItem>
-
-              {/* Condition to check if user is Logged In */}
-              {
-                !userInfo ?
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center"><Button onClick={handleLogin}><Link style={{ textDecoration: "none", color: palette.primary.main }}>Log In</Link></Button></Typography>
-                  </MenuItem>
-                :
-                  <MenuItem onClick={logoutUser}>
-                    <Typography textAlign="center" style={{ textDecoration: 'none', color: palette.primary.main }}>Log Out</Typography>
-                  </MenuItem>
-              }
-
+              {!userInfo ? (
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">
+                    <Button onClick={handleLogin}>
+                      <Link style={{ textDecoration: 'none', color: 'green' }}>Log In</Link>
+                    </Button>
+                  </Typography>
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={logoutUser}>
+                  <Typography textAlign="center" style={{ textDecoration: 'none', color: 'green' }}>
+                    Log Out
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
 export default Navbar;

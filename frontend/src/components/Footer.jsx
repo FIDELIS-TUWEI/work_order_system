@@ -1,20 +1,19 @@
-import { Box, useTheme } from "@mui/material"
+import { Box } from "@mui/material"
 
 const Footer = () => {
-  const { palette } = useTheme();
   return (
     <>
       <Box
         sx={{
           height: '70px',
-          bgcolor: palette.secondary.midNightBlue,
+          bgcolor: 'green',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
         }}
       >
-        <Box component='span' sx={{ color: palette.primary.main }}>
-          &copy; All rights Reserved. Holiday Inn-Nairobi&trade; WORK ORDER - 2023.
+        <Box component='span' sx={{ color: '#fff' }}>
+          &copy; All rights Reserved. Holiday Inn-Nairobi&trade; Work Order System - 2023.
         </Box>
       </Box>
     </>

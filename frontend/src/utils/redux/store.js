@@ -3,7 +3,6 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { userReducerLogout, userReducerSignIn } from "./reducers/userReducer";
 import userSlice from "./slice/userSlice";
-//import { addTaskReducer } from "./reducers/workReducer";
 import taskSlice from "./slice/taskSlice";
 import loadingSlice from "./slice/loadingSlice";
 
@@ -14,7 +13,6 @@ const reducers = combineReducers({
     logOut: userReducerLogout,
     users: userSlice,
     tasks: taskSlice,
-    //addTask: addTaskReducer
 });
 
 // Initial State

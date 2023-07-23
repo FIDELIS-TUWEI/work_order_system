@@ -70,13 +70,12 @@ const openedMixin = (theme) => ({
       }),
     }),
   );
-
 const SideNav = ({ open, setOpen }) => {
   const { userInfo } = useSelector(state => state.signIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [menuData, setMenuData] = useState("Home")
+  const [menuData, setMenuData] = useState("Home");
 
   const logOut = () => {
     dispatch(userLogoutAction());
@@ -86,155 +85,95 @@ const SideNav = ({ open, setOpen }) => {
     }, 500);
   };
 
+  const renderMainListItem = (text, icon) => {
+    return (
+      <ListItem disablePadding sx={{ display: 'block' }} onClick={() => setMenuData(text)}>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            {icon}
+          </ListItemIcon>
+          <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+        </ListItemButton>
+      </ListItem>
+    );
+  };
+
+  const renderMenuItems = () => {
+    if (userInfo && userInfo.role === 1) {
+      return (
+        <>
+          <List>
+            {renderMainListItem("Main", <DashboardIcon />)}
+          </List>
+          <List>
+            {renderMainListItem("Users", <GroupAddIcon />)}
+          </List>
+          <List>
+            {renderMainListItem("Tasks", <WorkIcon />)}
+          </List>
+          <List>
+            {renderMainListItem("Analysis", <Analytics />)}
+          </List>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <List>
+            {renderMainListItem("Tasks", <WorkIcon />)}
+          </List>
+        </>
+      );
+    }
+  };
+
   return (
     <>
-     <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={() => setOpen(false)}>
             <ChevronLeftIcon />
           </IconButton>
         </DrawerHeader>
         <Divider />
-        {userInfo && userInfo.role === 1 ?
-        <>
-          <List>
-              <ListItem  disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                    }}
-                  >
-                      <DashboardIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Main" sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-          </List>
-          <List>
-              <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Users")}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                    }}
-                  >
-                      <GroupAddIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Users" sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-          </List>
-          <List>
-              <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Tasks")}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                    }}
-                  >
-                      <WorkIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-          </List>
-          <List>
-              <ListItem  disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                    }}
-                  >
-                      <Analytics />
-                  </ListItemIcon>
-                  <ListItemText primary="Analysis" sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-          </List>
-        </> :
-        <>
-          <List>
-              <ListItem  disablePadding sx={{ display: 'block' }} onClick={() => setMenuData("Tasks")}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                    }}
-                  >
-                      <WorkIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Tasks" sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-          </List>
-        </>
-      }
+        {renderMenuItems()}
         <Divider />
         <Box sx={{ mx: "auto", mt: 3, mb: 1 }}>
-            <Tooltip title="current user">
-                <Avatar {...open && {sx:{width:100, height:100}}}/>
-            </Tooltip>
+          <Tooltip title="current user">
+            <Avatar {...open && { sx: { width: 100, height: 100 } }} />
+          </Tooltip>
         </Box>
         <Box sx={{ textAlign: "center" }}>
-            {open && <Typography>current user: Ftuwei</Typography>}
-            <Typography variant='body2'>role: admin</Typography>
-            <Tooltip title="logout" sx={{ mt: 1 }}>
-                <IconButton onClick={logOut}>
-                    <Logout />
-                </IconButton>
-            </Tooltip>
+          {open && <Typography>current user</Typography>}
+          <Typography variant='body2'>role</Typography>
+          <Tooltip title="logout" sx={{ mt: 1 }}>
+            <IconButton onClick={logOut}>
+              <Logout />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {menuData == "Home" && <Home />}
-        {menuData == "Users" && <DashUsers />}
-        {menuData == "Tasks" && <DashTasks />}
+        {menuData === "Home" && <Home />}
+        {menuData === "Users" && <DashUsers />}
+        {menuData === "Tasks" && <DashTasks />}
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default SideNav
+
+export default SideNav;
