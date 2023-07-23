@@ -17,7 +17,7 @@ import EditTask from "./pages/admin/EditTask";
 import { useSelector } from "react-redux";
 import LoadingBox from "./components/LoadingBox";
 import PublicRoute from "./components/PublicRoute";
-import { PrivateRoute } from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const { loading } = useSelector(state => state.loading);
