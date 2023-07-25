@@ -1,11 +1,12 @@
-const { Navigate } = "react-router-dom";
+import { useSelector } from "react-redux";
+import { Outlet, Navigate } from "react-router-dom";
 
-const PublicRoute = ({ children }) => {
-    const userInfo = localStorage.getItem("userInfo");
-    if (userInfo) {
-        return <Navigate to="/" replace />
-    }
-    return children;
+
+const PublicRoute = () => {
+    const { isAuthenticated } = useSelector(state => state.signIn);
+
+    return isAuthenticated ? <Navigate to="/" /> : <Outlet />
+
 }
 
 export default PublicRoute;

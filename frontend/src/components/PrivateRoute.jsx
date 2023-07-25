@@ -1,8 +1,11 @@
-const { Navigate } = 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+
 
 const PrivateRoute = ({ children }) => {
-  const userInfo = localStorage.getItem("userInfo");
-  return userInfo ? children : <Navigate to="/login" replace />
+  const { isAuthenticated } = useSelector(state => state.signIn);
+
+  return isAuthenticated ? children : <Navigate to="/login" />;
 }
 
 export default PrivateRoute;
