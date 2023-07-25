@@ -14,13 +14,24 @@ import CreateTask from "./pages/admin/CreateTask";
 import EditUser from "./pages/admin/EditUser";
 import EditTask from "./pages/admin/EditTask";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "./components/LoadingBox";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import { useEffect } from "react";
+import { userSignInAction } from "./utils/redux/actions/userAction";
 
 function App() {
   const { loading } = useSelector(state => state.loading);
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector(state => state.signIn);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(userSignInAction());
+    }
+  }, [isAuthenticated]);
+
 
   return (
     <>
