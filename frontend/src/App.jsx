@@ -14,23 +14,13 @@ import CreateTask from "./pages/admin/CreateTask";
 import EditUser from "./pages/admin/EditUser";
 import EditTask from "./pages/admin/EditTask";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import LoadingBox from "./components/LoadingBox";
-import PublicRoute from "./components/PublicRoute";
-import PrivateRoute from "./components/PrivateRoute";
-import { useEffect } from "react";
-import { userSignInAction } from "./utils/redux/actions/userAction";
+
 
 function App() {
   const { loading } = useSelector(state => state.loading);
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector(state => state.signIn);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(userSignInAction());
-    }
-  }, [isAuthenticated]);
+  
 
 
   return (
@@ -40,29 +30,22 @@ function App() {
       {loading ? (
         <LoadingBox />
       ) : (
-        <Routes>{renderRoutes()}</Routes>
+        <Routes>
+          <Route path="/" element={ <Home /> } />
+          <Route path="/login" element={ <LogIn /> } />
+          <Route path="/dashboard" element={ <Dashboard /> } />
+          <Route path="/tasks/list" element={ <Tasks /> } />
+          <Route path="/users/list" element={ <Users /> } />
+          <Route path="/users/create" element={ <CreateUsers /> } />
+          <Route path="/tasks/create" element={ <CreateTask /> } />
+          <Route path="/users/edit/:id" element={ <EditUser /> } />
+          <Route path="/tasks/edit/:id" element={ <EditTask /> } />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       )}
     </>
   );
 }
 
-function renderRoutes() {
-  const routes = [
-    { path: "/", element: <PublicRoute> <Home /> </PublicRoute> },
-    { path: "/dashboard", element: <PrivateRoute> <Dashboard /> </PrivateRoute> },
-    { path: "/login", element: <PublicRoute> <LogIn /> </PublicRoute> },
-    { path: "/tasks/list", element: <PrivateRoute> <Tasks /> </PrivateRoute> },
-    { path: "/users/list", element: <PrivateRoute> <Users /> </PrivateRoute> },
-    { path: "/users/create", element: <PrivateRoute> <CreateUsers /> </PrivateRoute> },
-    { path: "/tasks/create", element: <PrivateRoute> <CreateTask /> </PrivateRoute> },
-    { path: "/users/edit/:id", element: <PrivateRoute> <EditUser /> </PrivateRoute> },
-    { path: "/tasks/edit/:id", element: <PrivateRoute> <EditTask /> </PrivateRoute> },
-    { path: "*", element: <NotFound /> },
-  ];
-
-  return routes.map((route, index) => (
-    <Route key={index} path={route.path} element={route.element} />
-  ));
-}
 
 export default App;
