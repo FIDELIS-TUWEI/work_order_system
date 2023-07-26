@@ -2,7 +2,9 @@
 
 
 const PublicRoute = ({ children }) => {
-    if (localStorage.getItem("userInfo")) {
+    const { isAuthenticated } = useSelector(state => state.signIn);
+
+    if (!isAuthenticated) {
         return <Navigate to="/login" />;
     } else {
         return children;

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
 const User = require("../model/user");
+const JWT_SECRET = require("../utils/env")
 
 // check if user is authenticated
 const isAuthenticated = async (req, res, next) => {
@@ -12,7 +13,7 @@ const isAuthenticated = async (req, res, next) => {
 
     try {
         // Verify Token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET);
         req.user = await User.findById(decoded.id);
         next();
     } catch (error) {
