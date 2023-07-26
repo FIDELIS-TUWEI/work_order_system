@@ -16,7 +16,6 @@ import EditTask from "./pages/admin/EditTask";
 
 import { useSelector } from "react-redux";
 import LoadingBox from "./components/LoadingBox";
-import PrivateRoute from "./components/PrivateRoute";
 
 
 function App() {
@@ -32,8 +31,8 @@ function App() {
         <Routes>
           <Route path="/" element={ <Home /> } />
           <Route path="/login" element={ <LogIn /> } />
-          <Route path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute> } />
-          <Route path="/tasks/list" element={<PrivateRoute> <Tasks /> </PrivateRoute> } />
+          <Route path="/dashboard" element={ <Dashboard /> } />
+          <Route path="/tasks/list" element={ <Tasks /> } />
           <Route path="/users/list" element={ <Users /> } />
           <Route path="/users/create" element={ <CreateUsers /> } />
           <Route path="/tasks/create" element={ <CreateTask /> } />
