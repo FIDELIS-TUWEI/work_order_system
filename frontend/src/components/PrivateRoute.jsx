@@ -2,8 +2,11 @@ import useSelector from 'react-redux';
 
 
 const PrivateRoute = ({ children }) => {
-  const userInfo = localStorage.getItem('userInfo');
-  return userInfo ? children : <Navigate to="/login" />;
+  if (localStorage.getItem("userInfo")) {
+        return children;
+    } else {
+        return <Navigate to="/login" />
+    }
 }
 
 export default PrivateRoute;
