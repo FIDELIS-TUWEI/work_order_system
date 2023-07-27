@@ -1,7 +1,10 @@
 const User = require("../model/user");
 const WorkOrder = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
+const { JWT_SECRET, LOGIN_EXPIRES, REFRESH_TOKEN } = require("../utils/env");
 
 
 // @desc Register User
@@ -24,7 +27,7 @@ const register = asyncHandler (async (req, res, next) => {
 })
 
 // Login User
-const login = asyncHandler (async (req, res, next) => {
+{/*const login = asyncHandler (async (req, res, next) => {
     try {
         const { username, password } = req.body;
         // Validation
@@ -64,7 +67,7 @@ const sendTokenResponse = asyncHandler (async (user, codeStatus, res) => {
             success: true,
             role: user.role
         })
-});
+}); */}
 
 // Logout
 const logout = (req, res, next) => {
@@ -95,7 +98,7 @@ const userProfile = asyncHandler (async (req, res, next) => {
 })
 
 // Login User
-{/*const login = asyncHandler (async (req, res) => {
+const login = asyncHandler (async (req, res) => {
     const { username, password } = req.body;
 
     // check requirements
@@ -122,14 +125,14 @@ const userProfile = asyncHandler (async (req, res, next) => {
             "isAdmin": foundUser.isAdmin
         }
     },
-    process.env.JWT_SECRET,
-    {expiresIn: process.env.LOGIN_EXPIRES}
+    JWT_SECRET,
+    {expiresIn: LOGIN_EXPIRES }
     );
 
     // REFRESH TOKEN
     const refreshToken = jwt.sign(
         { "username": foundUser.username }, 
-        process.env.REFRESH_TOKEN_SECRET,
+        REFRESH_TOKEN,
         {expiresIn: '2d'}
     );
 
@@ -143,10 +146,10 @@ const userProfile = asyncHandler (async (req, res, next) => {
 
     // send access Token
     res.json({accessToken, message: "Login Success"});
-});*/}
+});
 
 // refresh token
-{/*const refresh = asyncHandler (async (req, res) => {
+const refresh = asyncHandler (async (req, res) => {
     const cookies = req.cookies
 
     if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" });
@@ -155,7 +158,7 @@ const userProfile = asyncHandler (async (req, res, next) => {
 
     jwt.verify(
         refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
+        REFRESH_TOKEN,
         asyncHandler( async (err, decoded) => {
             if (err) return res.status(403).json({ message: "Forbidden" })
 
@@ -168,14 +171,14 @@ const userProfile = asyncHandler (async (req, res, next) => {
                     "isAdmin": foundUser.isAdmin
                 }
             },
-            process.env.JWT_SECRET,
+            JWT_SECRET,
             { expiresIn: '15min'}
             )
 
             res.json({ accessToken })
         })
     )
-});*/}
+});
 
 // Logout
 {/*const logout = (req, res,) => {
@@ -188,7 +191,7 @@ const userProfile = asyncHandler (async (req, res, next) => {
 module.exports = {
     register,
     login,
-    //refresh,
+    refresh,
     logout,
     userProfile
 }
