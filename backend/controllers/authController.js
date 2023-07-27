@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
-const { JWT_SECRET, LOGIN_EXPIRES, REFRESH_TOKEN } = require("../utils/env");
+const { JWT_SECRET, LOGIN_EXPIRES, REFRESH_TOKEN, ACCESS_TOKEN } = require("../utils/env");
 
 
 // @desc Register User
@@ -125,7 +125,7 @@ const login = asyncHandler (async (req, res) => {
             "isAdmin": foundUser.isAdmin
         }
     },
-    JWT_SECRET,
+    ACCESS_TOKEN,
     {expiresIn: LOGIN_EXPIRES }
     );
 
@@ -133,7 +133,7 @@ const login = asyncHandler (async (req, res) => {
     const refreshToken = jwt.sign(
         { "username": foundUser.username }, 
         REFRESH_TOKEN,
-        {expiresIn: '2d'}
+        {expiresIn: '1d'}
     );
 
     // create Secure cookie with refresh Token
