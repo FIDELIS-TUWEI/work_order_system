@@ -13,8 +13,8 @@ const verifyJWT = (req, res, next) => {
 
     jwt.verify(token, JWT_SECRET, (err, decoded) => {
         if (err) return next(new ErrorResponse("Not authorized to access this route", 401));
-        req.user = decoded.username.id;
-        req.roles = decoded.UserInfo.isAdmin;
+        req.user = decoded.UserInfo.username;
+        req.isAdmin = decoded.UserInfo.isAdmin;
         next();
     })
 }

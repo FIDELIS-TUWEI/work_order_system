@@ -98,7 +98,7 @@ const userProfile = asyncHandler (async (req, res, next) => {
 })
 
 // Login User
-const login = asyncHandler (async (req, res) => {
+{/*const login = asyncHandler (async (req, res) => {
     const { username, password } = req.body;
 
     // check requirements
@@ -126,7 +126,7 @@ const login = asyncHandler (async (req, res) => {
         }
     },
     ACCESS_TOKEN,
-    {expiresIn: LOGIN_EXPIRES }
+    {expiresIn: '2m' }
     );
 
     // REFRESH TOKEN
@@ -178,7 +178,7 @@ const refresh = asyncHandler (async (req, res) => {
             res.json({ accessToken })
         })
     )
-});
+});*/}
 
 // Logout
 {/*const logout = (req, res,) => {
@@ -191,7 +191,7 @@ const refresh = asyncHandler (async (req, res) => {
 module.exports = {
     register,
     login,
-    refresh,
+    //refresh,
     logout,
     userProfile
 }
