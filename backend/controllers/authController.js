@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 
 
-// Register User
+// @desc Register User
 const register = asyncHandler (async (req, res, next) => {
     const { username } = req.body;
     const userExists = await User.findOne({ username });
