@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { createTask, updateTask, deleteTask, getTasks, singleTask } = require('../controllers/taskController');
 const { isAuthenticated, isAdmin } = require('../middleware/authMiddleware');
-//const verifyJWT = require('../middleware/verifyJWT');
 
-//router.use(verifyJWT);
 
 router.post("/tasks/create", createTask);
 router.get("/tasks/getall",  getTasks);
