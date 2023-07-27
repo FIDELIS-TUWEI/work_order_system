@@ -14,6 +14,10 @@ const register = asyncHandler (async (req, res, next) => {
 
     try {
         const user = await User.create(req.body);
+        if (user) {
+            generateToken(res, user._id);
+        }
+        
         res.status(201).json({
             success: true,
             user
