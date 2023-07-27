@@ -54,10 +54,10 @@ userSchema.pre("save", async function (next) {
 });
 
 // Compare user password in the database
-//userSchema.methods.comparePassword = async function(enteredPassword) {
-//    const isMatch = await bcrypt.compare(enteredPassword, this.password);
-//    return isMatch;
-//}
+userSchema.methods.comparePassword = async function(enteredPassword) {
+    const isMatch = await bcrypt.compare(enteredPassword, this.password);
+    return isMatch;
+}
 
 //userSchema.methods.getJwtToken = function () {
 //    const payload = { id: this.id };

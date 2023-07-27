@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, NODE_ENV } = require("./env");
 
-const generateToken = (res, userId) => {
-    const token = jwt.sign({ userId }, JWT_SECRET, {
+const generateToken = (res, id) => {
+    const token = jwt.sign({ id }, JWT_SECRET, {
         expiresIn: "30d",
     });
 
