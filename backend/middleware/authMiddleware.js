@@ -4,20 +4,25 @@ const User = require("../model/user");
 const JWT_SECRET = require("../utils/env")
 
 // check if user is authenticated
-const isAuthenticated = async (req, res, next) => {
-    const { token } = req.cookies;
-    // Make sure token exists
-    if (!token) {
-        return next(new ErrorResponse("Not authorized to access this route", 401));
-    }
+const protect = async (req, res, next) => {
+    let token;
 
-    try {
+    token = req.cookies.jwt;
+    
+    // Make sure token exists
+    if (token) {
         // Verify Token
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = await User.findById(decoded.id);
-        next();
-    } catch (error) {
-        return next(new ErrorResponse("Not authorized to access this route", 401));
+        try {
+            const decoded = jwt.verify(token, JWT_SECRET);
+
+            req.user = await User.findById(decoded.id).select("-password");
+
+            next();
+        } catch (error) {
+            return next(new ErrorResponse("Not authorized, token is invalid", 401));
+        }
+    } else {
+        return next(new ErrorResponse("Not authorized, no token", 401));
     }
 };
 
@@ -29,51 +34,7 @@ const isAdmin = (req, res, next) => {
     next();
 }
 
-// check if user is authenticated
-{/*const auth = (req, res, next) => {
-    const { token }= req.cookies;
-
-    if (!token) {
-        return res.status(401).send("Access Denied. Not authenticated!");
-    }
-
-    try {
-        const jwtSecretKey = process.env.JWT_SECRET;
-        const user= jwt.verify(token, jwtSecretKey);
-
-        req.user = user;
-        next();
-    } catch (error) {
-        return res.status(400).send("Access Denied, Invalid auth token");
-    }
-}}*/}
-
-// user profile
-{/*const isUser = (req, res, next) => {
-    auth(req, res, () => {
-        if (req.user._id === req.params.id || req.user.isAdmin) {
-            next();
-        } else {
-            res.status(403).send("Access Denied! You are not authorized ")
-        }
-    });
-};*/}
-
-// Admin
-{/*const isAdmin = (req, res, next) => {
-    auth(req, res, () => {
-        if (req.user.isAdmin) {
-            next();
-        } else {
-            res.status(403).send("Forbidden! Not Authorized")
-        }
-    })
-}*/}
-
 module.exports = {
-    isAuthenticated,
+    protect,
     isAdmin,
-    //auth,
-    //isUser,
-    //isAdmin,
 }
