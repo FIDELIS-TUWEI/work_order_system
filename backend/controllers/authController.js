@@ -1,8 +1,15 @@
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
-const { generateToken } = require("../utils/helpers/generateToken");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("../utils/env");
+//const { generateToken } = require("../utils/helpers/generateToken");
 
+const generateToken = (id) => {
+    return jwt.sign({ id }, JWT_SECRET, {
+        expiresIn: "1d",
+    })
+}
 
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
@@ -20,15 +27,21 @@ const signupUser = asyncHandler (async (req, res) => {
             password,
             date,
         })
+
         await newUser.save();
 
+        // Generate Token
+        const token = generateToken(newUser._id);
+
         if (newUser) {
+            //generateToken(res, newUser._id);
             res.status(201).json({
                 success: true,
                 _id: newUser._id,
                 name: newUser.name,
                 username: newUser.username,
                 date: newUser.date,
+                token: token,
                 message: "User created successfully"
             })
         } else {
@@ -50,7 +63,7 @@ const login = asyncHandler (async (req, res, next) => {
         const user = await User.findOne({ username });
 
         if (user && (await user.comparePassword(password))) {
-            generateToken(res, user._id);
+            //generateToken(res, user._id);
 
             res.json({
                 success: true,
