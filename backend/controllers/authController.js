@@ -5,11 +5,11 @@ const ErrorResponse = require("../utils/errorResponse");
 const { JWT_SECRET } = require("../utils/env");
 //const { generateToken } = require("../utils/helpers/generateToken");
 
-//const generateToken = ( id ) => {
-//    return token = jwt.sign({ id }, JWT_SECRET, {
-//        expiresIn: "7d",
-//    });
-//}
+const generateToken = ( id ) => {
+    return token = jwt.sign({ id }, JWT_SECRET, {
+        expiresIn: "7d",
+    });
+}
 
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
@@ -18,7 +18,7 @@ const signupUser = asyncHandler (async (req, res) => {
         const user = await User.findOne({ $or: [{ name }, { username }] });
 
         if (user) {
-            return res.status(400).json({ message: "User already exists, Please Login" });
+            return res.status(400).json({ message: "User already exists" });
         }
 
         const newUser = await User.create({
@@ -30,37 +30,32 @@ const signupUser = asyncHandler (async (req, res) => {
 
         await newUser.save();
 
-        // Create Token
-        const token = jwt.sign({ user_id: newUser._id, username }, JWT_SECRET, {
-            expiresIn: "1h",
-        });
-
-        // Save user token
-        newUser.token = token;
-
         // Generate Token
-        //const token = generateToken(newUser._id);
+        const token = generateToken(newUser._id);
 
         // Send Http-only cookie
-        //res.cookie("token", token, {
-        //    path: "/",
-        //    httpOnly: true, // more secure
-        //    secure: true, // Use secure cookies in production
-        //    sameSite: 'none', // Prevent CSRF attacks
-        //    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-        //})
-
-        res.status(201).json({
-            success: true,
-            newUser,
-            //_id: newUser._id,
-            //name: newUser.name,
-            //username: newUser.username,
-            //date: newUser.date,
-            //token: token,
-            message: "User created successfully"
+        res.cookie("token", token, {
+            path: "/",
+            httpOnly: true, // more secure
+            secure: true, // Use secure cookies in production
+            sameSite: 'none', // Prevent CSRF attacks
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
         })
-        
+
+        if (newUser) {
+            res.status(201).json({
+                success: true,
+                _id: newUser._id,
+                name: newUser.name,
+                username: newUser.username,
+                date: newUser.date,
+                token: token,
+                message: "User created successfully"
+            })
+        } else {
+            res.status(400).json({ message: "Invalid User Data" });
+        }
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -77,38 +72,30 @@ const login = asyncHandler (async (req, res, next) => {
         const passwordIsMatch = await user.comparePassword(password);
 
         // Generate Token
-        //const token = generateToken(user._id);
+        const token = generateToken(user._id);
 
-        //if (passwordIsMatch) {
+        if (passwordIsMatch) {
             // Send Http-only cookie
-        //    res.cookie("token", token, {
-        //        path: "/",
-        //        httpOnly: true, // more secure
-        //        secure: true, // Use secure cookies in production
-        //        sameSite: 'none', // Prevent CSRF attacks
-        //        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-        //    })
-        //}
+            res.cookie("token", token, {
+                path: "/",
+                httpOnly: true, // more secure
+                secure: true, // Use secure cookies in production
+                sameSite: 'none', // Prevent CSRF attacks
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+            })
+        }
 
         if (user && passwordIsMatch) {
-            //const { _id, name, username, date } = user;
-            // Create Token
-            const token = jwt.sign({ user_id: user._id, username }, JWT_SECRET, {
-                expiresIn: "1h",
-            });
-
-            // Save user token
-            user.token = token;
-
+            const { _id, name, username, date } = user;
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
                 data: {
-                    user
-                    //_id,
-                    //name,
-                    //username,
-                    //date,
+                    _id,
+                    name,
+                    username,
+                    date,
+                    token: token
                 },
             })
         } else {
