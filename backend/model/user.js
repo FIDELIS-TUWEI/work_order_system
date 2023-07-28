@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     ],
+    token: { type: String },
 }, 
 { 
     timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" }, 
