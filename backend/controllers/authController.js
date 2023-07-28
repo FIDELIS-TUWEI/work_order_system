@@ -4,6 +4,11 @@ const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../utils/env");
 
+const signToken = (id) => {
+    return jwt.sign({ id }, JWT_SECRET, {
+        expiresIn: process.env.LOGIN_EXPIRES,
+    });
+}
 
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
@@ -20,9 +25,7 @@ const signupUser = asyncHandler (async (req, res) => {
         const newUser = await User.create(req.body)
 
         // Create token
-        const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
-            expiresIn: process.env.LOGIN_EXPIRES,
-        })
+        const token = signToken(newUser._id);
 
         res.status(201).json({
             success: true,
@@ -49,31 +52,13 @@ const login = asyncHandler (async (req, res, next) => {
         const passwordIsMatch = await user.comparePassword(password);
 
         // Generate Token
-        const token = generateToken(user._id);
-
-        if (passwordIsMatch) {
-            // Send Http-only cookie
-            res.cookie("token", token, {
-                path: "/",
-                httpOnly: true, // more secure
-                secure: true, // Use secure cookies in production
-                sameSite: 'none', // Prevent CSRF attacks
-                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-            })
-        }
+        const token = signToken(user._id);
 
         if (user && passwordIsMatch) {
-            const { _id, name, username, date } = user;
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
-                data: {
-                    _id,
-                    name,
-                    username,
-                    date,
-                    token: token
-                },
+                token
             })
         } else {
             return next(new ErrorResponse("Invalid Credentials", 400));
