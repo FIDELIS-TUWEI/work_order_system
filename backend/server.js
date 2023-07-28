@@ -20,7 +20,8 @@ const taskRoutes = require("./routes/taskRoutes");
 const workOrderRoutes = require("./routes/workOrderRoutes");
 
 // Middleware
-app.use(express.json());
+app.use(express.json()); // To parse JSON data in the request body
+app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan('dev'));
