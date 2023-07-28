@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, NODE_ENV } = require("./env");
+const { JWT_SECRET, NODE_ENV } = require("../env");
 
 const generateToken = (res, id) => {
     const token = jwt.sign({ id }, JWT_SECRET, {
