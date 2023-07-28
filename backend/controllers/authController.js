@@ -1,60 +1,37 @@
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
-const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
+const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../utils/env");
-//const { generateToken } = require("../utils/helpers/generateToken");
 
-const generateToken = ( id ) => {
-    return token = jwt.sign({ id }, JWT_SECRET, {
-        expiresIn: "7d",
-    });
-}
 
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
     try {
-        const { name, username, password, date } = req.body;
+        const { name, username } = req.body;
         const user = await User.findOne({ $or: [{ name }, { username }] });
 
+        // Check for user in database
         if (user) {
             return res.status(400).json({ message: "User already exists" });
         }
 
-        const newUser = await User.create({
-            name,
-            username,
-            password,
-            date,
+        // Create new user
+        const newUser = await User.create(req.body)
+
+        // Create token
+        const token = jwt.sign({ id: newUser._id }, JWT_SECRET, {
+            expiresIn: process.env.LOGIN_EXPIRES,
         })
 
-        await newUser.save();
-
-        // Generate Token
-        const token = generateToken(newUser._id);
-
-        // Send Http-only cookie
-        res.cookie("token", token, {
-            path: "/",
-            httpOnly: true, // more secure
-            secure: true, // Use secure cookies in production
-            sameSite: 'none', // Prevent CSRF attacks
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
-        })
-
-        if (newUser) {
-            res.status(201).json({
-                success: true,
-                _id: newUser._id,
-                name: newUser.name,
-                username: newUser.username,
-                date: newUser.date,
-                token: token,
-                message: "User created successfully"
-            })
-        } else {
-            res.status(400).json({ message: "Invalid User Data" });
-        }
+        res.status(201).json({
+            success: true,
+            message: "User created successfully",
+            token,
+            data: {
+                user: newUser
+            }
+        });
 
     } catch (error) {
         res.status(500).json({ message: error.message });
