@@ -5,25 +5,36 @@ const { generateToken } = require("../utils/generateToken");
 
 
 // @desc Register User
-const register = asyncHandler (async (req, res, next) => {
-    const { username } = req.body;
-    const userExists = await User.findOne({ username });
-    if (userExists) {
-        return next(new ErrorResponse("Username is Already Registered", 400));
-    }
-
+const signupUser = asyncHandler (async (req, res) => {
     try {
-        const user = await User.create(req.body);
+        const { name, username, password } = req.body;
+        const user = await User.findOne({ $or: [{ name }, { username }] });
+
         if (user) {
-            generateToken(res, user._id);
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        const newUser = await User.create({
+            name,
+            username,
+            password,
+        })
+        await newUser.save();
+
+        if (newUser) {
+            res.status(201).json({
+                success: true,
+                _id: newUser._id,
+                name: newUser.name,
+                username: newUser.username,
+                message: "User created successfully"
+            })
+        } else {
+            res.status(400).json({ message: "Invalid User Data" });
         }
         
-        res.status(201).json({
-            success: true,
-            user
-        })
     } catch (error) {
-        next(error);
+        res.status(500).json({ message: error.message });
     }
 });
 
@@ -67,7 +78,7 @@ const logout = (req, res, next) => {
 
 
 module.exports = {
-    register,
+    signupUser,
     login,
     logout,
 }
