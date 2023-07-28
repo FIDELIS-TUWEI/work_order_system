@@ -1,8 +1,15 @@
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
+const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
-const { generateToken } = require("../utils/helpers/generateToken");
+const { JWT_SECRET } = require("../utils/env");
+//const { generateToken } = require("../utils/helpers/generateToken");
 
+const generateToken = ( id ) => {
+    return token = jwt.sign({ id }, JWT_SECRET, {
+        expiresIn: "7d",
+    });
+}
 
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
@@ -24,7 +31,16 @@ const signupUser = asyncHandler (async (req, res) => {
         await newUser.save();
 
         // Generate Token
-        const token = generateToken(res, newUser._id);
+        const token = generateToken(newUser._id);
+
+        // Send Http-only cookie
+        res.cookie("token", token, {
+            path: "/",
+            httpOnly: true, // more secure
+            secure: true, // Use secure cookies in production
+            sameSite: 'none', // Prevent CSRF attacks
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        })
 
         if (newUser) {
             res.status(201).json({
@@ -53,18 +69,37 @@ const login = asyncHandler (async (req, res, next) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
+        const passwordIsMatch = await user.comparePassword(password);
 
-        if (user && (await user.comparePassword(password))) {
-            // Generate Token
-            const token = generateToken(res, user._id);
+        // Generate Token
+        const token = generateToken(user._id);
 
+        if (passwordIsMatch) {
+            // Send Http-only cookie
+            res.cookie("token", token, {
+                path: "/",
+                httpOnly: true, // more secure
+                secure: true, // Use secure cookies in production
+                sameSite: 'none', // Prevent CSRF attacks
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+            })
+        }
+
+        if (user && passwordIsMatch) {
+            const { _id, name, username, date } = user;
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
-                token: token
+                data: {
+                    _id,
+                    name,
+                    username,
+                    date,
+                    token: token
+                },
             })
         } else {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            return next(new ErrorResponse("Invalid Credentials", 400));
         }
     } catch (error) {
         next(error);
