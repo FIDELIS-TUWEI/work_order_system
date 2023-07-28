@@ -1,32 +1,31 @@
 MERN STACK Work Order System for Holiday Inn hotel, Two Rivers.
 
+![Alt text](screenshots/home.png)
 
-![Alt text](home.PNG)
+![Alt text](screenshots/home2.png)
 
-![Alt text](home2.png)
+![Alt text](screenshots/login.png)
 
-![Alt text](login.png)
+![Alt text](screenshots/notification.png)
 
-![Alt text](notification.png) 
+![Alt text](screenshots/register1.png)
 
-![Alt text](register1.png) 
+![Alt text](screenshots/register2.png)
 
-![Alt text](register2.png) 
+![Alt text](screenshots/register3.png)
 
-![Alt text](register3.png) 
+![Alt text](screenshots/dash1.png)
 
-![Alt text](<report sample.png>) 
+![Alt text](screenshots/users1.png)
 
-![Alt text](status.png) 
+![Alt text](screenshots/users2.png)
 
-![Alt text](status2.png) 
+![Alt text](screenshots/tasks1.png)
 
-![Alt text](tasks1.png) 
+![Alt text](screenshots/tasks2.png)
 
-![Alt text](tasks2.png) 
+![Alt text](screenshots/status.png)
 
-![Alt text](users1.png) 
+![Alt text](screenshots/status2.png)
 
-![Alt text](users2.png) 
-
-![Alt text](dash1.png)
+![Alt text](screenshots/reportsample.png)
