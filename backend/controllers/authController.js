@@ -7,7 +7,7 @@ const { generateToken } = require("../utils/generateToken");
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
     try {
-        const { name, username, password } = req.body;
+        const { name, username, password, date } = req.body;
         const user = await User.findOne({ $or: [{ name }, { username }] });
 
         if (user) {
@@ -18,6 +18,7 @@ const signupUser = asyncHandler (async (req, res) => {
             name,
             username,
             password,
+            date,
         })
         await newUser.save();
 
@@ -27,12 +28,13 @@ const signupUser = asyncHandler (async (req, res) => {
                 _id: newUser._id,
                 name: newUser.name,
                 username: newUser.username,
+                date: newUser.date,
                 message: "User created successfully"
             })
         } else {
             res.status(400).json({ message: "Invalid User Data" });
         }
-        
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
