@@ -5,24 +5,25 @@ const JWT_SECRET = require("../utils/env")
 
 // check if user is authenticated
 const protect = async (req, res, next) => {
-    let token;
+    try {
+        const token = req.cookies.token;
+        
+        if (!token) {
+            return next(new ErrorResponse("Not authorized, please login", 401));
+        } 
 
-    token = req.cookies.jwt;
-    
-    // Make sure token exists
-    if (token) {
-        // Verify Token
-        try {
-            const decoded = jwt.verify(token, JWT_SECRET);
+        // Verify token
+        const verified = jwt.verify(token, JWT_SECRET);
+        // Get user id from token
+        const user = await User.findById(verified.id).select("-password");
 
-            req.user = await User.findById(decoded.id).select("-password");
-
-            next();
-        } catch (error) {
-            return next(new ErrorResponse("Not authorized, token is invalid", 401));
+        if (!user) {
+            return next(new ErrorResponse("User not found", 401));
         }
-    } else {
-        return next(new ErrorResponse("Not authorized, no token", 401));
+        req.user = user;
+        next();
+    } catch (error) {
+        return next(new ErrorResponse("Not authorized, please login", 401));
     }
 };
 
