@@ -1,31 +1,26 @@
 const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
-const User = require("../model/user");
-const JWT_SECRET = require("../utils/env")
+const asyncHandler = require("express-async-handler");
+const util = require("util");
 
 // check if user is authenticated
-const protect = async (req, res, next) => {
-    try {
-        const token = req.cookies.token;
-        
-        if (!token) {
-            return next(new ErrorResponse("Not authorized, please login", 401));
-        } 
+const protect = asyncHandler(async (req, res, next) => {
+    // Read token and check if user is authenticated
+    const authToken = req.headers.authorization;
+    let token;
 
-        // Verify token
-        const verified = jwt.verify(token, JWT_SECRET);
-        // Get user id from token
-        const user = await User.findById(verified.id).select("-password");
-
-        if (!user) {
-            return next(new ErrorResponse("User not found", 401));
-        }
-        req.user = user;
-        next();
-    } catch (error) {
-        return next(new ErrorResponse("Not authorized, please login", 401));
+    if (authToken && authToken.startsWith("bearer")) {
+        token = authToken.split(" ")[1];
     }
-};
+    if (!token) {
+        return next(new ErrorResponse("You are not logged in!", 401));
+    }
+
+    // Validate the token
+    const decodedToken = await util.promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    next();
+});
 
 // Middleware for Admin
 const isAdmin = (req, res, next) => {
