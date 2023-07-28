@@ -1,15 +1,8 @@
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../utils/env");
-//const { generateToken } = require("../utils/helpers/generateToken");
+const { generateToken } = require("../utils/helpers/generateToken");
 
-const generateToken = (id) => {
-    return jwt.sign({ id }, JWT_SECRET, {
-        expiresIn: "1d",
-    })
-}
 
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
@@ -31,10 +24,9 @@ const signupUser = asyncHandler (async (req, res) => {
         await newUser.save();
 
         // Generate Token
-        const token = generateToken(newUser._id);
+        const token = generateToken(res, newUser._id);
 
         if (newUser) {
-            //generateToken(res, newUser._id);
             res.status(201).json({
                 success: true,
                 _id: newUser._id,
@@ -63,11 +55,13 @@ const login = asyncHandler (async (req, res, next) => {
         const user = await User.findOne({ username });
 
         if (user && (await user.comparePassword(password))) {
-            //generateToken(res, user._id);
+            // Generate Token
+            const token = generateToken(res, user._id);
 
-            res.json({
+            res.status(200).json({
                 success: true,
-                message: "User logged in successfully"
+                message: "User logged in successfully",
+                token: token
             })
         } else {
             return next(new ErrorResponse("Invalid Credentials", 401));
@@ -81,9 +75,11 @@ const login = asyncHandler (async (req, res, next) => {
 // @route POST /hin/logout
 // @access Public
 const logout = (req, res, next) => {
-    res.cookie("jwt", "", {
+    res.cookie("token", "", {
         httpOnly: true,
         expires: new Date(0),
+        sameSite: 'none',
+        secure: true
     });
     res.status(200).json({
         success: true,
