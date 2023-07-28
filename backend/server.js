@@ -21,6 +21,7 @@ const workOrderRoutes = require("./routes/workOrderRoutes");
 
 // Middleware
 app.use(express.json()); // To parse JSON data in the request body
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -30,7 +31,6 @@ app.use(bodyParser.urlencoded({
     limit: "5mb",
     extended: true 
 }));
-app.use(cookieParser());
 app.use(cors());
 
 
