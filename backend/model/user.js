@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     ],
+    passwordChangedAt: Date,
 }, 
 { 
     timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" }, 
@@ -59,11 +60,14 @@ userSchema.methods.comparePassword = async function(enteredPassword) {
     return isMatch;
 }
 
-//userSchema.methods.getJwtToken = function () {
-//    const payload = { id: this.id };
-//    const secret = JWT_SECRET;
-//    const expiresIn = LOGIN_EXPIRES;
-//    return jwt.sign(payload, secret, { expiresIn });
-//};
+userSchema.methods.isPasswordChanged = async function (JWTTimestamp) {
+    if (this.passwordChangedAt) {
+        const pswdChangedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+        console.log(pswdChangedTimestamp, JWTTimestamp);
+
+        return JWTTimestamp < pswdChangedTimestamp;
+    }
+    return false;
+}
 
 module.exports = mongoose.model('User', userSchema);

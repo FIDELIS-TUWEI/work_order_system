@@ -27,6 +27,11 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 
     //3. If user changed password after token was issued
+    if (user.isPasswordChanged(decodedToken.iat)) {
+        return next(new ErrorResponse("Password has been changed recently, please login again", 401));
+    };
+
+    //4. Allow the user to access the route
 
     next();
 });
