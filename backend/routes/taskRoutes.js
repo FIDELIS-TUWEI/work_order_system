@@ -4,7 +4,7 @@ const { createTask, updateTask, deleteTask, getTasks, singleTask } = require('..
 const { protect, restrict } = require('../middleware/authMiddleware');
 
 
-router.post("/tasks/create", protect, restrict(["admin", "hod", "user", "supervisor"]), createTask);
+router.post("/tasks/create", protect, restrict(["admin", "hod", "supervisor"]), createTask);
 router.get("/tasks/getall", protect, restrict(["admin", "hod", "supervisor"]),  getTasks);
 router.get("/task/:id", protect, restrict(["admin", "supervisor"]), singleTask);
 router.put("/task/update/:task_id", protect, restrict(["admin", "supervisor"]), updateTask);
