@@ -40,7 +40,13 @@ const protect = asyncHandler(async (req, res, next) => {
 
 // Restrict users middleware
 const restrict = (role) => {
-    
+    return async (req, res, next) => {
+        const user = await User.findOne({ _id: req.user.id });
+        if (!user || !role.includes(user.role)) {
+            return next(new ErrorResponse("You are not authorized to access this route", 401));
+        }
+        next();
+    };
 }
 
 // Middleware for Admin
