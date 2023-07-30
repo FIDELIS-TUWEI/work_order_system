@@ -49,16 +49,7 @@ const restrict = (role) => {
     };
 }
 
-// Middleware for Admin
-const isAdmin = (req, res, next) => {
-    if (req.user.role === 0) {
-        return next(new ErrorResponse("Access Denied! You must be an admin", 401));
-    }
-    next();
-}
-
 module.exports = {
     protect,
     restrict,
-    isAdmin,
 }
