@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
+const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const util = require("util");
 
@@ -18,6 +19,12 @@ const protect = asyncHandler(async (req, res, next) => {
 
     // Validate the token
     const decodedToken = await util.promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // Check if user still exists
+    const user = await User.findById(decodedToken.id);
+    if (!user) {
+        return next(new ErrorResponse("The user with the given token does not exist", 401));  
+    }
 
     next();
 });
