@@ -20,18 +20,18 @@ const protect = asyncHandler(async (req, res, next) => {
     //2. Validate the token
     const decodedToken = await util.promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    // If user still exists
+    //3. If user still exists
     const user = await User.findById(decodedToken.id);
     if (!user) {
         return next(new ErrorResponse("The user with the given token does not exist", 401));  
     }
 
-    //3. If user changed password after token was issued
+    //4. If user changed password after token was issued
     if (user.isPasswordChanged(decodedToken.iat)) {
         return next(new ErrorResponse("Password has been changed recently, please login again", 401));
     };
 
-    //4. Allow the user to access the route
+    //5. Allow the user to access the route
 
     next();
 });
