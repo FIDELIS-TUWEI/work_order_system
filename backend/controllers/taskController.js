@@ -24,7 +24,18 @@ const createTask = asyncHandler (async (req, res, next) => {
                     from: "fideliofidel9@gmail.com",
                     to: "fidel.tuwei@holidayinnnairobi.com",
                     subject: "New Work Order created",
-                    html: `<p>A new task was created:</p><p>${task}</p>`,
+                    html: `
+                        <h2>A new Work Order was created:</h2>\n\n
+                        <hr>\n
+                            <h3>${task.title}</h3>\n
+                            <p>${task.location}</p>\n
+                            <p>${task.priority}</p>\n
+                            <p>${task.category}</p>\n
+                            <p>${task.taskType}</p>\n
+                            <p>${task.assignedTo}</p>\n
+                            <p>${task.assignedBy}</p>\n
+                            <p>${task.date}</p>\n\n
+                    `,
                 };
                 const info = await transporter.sendMail(mailOptions);
                 console.log("Email sent: " + info.response);
