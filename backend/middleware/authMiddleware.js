@@ -38,6 +38,11 @@ const protect = asyncHandler(async (req, res, next) => {
     next();
 });
 
+// Restrict users middleware
+const restrict = (role) => {
+    
+}
+
 // Middleware for Admin
 const isAdmin = (req, res, next) => {
     if (req.user.role === 0) {
@@ -48,5 +53,6 @@ const isAdmin = (req, res, next) => {
 
 module.exports = {
     protect,
+    restrict,
     isAdmin,
 }
