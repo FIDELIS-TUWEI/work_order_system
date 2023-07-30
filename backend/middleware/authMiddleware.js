@@ -6,7 +6,7 @@ const util = require("util");
 
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {
-    // Read token and check if user is authenticated
+    //1. Read token and check if user is authenticated
     const authToken = req.headers.authorization;
     let token;
 
@@ -17,14 +17,16 @@ const protect = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse("You are not logged in!", 401));
     }
 
-    // Validate the token
+    //2. Validate the token
     const decodedToken = await util.promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    // Check if user still exists
+    // If user still exists
     const user = await User.findById(decodedToken.id);
     if (!user) {
         return next(new ErrorResponse("The user with the given token does not exist", 401));  
     }
+
+    //3. If user changed password after token was issued
 
     next();
 });
