@@ -11,7 +11,7 @@ import {
     //USER_LOAD_SUCCESS,
     //USER_LOAD_FAIL
 } from "../constants/userConstant";
-import { hideLoading, showLoading } from "../slice/loadingSlice";
+import { hideLoading, showLoading } from "../slices/loadingSlice";
 
 const url = "http://localhost:5000"
 

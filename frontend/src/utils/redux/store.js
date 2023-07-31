@@ -2,9 +2,9 @@ import { configureStore, combineReducers, applyMiddleware } from "@reduxjs/toolk
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { userReducerLogout, userReducerSignIn } from "./reducers/userReducer";
-import userSlice from "./slice/userSlice";
-import taskSlice from "./slice/taskSlice";
-import loadingSlice from "./slice/loadingSlice";
+import userSlice from "./slices/userSlice";
+import taskSlice from "./slices/taskSlice";
+import loadingSlice from "./slices/loadingSlice";
 
 // combine reducers
 const reducers = combineReducers({

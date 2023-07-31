@@ -7,7 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
 import Footer from "../../components/Footer";
-import { getTasks } from "../../utils/redux/slice/taskSlice";
+import { getTasks } from "../../utils/redux/slices/taskSlice";
 
 const StyledTable = styled(Table)`
   width: '90%',

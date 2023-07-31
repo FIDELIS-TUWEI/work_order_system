@@ -7,7 +7,7 @@ import axios from 'axios';
 
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { addTask } from '../../utils/redux/slice/taskSlice';
+import { addTask } from '../../utils/redux/slices/taskSlice';
 import { validationSchemaTasks } from '../../utils/formik/validationSchema';
 
 // backend url endpoint

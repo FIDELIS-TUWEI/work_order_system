@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { editTask } from "../../utils/redux/slice/taskSlice";
+import { editTask } from "../../utils/redux/slices/taskSlice";
 
 
 // backend url endpoint

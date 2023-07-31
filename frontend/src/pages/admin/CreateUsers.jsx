@@ -8,7 +8,7 @@ import axios from "axios";
 
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { addUser } from "../../utils/redux/slice/userSlice"
+import { addUser } from "../../utils/redux/slices/userSlice"
 import { validationSchemaUsers } from "../../utils/formik/validationSchema";
 
 

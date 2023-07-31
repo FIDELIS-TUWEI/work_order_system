@@ -6,7 +6,7 @@ import { Table, TableHead, TableCell,TableRow, TableBody, Button, styled } from 
 import AddIcon from "@mui/icons-material/Add";
 import axios from 'axios';
 
-import { getUser } from '../../utils/redux/slice/userSlice';
+import { getUser } from '../../utils/redux/slices/userSlice';
 import Footer from '../../components/Footer';
 
 const StyledTable = styled(Table)`

@@ -7,7 +7,7 @@ import * as yup from "yup";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser } from "../../utils/redux/slice/userSlice"
+import { editUser } from "../../utils/redux/slices/userSlice"
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
