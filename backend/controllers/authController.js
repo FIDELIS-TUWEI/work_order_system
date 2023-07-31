@@ -72,7 +72,7 @@ const login = asyncHandler (async (req, res, next) => {
 // @route POST /hin/logout
 // @access Public
 const logout = (req, res, next) => {
-    res.cookie("token", "", {
+    res.clearCookie("token", "", {
         httpOnly: true,
         expires: new Date(0),
         sameSite: 'none',
