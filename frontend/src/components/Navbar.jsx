@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 
 const Navbar = () => {
-  const { userInfo } = useSelector(state => state.signIn);
+  const { userInfo } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
