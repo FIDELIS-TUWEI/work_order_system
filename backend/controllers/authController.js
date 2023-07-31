@@ -68,20 +68,12 @@ const login = asyncHandler (async (req, res, next) => {
     }
 });
 
-// @desc Logout User / clear cookie
-// @route POST /hin/logout
-// @access Public
 const logout = (req, res, next) => {
-    res.clearCookie("token", "", {
-        httpOnly: true,
-        expires: new Date(0),
-        sameSite: 'none',
-        secure: true
-    });
-    res.status(200).json({
-        success: true,
-        message: "Logged Out successfully"
-    })
+    res.clearCookie("token", "", { httpOnly: true, expires: new Date(0), sameSite: 'none', secure: true });
+    
+    res.status(200).json({ success: true, message: "Logged Out successfully" });
+
+    next();
 };
 
 
