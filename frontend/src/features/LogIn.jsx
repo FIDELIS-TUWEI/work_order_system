@@ -10,6 +10,8 @@ import LockClockOutlined from '@mui/icons-material/LockClockOutlined';
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { userSignInAction } from "../utils/redux/actions/userAction";
+import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
+import { setCredentials } from "../utils/redux/slices/authSlice";
 
 // Yup form validation Schema
 const validationSchema = yup.object({
@@ -36,6 +38,10 @@ const LogIn = () => {
         }
     }, [isAuthenticated]);
 
+    const onSubmit = (values, actions) => {
+        actions.resetForm();
+    }
+
     // formik
     const formik = useFormik({
         initialValues: {
@@ -43,11 +49,7 @@ const LogIn = () => {
             password: ""
         },
         validationSchema: validationSchema,
-        onSubmit: (values, actions) => {
-            //alert(JSON.stringify(values, null, 2))
-            dispatch(userSignInAction(values));
-            actions.resetForm();
-        }
+        onSubmit
     })
   return (
     <>
