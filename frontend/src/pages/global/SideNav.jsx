@@ -111,7 +111,7 @@ const SideNav = ({ open, setOpen }) => {
   };
 
   const renderMenuItems = () => {
-    if (userInfo && userInfo.role === "admin") {
+    if (userInfo.role === "admin") {
       return (
         <>
           <List>
@@ -156,7 +156,7 @@ const SideNav = ({ open, setOpen }) => {
           </Tooltip>
         </Box>
         <Box sx={{ textAlign: "center" }}>
-          {open && <Typography>current user</Typography>}
+          {open && <Typography>{userInfo.username}</Typography>}
           <Typography variant='body2'>role</Typography>
           <Tooltip title="logout" sx={{ mt: 1 }}>
             <IconButton onClick={logOut}>
