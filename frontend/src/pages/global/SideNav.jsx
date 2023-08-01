@@ -111,7 +111,7 @@ const SideNav = ({ open, setOpen }) => {
   };
 
   const renderMenuItems = () => {
-    if (userInfo && userInfo.role === 1) {
+    if (userInfo && userInfo.role === "admin") {
       return (
         <>
           <List>
