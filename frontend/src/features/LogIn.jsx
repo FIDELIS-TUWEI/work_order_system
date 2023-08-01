@@ -9,7 +9,7 @@ import LockClockOutlined from '@mui/icons-material/LockClockOutlined';
 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { userSignInAction } from "../utils/redux/actions/userAction";
+//import { userSignInAction } from "../utils/redux/actions/userAction";
 import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
 import { setCredentials } from "../utils/redux/slices/authSlice";
 
@@ -29,18 +29,29 @@ const validationSchema = yup.object({
 const LogIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isAuthenticated } = useSelector(state => state.signIn);
 
-    // useEffect hook
+    const [login] = useLoginMutation();
+
+    const { userInfo } = useSelector(state => state.auth);
+
+    // useEffect to check if user is logged in
     useEffect(() => {
-        if (isAuthenticated) {
-            navigate("/dashboard");
+        if (userInfo) {
+            navigate('/dashboard');
         }
-    }, [isAuthenticated]);
+    }, [userInfo, navigate]);
 
-    const onSubmit = (values, actions) => {
+    const onSubmit = async (values, actions) => {
+        try {
+            const res = await login(values).unwrap();
+            dispatch(setCredentials({ ...res }));
+            navigate('/dashboard');
+        } catch (err) {
+            console.log(err?.data?.message || err.error);
+        }
         actions.resetForm();
     }
+
 
     // formik
     const formik = useFormik({

@@ -71,7 +71,7 @@ const openedMixin = (theme) => ({
     }),
   );
 const SideNav = ({ open, setOpen }) => {
-  const { userInfo } = useSelector(state => state.signIn);
+  const { userInfo } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
