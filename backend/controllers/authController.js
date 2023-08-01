@@ -61,7 +61,7 @@ const login = asyncHandler (async (req, res, next) => {
                 token
             })
         } else {
-            return next(new ErrorResponse("Invalid Credentials", 400));
+            return next(new ErrorResponse("Invalid Credentials", 401));
         }
     } catch (error) {
         next(error);

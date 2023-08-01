@@ -12,6 +12,7 @@ import Navbar from "../components/Navbar";
 //import { userSignInAction } from "../utils/redux/actions/userAction";
 import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
 import { setCredentials } from "../utils/redux/slices/authSlice";
+import { toast } from "react-toastify";
 
 // Yup form validation Schema
 const validationSchema = yup.object({
@@ -45,9 +46,10 @@ const LogIn = () => {
         try {
             const res = await login(values).unwrap();
             dispatch(setCredentials({ ...res }));
+            toast.success("Login Succesful");
             navigate('/dashboard');
-        } catch (err) {
-            console.log(err?.data?.message || err.error);
+        } catch (error) {
+            toast.error(error.data.error);
         }
         actions.resetForm();
     }
