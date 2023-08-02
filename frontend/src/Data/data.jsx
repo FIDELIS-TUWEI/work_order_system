@@ -1,8 +1,8 @@
-import AiOutlineHome from "react-icons/ai";
-import HiClipboardDocumentList from "react-icons/hi";
-import MdPeople from "react-icons/md";
-import TbReportAnalytics from "react-icons/tb";
-import AiOutlineLogout from "react-icons/ai";
+import {AiOutlineHome} from "react-icons/ai";
+import {MdOutlineWork} from "react-icons/md";
+import {MdPeople} from "react-icons/md";
+import {TbReportAnalytics} from "react-icons/tb";
+import {AiOutlineLogout} from "react-icons/ai";
 
 export const SidebarMenu = [
     {
@@ -13,7 +13,7 @@ export const SidebarMenu = [
     {
         name: "Tasks",
         path: "/tasks/list",
-        icon: <HiClipboardDocumentList />
+        icon: <MdOutlineWork />
     },
     {
         name: "Users",
