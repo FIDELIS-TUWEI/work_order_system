@@ -79,14 +79,21 @@ const Navbar = () => {
             WORK ORDER
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Button
-              sx={{ my: 2, color: 'white', display: 'block' }}
+            <WorkIcon sx={{  mr: 1 }} />
+            <Typography
+              variant='h6'
+              noWrap
               component={Link}
-              to="/"
-              style={{ color: 'white', textDecoration: 'none' }}
+              to=""
+              sx={{ 
+                mr: 2, color: 'inherit', 
+                display: 'block', textDecoration: 'none',
+                fontFamily: 'monospace', fontWeight: 700, 
+                letterSpacing: '.2rem' 
+            }}
             >
-              Home
-            </Button>
+              WORK ORDER
+            </Typography>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

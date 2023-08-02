@@ -8,7 +8,9 @@ const Layout = ({ children }) => {
       <div className="main">
         <div className="layout">
           <div className="sidebar">
-            <div className="logo">Work Order</div>
+            <div className="logo">
+              <h6>Holiday Inn</h6>
+            </div>
             <hr style={{ marginBottom: "30px" }} />
             <div className="menu">
               {SidebarMenu.map((menu) => (
