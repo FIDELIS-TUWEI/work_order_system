@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -13,13 +16,14 @@ import WorkIcon from "@mui/icons-material/Work";
 import Analytics from "@mui/icons-material/Analytics"
 import { Avatar, Box, Tooltip, Typography, styled } from '@mui/material';
 import Logout from "@mui/icons-material/Logout";
+import { useLogoutMutation } from '../../utils/redux/slices/usersApiSlice';
+import { logout } from '../../utils/redux/slices/authSlice';
+
 import Home from '../Home';
 import DashUsers from '../admin/Users';
 import DashTasks from '../admin/Tasks';
-import { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { userLogoutAction } from '../../utils/redux/actions/userAction';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 
 const drawerWidth = 240;
@@ -75,14 +79,24 @@ const SideNav = ({ open, setOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [logoutApiCall] = useLogoutMutation();
+
   const [menuData, setMenuData] = useState("Home");
 
-  const logOut = () => {
-    dispatch(userLogoutAction());
-    setTimeout(() => {
-      window.location.reload(true);
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      toast.success("Logout Succesful");
       navigate("/");
-    }, 500);
+    } catch (error) {
+      toast.error(error.data.error);
+    }
+    //dispatch(userLogoutAction());
+    //setTimeout(() => {
+    //  window.location.reload(true);
+    //  navigate("/");
+    //}, 500);
   };
 
   const renderMainListItem = (text, icon) => {
@@ -159,7 +173,7 @@ const SideNav = ({ open, setOpen }) => {
           {open && <Typography>{userInfo.username}</Typography>}
           <Typography variant='body2'>role</Typography>
           <Tooltip title="logout" sx={{ mt: 1 }}>
-            <IconButton onClick={logOut}>
+            <IconButton onClick={logoutHandler}>
               <Logout />
             </IconButton>
           </Tooltip>

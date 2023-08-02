@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogoutAction } from '../utils/redux/actions/userAction';
 import WorkIcon from '@mui/icons-material/Work';
 import {
   AppBar,
@@ -17,10 +16,18 @@ import {
   MenuItem,
 } from '@mui/material';
 
+import { useLogoutMutation } from '../utils/redux/slices/usersApiSlice';
+import { logout } from '../utils/redux/slices/authSlice';
+import { toast } from 'react-toastify';
+
 const Navbar = () => {
   const { userInfo } = useSelector(state => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [ logoutApiCall ] = useLogoutMutation();
+
   const [anchorElUser, setAnchorElUser] = useState(null);
 
 
@@ -36,12 +43,20 @@ const Navbar = () => {
     navigate('/login');
   };
 
-  const logoutUser = () => {
-    dispatch(userLogoutAction());
-    window.location.reload(true);
-    setTimeout(() => {
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      toast.success("Logout Succesful");
       navigate('/');
-    }, 500);
+    } catch (error) {
+      toast.error(error.data.error);
+    }
+    //dispatch(userLogoutAction());
+    //window.location.reload(true);
+    //setTimeout(() => {
+    //  navigate('/');
+    //}, 500);
   };
 
   return (
@@ -108,7 +123,7 @@ const Navbar = () => {
                   </Typography>
                 </MenuItem>
               ) : (
-                <MenuItem onClick={logoutUser}>
+                <MenuItem onClick={logoutHandler}>
                   <Typography textAlign="center" style={{ textDecoration: 'none', color: 'green' }}>
                     Log Out
                   </Typography>
