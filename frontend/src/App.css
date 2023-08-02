@@ -19,3 +19,9 @@
     border-left-width: 1px;
     border-right-width: 1px;
 }
+
+/* Admin Dashboard Styles */
+.main {
+    padding: 20px;
+    height: "100vh";
+}
