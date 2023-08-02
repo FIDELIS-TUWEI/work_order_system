@@ -83,6 +83,7 @@ const SideNav = ({ open, setOpen }) => {
 
   const [menuData, setMenuData] = useState("Home");
 
+  // function to logout user
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
@@ -92,11 +93,6 @@ const SideNav = ({ open, setOpen }) => {
     } catch (error) {
       toast.error(error.data.error);
     }
-    //dispatch(userLogoutAction());
-    //setTimeout(() => {
-    //  window.location.reload(true);
-    //  navigate("/");
-    //}, 500);
   };
 
   const renderMainListItem = (text, icon) => {

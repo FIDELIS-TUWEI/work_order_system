@@ -43,6 +43,7 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  // function to logout user
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
@@ -52,11 +53,6 @@ const Navbar = () => {
     } catch (error) {
       toast.error(error.data.error);
     }
-    //dispatch(userLogoutAction());
-    //window.location.reload(true);
-    //setTimeout(() => {
-    //  navigate('/');
-    //}, 500);
   };
 
   return (
