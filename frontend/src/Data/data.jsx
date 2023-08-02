@@ -7,17 +7,17 @@ import {AiOutlineLogout} from "react-icons/ai";
 export const SidebarMenu = [
     {
         name: "Home",
-        path: "/",
+        path: "/private",
         icon: <AiOutlineHome />
     },
     {
-        name: "Tasks",
-        path: "/tasks/list",
+        name: "Work",
+        path: "/work/list",
         icon: <MdOutlineWork />
     },
     {
         name: "Users",
-        path: "/users/list",
+        path: "/users",
         icon: <MdPeople />
     },
     {

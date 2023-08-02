@@ -82,5 +82,10 @@
 
 .active {
     background-color: white;
+    padding: 10px;
+}
+
+.active a,
+.active i {
     color: rgb(51, 1, 1);
 }
