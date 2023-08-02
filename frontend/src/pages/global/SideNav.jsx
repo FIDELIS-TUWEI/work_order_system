@@ -19,7 +19,6 @@ import Logout from "@mui/icons-material/Logout";
 import { useLogoutMutation } from '../../utils/redux/slices/usersApiSlice';
 import { logout } from '../../utils/redux/slices/authSlice';
 
-import Home from '../Home';
 import DashUsers from '../admin/Users';
 import DashTasks from '../admin/Tasks';
 import { toast } from 'react-toastify';
@@ -121,7 +120,6 @@ const SideNav = ({ open, setOpen }) => {
   };
 
   const renderMenuItems = () => {
-    if (userInfo.role === "admin") {
       return (
         <>
           <List>
@@ -138,15 +136,7 @@ const SideNav = ({ open, setOpen }) => {
           </List>
         </>
       );
-    } else {
-      return (
-        <>
-          <List>
-            {renderMainListItem("Tasks", <WorkIcon />)}
-          </List>
-        </>
-      );
-    }
+    
   };
 
   return (
@@ -177,7 +167,6 @@ const SideNav = ({ open, setOpen }) => {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {menuData === "Home" && <Home />}
         {menuData === "Users" && <DashUsers />}
         {menuData === "Tasks" && <DashTasks />}
       </Box>
