@@ -19,13 +19,15 @@ import CreateTask from './pages/admin/CreateTask';
 import EditUser from './pages/admin/EditUser';
 import EditTask from './pages/admin/EditTask';
 import NotFound from './pages/NotFound';
+import PublicRoute from './components/PublicRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
       <Route index={true} path="/" element={ <Home /> } />
-      <Route path="/login" element={ <LogIn /> } />
-      <Route path="/dashboard" element={ <Dashboard /> } />
+      <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
+      <Route path="/dashboard" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path="/tasks/list" element={ <Tasks /> } />
       <Route path="/users/list" element={ <Users /> } />
       <Route path="/users/create" element={ <CreateUsers /> } />
