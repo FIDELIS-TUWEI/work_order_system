@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Avatar, Box, Button, TextField  } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -8,7 +9,9 @@ import axios from "axios";
 
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { addUser } from "../../utils/redux/slices/userSlice"
+import LoadingBox from "../../components/LoadingBox";
+import { useRegisterMutation } from "../../utils/redux/slices/usersApiSlice";
+import { setCredentials } from "../../utils/redux/slices/authSlice";
 import { validationSchemaUsers } from "../../utils/formik/validationSchema";
 
 
@@ -17,17 +20,26 @@ const URL = 'http://localhost:5000/hin'
 
 
 const CreateUsers = () => {
+  const { userInfo } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [register, { isLoading }] = useRegisterMutation();
+
+  // check if user is logged in
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard');
+    }
+  }, [userInfo, navigate]);
+
   const onSubmit = async (values, actions) => {
-    const { ...data } = values;
     try {
-      const response = await axios.post(`${URL}/register`, data);
-      dispatch(addUser(response.data));
+      const res = await register(values).unwrap();
+      dispatch(setCredentials({ ...res }));
       toast.success("User Registered successfully");
       actions.resetForm();
-      navigate("/users/list");
+      navigate('/users/list');
     } catch (error) {
       toast.error(error.data.error);
     }
@@ -121,6 +133,8 @@ const CreateUsers = () => {
                 helperText={formik.touched[input.name] && formik.errors[input.name]}
               />
             ))}
+
+            { isLoading && <LoadingBox /> }
 
             <Button fullWidth variant="contained" type="submit">
               Register User

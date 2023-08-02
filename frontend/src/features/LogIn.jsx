@@ -48,11 +48,11 @@ const LogIn = () => {
             const res = await login(values).unwrap();
             dispatch(setCredentials({ ...res }));
             toast.success("Login Succesful");
+            actions.resetForm();
             navigate('/dashboard');
         } catch (error) {
             toast.error(error.data.error);
         }
-        actions.resetForm();
     }
 
 
