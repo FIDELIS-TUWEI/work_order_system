@@ -22,6 +22,7 @@ import NotFound from './pages/NotFound';
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import PrivateHome from './pages/PrivateHome';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
       <Route path="/dashboard" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path='/admin/dashboard' element={ <AdminDashboard /> } />
+      <Route path="/private" element={ <PrivateHome /> } />
       <Route path="/tasks/list" element={ <Tasks /> } />
       <Route path="/users/list" element={ <Users /> } />
       <Route path="/users/create" element={ <CreateUsers /> } />
