@@ -13,6 +13,7 @@ import Navbar from "../components/Navbar";
 import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
 import { setCredentials } from "../utils/redux/slices/authSlice";
 import { toast } from "react-toastify";
+import LoadingBox from "../components/LoadingBox";
 
 // Yup form validation Schema
 const validationSchema = yup.object({
@@ -31,7 +32,7 @@ const LogIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [login] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
 
     const { userInfo } = useSelector(state => state.auth);
 
@@ -107,6 +108,7 @@ const LogIn = () => {
                         error={formik.touched.password && Boolean(formik.errors.password)}
                         helperText={formik.touched.password && formik.errors.password}
                     />
+                    { isLoading && <LoadingBox /> }
 
                     <Button fullWidth variant="contained" type="submit" color="success">Log In</Button>
                 </Box>

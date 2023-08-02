@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Paper } from "@mui/material";
 import { useState } from "react";
 import HashLoader from "react-spinners/HashLoader"
 
@@ -7,18 +7,18 @@ const LoadingBox = () => {
   const [color, setColor] = useState("green");
   return (
     <>
-        <Box
+    
+        <Paper
             sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                //backgroundColor: 'lightgreen',
+              height: '100px',
+              width: '100px',
+              display: 'block',
+              margin: 'auto',
             }}
             onChange={e => setColor(e.target.value)}
         >
             <HashLoader color={color} />
-        </Box>
+          </Paper>
     </>
   )
 }
