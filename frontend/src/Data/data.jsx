@@ -1,4 +1,5 @@
 import {FaHome} from 'react-icons/fa';
+import {MdDashboard} from 'react-icons/md';
 import {FaUsers} from 'react-icons/fa';
 import {MdOutlineWork} from 'react-icons/md';
 import {TbBrandGoogleAnalytics} from 'react-icons/tb';
@@ -10,6 +11,11 @@ export const AdminMenu = [
         name: "Home",
         path: "/",
         icon: <FaHome/>
+    },
+    {
+        name: "Dashboard",
+        path: "/private",
+        icon: <MdDashboard/>
     },
     {
         name: "Users",
