@@ -3,6 +3,7 @@ import {MdOutlineWork} from "react-icons/md";
 import {MdPeople} from "react-icons/md";
 import {TbReportAnalytics} from "react-icons/tb";
 import {AiOutlineLogout} from "react-icons/ai";
+import {CgProfile} from "react-icons/cg";
 
 // Users Menu
 export const SidebarMenu = [
@@ -15,6 +16,11 @@ export const SidebarMenu = [
         name: "Work",
         path: "/work/list",
         icon: <MdOutlineWork />
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+        icon: <CgProfile />
     },
     {
         name: "Logout",
