@@ -1,8 +1,9 @@
 import { Link, useLocation } from "react-router-dom"
 import { AdminMenu } from "../Data/data"
-import Navbar from "./Navbar"
+import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
+  const { userInfo } = useSelector(state => state.auth);
   const location = useLocation();
 
   return (
@@ -28,7 +29,14 @@ const Layout = ({ children }) => {
           </div>
         </div>
         <div className="content">
-          <div className="header">Header</div>
+          <div className="header">
+            
+            { userInfo ? (
+              <h1>{userInfo.username}</h1>
+            ): (
+              <h4>Login</h4>
+            )}
+          </div>
           <div className="body">{children}</div>
         </div>
       </div>
