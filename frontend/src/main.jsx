@@ -9,7 +9,7 @@ import {
   Route, 
   RouterProvider,  
 } from 'react-router-dom';
-import Home from './pages/Dashboard';
+import Home from './pages/Home';
 import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
 import PublicRoute from './components/PublicRoute';

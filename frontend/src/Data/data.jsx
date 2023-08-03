@@ -1,17 +1,12 @@
-import {FaHome} from 'react-icons/fa';
 import {MdDashboard} from 'react-icons/md';
 import {FaUsers} from 'react-icons/fa';
 import {MdOutlineWork} from 'react-icons/md';
-import {TbBrandGoogleAnalytics} from 'react-icons/tb';
-import {CgProfile} from 'react-icons/cg';
+import {SiGoogleanalytics} from 'react-icons/si';
+import {FaUser} from 'react-icons/fa';
 import { RiLogoutCircleFill } from 'react-icons/ri';
 
 export const AdminMenu = [
-    {
-        name: "Home",
-        path: "/",
-        icon: <FaHome/>
-    },
+    
     {
         name: "Dashboard",
         path: "/private",
@@ -30,12 +25,12 @@ export const AdminMenu = [
     {
         name: "Analytics",
         path: "/work/analytics",
-        icon: <TbBrandGoogleAnalytics/>
+        icon: <SiGoogleanalytics/>
     },
     {
         name: "Profile",
         path: "/profile",
-        icon: <CgProfile/>
+        icon: <FaUser/>
     },
     {
         name: "Logout",
