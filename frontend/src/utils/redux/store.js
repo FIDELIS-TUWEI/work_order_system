@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice";
 import userSlice from "./slices/userSlice";
-//import taskSlice from "./slices/taskSlice";
+import taskSlice from "./slices/taskSlice";
 import loadingSlice from "./slices/loadingSlice";
 import { apiSlice } from "./slices/apiSlice";
 
@@ -9,7 +9,7 @@ const store = configureStore({
     reducer: {
         auth: authSlice,
         [apiSlice.reducerPath]: apiSlice.reducer,
-        //user: userSlice,
+        user: userSlice,
         //task: taskSlice,
         loading: loadingSlice,
     },
