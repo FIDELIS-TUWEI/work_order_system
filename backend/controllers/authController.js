@@ -68,6 +68,9 @@ const login = asyncHandler (async (req, res, next) => {
     }
 });
 
+// @desc Logout user
+// @route POST /hin/logout
+// @access Private
 const logout = (req, res, next) => {
     res.clearCookie("token", "", { httpOnly: true, expires: new Date(0), sameSite: 'none', secure: true });
     
@@ -76,9 +79,31 @@ const logout = (req, res, next) => {
     next();
 };
 
+// @desc Get user info
+// @route GET /hin/userInfo
+// @access Private
+const getUserInfo = asyncHandler (async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password");
+
+        if (!user) {
+            return next(new ErrorResponse("User not found", 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            data: user
+        })
+    } catch (error) {
+        next(error);
+    }
+})
+
 
 module.exports = {
     signupUser,
     login,
     logout,
+    getUserInfo
 }
