@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import { SidebarMenu } from "../Data/data"
+import { AdminMenu } from "../Data/data"
 import Navbar from "./Navbar"
 
 const Layout = ({ children }) => {
@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
             <hr />
           </div>
           <div className="menu">
-            {SidebarMenu.map((menu) => {
+            {AdminMenu.map((menu) => {
               const isActive = location.pathname === menu.path;
               return (
                 <div key={menu.name}>

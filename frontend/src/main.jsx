@@ -9,22 +9,20 @@ import {
   Route, 
   RouterProvider,  
 } from 'react-router-dom';
-import Home from './pages/Home';
-import LogIn from './features/LogIn';
-import Dashboard from './pages/global/Dashboard';
+import Home from './pages/PrivateHome';
+import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
 import PrivateHome from './pages/PrivateHome';
-import Profile from './pages/admin/Profile';
-import WorkOrder from './pages/admin/WorkOrder';
+import Profile from './pages/Profile';
+import WorkOrder from './pages/WorkOrder';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
       <Route index={true} path="/" element={ <Home /> } />
       <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
-      <Route path="/dashboard" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path="/private" element={ <PrivateRoute> <PrivateHome /> </PrivateRoute> } />
       <Route path="/work/list" element={ <PrivateRoute> <WorkOrder /> </PrivateRoute> } />
       <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />

@@ -48,7 +48,7 @@ const LogIn = () => {
             dispatch(setCredentials({ ...res }));
             toast.success("Login Succesful");
             actions.resetForm();
-            navigate('/dashboard');
+            navigate('/private');
         } catch (error) {
             toast.error(error.data.error);
         }

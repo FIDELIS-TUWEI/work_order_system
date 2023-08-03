@@ -1,11 +1,11 @@
-import Layout from "../components/Layout"
+import React from 'react'
 
-const PrivateHome = () => {
+const Home = () => {
   return (
-    <Layout>
-      <h1>Private Home</h1>
-    </Layout>
+    <div>
+      <h1>Home</h1>
+    </div>
   )
 }
 
-export default PrivateHome
+export default Home
