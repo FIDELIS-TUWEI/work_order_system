@@ -39,7 +39,7 @@ const LogIn = () => {
     // useEffect to check if user is logged in
     useEffect(() => {
         if (userInfo) {
-            navigate('/dashboard');
+            navigate('/private');
         }
     }, [userInfo, navigate]);
 

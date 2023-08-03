@@ -23,7 +23,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={ <Home /> } />
       <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
       <Route path="/dashboard" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
-      <Route path="/private" element={ <PrivateHome /> } />
+      <Route path="/private" element={ <PrivateRoute> <PrivateHome /> </PrivateRoute> } />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

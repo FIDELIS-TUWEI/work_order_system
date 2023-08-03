@@ -9,7 +9,7 @@ const store = configureStore({
     reducer: {
         auth: authSlice,
         [apiSlice.reducerPath]: apiSlice.reducer,
-        user: userSlice,
+        //user: userSlice,
         //task: taskSlice,
         loading: loadingSlice,
     },
