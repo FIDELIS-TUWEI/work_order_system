@@ -17,6 +17,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        allUsers: builder.query({
+            query: () => ({
+                url: `${ USERS_URL }/all-users`,
+                method: "GET",
+            }),
+        }),
         logout: builder.mutation({
             query: () => ({
                 url: `${ USERS_URL }/logout`,
