@@ -9,22 +9,27 @@ import {
   Route, 
   RouterProvider,  
 } from 'react-router-dom';
-import Home from './pages/PrivateHome';
+import Home from './pages/Dashboard';
 import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
-import PrivateHome from './pages/PrivateHome';
+import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import WorkOrder from './pages/WorkOrder';
+import Users from './pages/Users';
+import Analytics from './pages/Analytics';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
       <Route index={true} path="/" element={ <Home /> } />
       <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
-      <Route path="/private" element={ <PrivateRoute> <PrivateHome /> </PrivateRoute> } />
+      <Route path="/private" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path="/work/list" element={ <PrivateRoute> <WorkOrder /> </PrivateRoute> } />
+      <Route path="/users/list" element={ <PrivateRoute> <Users /> </PrivateRoute> } />
+      <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
+
       <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
       <Route path="*" element={<NotFound />} />
     </Route>

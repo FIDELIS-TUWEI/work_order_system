@@ -1,11 +1,11 @@
 import Layout from "../components/Layout"
 
-const PrivateHome = () => {
+const Dashboard = () => {
   return (
     <Layout>
-      <h1>Private Home</h1>
+      <h1>Dashboard</h1>
     </Layout>
   )
 }
 
-export default PrivateHome
+export default Dashboard;

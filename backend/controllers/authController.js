@@ -93,7 +93,11 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            data: user
+            data: {
+                _id: user._id,
+                name: user.name,
+                username: user.username
+            }
         })
     } catch (error) {
         next(error);
