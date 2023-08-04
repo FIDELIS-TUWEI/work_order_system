@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
           <div className="header">
             
             { userInfo ? (
-              <h1>{userInfo.username}</h1>
+              <h1>{userInfo.name}</h1>
             ): (
               <h4>Login</h4>
             )}
