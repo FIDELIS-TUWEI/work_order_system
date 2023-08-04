@@ -23,7 +23,7 @@ import Analytics from './pages/Analytics';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
-      <Route index={true} path="/" element={ <Home /> } />
+      <Route index={true} path="/" element={<PublicRoute> <Home /> </PublicRoute>} />
       <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
       <Route path="/private" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path="/work/list" element={ <PrivateRoute> <WorkOrder /> </PrivateRoute> } />
