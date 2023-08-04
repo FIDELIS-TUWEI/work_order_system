@@ -1,21 +1,35 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AdminMenu, HodMenu, UserMenu } from "../Data/data"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
+import { useLogoutMutation } from "../utils/redux/slices/usersApiSlice";
+import {logout} from "../utils/redux/slices/authSlice";
+
 const Layout = ({ children }) => {
   const { userInfo } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // function to handle logout
-  const handleLogout = () => {
-    localStorage.removeItem("userInfo");
-    window.location.reload(true);
-    navigate("/login");
-    toast.success("Logout Succesful");
+  const [logoutApiCall] = useLogoutMutation();
 
+  // function to handle logout
+  const handleLogout = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      setTimeout(() => {
+        if (window.location.reload) {
+        navigate("/");
+        toast.success("Logout Succesful");
+        }
+      }, 500);
+    } catch (error) {
+      toast.error(error.data.error);
+      console.log(error);
+    }
   }
 
   // Rendering menu list
