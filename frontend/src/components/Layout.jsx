@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom"
-import { AdminMenu } from "../Data/data"
+import { AdminMenu, HodMenu, UserMenu } from "../Data/data"
 import { useSelector } from "react-redux";
 import { useUserDataMutation } from "../utils/redux/slices/usersApiSlice";
 
@@ -8,6 +8,9 @@ const Layout = ({ children }) => {
   const location = useLocation();
 
 
+  // Rendering menu list
+  const adminMenu = userInfo?.role === "admin" ? AdminMenu : userInfo?.role === "hod" ? HodMenu : UserMenu;
+   
   return (
     <div className="main">
       <div className="layout">
@@ -17,7 +20,7 @@ const Layout = ({ children }) => {
             <hr />
           </div>
           <div className="menu">
-            {AdminMenu.map((menu) => {
+            {adminMenu.map((menu) => {
               const isActive = location.pathname === menu.path;
               return (
                 <div key={menu.name}>

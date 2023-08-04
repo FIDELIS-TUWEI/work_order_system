@@ -37,3 +37,54 @@ export const AdminMenu = [
         icon: <RiLogoutCircleFill/>
     },
 ]
+
+export const UserMenu = [
+    
+    {
+        name: "Dashboard",
+        path: "/private",
+        icon: <MdDashboard/>
+    },
+    {
+        name: "Work Order",
+        path: "/work/list",
+        icon: <MdOutlineWork/>
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+        icon: <FaUser/>
+    },
+    {
+        name: "Logout",
+        icon: <RiLogoutCircleFill/>
+    },
+]
+
+export const HodMenu = [
+    
+    {
+        name: "Dashboard",
+        path: "/private",
+        icon: <MdDashboard/>
+    },
+    {
+        name: "Work Order",
+        path: "/work/list",
+        icon: <MdOutlineWork/>
+    },
+    {
+        name: "Analytics",
+        path: "/work/analytics",
+        icon: <SiGoogleanalytics/>
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+        icon: <FaUser/>
+    },
+    {
+        name: "Logout",
+        icon: <RiLogoutCircleFill/>
+    },
+]
