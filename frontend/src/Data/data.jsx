@@ -32,10 +32,6 @@ export const AdminMenu = [
         path: "/profile",
         icon: <FaUser/>
     },
-    {
-        name: "Logout",
-        icon: <RiLogoutCircleFill/>
-    },
 ]
 
 export const UserMenu = [
@@ -54,10 +50,6 @@ export const UserMenu = [
         name: "Profile",
         path: "/profile",
         icon: <FaUser/>
-    },
-    {
-        name: "Logout",
-        icon: <RiLogoutCircleFill/>
     },
 ]
 
@@ -82,9 +74,5 @@ export const HodMenu = [
         name: "Profile",
         path: "/profile",
         icon: <FaUser/>
-    },
-    {
-        name: "Logout",
-        icon: <RiLogoutCircleFill/>
     },
 ]

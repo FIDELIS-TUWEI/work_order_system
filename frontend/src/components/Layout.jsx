@@ -1,16 +1,26 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AdminMenu, HodMenu, UserMenu } from "../Data/data"
 import { useSelector } from "react-redux";
-import { useUserDataMutation } from "../utils/redux/slices/usersApiSlice";
-
+import { toast } from "react-toastify";
+import {CgProfile} from "react-icons/cg";
+import {RiLogoutCircleFill} from "react-icons/ri";
 const Layout = ({ children }) => {
   const { userInfo } = useSelector(state => state.auth);
   const location = useLocation();
+  const navigate = useNavigate();
 
+  // function to handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("userInfo");
+    window.location.reload(true);
+    navigate("/login");
+    toast.success("Logout Succesful");
+
+  }
 
   // Rendering menu list
   const adminMenu = userInfo?.role === "admin" ? AdminMenu : userInfo?.role === "hod" ? HodMenu : UserMenu;
-   
+
   return (
     <div className="main">
       <div className="layout">
@@ -31,16 +41,18 @@ const Layout = ({ children }) => {
                 </div>
               );
             })}
+            <div className={`menu-item`} onClick={handleLogout}>
+                    <i><RiLogoutCircleFill/></i>
+                    <Link to="/login">Logout</Link>
+                  </div>
           </div>
         </div>
         <div className="content">
           <div className="header">
-            
-            { userInfo ? (
-              <h1>{userInfo.name}</h1>
-            ): (
-              <h4>Login</h4>
-            )}
+            <div className="header-content">
+              <i><CgProfile/></i>
+              <Link to="/profile">{userInfo?.name}</Link>
+            </div>
           </div>
           <div className="body">{children}</div>
         </div>
