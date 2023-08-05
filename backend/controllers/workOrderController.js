@@ -48,7 +48,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
         const updates = req.body;
-        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {new: true, runValidators: true}).populate("requestedBy", "username");
+        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {new: true, runValidators: true}).populate();
 
         if (!updatedWorkorder) {
             return next(new ErrorResponse("Work Order not found", 404));
@@ -112,7 +112,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Completed Work Order
+// Pending Work Order
 const pendingWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrder = await WorkOrder.find({status: "Pending"}).populate().select("-completedWork");
@@ -127,6 +127,23 @@ const pendingWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse(error.message, 500));
     }
         
+});
+
+// Push complete work order
+const completeWork = asyncHandler (async (req, res, next) => {
+    const finishedWork = await WorkOrder.find({status: "Complete"});
+
+    finishedWork.forEach(workOrder => {
+        workOrder.completedWork.push({finishedWork: workOrder._id});
+        workOrder.dateCompleted = req.body.dateCompleted;
+        workOrder.reviewed = false;
+        workOrder.save();
+    })
+    return res.status(200).json({
+        success: true,
+        data: finishedWork
+    })
+
 })
 
 module.exports = {
@@ -135,5 +152,6 @@ module.exports = {
     getAllWorkOrders,
     getSingleWorkOrder,
     deleteWorkOrder,
-    pendingWorkOrder
+    pendingWorkOrder,
+    completeWork
 }

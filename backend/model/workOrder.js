@@ -38,10 +38,6 @@ const workOrderSchema = new mongoose.Schema({
         enum: ["Pending", "In_Progress" ,"Complete", "Inspected"],
         default: "Pending"
     },
-    completedWork: {
-        type: Array,
-        default: []
-    },
     date: {
         // Format YYYY-MM-DD
         type: Object,
