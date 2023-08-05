@@ -10,7 +10,7 @@ const Register = () => {
 
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Register Registration</Typography>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>User Registration</Typography>
       <Form onFinish={onFinishHandler} layout='vertical' style={{ margin: '18px' }}>
         <Typography style={{ fontSize: '1rem', fontWeight: '500' }}>User Details: </Typography>
         <Row gutter={20}>
