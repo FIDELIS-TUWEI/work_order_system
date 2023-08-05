@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { LOGIN_EXPIRES, JWT_SECRET } = require("../utils/env");
 const { ObjectId } = mongoose.Schema;
 
 // User Schema
 const userSchema = new mongoose.Schema({
-    name: {
+    firstName: {
+        type: String,
+        required: [true, "Please fill your name"]
+    },
+    lastName: {
         type: String,
         required: [true, "Please fill your name"]
     },
@@ -20,10 +22,6 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minLength: [6, "Password must have at least (6) characters"],
     },
-    //role: {
-    //    type: Number,
-    //    default: 0
-    //},
     role: {
         type: String,
         enum: ["user", "hod", "admin", "supervisor"],
@@ -34,7 +32,15 @@ const userSchema = new mongoose.Schema({
         default: true,
     },
     date: {
-        type: String,
+        // format YY-MM-DD
+        type: Object,
+        match: /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/,
+        required: true,
+    },
+    time: {
+        // format HH:MM:SS
+        type: Object,
+        match: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
         required: true,
     },
     workOrders: [

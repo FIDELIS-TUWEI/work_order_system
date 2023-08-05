@@ -13,8 +13,8 @@ const signToken = (id) => {
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
     try {
-        const { name, username } = req.body;
-        const user = await User.findOne({ $or: [{ name }, { username }] });
+        const { firstName, lastName, username } = req.body;
+        const user = await User.findOne({ $or: [{ firstName }, { lastName }, { username }] });
 
         // Check for user in database
         if (user) {
@@ -56,7 +56,7 @@ const login = asyncHandler (async (req, res, next) => {
 
         if (user && passwordIsMatch) {
             res.status(200).json({
-                name: user.name,
+                firstName: user.firstName,
                 role: user.role,
                 token
             })

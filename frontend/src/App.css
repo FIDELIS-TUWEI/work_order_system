@@ -139,3 +139,9 @@
 .active i {
     color: rgb(51, 1, 1);
 }
+
+.user_submit {
+    margin: auto;
+    display: flex;
+    justify-content: flex-end;
+}

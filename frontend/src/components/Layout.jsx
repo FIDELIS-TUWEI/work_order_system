@@ -65,7 +65,7 @@ const Layout = ({ children }) => {
           <div className="header">
             <div className="header-content">
               <i><CgProfile/></i>
-              <Link to="/profile">{userInfo?.name}</Link>
+              <Link to="/profile">{userInfo?.firstName}</Link>
             </div>
           </div>
           <div className="body">{children}</div>
