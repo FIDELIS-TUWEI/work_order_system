@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const workOrderSchema = new mongoose.Schema({
-    requestedBy: {
-        type: ObjectId,
-        ref: "User",
-        required: true
-    },
+    //requestedBy: {
+    //    type: ObjectId,
+    //    ref: "User",
+    //    required: true
+    //},
     priority: {
         // High, Medium, Low
         type: String,
@@ -35,11 +35,21 @@ const workOrderSchema = new mongoose.Schema({
         // Pending, Complete, Inspected
         type: String,
         required: true,
-        enum: ["Pending", "Complete", "Inspected"],
+        enum: ["Pending", "In_Progress" ,"Complete", "Inspected"],
         default: "Pending"
     },
+    completedWork: {
+        type: Array,
+        default: []
+    },
     date: {
-        type: String,
+        // Format YYYY-MM-DD
+        type: Object,
+        required: true,
+    },
+    time: {
+        // Format HH:mm:ss
+        type: Object,
         required: true,
     },
     assignedTo: {

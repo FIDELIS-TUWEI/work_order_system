@@ -5,18 +5,25 @@ const ErrorResponse = require("../utils/errorResponse");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
-    const { userId, priority, title, location, serviceType, category, date } = req.body;
+    const userId = req.user._id;
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+        return next(new ErrorResponse("User not found", 404));
+    }
+    const { priority, title, location, serviceType, category, date, time } = req.body;
 
     try {
         //const user = await User.findById(req.params.id);
         const newWorkOrder = await WorkOrder({
-            requestedBy: userId,
+            //requestedBy: userId,
             priority,
             title,
             location,
             serviceType,
             category,
             date,
+            time
         });
 
         const savedWorkorder = await newWorkOrder.save();
@@ -41,7 +48,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
         const updates = req.body;
-        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {new: true, runValidators: true}).populate("requestedBy", "name username");
+        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {new: true, runValidators: true}).populate("requestedBy", "username");
 
         if (!updatedWorkorder) {
             return next(new ErrorResponse("Work Order not found", 404));
@@ -59,7 +66,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     try {
-        const workOrders = await WorkOrder.find({}).populate("requestedBy", "name username");
+        const workOrders = await WorkOrder.find({}).populate("requestedBy", "username");
         return res.status(200).json({
             success: true,
             data: workOrders
@@ -73,7 +80,7 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
 const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
-        const workOrder = await WorkOrder.findById(workOrderId).populate("requestedBy", "name username");
+        const workOrder = await WorkOrder.findById(workOrderId).populate("requestedBy", "username");
         if (!workOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         }
@@ -90,7 +97,7 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
 const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
-        const workOrder = await WorkOrder.findByIdAndDelete(workOrderId).populate("requestedBy", "name username");
+        const workOrder = await WorkOrder.findByIdAndDelete(workOrderId).populate("requestedBy", "username");
         if (!workOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         }
@@ -103,6 +110,28 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
+});
+
+// Completed Work Order
+const completedWorkOrder = asyncHandler (async (req, res, next) => {
+    try {
+        const workOrder = await WorkOrder.find({status: "Pending"}).populate();
+        if (!workOrder) {
+            return next(new ErrorResponse("Work Order not found", 404));
+        }
+        //workOrder.status = "Complete";
+        //const completed = await workOrder.save();
+        
+        // push completedWorkOrder to the user's completedWorkOrders array
+        //await User.findByIdAndUpdate(workOrder, { $push: { completedWorkOrders: completed._id } });
+        return res.status(200).json({
+            success: true,
+            data: workOrder
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
+        
 })
 
 module.exports = {
@@ -110,5 +139,6 @@ module.exports = {
     updateWorkOrder,
     getAllWorkOrders,
     getSingleWorkOrder,
-    deleteWorkOrder
+    deleteWorkOrder,
+    completedWorkOrder
 }

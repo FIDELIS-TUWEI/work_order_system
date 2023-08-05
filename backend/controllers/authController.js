@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../utils/env");
+const workOrder = require("../model/workOrder");
 
 const signToken = (id) => {
     return jwt.sign({ id }, JWT_SECRET, {
@@ -86,7 +87,7 @@ const logout = (req, res, next) => {
 const getUserInfo = asyncHandler (async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(userId).select("-password").populate("workOrders");
 
         if (!user) {
             return next(new ErrorResponse("User not found", 404));
@@ -94,11 +95,7 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            data: {
-                _id: user._id,
-                name: user.name,
-                username: user.username
-            }
+            user
         })
     } catch (error) {
         next(error);
