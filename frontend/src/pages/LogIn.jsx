@@ -41,7 +41,7 @@ const LogIn = () => {
         <div className="form-container">
             <Form onFinish={onFinishHandler} layout="vertical">
                 <Card title="Log In" style={{ width: "300px", margin: "auto", textAlign: "center" }}>
-                    <Form.Item name="username" label="Username">
+                    <Form.Item name="username" label="Username" required rules={[{ required: true, message: 'Please input your username!' }]}>
                         <Input 
                             id="username" 
                             type="text"
@@ -49,7 +49,7 @@ const LogIn = () => {
                         />
                     </Form.Item>
 
-                    <Form.Item name="password" label="Password">
+                    <Form.Item name="password" label="Password" required rules={[{ required: true, message: 'Please input your password!' }]}>
                         <Input 
                             id="password" 
                             type="password"
