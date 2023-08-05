@@ -56,7 +56,9 @@ const LogIn = () => {
                             placeholder="Password"
                         />
                     </Form.Item>
-                    { isLoading && <LoadingBox /> }
+                    <div className="loader">
+                        { isLoading && <LoadingBox /> }
+                    </div>
 
                     <Button type="primary" htmlType="submit">Log In</Button>
                 </Card>

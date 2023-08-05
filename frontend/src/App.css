@@ -16,6 +16,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: lightgray;
+}
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
 }
 
 /*.form_style {
