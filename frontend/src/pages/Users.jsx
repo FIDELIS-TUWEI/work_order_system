@@ -49,7 +49,7 @@ const Users = () => {
                 name="date" 
                 label="Date" 
                 required rules={[{ required: true, message: 'Please Select a date!' }]}>
-              <DatePicker />
+              <DatePicker format={'YYYY-MM-DD'} />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
@@ -57,7 +57,7 @@ const Users = () => {
                 name="time" 
                 label="Time" 
                 required rules={[{ required: true, message: 'Please Select time!' }]}>
-              <TimePicker />
+              <TimePicker format={'HH:mm:ss'} />
             </Form.Item>
           </Col>
         </Row>

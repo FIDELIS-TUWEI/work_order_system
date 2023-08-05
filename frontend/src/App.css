@@ -100,7 +100,7 @@
 }
 
 .body {
-    height: 85vh;
+    min-height: 85vh;
     box-shadow: 0 0  2px gray;
     background-color: white;
 }
