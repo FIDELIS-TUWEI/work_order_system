@@ -129,22 +129,6 @@ const pendingWorkOrder = asyncHandler (async (req, res, next) => {
         
 });
 
-// Push complete work order
-const completeWork = asyncHandler (async (req, res, next) => {
-    const finishedWork = await WorkOrder.find({status: "Complete"});
-
-    finishedWork.forEach(workOrder => {
-        workOrder.completedWork.push({finishedWork: workOrder._id});
-        workOrder.dateCompleted = req.body.dateCompleted;
-        workOrder.reviewed = false;
-        workOrder.save();
-    })
-    return res.status(200).json({
-        success: true,
-        data: finishedWork
-    })
-
-})
 
 module.exports = {
     createWorkOrder,
@@ -153,5 +137,4 @@ module.exports = {
     getSingleWorkOrder,
     deleteWorkOrder,
     pendingWorkOrder,
-    completeWork
 }
