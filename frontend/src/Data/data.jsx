@@ -3,7 +3,6 @@ import {FaUsers} from 'react-icons/fa';
 import {MdOutlineWork} from 'react-icons/md';
 import {SiGoogleanalytics} from 'react-icons/si';
 import {FaUser} from 'react-icons/fa';
-import { RiLogoutCircleFill } from 'react-icons/ri';
 
 export const AdminMenu = [
     
@@ -14,7 +13,7 @@ export const AdminMenu = [
     },
     {
         name: "Users",
-        path: "/users/list",
+        path: "/users/register",
         icon: <FaUsers/>
     },
     {

@@ -1,14 +1,15 @@
 import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography } from 'antd'
 import Layout from '../components/Layout'
 
-const Users = () => {
+const Register = () => {
   // function to create user
   const onFinishHandler = async (values) => {
     console.log('Success:', values);
   }
+
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Users Registration</Typography>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Register Registration</Typography>
       <Form onFinish={onFinishHandler} layout='vertical' style={{ margin: '18px' }}>
         <Typography style={{ fontSize: '1rem', fontWeight: '500' }}>User Details: </Typography>
         <Row gutter={20}>
@@ -69,4 +70,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Register

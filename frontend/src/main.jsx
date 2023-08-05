@@ -17,8 +17,8 @@ import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import WorkOrder from './pages/WorkOrder';
-import Users from './pages/Users';
 import Analytics from './pages/Analytics';
+import Register from './pages/Register';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,7 +27,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
       <Route path="/private" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path="/work/list" element={ <PrivateRoute> <WorkOrder /> </PrivateRoute> } />
-      <Route path="/users/list" element={ <PrivateRoute> <Users /> </PrivateRoute> } />
+      <Route path="/users/register" element={ <PrivateRoute> <Register/> </PrivateRoute> } />
       <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
 
       <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
