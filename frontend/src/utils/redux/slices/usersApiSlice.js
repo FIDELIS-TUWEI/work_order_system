@@ -23,13 +23,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
             }),
         }),
-        userData: builder.query({
-            query: (data) => ({
-                url: `${ USERS_URL }/userInfo`,
-                method: "GET",
-                body: data,
-            }),
-        }),
     })
 })
 
@@ -37,5 +30,4 @@ export const {
     useLoginMutation, 
     useLogoutMutation, 
     useRegisterMutation, 
-    useUserDataMutation 
 } = usersApiSlice;

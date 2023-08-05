@@ -2,9 +2,10 @@ import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography } fro
 import Layout from '../components/Layout'
 
 const Register = () => {
+
   // function to create user
   const onFinishHandler = async (values) => {
-    console.log('Success:', values);
+    console.log(values);
   }
 
   return (
