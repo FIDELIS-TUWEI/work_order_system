@@ -57,6 +57,7 @@ const login = asyncHandler (async (req, res, next) => {
         if (user && passwordIsMatch) {
             res.status(200).json({
                 firstName: user.firstName,
+                lastName: user.lastName,
                 role: user.role,
                 token
             })
