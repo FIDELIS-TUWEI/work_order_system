@@ -11,7 +11,14 @@
     justify-content: center;
 }
 
-.form_style {
+.form-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*.form_style {
     position: relative;
     outline: 0;
     margin: auto;
@@ -31,7 +38,7 @@
     border-radius: 10px;
     border-left-width: 1px;
     border-right-width: 1px;
-}
+}*/
 
 /* Admin Dashboard Styles */
 .main {
