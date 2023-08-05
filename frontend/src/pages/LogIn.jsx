@@ -3,18 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Avatar, Box, Button, TextField } from "@mui/material";
-import LockClockOutlined from '@mui/icons-material/LockClockOutlined';
+import { Button, Form, Input } from 'antd';
 
 
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
 import { setCredentials } from "../utils/redux/slices/authSlice";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
 
-// Yup form validation Schema
+// Yup Form validation Schema
 const validationSchema = yup.object({
     username: yup
         .string("Enter your Username")
@@ -66,54 +63,37 @@ const LogIn = () => {
     })
   return (
     <>
-        <Navbar />
-        <Box sx={{ height: "81vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <Box onSubmit={formik.handleSubmit} component="form" className="form_style border_style">
-                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-                    <Avatar sx={{ m: 1, bgcolor: "green", mb: 3 }}>
-                        <LockClockOutlined />
-                    </Avatar>
+        <div>
+            <Form onSubmit={formik.handleSubmit} layout="vertical" className="form_style border_style">
 
-                    <TextField 
-                        sx={{ mb: 3 }}
-                        fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        placeholder="Username"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={formik.touched.username && Boolean(formik.errors.username)}
-                        helperText={formik.touched.username && formik.errors.username}
-                    />
+                <Input 
+                    id="username"
+                    label="Username"
+                    name="username"
+                    placeholder="Username"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.username && Boolean(formik.errors.username)}
+                    helperText={formik.touched.username && formik.errors.username}
+                />
 
-                    <TextField 
-                        sx={{ mb: 3 }}
-                        fullWidth
-                        id="password"
-                        label="password"
-                        name="password"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        placeholder="Password"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        error={formik.touched.password && Boolean(formik.errors.password)}
-                        helperText={formik.touched.password && formik.errors.password}
-                    />
-                    { isLoading && <LoadingBox /> }
+                <Input 
+                    id="password"
+                    label="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                />
+                { isLoading && <LoadingBox /> }
 
-                    <Button fullWidth variant="contained" type="submit" color="success">Log In</Button>
-                </Box>
-            </Box>
-        </Box>
-        <Footer />
+                <Button>Log In</Button>
+            </Form>
+        </div>
     </>
   )
 }

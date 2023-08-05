@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+.not-found {
+    height: 81vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .form_style {
     position: relative;
     outline: 0;
