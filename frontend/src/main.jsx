@@ -19,6 +19,7 @@ import Profile from './pages/Profile';
 import WorkOrder from './pages/WorkOrder';
 import Analytics from './pages/Analytics';
 import Register from './pages/Register';
+import UsersAll from './pages/UsersAll';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,9 +28,9 @@ const router = createBrowserRouter(
       <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
       <Route path="/private" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path="/work/list" element={ <PrivateRoute> <WorkOrder /> </PrivateRoute> } />
+      <Route path="/users/all" element={ <PrivateRoute> <UsersAll/> </PrivateRoute> } />
       <Route path="/users/register" element={ <PrivateRoute> <Register/> </PrivateRoute> } />
       <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
-
       <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
       <Route path="*" element={<NotFound />} />
     </Route>

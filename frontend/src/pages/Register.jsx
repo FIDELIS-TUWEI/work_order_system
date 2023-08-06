@@ -28,14 +28,10 @@ const Register = () => {
     try {
       const res = await register(values).unwrap();
       dispatch(setCredentials({ ...res.data }));
-      setTimeout(() => {
-        window.location.reload();
-        toast.success("Registration Succesful");
-      }, 500);
+      window.location.reload();
       localStorage.removeItem('userInfo');
-      navigate('/');
     } catch (error) {
-      console.log(error);
+      toast.error(error.data.error);
     }
   }
 

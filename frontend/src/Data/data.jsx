@@ -2,7 +2,8 @@ import {MdDashboard} from 'react-icons/md';
 import {FaUsers} from 'react-icons/fa';
 import {MdOutlineWork} from 'react-icons/md';
 import {SiGoogleanalytics} from 'react-icons/si';
-import {FaUser} from 'react-icons/fa';
+import {FaUserPlus} from 'react-icons/fa';
+import {PiUserCircleGearFill} from 'react-icons/pi';
 
 export const AdminMenu = [
     
@@ -13,8 +14,13 @@ export const AdminMenu = [
     },
     {
         name: "Users",
-        path: "/users/register",
+        path: "/users/all",
         icon: <FaUsers/>
+    },
+    {
+        name: "Register",
+        path: "/users/register",
+        icon: <FaUserPlus/>
     },
     {
         name: "Work Order",
@@ -29,7 +35,7 @@ export const AdminMenu = [
     {
         name: "Profile",
         path: "/profile",
-        icon: <FaUser/>
+        icon: <PiUserCircleGearFill/>
     },
 ]
 
@@ -48,7 +54,7 @@ export const UserMenu = [
     {
         name: "Profile",
         path: "/profile",
-        icon: <FaUser/>
+        icon: <PiUserCircleGearFill/>
     },
 ]
 
@@ -72,6 +78,6 @@ export const HodMenu = [
     {
         name: "Profile",
         path: "/profile",
-        icon: <FaUser/>
+        icon: <PiUserCircleGearFill/>
     },
 ]
