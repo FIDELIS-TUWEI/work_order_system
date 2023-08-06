@@ -1,11 +1,42 @@
 import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography } from 'antd'
 import Layout from '../components/Layout'
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { setCredentials } from '../utils/redux/slices/authSlice';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+import { useRegisterMutation } from '../utils/redux/slices/usersApiSlice';
 
 const Register = () => {
+  const { userInfo } = useSelector(state => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [register] = useRegisterMutation();
+
+  // useEffect to check if user is logged in
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/users/register');
+    }
+  }, [userInfo, navigate]);
 
   // function to create user
   const onFinishHandler = async (values) => {
-    console.log(values);
+    try {
+      const res = await register(values).unwrap();
+      dispatch(setCredentials({ ...res.data }));
+      setTimeout(() => {
+        window.location.reload();
+        toast.success("Registration Succesful");
+      }, 500);
+      localStorage.removeItem('userInfo');
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

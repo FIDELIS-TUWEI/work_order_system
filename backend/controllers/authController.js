@@ -2,8 +2,6 @@ const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../utils/env");
-const workOrder = require("../model/workOrder");
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.ACCESS_TOKEN, {
@@ -14,8 +12,8 @@ const signToken = (id) => {
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
     try {
-        const { firstName, lastName, username } = req.body;
-        const user = await User.findOne({ $or: [{ firstName }, { lastName }, { username }] });
+        const { username } = req.body;
+        const user = await User.findOne({ $or: [{ username }] });
 
         // Check for user in database
         if (user) {
