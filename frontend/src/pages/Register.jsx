@@ -26,7 +26,14 @@ const Register = () => {
   // function to create user
   const onFinishHandler = async (values) => {
     try {
-      const res = await register(values).unwrap();
+      const res = await register(values, 
+        {
+          userInfo: {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('userInfo')}`
+          }
+        }
+      }).unwrap();
       dispatch(setCredentials({ ...res.data }));
       window.location.reload();
       localStorage.removeItem('userInfo');
