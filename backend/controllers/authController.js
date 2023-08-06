@@ -6,7 +6,7 @@ const { JWT_SECRET } = require("../utils/env");
 const workOrder = require("../model/workOrder");
 
 const signToken = (id) => {
-    return jwt.sign({ id }, JWT_SECRET, {
+    return jwt.sign({ id }, process.env.ACCESS_TOKEN, {
         expiresIn: process.env.LOGIN_EXPIRES,
     });
 }
