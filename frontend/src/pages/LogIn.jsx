@@ -16,14 +16,7 @@ const LogIn = () => {
 
     const [login, { isLoading }] = useLoginMutation();
 
-    const userInfo = useSelector(selectUserInfo);
-
-    // useEffect to check if user is logged in
-    //useEffect(() => {
-    //    if (userInfo) {
-    //        navigate('/private');
-    //    }
-    //}, [userInfo, navigate]);
+    
 
     const onFinishHandler = async (values) => {
         try {

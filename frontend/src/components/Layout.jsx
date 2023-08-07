@@ -20,12 +20,14 @@ const Layout = ({ children }) => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
-      setTimeout(() => {
-        if (window.location.reload) {
-        navigate("/");
-        toast.success("Logout Succesful");
-        }
-      }, 500);
+      toast.success("Logout Succesful");
+      navigate("/");
+      //setTimeout(() => {
+      //  if (window.location.reload) {
+      //  navigate("/");
+      //  toast.success("Logout Succesful");
+      //  }
+      //}, 500);
     } catch (error) {
       toast.error(error.data.error);
       console.log(error);
