@@ -4,7 +4,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 
 const signToken = (id) => {
-    return jwt.sign({ id }, process.env.ACCESS_TOKEN, {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: process.env.LOGIN_EXPIRES,
     });
 }

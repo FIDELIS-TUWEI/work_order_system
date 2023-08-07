@@ -18,7 +18,7 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 
     //2. Validate the token
-    const decodedToken = await util.promisify(jwt.verify)(token, process.env.ACCESS_TOKEN);
+    const decodedToken = await util.promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
     //3. If user still exists
     const user = await User.findById(decodedToken.id);

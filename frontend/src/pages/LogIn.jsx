@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { Button, Card, Form, Input } from 'antd';
 
 
 import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
-import { selectUserInfo, setCredentials } from "../utils/redux/slices/authSlice";
+import { setCredentials } from "../utils/redux/slices/authSlice";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
 
