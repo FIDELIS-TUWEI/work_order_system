@@ -5,7 +5,7 @@ import { Button, Card, Form, Input } from 'antd';
 
 
 import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
-import { setCredentials } from "../utils/redux/slices/authSlice";
+import { selectUserInfo, setCredentials } from "../utils/redux/slices/authSlice";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
 
@@ -16,14 +16,14 @@ const LogIn = () => {
 
     const [login, { isLoading }] = useLoginMutation();
 
-    const { userInfo } = useSelector(state => state.auth);
+    const userInfo = useSelector(selectUserInfo);
 
     // useEffect to check if user is logged in
-    useEffect(() => {
-        if (userInfo) {
-            navigate('/private');
-        }
-    }, [userInfo, navigate]);
+    //useEffect(() => {
+    //    if (userInfo) {
+    //        navigate('/private');
+    //    }
+    //}, [userInfo, navigate]);
 
     const onFinishHandler = async (values) => {
         try {

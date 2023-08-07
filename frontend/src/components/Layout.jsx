@@ -5,10 +5,10 @@ import { toast } from "react-toastify";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
 import { useLogoutMutation } from "../utils/redux/slices/usersApiSlice";
-import {logout} from "../utils/redux/slices/authSlice";
+import {logout, selectUserInfo} from "../utils/redux/slices/authSlice";
 
 const Layout = ({ children }) => {
-  const { userInfo } = useSelector(state => state.auth);
+  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
