@@ -23,6 +23,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        getUsers: builder.query({
+            query: () => ({
+                url: `${ USERS_URL }/all-users`,
+                method: "GET",
+            }),
+        })
     })
 })
 
