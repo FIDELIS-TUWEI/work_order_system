@@ -3,10 +3,10 @@ import { Navigate } from 'react-router-dom';
 import { selectToken, selectUserInfo } from '../utils/redux/slices/authSlice';
 
 const PrivateRoute = ({ children }) => {
-    //const userInfo = useSelector(selectUserInfo);
-    const userToken = useSelector(selectToken);
+    const userInfo = useSelector(selectUserInfo);
+    const token = useSelector(selectToken);
 
-    if ( userToken) {
+    if (userInfo && token) {
         return children;
     } else {
         return <Navigate to="/login" />
