@@ -4,10 +4,10 @@ const USERS_URL = "/hin";
 export const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
-            query: (data) => ({
+            query: credentials => ({
                 url: `${ USERS_URL }/login`,
                 method: "POST",
-                body: data,
+                body: { ...credentials },
             }),
         }),
         logout: builder.mutation({
