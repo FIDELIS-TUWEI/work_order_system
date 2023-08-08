@@ -27,6 +27,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             query: () => ({
                 url: `${ USERS_URL }/all-users`,
                 method: "GET",
+                credentials: "include",
             }),
         })
     })
