@@ -4,7 +4,7 @@ import Layout from "../components/Layout"
 import { useSelector } from "react-redux";
 import { selectToken } from "../utils/redux/slices/authSlice";
 //import { useNavigate } from "react-router-dom";
-import { Table, Typography } from "antd";
+import { Table, Typography, Button } from "antd";
 import axios from "axios";
 
 const UsersAll = () => {
@@ -24,8 +24,8 @@ const getUsers = async () => {
       },
     });
     const data = response.data;
-    setAllUsers(data);
-    console.log(data);
+    setAllUsers(data.data);
+    setLoading(false);
   } catch (error) {
     console.error(error);
   }
@@ -35,17 +35,40 @@ const getUsers = async () => {
     getUsers();
   }, []);
 
-  const users = allUsers;
-  console.log(users);
-
   // antD table
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      render: (text, record) => {
-        <span>{record.firstName} {record.lastName}</span>
+      title: "First Name",
+      dataIndex: "firstName",
+    },
+    {
+      title: "Last Name",
+      dataIndex: "lastName",
+    },
+    {
+      title: "Username",
+      dataIndex: "username",
+    },
+    {
+      title: "Active",
+      dataIndex: "active",
+      renderCell: () => {
+        return active ? true : false
+      }
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      render: () => {
+        <div className="actions__btn">
+          <Button>Edit</Button>
+          <Button>Delete</Button>
+        </div>
       }
     }
   ]
@@ -53,7 +76,7 @@ const getUsers = async () => {
   return (
     <Layout>
       <Typography>Users</Typography>
-      {loading && <p>Loading...</p>}
+      <Table columns={columns} dataSource={allUsers} bordered rowKey={"id"} />
     </Layout>
   )
 }
