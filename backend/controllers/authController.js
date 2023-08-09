@@ -2,6 +2,7 @@ const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
