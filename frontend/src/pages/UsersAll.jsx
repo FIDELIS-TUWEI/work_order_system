@@ -65,10 +65,12 @@ const getUsers = async () => {
       title: "Actions",
       dataIndex: "actions",
       render: () => {
-        <div className="actions__btn">
-          <Button>Edit</Button>
-          <Button>Delete</Button>
-        </div>
+        return (
+          <div className="actions__btn">
+            <Button>Edit</Button>
+            <Button danger>Delete</Button>
+          </div>
+        );
       }
     }
   ]
