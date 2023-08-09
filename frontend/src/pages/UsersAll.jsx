@@ -71,7 +71,10 @@ const getUsers = async () => {
   return (
     <Layout>
       <Typography>Users</Typography>
-      <Table columns={columns} dataSource={allUsers} bordered rowKey={"id"} />
+      <div className="add-user">
+        <Button onClick={() => navigate("/users/register")}>Add User</Button>
+      </div>
+      <Table columns={columns} dataSource={allUsers} bordered rowKey={"_id"} />
     </Layout>
   )
 }
