@@ -23,10 +23,9 @@ const getUsers = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    //setAllUsers([...allUsers, response.data]);
-    //setLoading(false);
     const data = response.data;
     setAllUsers(data);
+    console.log(data);
   } catch (error) {
     console.error(error);
   }
@@ -36,15 +35,6 @@ const getUsers = async () => {
     getUsers();
   }, []);
 
-
-  //const data = [allUsers.map((user) => {
-  //  return {
-  //    key: user.id,
-  //    firstName: user.firstName,
-  //    lastName: user.lastName,
-  //    username: user.username,
-  //  };
-  //})]
   // antD table
 
   const columns = [
@@ -60,7 +50,15 @@ const getUsers = async () => {
   return (
     <Layout>
       <Typography>Users</Typography>
-      <Table dataSource={allUsers} columns={columns} rowKey={"id"} />
+      {
+        allUsers && allUsers.map(user => {
+          return (
+            <div key={user.id}>
+              <p>{user.firstName} {user.lastName}</p>
+            </div>
+          )
+        })
+      }
       {loading && <p>Loading...</p>}
     </Layout>
   )
