@@ -31,7 +31,8 @@ const signupUser = asyncHandler (async (req, res) => {
             path: "/",
             httpOnly: true,
             secure: true,
-            sameSite: 'none',
+            signed: false,
+            sameSite: 'None',
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         })
 
@@ -71,7 +72,8 @@ const login = asyncHandler (async (req, res, next) => {
             path: "/",
             httpOnly: true,
             secure: true,
-            sameSite: 'none',
+            signed: false,
+            sameSite: 'None',
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         })
 

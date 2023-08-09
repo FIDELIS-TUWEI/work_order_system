@@ -30,7 +30,10 @@ app.use(bodyParser.urlencoded({
     limit: "5mb",
     extended: true 
 }));
-app.use(cors());
+app.use(cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL
+}));
 
 
 // Routes Middleware

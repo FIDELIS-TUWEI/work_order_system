@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Form, Input } from 'antd';
 
 
 import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
-import { setCredentials } from "../utils/redux/slices/authSlice";
+import { selectToken, setCredentials } from "../utils/redux/slices/authSlice";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
 
@@ -12,6 +12,7 @@ import LoadingBox from "../components/LoadingBox";
 const LogIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const token = useSelector(selectToken);
 
     const [login, { isLoading }] = useLoginMutation();
 
