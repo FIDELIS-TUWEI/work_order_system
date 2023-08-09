@@ -66,7 +66,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     try {
-        const workOrders = await WorkOrder.find({}).populate("requestedBy", "username");
+        const workOrders = await WorkOrder.find({}).populate();
         return res.status(200).json({
             success: true,
             data: workOrders
