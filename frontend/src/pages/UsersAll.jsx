@@ -35,7 +35,7 @@ const getUsers = async () => {
     getUsers();
   }, []);
 
-  const users = [allUsers];
+  const users = allUsers;
   console.log(users);
 
   // antD table
@@ -53,7 +53,9 @@ const getUsers = async () => {
   return (
     <Layout>
       <Typography>Users</Typography>
-      <Table columns={columns} dataSource={users} />
+      {users.length > 0 && (
+        <Table columns={columns} dataSource={users} />
+      )}
       {loading && <p>Loading...</p>}
     </Layout>
   )
