@@ -3,7 +3,7 @@ import Layout from "../components/Layout"
 //import { useGetUsersQuery } from "../utils/redux/slices/usersApiSlice";
 import { useSelector } from "react-redux";
 import { selectToken } from "../utils/redux/slices/authSlice";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
 import axios from "axios";
 
@@ -11,7 +11,7 @@ const UsersAll = () => {
   const token = useSelector(selectToken);
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   //const { data: users } = useGetUsersQuery();
 
@@ -51,13 +51,6 @@ const getUsers = async () => {
       dataIndex: "username",
     },
     {
-      title: "Active",
-      dataIndex: "active",
-      renderCell: () => {
-        return active ? true : false
-      }
-    },
-    {
       title: "Role",
       dataIndex: "role",
     },
@@ -67,7 +60,7 @@ const getUsers = async () => {
       render: () => {
         return (
           <div className="actions__btn">
-            <Button>Edit</Button>
+            <Button onClick={() => navigate("/profile")}>Edit</Button>
             <Button danger>Delete</Button>
           </div>
         );
