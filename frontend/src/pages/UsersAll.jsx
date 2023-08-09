@@ -53,9 +53,6 @@ const getUsers = async () => {
   return (
     <Layout>
       <Typography>Users</Typography>
-      {users.length > 0 && (
-        <Table columns={columns} dataSource={users} />
-      )}
       {loading && <p>Loading...</p>}
     </Layout>
   )
