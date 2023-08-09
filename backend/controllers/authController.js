@@ -96,7 +96,7 @@ const login = asyncHandler (async (req, res, next) => {
 // @route POST /hin/logout
 // @access Private
 const logout = (req, res, next) => {
-    res.clearCookie("token", "", { httpOnly: true, expires: new Date(0), sameSite: 'none', secure: true });
+    res.Cookie("token", "", { path: "/", httpOnly: true, expires: new Date(0), sameSite: 'none', secure: true });
     
     res.status(200).json({ success: true, message: "Logged Out successfully" });
 

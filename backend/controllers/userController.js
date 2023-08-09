@@ -10,7 +10,7 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
     const count = await User.find({}).estimatedDocumentCount();
 
     try {
-        const users = await User.find({}).sort({ createdAt: -1 }).select("-password")
+        const users = await User.find({}).sort({ createdAt: -1 }).select("-password").populate("workOrders")
             .skip(pageSize * (page -1))
             .limit(pageSize)
         res.status(200).json({
