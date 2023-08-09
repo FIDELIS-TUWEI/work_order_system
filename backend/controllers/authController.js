@@ -26,14 +26,27 @@ const signupUser = asyncHandler (async (req, res) => {
         // Create token
         const token = signToken(newUser._id);
 
-        res.status(201).json({
-            success: true,
-            message: "User created successfully",
-            token,
-            data: {
-                user: newUser
-            }
-        });
+        // Send Http-Only cookie
+        res.cookie("token", token, {
+            path: "/",
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        })
+
+        if (user) {
+            const {_id, firstName, lastName, role} = user;
+            res.status(201).json({
+                success: true,
+                message: "User created successfully",
+                _id,
+                firstName,
+                lastName,
+                role,
+                token
+            });
+        }
 
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -53,16 +66,23 @@ const login = asyncHandler (async (req, res, next) => {
         // Generate Token
         const token = signToken(user._id);
 
-        if (user && passwordIsMatch) {
-            res.status(200).json({
-                token,
-                user: {
-                    username: user.username,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    role: user.role,
-                }
+        // Send Http-Only cookie
+        res.cookie("token", token, {
+            path: "/",
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        })
 
+        if (user && passwordIsMatch) {
+            const {firstName, lastName, role} = user;
+            res.status(200).json({
+                success: true,
+                message: "User logged in successfully",
+                firstName,
+                lastName,
+                role
             })
         } else {
             return next(new ErrorResponse("Invalid Credentials", 401));
