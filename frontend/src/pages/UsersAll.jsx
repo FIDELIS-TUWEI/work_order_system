@@ -35,6 +35,9 @@ const getUsers = async () => {
     getUsers();
   }, []);
 
+  const users = [allUsers];
+  console.log(users);
+
   // antD table
 
   const columns = [
@@ -50,15 +53,7 @@ const getUsers = async () => {
   return (
     <Layout>
       <Typography>Users</Typography>
-      {
-        allUsers && allUsers.map(user => {
-          return (
-            <div key={user.id}>
-              <p>{user.firstName} {user.lastName}</p>
-            </div>
-          )
-        })
-      }
+      <Table columns={columns} dataSource={users} />
       {loading && <p>Loading...</p>}
     </Layout>
   )
