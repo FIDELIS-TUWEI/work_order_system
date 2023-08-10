@@ -3,13 +3,13 @@ import Layout from '../components/Layout'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { setCredentials } from '../utils/redux/slices/authSlice';
+import { selectUserInfo, setCredentials } from '../utils/redux/slices/authSlice';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useRegisterMutation } from '../utils/redux/slices/usersApiSlice';
 
 const Register = () => {
-  const { userInfo } = useSelector(state => state.auth);
+  const userInfo = useSelector(selectUserInfo);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,15 +28,13 @@ const Register = () => {
     try {
       const res = await register(values, 
         {
-          userInfo: {
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('userInfo')}`
-          }
-        }
-      }).unwrap();
+           withCredentials: true,
+           headers: {
+             Authorization: `Bearer ${userInfo.token}`
+           } 
+        }).unwrap();
       dispatch(setCredentials({ ...res.data }));
-      window.location.reload();
-      localStorage.removeItem('userInfo');
+      toast.success("Registration Succesful");
     } catch (error) {
       toast.error(error.data.error);
     }

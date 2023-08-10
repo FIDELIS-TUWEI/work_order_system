@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
     const userInfo = useSelector(selectUserInfo);
     const token = useSelector(selectToken);
 
-    if ( token) {
+    if (userInfo && token) {
         return children;
     } else {
         return <Navigate to="/login" />
