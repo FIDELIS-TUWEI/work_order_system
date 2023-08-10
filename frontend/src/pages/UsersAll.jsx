@@ -18,7 +18,11 @@ const UsersAll = () => {
 const getUsers = async () => {
   try {
     setLoading(true);
-    const response = await axios.get("http://localhost:5000/hin/all-users");
+    const response = await axios.get("http://localhost:5000/hin/all-users",{
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }});
     const data = response.data;
     setAllUsers(data.data);
     setLoading(false);
