@@ -30,12 +30,8 @@ const Register = () => {
       const res = await register(values, 
         {
            withCredentials: true,
-           headers: {
-             Authorization: `Bearer ${token}`
-           } 
         }).unwrap();
       dispatch(setCredentials({ ...res.data }));
-      toast.success("Registration Succesful");
     } catch (error) {
       toast.error(error.data.error);
     }
