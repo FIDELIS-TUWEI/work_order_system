@@ -3,13 +3,14 @@ import Layout from '../components/Layout'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { selectUserInfo, setCredentials } from '../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo, setCredentials } from '../utils/redux/slices/authSlice';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useRegisterMutation } from '../utils/redux/slices/usersApiSlice';
 
 const Register = () => {
   const userInfo = useSelector(selectUserInfo);
+  const token = useSelector(selectToken);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Register = () => {
         {
            withCredentials: true,
            headers: {
-             Authorization: `Bearer ${userInfo.token}`
+             Authorization: `Bearer ${token}`
            } 
         }).unwrap();
       dispatch(setCredentials({ ...res.data }));
