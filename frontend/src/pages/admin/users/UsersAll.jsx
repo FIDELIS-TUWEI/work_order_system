@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
-import axios from "axios";
 import { getAllUsers } from "../../../services/usersApi";
-const USERS_URL = "/hin";
 
 
 const UsersAll = () => {
@@ -17,6 +15,11 @@ const UsersAll = () => {
   const navigate = useNavigate();
 
 
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  // Function to get all users from Api
 const getUsers = async () => {
   setLoading(true);
   let response = await getAllUsers({
@@ -29,9 +32,7 @@ const getUsers = async () => {
   setLoading(false);
 };
 
-  useEffect(() => {
-    getUsers();
-  }, []);
+
 
   // antD table
 
