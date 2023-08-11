@@ -1,24 +1,21 @@
-import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography, message } from 'antd'
 import Layout from '../components/Layout'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { selectToken, selectUserInfo, setCredentials } from '../utils/redux/slices/authSlice';
-import { toast } from 'react-toastify';
-import { useEffect } from 'react';
-import { useRegisterMutation } from '../utils/redux/slices/authApiSlice';
+import { selectToken, selectUserInfo } from '../utils/redux/slices/authSlice';
+import { useEffect, useState } from 'react';
 import LoadingBox from '../components/LoadingBox';
 import axios from 'axios';
 const USERS_URL = "/hin";
 
 
 const Register = () => {
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const userInfo = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
 
-  const [register, { isLoading }] = useRegisterMutation();
 
   // useEffect to check if user is logged in
   useEffect(() => {
@@ -30,15 +27,18 @@ const Register = () => {
 // function to create user
 const onFinishHandler = async (values) => {
   try {
+    setLoading(true);
     const res = await axios.post(`${USERS_URL}/register`, values);
     if (res.data) {
-      toast.success("User Registered Succesfully");
+      message.success("User Registered Succesfully");
       navigate('/users/all');
+      setLoading(false);
     } else {
-      toast.error("User Registration Failed");
+      message.error("User Registration Failed");
     }
   } catch (error) {
-    toast.error("User Registration Failed:", error);
+    setLoading(false);
+    message.error("User Registration Failed:", error);
   }
 }
 
@@ -102,7 +102,7 @@ const onFinishHandler = async (values) => {
         </div>
         <Col xs={24} md={24} lg={8}></Col>
         <div className="loader">
-          { isLoading && <LoadingBox /> }
+          { loading && <LoadingBox /> }
         </div>
       </Form>
     </Layout>
