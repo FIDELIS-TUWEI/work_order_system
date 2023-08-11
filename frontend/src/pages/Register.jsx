@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { selectToken, selectUserInfo, setCredentials } from '../utils/redux/slices/authSlice';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
-import { useRegisterMutation } from '../utils/redux/slices/usersApiSlice';
+import { useRegisterMutation } from '../utils/redux/slices/authApiSlice';
 
 const Register = () => {
   const userInfo = useSelector(selectUserInfo);
@@ -19,23 +19,22 @@ const Register = () => {
 
   // useEffect to check if user is logged in
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && token) {
       navigate('/users/register');
     }
   }, [userInfo, navigate]);
 
-  // function to create user
-  const onFinishHandler = async (values) => {
-    try {
-      const res = await register(values, 
-        {
-           withCredentials: true,
-        }).unwrap();
-      dispatch(setCredentials({ ...res.data }));
-    } catch (error) {
-      toast.error(error.data.error);
-    }
+// function to create user
+const onFinishHandler = async (values) => {
+  try {
+    const res = await register(values, {
+      withCredentials: true,
+    }).unwrap();
+    dispatch(setCredentials({ ...res.data }));
+  } catch (error) {
+    toast.error(error.data.error);
   }
+}
 
   return (
     <Layout>

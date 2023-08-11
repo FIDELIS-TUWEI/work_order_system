@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Button, Card, Form, Input } from 'antd';
 
 
-import { useLoginMutation } from "../utils/redux/slices/usersApiSlice";
-import { selectToken, setCredentials } from "../utils/redux/slices/authSlice";
+import { useLoginMutation } from "../utils/redux/slices/authApiSlice";
+import { selectToken, selectUserInfo, setCredentials } from "../utils/redux/slices/authSlice";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
+import { useEffect } from "react";
 
 
 const LogIn = () => {
@@ -15,6 +16,14 @@ const LogIn = () => {
     const token = useSelector(selectToken);
 
     const [login, { isLoading }] = useLoginMutation();
+
+    const userInfo = useSelector(selectUserInfo);
+
+    useEffect(() => {
+        if (!userInfo && !token) {
+            navigate('/login');
+        }
+    }, [userInfo, navigate, token]);
 
     
 

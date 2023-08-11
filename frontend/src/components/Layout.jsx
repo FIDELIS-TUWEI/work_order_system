@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
-import { useLogoutMutation } from "../utils/redux/slices/usersApiSlice";
+import { useLogoutMutation } from "../utils/redux/slices/authApiSlice";
 import {logout, selectUserInfo} from "../utils/redux/slices/authSlice";
 
 const Layout = ({ children }) => {
@@ -22,12 +22,6 @@ const Layout = ({ children }) => {
       dispatch(logout());
       toast.success("Logout Succesful");
       navigate("/");
-      //setTimeout(() => {
-      //  if (window.location.reload) {
-      //  navigate("/");
-      //  toast.success("Logout Succesful");
-      //  }
-      //}, 500);
     } catch (error) {
       toast.error(error.data.error);
       console.log(error);
