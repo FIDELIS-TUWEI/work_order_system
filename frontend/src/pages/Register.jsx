@@ -7,6 +7,9 @@ import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useRegisterMutation } from '../utils/redux/slices/authApiSlice';
 import LoadingBox from '../components/LoadingBox';
+import axios from 'axios';
+const USERS_URL = "/hin";
+
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -27,11 +30,15 @@ const Register = () => {
 // function to create user
 const onFinishHandler = async (values) => {
   try {
-    const res = await register(values).unwrap();
-    dispatch(setCredentials({ ...res.data }));
-    navigate('/private');
+    const res = await axios.post(`${USERS_URL}/register`, values);
+    if (res.data) {
+      toast.success("User Registered Succesfully");
+      navigate('/users/all');
+    } else {
+      toast.error("User Registration Failed");
+    }
   } catch (error) {
-    toast.error(error.data.error);
+    toast.error("User Registration Failed:", error);
   }
 }
 
