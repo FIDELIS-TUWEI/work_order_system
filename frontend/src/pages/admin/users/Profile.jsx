@@ -22,10 +22,10 @@ const Profile = () => {
       <Card title="Profile">
         <RxAvatar />
         <p>
-          FirstName: {user && user.firstName}
+          First Name: {user && user.firstName}
         </p>
         <p>
-          LastName: {user && user.lastName}
+          Last Name: {user && user.lastName}
         </p>
         <p>
           Username: {user && user.username}
