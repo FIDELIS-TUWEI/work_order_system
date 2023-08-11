@@ -23,13 +23,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
             }),
         }),
-        getUsers: builder.query({
-            query: () => ({
-                url: `${ USERS_URL }/all-users`,
-                method: "GET",
-                credentials: "include",
-            }),
-        })
     })
 })
 

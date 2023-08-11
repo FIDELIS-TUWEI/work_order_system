@@ -27,10 +27,9 @@ const Register = () => {
 // function to create user
 const onFinishHandler = async (values) => {
   try {
-    const res = await register(values, {
-      withCredentials: true,
-    }).unwrap();
-    dispatch(setCredentials({ ...res }));
+    const res = await register(values).unwrap();
+    dispatch(setCredentials({ ...res.data }));
+    navigate('/private');
   } catch (error) {
     toast.error(error.data.error);
   }
