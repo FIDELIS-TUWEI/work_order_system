@@ -48,7 +48,7 @@ export const UserMenu = [
     },
     {
         name: "Work Order",
-        path: "/work/list",
+        path: "/new/work",
         icon: <MdOutlineWork/>
     },
     {
