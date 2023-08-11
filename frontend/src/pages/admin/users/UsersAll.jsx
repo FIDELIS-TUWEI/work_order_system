@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import Layout from "../components/Layout"
-//import { useGetUsersQuery } from "../utils/redux/slices/usersApiSlice";
+import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
-import { selectToken } from "../utils/redux/slices/authSlice";
+import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
 import axios from "axios";
@@ -15,7 +14,6 @@ const UsersAll = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  //const { data: users } = useGetUsersQuery();
 
 const getUsers = async () => {
   try {

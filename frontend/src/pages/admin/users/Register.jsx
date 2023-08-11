@@ -1,10 +1,10 @@
 import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography, message } from 'antd'
-import Layout from '../components/Layout'
+import Layout from '../../../components/Layout';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { selectToken, selectUserInfo } from '../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
 import { useEffect, useState } from 'react';
-import LoadingBox from '../components/LoadingBox';
+import LoadingBox from '../../../components/LoadingBox';
 import axios from 'axios';
 const USERS_URL = "/hin";
 
