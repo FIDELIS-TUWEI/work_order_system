@@ -6,6 +6,8 @@ import { selectToken } from "../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
 import axios from "axios";
+const USERS_URL = "/hin";
+
 
 const UsersAll = () => {
   const token = useSelector(selectToken);
@@ -18,7 +20,7 @@ const UsersAll = () => {
 const getUsers = async () => {
   try {
     setLoading(true);
-    const response = await axios.get("http://localhost:5000/hin/all-users",{
+    const response = await axios.get(`${USERS_URL}/all-users`,{
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`
