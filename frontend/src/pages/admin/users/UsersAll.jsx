@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
 import { getAllUsers } from "../../../services/usersApi";
+import {setUser} from "../../../utils/redux/slices/userSlice";
+import axios from "axios";
+const USERS_URL = "/hin";
+
 
 
 
 const UsersAll = () => {
-  const user = useSelector(selectUserInfo);
+  const dispatch = useDispatch();
+  const {user} = useSelector((state) => state.user);
+  //const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -32,6 +38,29 @@ const getUsers = async () => {
   setAllUsers(response.data);
   setLoading(false);
 };
+
+// Get user profile data
+const getUserInfo = async () => {
+  try {
+    const res = await axios.get(`${USERS_URL}/userInfo`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    if (res.data) {
+      dispatch(setUser(res.data));
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+useEffect(() => {
+  if (!user) {
+    getUserInfo();
+  }
+}, [user, getUserInfo]);
 
 
   // antD table
