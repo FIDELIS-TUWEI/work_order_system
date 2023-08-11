@@ -24,9 +24,7 @@ export const getUserInfo = async (id) => {
 // Get user by id and edit
 export const editUser = async (id, user) => {
     try {
-        const response = await axios.get(`${USERS_URL}/edit/${id}`, user)
-        const data = response.data;
-        return data;
+        return await axios.get(`${USERS_URL}/edit/${id}`, user);
     } catch (error) {
         console.error("Error while Updating user", error);
     }
