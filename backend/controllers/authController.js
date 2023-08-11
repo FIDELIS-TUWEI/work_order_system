@@ -24,21 +24,8 @@ const signupUser = asyncHandler (async (req, res) => {
         // Create new user
         const newUser = await User.create(req.body)
 
-        // Create token
-        const token = signToken(newUser._id);
-
-        // Send Http-Only cookie
-        res.cookie("token", token, {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            signed: false,
-            sameSite: 'None',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        })
-
         if (user) {
-            const {_id, firstName, lastName, role} = user;
+            const {_id, firstName, lastName, role} = newUser;
             res.status(201).json({
                 success: true,
                 message: "User created successfully",
@@ -46,7 +33,6 @@ const signupUser = asyncHandler (async (req, res) => {
                 firstName,
                 lastName,
                 role,
-                token
             });
         }
 
@@ -79,7 +65,6 @@ const login = asyncHandler (async (req, res, next) => {
         })
 
         if (user && passwordIsMatch) {
-            const {firstName, lastName, role} = user;
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",

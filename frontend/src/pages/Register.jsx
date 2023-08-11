@@ -1,28 +1,28 @@
 import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography } from 'antd'
 import Layout from '../components/Layout'
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { selectToken, selectUserInfo, setCredentials } from '../utils/redux/slices/authSlice';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useRegisterMutation } from '../utils/redux/slices/authApiSlice';
+import LoadingBox from '../components/LoadingBox';
 
 const Register = () => {
-  const userInfo = useSelector(selectUserInfo);
-  const token = useSelector(selectToken);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register] = useRegisterMutation();
+  const userInfo = useSelector(selectUserInfo);
+  const token = useSelector(selectToken);
+
+  const [register, { isLoading }] = useRegisterMutation();
 
   // useEffect to check if user is logged in
   useEffect(() => {
-    if (userInfo && token) {
-      navigate('/users/register');
+    if (!userInfo && !token) {
+      navigate('/login');
     }
-  }, [userInfo, navigate]);
+  }, [userInfo, navigate, token]);
 
 // function to create user
 const onFinishHandler = async (values) => {
@@ -30,7 +30,7 @@ const onFinishHandler = async (values) => {
     const res = await register(values, {
       withCredentials: true,
     }).unwrap();
-    dispatch(setCredentials({ ...res.data }));
+    dispatch(setCredentials({ ...res }));
   } catch (error) {
     toast.error(error.data.error);
   }
@@ -93,6 +93,10 @@ const onFinishHandler = async (values) => {
         </Row>
         <div className="user_submit">
           <Button type="primary" htmlType="submit">Submit</Button>
+        </div>
+        <Col xs={24} md={24} lg={8}></Col>
+        <div className="loader">
+          { isLoading && <LoadingBox /> }
         </div>
       </Form>
     </Layout>
