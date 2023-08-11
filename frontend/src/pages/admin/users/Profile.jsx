@@ -37,7 +37,10 @@ const Profile = () => {
           Status: {user && user.active === true ? "Active" : "Not Active"}
         </p>
 
-        <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
+        {user && user.role === "admin" ? (
+          <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
+        )
+        : null}
       </Card>
     </Layout>
   )
