@@ -1,9 +1,10 @@
+import { Typography } from 'antd'
 import Layout from '../../../components/Layout'
 
 const Profile = () => {
   return (
     <Layout>
-      <h1>Profile</h1>
+      <Typography>Manage Profile</Typography>
     </Layout>
   )
 }
