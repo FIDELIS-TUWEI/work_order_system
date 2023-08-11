@@ -5,6 +5,7 @@ import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSli
 import { useNavigate } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
 import axios from "axios";
+import { getAllUsers } from "../../../services/usersApi";
 const USERS_URL = "/hin";
 
 
@@ -17,19 +18,15 @@ const UsersAll = () => {
 
 
 const getUsers = async () => {
-  try {
-    setLoading(true);
-    const response = await axios.get(`${USERS_URL}/all-users`,{
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }});
-    const data = response.data;
-    setAllUsers(data.data);
-    setLoading(false);
-  } catch (error) {
-    console.error(error);
-  }
+  setLoading(true);
+  let response = await getAllUsers({
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  setAllUsers(response.data);
+  setLoading(false);
 };
 
   useEffect(() => {
