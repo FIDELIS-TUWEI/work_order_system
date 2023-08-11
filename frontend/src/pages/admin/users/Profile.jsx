@@ -1,35 +1,40 @@
-import { Typography } from 'antd'
+import { Card, Typography } from 'antd'
 import Layout from '../../../components/Layout'
-import { selectUser } from '../../../utils/redux/slices/userSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
 const USERS_URL = "/hin";
+
+import { RxAvatar } from 'react-icons/rx';
 
 
 const Profile = () => {
-  const userData = useSelector(selectUser);
+  const user = useSelector(selectUserInfo);
+  const token = useSelector(selectToken);
 
-  // getUserData
-  const getUserData = async () => {
-    try {
-      const response = await axios.get(`${USERS_URL}/userInfo`, {
-        withCredentials: true,
-      });
-      const data = response.data;
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   return (
     <Layout>
       <Typography>Manage Profile</Typography>
+      <Card title="Profile">
+        <RxAvatar />
+        <p>
+          FirstName: {user && user.firstName}
+        </p>
+        <p>
+          LastName: {user && user.lastName}
+        </p>
+        <p>
+          Username: {user && user.username}
+        </p>
+        <p>
+          Role: {user && user.role}
+        </p>
+        <p>
+          Status: {user && user.active === true ? "Active" : "Not Active"}
+        </p>
+      </Card>
     </Layout>
   )
 }
