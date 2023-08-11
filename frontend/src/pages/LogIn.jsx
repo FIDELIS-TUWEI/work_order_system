@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Form, Input } from 'antd';
+import { Button, Card, Form, Input, message } from 'antd';
 
 
 import { useLoginMutation } from "../utils/redux/slices/authApiSlice";
 import { selectToken, selectUserInfo, setCredentials } from "../utils/redux/slices/authSlice";
-import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
 import { useEffect } from "react";
 
@@ -31,10 +30,10 @@ const LogIn = () => {
         try {
             const res = await login(values).unwrap();
             dispatch(setCredentials({ ...res }));
-            toast.success("Login Succesful");
+            message.success("Login Succesful");
             navigate('/private');
         } catch (error) {
-            toast.error(error.data.error);
+            message.error(error.data.error);
         }
     }
 

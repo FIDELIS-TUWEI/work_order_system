@@ -1,11 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AdminMenu, HodMenu, UserMenu } from "../Data/data"
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
 import { useLogoutMutation } from "../utils/redux/slices/authApiSlice";
 import {logout, selectUserInfo} from "../utils/redux/slices/authSlice";
+import { message } from "antd";
 
 const Layout = ({ children }) => {
   const userInfo = useSelector(selectUserInfo);
@@ -20,10 +20,10 @@ const Layout = ({ children }) => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
-      toast.success("Logout Succesful");
+      message.success("Logout Succesful");
       navigate("/");
     } catch (error) {
-      toast.error(error.data.error);
+      message.error(error.data.error);
       console.log(error);
     }
   }
