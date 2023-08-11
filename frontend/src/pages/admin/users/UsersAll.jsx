@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
 import { getAllUsers } from "../../../services/usersApi";
+
 
 
 const UsersAll = () => {
@@ -31,7 +32,6 @@ const getUsers = async () => {
   setAllUsers(response.data);
   setLoading(false);
 };
-
 
 
   // antD table
@@ -69,7 +69,7 @@ const getUsers = async () => {
 
   return (
     <Layout>
-      <Typography>Users</Typography>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Users</Typography>
       <div className="add-user">
         <Button type="primary" onClick={() => navigate("/users/register")}>Add User</Button>
       </div>

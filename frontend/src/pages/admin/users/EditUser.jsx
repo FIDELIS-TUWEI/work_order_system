@@ -32,7 +32,7 @@ const EditUser = () => {
       }
       console.log(res);
     } catch (error) {
-      message.error("Error while updating user details:", error);
+      message.error("Error while updating user details");
     }
   }
 

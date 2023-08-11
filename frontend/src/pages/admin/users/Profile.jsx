@@ -1,10 +1,7 @@
 import { Button, Card, Typography } from 'antd'
 import Layout from '../../../components/Layout'
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
-const USERS_URL = "/hin";
+import { selectUserInfo } from '../../../utils/redux/slices/authSlice';
 
 import { RxAvatar } from 'react-icons/rx';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const user = useSelector(selectUserInfo);
-  const token = useSelector(selectToken);
   const navigate = useNavigate();
 
 
