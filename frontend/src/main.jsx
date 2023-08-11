@@ -9,17 +9,17 @@ import {
   Route, 
   RouterProvider,  
 } from 'react-router-dom';
-import Home from './pages/Home';
+import Home from './pages/home/Home';
 import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import WorkOrder from './pages/WorkOrder';
-import Analytics from './pages/Analytics';
-import Register from './pages/Register';
-import UsersAll from './pages/UsersAll';
+import Dashboard from './pages/dashboard/Dashboard';
+import Profile from './pages/admin/users/Profile';
+import WorkOrder from './pages/admin/workOrders/WorkOrder';
+import Analytics from './pages/admin/reports/Analytics';
+import Register from './pages/admin/users/Register';
+import UsersAll from './pages/admin/users/UsersAll';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
