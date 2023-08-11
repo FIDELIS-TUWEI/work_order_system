@@ -73,7 +73,6 @@ const EditUser = () => {
               <Form.Item 
                   name="password" 
                   label="Password" 
-                  //required rules={[{ required: true, message: 'Please Enter a password!' }]}
                 >
                 <Input type='password' placeholder='Enter Password' />
               </Form.Item>  
@@ -89,7 +88,11 @@ const EditUser = () => {
                   placeholder="Select Role"
                   allowClear
                   style={{ width: '100%' }}
-                  options={[{ value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }, { value: 'hod', label: 'HoD' }]}
+                  options={[
+                    { value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }, 
+                    { value: 'hod', label: 'HoD' }, { value: 'superadmin', label: 'Super Admin' },
+                    { value: 'supervisor', label: 'Supervisor' }, { value: 'reviewer', label: 'Reviewer' }
+                  ]}
                 />
               </Form.Item>
             </Col>

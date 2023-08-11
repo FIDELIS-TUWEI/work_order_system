@@ -33,7 +33,7 @@ const Profile = () => {
           Status: {user && user.active === true ? "Active" : "Not Active"}
         </p>
 
-        {user && user.role === "admin" ? (
+        {user && user.role === "admin" || user && user.role === "superadmin" ? (
           <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
         )
         : null}
