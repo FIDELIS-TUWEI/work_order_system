@@ -12,11 +12,12 @@ import { useEffect } from "react";
 const LogIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+    const userInfo = useSelector(selectUserInfo);
     const token = useSelector(selectToken);
 
     const [login, { isLoading }] = useLoginMutation();
 
-    const userInfo = useSelector(selectUserInfo);
 
     useEffect(() => {
         if (!userInfo && !token) {
