@@ -20,6 +20,7 @@ import WorkOrder from './pages/admin/workOrders/WorkOrder';
 import Analytics from './pages/admin/reports/Analytics';
 import Register from './pages/admin/users/Register';
 import UsersAll from './pages/admin/users/UsersAll';
+import EditUser from './pages/admin/users/EditUser';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path="/users/register" element={ <PrivateRoute> <Register/> </PrivateRoute> } />
       <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
       <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
+      <Route path="/edit/user/:id" element={ <PrivateRoute> <EditUser /> </PrivateRoute> } />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

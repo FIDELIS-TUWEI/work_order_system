@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
+import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Table, Typography, Button } from "antd";
 import axios from "axios";
@@ -9,6 +9,7 @@ const USERS_URL = "/hin";
 
 
 const UsersAll = () => {
+  const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,7 +61,7 @@ const getUsers = async () => {
       render: () => {
         return (
           <div className="actions__btn">
-            <Button onClick={() => navigate("/profile")}>Edit</Button>
+            <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
             <Button danger>Delete</Button>
           </div>
         );

@@ -1,4 +1,4 @@
-import { Card, Typography } from 'antd'
+import { Button, Card, Typography } from 'antd'
 import Layout from '../../../components/Layout'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -7,11 +7,13 @@ import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSli
 const USERS_URL = "/hin";
 
 import { RxAvatar } from 'react-icons/rx';
+import { useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
+  const navigate = useNavigate();
 
 
   return (
@@ -34,6 +36,8 @@ const Profile = () => {
         <p>
           Status: {user && user.active === true ? "Active" : "Not Active"}
         </p>
+
+        <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
       </Card>
     </Layout>
   )

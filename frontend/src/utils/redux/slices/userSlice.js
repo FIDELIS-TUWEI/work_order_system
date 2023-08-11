@@ -1,15 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
+const USERS_URL = "/hin";
+
+
+
 
 export const userSlice = createSlice({
     name: "user",
     initialState: {
-        user: null,
+        user: {},
     },
-    reducers: {
-        getUser: (state, action) => {
-            state.user = action.payload;
-        },
-    }
+    reducers: {},
 });
 
 export const { getUser } = userSlice.actions;
