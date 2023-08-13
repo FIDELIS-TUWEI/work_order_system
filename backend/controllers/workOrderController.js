@@ -86,7 +86,7 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
         }
         return res.status(200).json({
             success: true,
-            work
+            data: work
         })
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
