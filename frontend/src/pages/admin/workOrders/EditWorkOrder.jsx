@@ -1,8 +1,12 @@
 import React from 'react'
 import Layout from '../../../components/Layout'
 import { Col, Form, Row, Typography } from 'antd'
+import { useSelector } from 'react-redux'
+import { selectUserInfo } from '../../../utils/redux/slices/authSlice'
 
 const EditWorkOrder = () => {
+  const user = useSelector(selectUserInfo);
+  
   return (
     <Layout>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
