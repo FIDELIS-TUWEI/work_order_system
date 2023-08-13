@@ -58,7 +58,7 @@ const AllWorkOrders = () => {
                 <td>{work.date}</td>
                 <td>{work.status}</td>
                 <td className="actions__btn">
-                  <Button onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
+                  <Button style={{ color: 'green', border: 'none'}} onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
                 </td>
               </tr>
             ))}
