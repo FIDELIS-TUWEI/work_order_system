@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom"
 import { getAllWorkOrders } from "../../../services/workApi";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
+import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 
 const AllWorkOrders = () => {
+  const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [allWork, setAllWork] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,15 @@ const AllWorkOrders = () => {
                 <td>{work.status}</td>
                 <td className="actions__btn">
                   <Button style={{ color: 'green', border: 'none'}} onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
+                  {
+                    user.role === "admin" || user.role === "superadmin" || user.role === "hod" ? 
+                      <Button style={{ color: 'red', border: 'none'}} 
+                        onClick={() => navigate(`/edit/work/${work._id}`)}
+                      >
+                        Edit
+                      </Button> 
+                    : null
+                  }
                 </td>
               </tr>
             ))}
