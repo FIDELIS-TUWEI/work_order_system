@@ -35,7 +35,8 @@ const WorkDetails = () => {
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
            Manage Work Details
         </Typography>
-        <div>
+        <div key={workDetails._id}>
+            <p>Work Id: {workDetails._id}</p>
             <p>
                 Title: {workDetails.title}
             </p>

@@ -35,7 +35,7 @@ const AllWorkOrders = () => {
     <Layout>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Work Orders</Typography>
         <div className="add-btn">
-            <Button type="primary" onClick={() => navigate("/new/work")}>New Work</Button>
+            <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none'}} onClick={() => navigate("/new/work")}>New Work</Button>
         </div>
 
         <table>
@@ -43,6 +43,9 @@ const AllWorkOrders = () => {
             <tr>
               <th>Title</th>
               <th>Location</th>
+              <th>Service Type</th>
+              <th>Date Requested</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -51,9 +54,11 @@ const AllWorkOrders = () => {
               <tr key={work._id}>
                 <td>{work.title}</td>
                 <td>{work.location}</td>
-                <td>
+                <td>{work.serviceType}</td>
+                <td>{work.date}</td>
+                <td>{work.status}</td>
+                <td className="actions__btn">
                   <Button onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
-                  <Button danger>Delete</Button>
                 </td>
               </tr>
             ))}

@@ -132,6 +132,30 @@
 }
 
 .actions__btn {
-    display: flex;
-    gap: 10px;
+    margin: 0 .3em;
+    padding: .3em 1em;
+    font-size: 1.1em;
+}
+
+table {
+    border-spacing: 0;
+    width: 90%;
+    margin: 30px 0 0 30px;
+}
+
+th {
+    background-color: darkgreen;
+    color: #ddd;
+}
+
+table td, table th {
+    padding: .75em;
+    vertical-align: top;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+table tr:hover {
+    background-color: lightgray;
+    cursor: pointer;
 }
