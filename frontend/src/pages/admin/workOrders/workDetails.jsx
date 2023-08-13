@@ -10,24 +10,23 @@ const WORK_URL = "/hin";
 
 
 const WorkDetails = () => {
-    const [workDetails, setWorkDetails] = useState([]);
+    const [workDetails, setWorkDetails] = useState({});
     const token = useSelector(selectToken);
     const navigate = useNavigate();
     const {id} = useParams();
 
     useEffect(() => {
-        getWorkDetails();
+        const fetchWorkDetails = async () => {
+            const response = await axios.get(`${WORK_URL}/single/work/${id}`, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setWorkDetails(response.data);
+        }
+        fetchWorkDetails();
     }, []);
-
-    const getWorkDetails = async () => {
-        let res = await getSingleWorkOrder({
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }, id);
-        setWorkDetails(res.data);
-    };
 
     console.log(workDetails);
 
@@ -36,14 +35,11 @@ const WorkDetails = () => {
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
            Manage Work Details
         </Typography>
-        {
-            workDetails.map((work) => (
-                <div key={work._id}>
-                    <h2>{work.title}</h2>
-
-                </div>
-            ))
-        }
+        <div>
+            <p>
+                Title: {workDetails.title}
+            </p>
+        </div>
     </Layout>
   )
 }

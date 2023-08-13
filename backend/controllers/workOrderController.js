@@ -80,13 +80,13 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
 const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
-        const workOrder = await WorkOrder.findById(workOrderId);
-        if (!workOrder) {
+        const work = await WorkOrder.findById(workOrderId);
+        if (!work) {
             return next(new ErrorResponse("Work Order not found", 404));
         }
         return res.status(200).json({
             success: true,
-            data: workOrder
+            work
         })
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
