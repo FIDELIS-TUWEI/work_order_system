@@ -23,7 +23,7 @@ export const getAllWorkOrders = async () => {
 };
 
 // Get single work order
-export const getSingleWorkOrder = async () => {
+export const getSingleWorkOrder = async (id) => {
     try {
         const res = await axios.get(`${WORK_URL}/single/work/${id}`);
         const data = res.data;

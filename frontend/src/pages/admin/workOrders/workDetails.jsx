@@ -10,23 +10,29 @@ const WORK_URL = "/hin";
 
 
 const WorkDetails = () => {
-    const [workDetails, setWorkDetails] = useState({});
+    const [workDetails, setWorkDetails] = useState(null);
     const token = useSelector(selectToken);
     const navigate = useNavigate();
     const {id} = useParams();
 
     useEffect(() => {
-        const fetchWorkDetails = async () => {
-            const response = await axios.get(`${WORK_URL}/single/work/${id}`, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setWorkDetails(response.data);
+        if (id) {
+            getSingleWork(id);
         }
-        fetchWorkDetails();
-    }, []);
+    }, [id]);
+
+    // get work details
+    const getSingleWork = async (id) => {
+        const res = await axios.get(`${WORK_URL}/single/work/${id}`, {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (res.data) {
+            setWorkDetails({...res.data});
+        }
+    }
 
     console.log(workDetails);
 
@@ -35,10 +41,10 @@ const WorkDetails = () => {
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
            Manage Work Details
         </Typography>
-        <div key={workDetails._id}>
-            <p>Work Id: {workDetails._id}</p>
+        <div>
+            <p>Work Id: {id}</p>
             <p>
-                Title: {workDetails.title}
+                Title: {workDetails && workDetails.title}
             </p>
         </div>
     </Layout>
