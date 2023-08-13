@@ -32,10 +32,7 @@ const WorkDetails = () => {
 
   return (
     <Layout>
-        <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
-            Work Details
-        </Typography>
-        <Card style={{ margin: '1rem' }}>
+        <Card title="Work Details" style={{ margin: 'auto', width: '300px' }}>
             <p>Work Id: {id}</p>
             <p>
                 Title: {workDetails && workDetails.title}
@@ -45,6 +42,9 @@ const WorkDetails = () => {
             </p>
             <p>
                 Work Service Type: {workDetails && workDetails.serviceType}
+            </p>
+            <p>
+                Category : {workDetails && workDetails.category}
             </p>
             <p>
                 Work Status: {workDetails && workDetails.status}
@@ -57,6 +57,18 @@ const WorkDetails = () => {
             </p>
             <p>
                 Assigned To: {workDetails && workDetails.assignedTo}
+            </p>
+            <p>
+                Date Completed: {workDetails && workDetails.dateCompleted}
+            </p>
+            <p>
+                Reviewed: {workDetails && workDetails.reviewed === true ? "Yes" : "No"}
+            </p>
+            <p>
+                Reviewed By: {workDetails && workDetails.reviewedBy}
+            </p>
+            <p>
+                Date Reviewed: {workDetails && workDetails.dateReviewed}
             </p>
             <Button onClick={() => navigate(-1)}>Back</Button>
         </Card>

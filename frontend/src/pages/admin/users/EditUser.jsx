@@ -105,6 +105,9 @@ const EditUser = () => {
               </Form.Item>
             </Col>
             </Row>
+            <div>
+              <Button type="primary" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+            </div>
             <div className="user_submit">
               <Button type="primary" htmlType="submit">Update</Button>
             </div>

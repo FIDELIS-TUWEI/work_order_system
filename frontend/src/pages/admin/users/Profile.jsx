@@ -14,9 +14,9 @@ const Profile = () => {
 
   return (
     <Layout>
-      <Typography>Manage Profile</Typography>
-      <Card title="Profile">
-        <RxAvatar />
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Manage Profile</Typography>
+      <Card title="Profile" style={{ margin: 'auto', width: '300px' }}>
+        <RxAvatar style={{ fontSize: '3rem' }} />
         <p>
           First Name: {user && user.firstName}
         </p>
