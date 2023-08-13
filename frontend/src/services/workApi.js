@@ -20,4 +20,25 @@ export const getAllWorkOrders = async () => {
     } catch (error) {
         console.log("Error while fetching all work orders", error);
     }
+};
+
+// Get single work order
+export const getSingleWorkOrder = async (id) => {
+    try {
+        const res = await axios.get(`${WORK_URL}/single/work/${id}`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching single work order", error);
+    }
+}
+
+// Edit work order
+export const updateWorkOrder = async (id, values) => {
+    try {
+        const res = await axios.put(`${WORK_URL}/update/work/${id}`, values);
+        return res.data;
+    } catch (error) {
+        console.log("Error while updating work order", error);
+    }
 }

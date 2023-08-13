@@ -29,40 +29,7 @@ const AllWorkOrders = () => {
       setLoading(false);
   }
 
-  // antD table
-  const columns = [
-    {
-      title: "Title",
-      dataIndex: "title",
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-    },
-    {
-      title: "Service Type",
-      dataIndex: "serviceType",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-    },
-    {
-      title: "Date Requested",
-      dataIndex: "date",
-    },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      render: () => {
-        return (
-          <div className="actions__btn">
-            <Button onClick={() => {navigate(`/work/details/${allWork._id}`)}}>View Details</Button>
-          </div>
-        );
-      }
-    }
-  ]
+
     
   return (
     <Layout>
@@ -70,7 +37,28 @@ const AllWorkOrders = () => {
         <div className="add-btn">
             <Button type="primary" onClick={() => navigate("/new/work")}>New Work</Button>
         </div>
-        <Table columns={columns} dataSource={allWork} loading={loading} bordered rowKey={"_id"} scroll={{ x: 1000 }} />
+
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Location</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allWork.map((work) => (
+              <tr key={work._id}>
+                <td>{work.title}</td>
+                <td>{work.location}</td>
+                <td>
+                  <Button onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
+                  <Button danger>Delete</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
     </Layout>
   )
 }
