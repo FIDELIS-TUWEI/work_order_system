@@ -23,7 +23,7 @@ const WorkDetails = () => {
 
     // get work details
     const getSingleWork = async (id) => {
-        const res = await axios.get(`${WORK_URL}/single/work/${id}`, {
+        const res = await getSingleWorkOrder(id, {
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${token}`,

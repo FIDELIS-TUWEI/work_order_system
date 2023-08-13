@@ -25,9 +25,7 @@ export const getAllWorkOrders = async () => {
 // Get single work order
 export const getSingleWorkOrder = async (id) => {
     try {
-        const res = await axios.get(`${WORK_URL}/single/work/${id}`);
-        const data = res.data;
-        return data;
+        return await axios.get(`${WORK_URL}/single/work/${id}`);
     } catch (error) {
         console.log("Error while fetching single work order", error);
     }
