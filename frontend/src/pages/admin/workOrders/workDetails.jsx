@@ -1,7 +1,37 @@
 import { Card, Col, DatePicker, Form, Input, Row, Typography } from "antd"
 import Layout from "../../../components/Layout"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState } from "react";
+import { selectToken } from "../../../utils/redux/slices/authSlice";
+import axios from "axios";
+const WORK_URL = "/hin";
+
 
 const WorkDetails = () => {
+    const dispatch = useDispatch();
+    const [workDetails, setWorkDetails] = useState([]);
+    const token = useSelector(selectToken);
+
+    useEffect(() => {
+        getWorkDetails();
+    }, []);
+
+    const getWorkDetails = async () => {
+        try {
+            const res = await axios.get(`${WORK_URL}/getall/work`, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setWorkDetails(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    console.log(workDetails);
+
   return (
     <Layout>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
