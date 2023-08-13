@@ -22,6 +22,8 @@ import UsersAll from './pages/admin/users/UsersAll';
 import EditUser from './pages/admin/users/EditUser';
 import AllWorkOrders from './pages/admin/workOrders/AllWorkOrders';
 import CreateWorkOrder from './pages/admin/workOrders/CreateWorkOrder';
+import EditWorkOrder from './pages/admin/workOrders/EditWorkOrder';
+import WorkDetails from './pages/admin/workOrders/workDetails';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +33,8 @@ const router = createBrowserRouter(
       <Route path="/private" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
       <Route path="/work/list" element={ <PrivateRoute> <AllWorkOrders /> </PrivateRoute> } />
       <Route path="/new/work" element={ <PrivateRoute> <CreateWorkOrder /> </PrivateRoute> } />
+      <Route path="/work/details/:id" element={ <PrivateRoute> <WorkDetails /> </PrivateRoute> } />
+      <Route path="/edit/work/:id" element={ <PrivateRoute> <EditWorkOrder /> </PrivateRoute> } />
       <Route path="/users/all" element={ <PrivateRoute> <UsersAll/> </PrivateRoute> } />
       <Route path="/users/register" element={ <PrivateRoute> <Register/> </PrivateRoute> } />
       <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />

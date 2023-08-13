@@ -1,7 +1,7 @@
 import { Typography } from "antd"
 import Layout from "../../../components/Layout"
 
-const workDetails = () => {
+const WorkDetails = () => {
   return (
     <Layout>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
@@ -11,4 +11,4 @@ const workDetails = () => {
   )
 }
 
-export default workDetails
+export default WorkDetails

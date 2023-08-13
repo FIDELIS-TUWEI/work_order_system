@@ -57,7 +57,7 @@ const AllWorkOrders = () => {
       render: () => {
         return (
           <div className="actions__btn">
-            <Button>View Details</Button>
+            <Button onClick={() => {navigate(`/work/details/${allWork._id}`)}}>View Details</Button>
           </div>
         );
       }
