@@ -52,8 +52,12 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    dateAssigned: {
+        type: Object,
+        default: ""
+    },
     dateCompleted: {
-        type: String,
+        type: Object,
         default: ""
     },
     comments: {
@@ -69,7 +73,7 @@ const workOrderSchema = new mongoose.Schema({
         default: ""
     },
     dateReviewed: {
-        type: String,
+        type: Object,
         default: ""
     },
     reviewComments: {

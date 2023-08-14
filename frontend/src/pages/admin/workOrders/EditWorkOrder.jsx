@@ -48,8 +48,8 @@ const EditWorkOrder = () => {
                 </Col>
                 <Col xs={24} md={24} lg={8}>
                   <Form.Item
-                    label="Date Completed"
-                    name="dateCompleted"
+                    label="Date Assigned"
+                    name="dateAssigned"
                   >
                     <DatePicker format='YYYY-MM-DD' />
                   </Form.Item>
