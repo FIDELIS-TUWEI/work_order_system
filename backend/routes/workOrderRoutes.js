@@ -5,7 +5,7 @@ const { protect,  restrict} = require('../middleware/authMiddleware');
 
 
 router.post("/create/work", protect, restrict(["admin", "hod", "user", "supervisor", "superadmin"]), createWorkOrder);
-router.get("/getall/work", protect, restrict(["admin", "hod", "supervisor", "superadmin"]), getAllWorkOrders);
+router.get("/getall/work", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer"]), getAllWorkOrders);
 router.get("/work/complete", protect, restrict(["admin", "hod", "supervisor", "superadmin"]), completedWorkOrder)
 router.get("/single/work/:id", protect, restrict(["admin", "supervisor", "superadmin"]), getSingleWorkOrder);
 router.get("/pending/work", protect, restrict(["admin", "hod", "supervisor", "superadmin"]), pendingWorkOrder);

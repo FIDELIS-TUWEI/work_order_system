@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
   }
 
   // Rendering menu list
-  const adminMenu = userInfo?.role === "admin" || userInfo?.role === "superadmin" ? AdminMenu : userInfo?.role === "hod" || userInfo?.role === "supervisor" ? HodMenu : UserMenu;
+  const adminMenu = userInfo?.role === "admin" || userInfo?.role === "superadmin" ? AdminMenu : userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer" ? HodMenu : UserMenu;
 
   return (
     <div className="main">
