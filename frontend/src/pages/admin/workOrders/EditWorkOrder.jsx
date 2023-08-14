@@ -85,7 +85,7 @@ const EditWorkOrder = () => {
                           label="Reviewed By"
                           name="reviewedBy"
                         >
-                          <Input type='text' placeholder='Enter employee name to assign' />
+                          <Input type='text' placeholder='Enter your name' />
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={24} lg={8}>

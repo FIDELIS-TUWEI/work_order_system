@@ -61,7 +61,7 @@ const AllWorkOrders = () => {
                 <td className="actions__btn">
                   <Button style={{ color: 'green', border: 'none'}} onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
                   {
-                    user.role === "admin" || user.role === "superadmin" || user.role === "hod" || user.role === "supervisor" ? 
+                    user.role === "admin" || user.role === "superadmin" || user.role === "hod" || user.role === "supervisor" || user.role === "reviewer" ? 
                       <Button style={{ color: 'red', border: 'none'}} 
                         onClick={() => navigate(`/edit/work/${work._id}`)}
                       >
