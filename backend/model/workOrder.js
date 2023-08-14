@@ -35,12 +35,8 @@ const workOrderSchema = new mongoose.Schema({
         // Pending, Complete, Inspected
         type: String,
         required: true,
-        enum: ["Pending", "In_Progress" ,"Complete", "Inspected"],
+        enum: ["Pending", "In_Progress" ,"Complete", "Reviewed"],
         default: "Pending"
-    },
-    completedWork: {
-        type: Array,
-        default: []
     },
     date: {
         // Format YYYY-MM-DD
@@ -60,6 +56,10 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    comments: {
+        type: String,
+        default: ""
+    },
     reviewed: {
         type: Boolean,
         default: false
@@ -71,7 +71,15 @@ const workOrderSchema = new mongoose.Schema({
     dateReviewed: {
         type: String,
         default: ""
-    }
+    },
+    reviewComments: {
+        type: String,
+        default: ""
+    },
+    completedWork: {
+        type: Array,
+        default: []
+    },
 },
 
 { 
