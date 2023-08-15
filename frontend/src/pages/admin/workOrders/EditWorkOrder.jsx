@@ -43,51 +43,91 @@ const EditWorkOrder = () => {
             Edit Work Order
         </Typography>
         <Form onFinish={onFinishHandler} layout='vertical' style={{ margin: '18px' }}>
-            <Typography style={{ fontSize: '1rem', fontWeight: '500', marginBottom: '10px', textAlign: 'center' }}>Work Details: </Typography>
             <Typography style={{ fontSize: '1rem', fontWeight: '500', textDecoration: 'underline', marginBottom: '10px' }}>
               Task Title: {workDetails && workDetails.title}
             </Typography>
+            
+            {
+              user && user.role === 'admin' || user && user.role === 'hod' || user && user.role === 'superadmin' || user && user.role === 'supervisor' ? (
+                <></>
+              ) : (
+                <></>
+              )
+            }
             <Row gutter={20}>
-                <Col xs={24} md={24} lg={8}>
-                  <Form.Item
-                    label="Assigned To"
-                    name="assignedTo"
-                  >
-                    <Input type='text' placeholder='Enter employee name to assign' />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8}>
-                  <Form.Item
-                    label="Status"
-                    name="status"
-                  >
-                    <Select 
-                      placeholder='Select Status'
-                      allowClear
-                      style={{ width: '100%' }}
-                      options={[
-                        { value: 'Pending', label: 'Pending' }, { value: 'In_Progress', label: 'In Progress' }, 
-                        { value: 'Complete', label: 'Complete' }, { value: 'Reviewed', label: 'Reviewed' }
-                      ]}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8}>
-                  <Form.Item
-                    label="Date Assigned"
-                    name="dateAssigned"
-                  >
-                    <DatePicker format='YYYY-MM-DD' />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} md={24} lg={8}>
-                  <Form.Item
-                    label="Comments"
-                    name="comments"
-                  >
-                    <Input type='text' placeholder='Enter comments' />
-                  </Form.Item>
-                </Col>
+            {
+              workDetails && workDetails.status === 'Pending' ? (
+                <>
+                  <Col xs={24} md={24} lg={8}>
+                    <Form.Item
+                      label="Assigned To"
+                      name="assignedTo"
+                    >
+                      <Input type='text' placeholder='Enter employee name to assign' />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={24} lg={8}>
+                    <Form.Item
+                      label="Status"
+                      name="status"
+                    >
+                      <Select 
+                        placeholder='Select Status'
+                        allowClear
+                        style={{ width: '100%' }}
+                        options={[
+                          { value: 'Pending', label: 'Pending' }, { value: 'In_Progress', label: 'In Progress' }, 
+                          { value: 'Complete', label: 'Complete' }, { value: 'Reviewed', label: 'Reviewed' }
+                        ]}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={24} lg={8}>
+                    <Form.Item
+                      label="Date Assigned"
+                      name="dateAssigned"
+                    >
+                      <DatePicker format='YYYY-MM-DD' />
+                    </Form.Item>
+                  </Col>
+                </>
+              ) : workDetails && workDetails.status === 'In_Progress' ? (
+                <>
+                  <Col xs={24} md={24} lg={8}>
+                      <Form.Item
+                        label="Status"
+                        name="status"
+                      >
+                        <Select 
+                          placeholder='Select Status'
+                          allowClear
+                          style={{ width: '100%' }}
+                          options={[
+                            { value: 'Pending', label: 'Pending' }, { value: 'In_Progress', label: 'In Progress' }, 
+                            { value: 'Complete', label: 'Complete' }, { value: 'Reviewed', label: 'Reviewed' }
+                          ]}
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={24} lg={8}>
+                      <Form.Item
+                        label="Comments"
+                        name="comments"
+                      >
+                        <Input type='text' placeholder='Enter comments' />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={24} lg={8}>
+                      <Form.Item
+                        label="Date Completed"
+                        name="dateCompleted"
+                      >
+                        <DatePicker format='YYYY-MM-DD' />
+                      </Form.Item>
+                    </Col>
+                </>
+              ) : (
+                <>
                 {
                   user && user.role === 'admin' || user && user.role === 'reviewer' ? (
                     <>
@@ -132,6 +172,12 @@ const EditWorkOrder = () => {
                       </Col>
                     </>
                   ) : ''}
+                </>
+              )
+            }
+                
+                
+                
             </Row>
             <div>
               <Button type="primary" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>

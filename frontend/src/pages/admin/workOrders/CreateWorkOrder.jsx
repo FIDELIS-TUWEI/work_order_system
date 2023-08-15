@@ -77,6 +77,7 @@ const CreateWorkOrder = () => {
                   { value: 'Electrical', label: 'Electrical' }, { value: 'Plumbing', label: 'Plumbing' },
                   { value: 'HVAC', label: 'HVAC' }, { value: 'Painting', label: 'Painting' },
                   { value: 'Door Lock', label: 'Door Lock' }, { value: 'Room-safe', label: 'Room-Safe' },
+                  { value: 'IT', label: 'IT' }, { value: 'Other', label: 'Other' }
                 ]} 
               />
             </Form.Item>  
