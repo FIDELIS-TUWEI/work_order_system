@@ -4,8 +4,7 @@ const WORK_URL = "/hin";
 // create new work
 export const createWorkOrder = async (values) => {
     try {
-        const res = await axios.post(`${WORK_URL}/create/work`, values);
-        console.log(res);
+        return await axios.post(`${WORK_URL}/create/work`, values);
     } catch (error) {
         console.log("Error while creating work", error);
     }
