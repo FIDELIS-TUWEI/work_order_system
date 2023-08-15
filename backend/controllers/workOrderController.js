@@ -11,7 +11,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
     if (!user) {
         return next(new ErrorResponse("User not found", 404));
     }
-    const { priority, title, location, serviceType, category, date, time } = req.body;
+    const { priority, title, location, serviceType, category } = req.body;
 
     try {
         //const user = await User.findById(req.params.id);
@@ -22,8 +22,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             location,
             serviceType,
             category,
-            date,
-            time
         });
 
         const savedWorkorder = await newWorkOrder.save();

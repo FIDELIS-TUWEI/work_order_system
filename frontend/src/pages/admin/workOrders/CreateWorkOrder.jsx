@@ -99,22 +99,6 @@ const CreateWorkOrder = () => {
                 />
             </Form.Item>
           </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item 
-                name="date" 
-                label="Date" 
-                required rules={[{ required: true, message: 'Please Select a date!' }]}>
-              <DatePicker format={'YYYY-MM-DD'} />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item 
-                name="time" 
-                label="Time" 
-                required rules={[{ required: true, message: 'Please Select time!' }]}>
-              <TimePicker format={'HH:mm:ss'} />
-            </Form.Item>
-          </Col>
         </Row>
         <div className="user_submit">
           <Button type="primary" htmlType="submit">Submit</Button>
