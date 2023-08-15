@@ -73,7 +73,32 @@ const getUsers = async () => {
       <div className="add-btn">
         <Button type="primary" onClick={() => navigate("/users/register")}>Add User</Button>
       </div>
-      <Table columns={columns} dataSource={allUsers} loading={loading} bordered rowKey={"_id"} />
+      
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allUsers.map((user) => (
+            <tr key={user._id}>
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
+              <td>{user.username}</td>
+              <td>{user.role}</td>
+              <td className="actions__btn">
+                <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
+                <Button danger>Delete</Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Layout>
   )
 }
