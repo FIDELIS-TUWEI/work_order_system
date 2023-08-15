@@ -24,7 +24,10 @@ const EditWorkOrder = () => {
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={8}>
-                  <Form.Item>
+                  <Form.Item
+                    label="Status"
+                    name="status"
+                  >
                     <Select 
                       placeholder='Select Status'
                       allowClear
