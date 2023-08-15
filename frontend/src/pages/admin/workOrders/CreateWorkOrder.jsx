@@ -1,13 +1,21 @@
-import { Button, Col, DatePicker, Form, Input, Row, Select, TimePicker, Typography } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row, Select, TimePicker, Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useState } from 'react'
+import { createWorkOrder } from '../../../services/workApi'
+import { useNavigate } from 'react-router-dom'
+import LoadingBox from '../../../components/LoadingBox'
 
 const CreateWorkOrder = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // function to handle form submit
   const onFinishHandler = async (values) => {
-    console.log(values);
+    setLoading(true);
+    await createWorkOrder(values);
+    navigate('/work/list');
+    message.success('Work Order Created Successfully');
+    setLoading(false);
   }
 
   return (
@@ -72,6 +80,23 @@ const CreateWorkOrder = () => {
                 ]} 
               />
             </Form.Item>  
+          </Col>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item
+              name="priority"
+              label="Priority"
+              required
+              rules={[{ required: true, message: 'Please Select a priority!' }]} 
+            >
+              <Select 
+                  placeholder='Select Priority'
+                  allowClear
+                  style={{ width: '100%' }}
+                  options={[
+                    { value: 'High', label: 'High' }, { value: 'Medium', label: 'Medium' }, { value: 'Low', label: 'Low' }
+                  ]}
+                />
+            </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item 
