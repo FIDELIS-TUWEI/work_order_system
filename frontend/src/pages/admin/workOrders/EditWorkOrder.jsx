@@ -1,17 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../../components/Layout'
-import { Button, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd'
+import { Button, Col, DatePicker, Form, Input, Row, Select, Typography, message } from 'antd'
 import { useSelector } from 'react-redux'
-import { selectUserInfo } from '../../../utils/redux/slices/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getSingleWorkOrder, updateWorkOrder } from '../../../services/workApi'
 
 const EditWorkOrder = () => {
   const user = useSelector(selectUserInfo);
+  const token = useSelector(selectToken);
+  const [workDetails, setWorkDetails] = useState([]);
   const navigate = useNavigate();
+  const {id} = useParams();
+
+  useEffect(() => {
+    if (id) {
+      getWorkOrderDetails(id);
+    }
+  }, [id]);
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
-    console.log(values);
+    await updateWorkOrder(id, values);
+    navigate('/work/list');
+    message.success('Work Order Updated Successfully');
+  }
+
+  // Function to get work order details
+  const getWorkOrderDetails = async (id) => {
+    const res = await getSingleWorkOrder(id, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setWorkDetails({...res.data});
   }
   
   return (
@@ -21,6 +44,9 @@ const EditWorkOrder = () => {
         </Typography>
         <Form onFinish={onFinishHandler} layout='vertical' style={{ margin: '18px' }}>
             <Typography style={{ fontSize: '1rem', fontWeight: '500', marginBottom: '10px', textAlign: 'center' }}>Work Details: </Typography>
+            <Typography style={{ fontSize: '1rem', fontWeight: '500', textDecoration: 'underline', marginBottom: '10px' }}>
+              Task Title: {workDetails && workDetails.title}
+            </Typography>
             <Row gutter={20}>
                 <Col xs={24} md={24} lg={8}>
                   <Form.Item
