@@ -24,9 +24,10 @@ export const getUserInfo = async (id) => {
 }
 
 // Get user by id and edit
-export const editUser = async (id, user) => {
+export const editUser = async (id, values) => {
     try {
-        return await axios.put(`${USERS_URL}/edit/${id}`, user);
+        const res = await axios.put(`${USERS_URL}/edit/${id}`, values);
+        return res.data;
     } catch (error) {
         console.error("Error while Updating user", error);
     }
