@@ -59,7 +59,7 @@ const getUsers = async () => {
               <td>{user.role}</td>
               <td className="actions__btn">
                 <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
-                <Button danger>Delete</Button>
+                <Button danger>View Details</Button>
               </td>
             </tr>
           ))}
