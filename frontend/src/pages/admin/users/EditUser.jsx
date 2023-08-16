@@ -37,10 +37,9 @@ const EditUser = () => {
 
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>User Details</Typography>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
       {user &&  ( 
-        <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: "18px"}} initialValues={user}>
-          <Typography style={{ fontSize: '1rem', fontWeight: '500', marginBottom: '10px' }}>Edit User Details: </Typography>
+        <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: "18px"}}>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={8}>
               <Form.Item 
