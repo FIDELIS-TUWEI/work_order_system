@@ -16,6 +16,7 @@ import Profile from '../pages/admin/users/Profile';
 import EditUser from '../pages/admin/users/EditUser';
 import UsersAll from '../pages/admin/users/UsersAll';
 import Register from '../pages/admin/users/Register';
+import UserDetails from "../pages/admin/users/UserDetails";
 
 
 
@@ -34,6 +35,7 @@ export const router = createBrowserRouter(
         <Route path="/users/register" element={ <PrivateRoute> <Register/> </PrivateRoute> } />
         <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
         <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
+        <Route path="/user/details/:id" element={ <PrivateRoute> <UserDetails /> </PrivateRoute> } />
         <Route path="/edit/user/:id" element={ <PrivateRoute> <EditUser /> </PrivateRoute> } />
         <Route path="*" element={<NotFound />} />
       </Route>
