@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserInfo } from "../../../services/usersApi";
+import { editUser, getUserInfo } from "../../../services/usersApi";
 import { useEffect, useState } from "react";
 const USERS_URL = "/hin";
 
@@ -26,22 +26,17 @@ const EditUser = () => {
 
   // function to handle form submit
   const onFinishHandler = async (values) => {
-    try {
-      const res = await axios.put(`${USERS_URL}/edit/${user._id}`,{
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }, values);
-      if (res.data) {
-        message.success("User details updated successfully");
-        navigate('/users/all');
-      } else {
-        message.error("Error while updating user details");
+    const res = await editUser(id, values, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-      console.log(res);
-    } catch (error) {
-      message.error("Error while updating user details");
+    });
+    if (res) {
+      message.success("User Updated Successfully");
+      navigate("/users/all");
+    } else {
+      message.error("User Update Failed");
     }
   };
 
