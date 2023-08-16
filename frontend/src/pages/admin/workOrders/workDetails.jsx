@@ -50,7 +50,7 @@ const WorkDetails = () => {
                 Work Status: {workDetails && workDetails.status}
             </p>
             <p>
-                Requested Date: {workDetails && workDetails.date}
+                Requested Date: {workDetails && workDetails.Date_Created}
             </p>
             <p>
                 Work Requested Time: {workDetails && workDetails.time}

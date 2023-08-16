@@ -56,7 +56,7 @@ const AllWorkOrders = () => {
                 <td>{work.title}</td>
                 <td>{work.location}</td>
                 <td>{work.serviceType}</td>
-                <td>{work.date}</td>
+                <td>{work.Date_Created}</td>
                 <td>{work.status}</td>
                 <td className="actions__btn">
                   <Button style={{ color: 'green', border: 'none'}} onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
