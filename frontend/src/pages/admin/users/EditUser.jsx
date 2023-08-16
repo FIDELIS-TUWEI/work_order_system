@@ -3,15 +3,25 @@ import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserInfo } from "../../../services/usersApi";
+import { useEffect, useState } from "react";
 const USERS_URL = "/hin";
 
 
 const EditUser = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
+  const [userDetails, setUserDetails] = useState([]);
   const navigate = useNavigate();
+  const {id} = useParams();
 
+
+  useEffect(() => {
+    if (id) {
+      getUserDetails(id);
+    }
+  }, [id]);
 
 
   // function to handle form submit
@@ -33,38 +43,41 @@ const EditUser = () => {
     } catch (error) {
       message.error("Error while updating user details");
     }
+  };
+
+  // Function to get single user details
+  const getUserDetails = async (id) => {
+    const res = await getUserInfo(id, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setUserDetails({...res.data});
   }
 
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
-      {user &&  ( 
+      <Typography>
+        Username: {userDetails && userDetails.username}
+      </Typography>
         <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: "18px"}}>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={8}>
               <Form.Item 
                 name="firstName" 
-                label="First Name" 
-                required rules={[{ required: true, message: 'Please Enter First Name!' }]}>
-                <Input type='text' placeholder="Enter First Name" />
+                label="First Name"
+              > 
+                <Input type='text' placeholder={userDetails && userDetails.firstName} />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
               <Form.Item 
                 name="lastName" 
                 label="Last Name" 
-                required rules={[{ required: true, message: 'Please Enter Last Name!' }]}>
-                <Input type='text' placeholder="Enter Last Name" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item
-                name="username"
-                label="Userame"
-                required
-                rules={[{ required: true, message: 'Please Enter a username!' }]}
               >
-                <Input type='text' placeholder='Enter Username' />
+                <Input type='text' placeholder={userDetails && userDetails.lastName} />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
@@ -99,7 +112,14 @@ const EditUser = () => {
                   name="status" 
                   label="Status" 
                   required rules={[{ required: true, message: 'Please Enter a status!' }]}>
-                <Input type='text' placeholder='Enter Status' />
+                <Select
+                  placeholder="Select Status"
+                  allowClear
+                  style={{ width: '100%' }}
+                  options={[
+                    { value: true, label: 'Active' }, { value: false, label: 'Inactive' }, 
+                  ]}
+                />
               </Form.Item>
             </Col>
             </Row>
@@ -110,7 +130,6 @@ const EditUser = () => {
               <Button type="primary" htmlType="submit">Update</Button>
             </div>
         </Form>
-      )}
     </Layout>
   )
 }

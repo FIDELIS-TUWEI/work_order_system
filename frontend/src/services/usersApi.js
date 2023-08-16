@@ -15,7 +15,9 @@ export const getAllUsers = async () => {
 // Get user profile by id
 export const getUserInfo = async (id) => {
     try {
-        return await axios.get(`${USERS_URL}/user/${id}`)
+        const res = await axios.get(`${USERS_URL}/user/${id}`);
+        const data = res.data;
+        return data;
     } catch (error) {
         console.error("Error while fetching single user", error);
     }
