@@ -3,6 +3,7 @@ const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const nodemailer = require("nodemailer");
+const { PASS, USER } = require("../utils/env");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -20,8 +21,8 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: process.env.USER,
-                pass: process.env.PASS,
+                user: USER,
+                pass: PASS,
             },
         });
 
@@ -29,7 +30,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         async function sendMail(savedWorkorder) {
             try {
                 const mailOptions = {
-                    from: `holidayinn.workorder@gmail.com`,
+                    from: `workorder.holidayinnnairobi@gmail.com`,
                     to: `fidel.tuwei@holidayinnnairobi.com`,
                     subject: "New Work Order created",
                     html: `
@@ -61,7 +62,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         });
 
         const savedWorkorder = await newWorkOrder.save();
-
+        sendMail(savedWorkorder);
         // push savedWorkOrder to the user's workOrders array
         await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id } });
         
@@ -71,7 +72,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                 savedWorkorder
             }
         });
-        sendMail(savedWorkorder);
     } catch (error) {
         next(error);
     }
