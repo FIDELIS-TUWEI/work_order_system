@@ -2,6 +2,7 @@ const WorkOrder = require("../model/workOrder");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
+const nodemailer = require("nodemailer");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -14,6 +15,41 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
     const { priority, title, location, serviceType, category } = req.body;
 
     try {
+        // send email notification to cheif engineer
+        // Configure gmail smtp
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.USER,
+                pass: process.env.PASS,
+            },
+        });
+
+        // Function to send Email
+        async function sendMail(savedWorkorder) {
+            try {
+                const mailOptions = {
+                    from: `holidayinn.workorder@gmail.com`,
+                    to: `fidel.tuwei@holidayinnnairobi.com`,
+                    subject: "New Work Order created",
+                    html: `
+                        <h2>A new Work Order was created:</h2>\n\n
+                        <hr>\n
+                            <h3>${savedWorkorder.title}</h3>\n
+                            <p>${savedWorkorder.location}</p>\n
+                            <p>${savedWorkorder.priority}</p>\n
+                            <p>${savedWorkorder.category}</p>\n
+                            <p>${savedWorkorder.serviceType}</p>\n
+                    `,
+                };
+                const info = await transporter.sendMail(mailOptions);
+                console.log("Email sent: " + info.response);
+            } catch (error) {
+                console.log("Error sending email:", error);
+            }
+            
+        }
+
         //const user = await User.findById(req.params.id);
         const newWorkOrder = await WorkOrder({
             //requestedBy: userId,
@@ -34,7 +70,8 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             data: {
                 savedWorkorder
             }
-        })
+        });
+        sendMail(savedWorkorder);
     } catch (error) {
         next(error);
     }
