@@ -36,11 +36,11 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                     html: `
                         <h2>A new Work Order was created</h2>\n\n
                         <hr>\n
-                            <p>${savedWorkorder.title}</p>\n
-                            <p>${savedWorkorder.location}</p>\n
-                            <p>${savedWorkorder.priority}</p>\n
-                            <p>${savedWorkorder.category}</p>\n
-                            <p>${savedWorkorder.serviceType}</p>\n
+                            <p>Work Title: ${savedWorkorder.title}</p>\n
+                            <p>Work Location: ${savedWorkorder.location}</p>\n
+                            <p>Priority: ${savedWorkorder.priority}</p>\n
+                            <p>Category: ${savedWorkorder.category}</p>\n
+                            <p>Service Type: ${savedWorkorder.serviceType}</p>\n
                     `,
                 };
                 const info = await transporter.sendMail(mailOptions);
