@@ -94,12 +94,15 @@ const CreateWorkOrder = () => {
                   allowClear
                   style={{ width: '100%' }}
                   options={[
-                    { value: 'High', label: 'High' }, { value: 'Medium', label: 'Medium' }, { value: 'Low', label: 'Low' }
+                    { value: 'Normal', label: 'Normal' }, { value: 'Urgent', label: 'Urgent' }
                   ]}
                 />
             </Form.Item>
           </Col>
         </Row>
+        <div>
+          <Button type="primary" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+        </div>
         <div className="user_submit">
           <Button type="primary" htmlType="submit">Submit</Button>
         </div>
