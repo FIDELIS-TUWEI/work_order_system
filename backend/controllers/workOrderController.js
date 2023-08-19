@@ -34,13 +34,15 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                     to: `fidel.tuwei@holidayinnnairobi.com`,
                     subject: "New Work Order created",
                     html: `
-                        <h2>A new Work Order was created</h2>\n\n
+                        <h2>A New Work Order was Created</h2>\n\n
                         <hr>\n
+                            <h3>Work Order Details:</h3>\n
                             <p>Work Title: ${savedWorkorder.title}</p>\n
                             <p>Work Location: ${savedWorkorder.location}</p>\n
                             <p>Priority: ${savedWorkorder.priority}</p>\n
                             <p>Category: ${savedWorkorder.category}</p>\n
                             <p>Service Type: ${savedWorkorder.serviceType}</p>\n
+                            <p>Date: ${savedWorkorder.Date_Created}</p>\n
                     `,
                 };
                 const info = await transporter.sendMail(mailOptions);
