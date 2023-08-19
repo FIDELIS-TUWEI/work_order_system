@@ -34,9 +34,9 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                     to: `fidel.tuwei@holidayinnnairobi.com`,
                     subject: "New Work Order created",
                     html: `
-                        <h2>A new Work Order was created:</h2>\n\n
+                        <h2>A new Work Order was created</h2>\n\n
                         <hr>\n
-                            <h3>${savedWorkorder.title}</h3>\n
+                            <p>${savedWorkorder.title}</p>\n
                             <p>${savedWorkorder.location}</p>\n
                             <p>${savedWorkorder.priority}</p>\n
                             <p>${savedWorkorder.category}</p>\n
