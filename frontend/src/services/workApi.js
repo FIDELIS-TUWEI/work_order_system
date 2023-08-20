@@ -40,4 +40,15 @@ export const updateWorkOrder = async (id, values) => {
     } catch (error) {
         console.log("Error while updating work order", error);
     }
+};
+
+// Get Work Locations
+export const getWorkLocations = async () => {
+    try {
+        const res = await axios.get(`${WORK_URL}/all-locations`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching work locations", error);
+    }
 }

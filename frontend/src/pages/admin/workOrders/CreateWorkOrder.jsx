@@ -1,12 +1,19 @@
-import { Button, Col, DatePicker, Form, Input, Row, Select, TimePicker, Typography, message } from 'antd'
+import { 
+  Button, Col, Form, Input, 
+  Row, Select, Typography, message 
+} from 'antd'
 import Layout from '../../../components/Layout'
-import { useState } from 'react'
-import { createWorkOrder } from '../../../services/workApi'
+import { useEffect, useState } from 'react'
+import { createWorkOrder, getWorkLocations } from '../../../services/workApi'
 import { useNavigate } from 'react-router-dom'
 import LoadingBox from '../../../components/LoadingBox'
+import { useSelector } from 'react-redux'
+import { selectToken } from '../../../utils/redux/slices/authSlice'
 
 const CreateWorkOrder = () => {
+  const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState([]);
   const navigate = useNavigate();
 
   // function to handle form submit
@@ -16,7 +23,24 @@ const CreateWorkOrder = () => {
     navigate('/work/list');
     message.success('Work Order Created Successfully');
     setLoading(false);
-  }
+  };
+
+  // Function to get all work Locations from Services Api
+  const workLocation = async () => {
+    const response = await getWorkLocations({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setLocation(response.data)
+  };
+
+  console.log(location)
+
+  useEffect(() => {
+    workLocation();
+  }, []);
 
   return (
     <Layout>
@@ -38,13 +62,10 @@ const CreateWorkOrder = () => {
                 label="Work Location" 
                 required rules={[{ required: true, message: 'Please Select Work Location!' }]}>
               <Select 
-                placeholder='Select Work Location' 
+                placeholder='Select Work Location'
                 allowClear
                 style={{ width: '100%' }}
-                options={[
-                  { value: 'Room', label: 'Room' }, { value: 'Back-office', label: 'Back-Office' },
-                  { value: 'Admin-Office', label: 'Admin-Office' }, { value: 'Pool-area', label: 'Pool-Area' }
-                ]}
+                options={location}
               />
             </Form.Item>
           </Col>
