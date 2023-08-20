@@ -1,7 +1,10 @@
+import Layout from "../../../components/Layout";
 
 const Reports = () => {
   return (
-    <div>Reports</div>
+    <Layout>
+      <h1>Reports</h1>
+    </Layout>
   )
 }
 
