@@ -18,7 +18,9 @@ function App() {
   return (
     <>
       { loading ? (
-        <LoadingBox loading={loading} />
+        <div className="spinner">
+          <LoadingBox loading={loading} />
+        </div>
       ) : (
           <div className="App">
             <Outlet />
