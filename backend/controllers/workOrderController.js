@@ -122,35 +122,6 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Work Order not found", 404));
         }
 
-        // Create PDF document
-        const doc = new PDFDocument();
-
-        // Set response headers
-        res.setHeader("Content-Type", "application/pdf");
-        res.setHeader("Content-Disposition", `inline; filename=${work.title}_report.pdf`);
-        //res.setHeader("Content-Disposition", "attachment; filename=workorder.pdf"); // to download
-
-        doc.pipe(res);
-
-        // Add content to the pdf
-        doc.text(`Work Order: ${work.title}`, 20, 20, { underline: true });
-        doc.text(`Work Location: ${work.location}`, 20, 30);
-        doc.text(`Priority: ${work.priority}`, 20, 40);
-        doc.text(`Category: ${work.category}`, 20, 50);
-        doc.text(`Service Type: ${work.serviceType}`, 20, 60);
-        doc.text(`Date Requested: ${work.Date_Created}`, 20, 70);
-        doc.text(`Work Status: ${work.status}`, 20, 80);
-        doc.text(`Assigned To: ${work.assignedTo}`, 20, 90);
-        doc.text(`Date Completed: ${work.dateCompleted}`, 20, 100);
-        doc.text(`Comments: ${work.comments}`, 20, 110);
-        doc.text(`Reviewed: ${work.reviewed === true ? "Yes" : "No"}`, 20, 110);
-        doc.text(`Reviewed By: ${work.reviewedBy}`, 20, 120);
-        doc.text(`Reviewed Date: ${work.dateReviewed}`, 20, 130);
-        doc.text(`Review Comments: ${work.reviewComments}`, 20, 140);
-
-        // End the document
-        doc.end();
-
         return res.status(200).json({
             success: true,
             data: work
