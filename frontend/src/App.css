@@ -64,7 +64,18 @@
     height: 10vh;
     margin-bottom: 20px;
     box-shadow: 0 0  2px gray;
-    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    background-color: darkgreen;
+    color: #fff;
+}
+
+.header-title {
+    font-size: 1.2rem;
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .header-content {
@@ -82,7 +93,7 @@
 
 .header-content a {
     text-decoration: none;
-    color: black;
+    color: #fff;
     margin: 0 5px;
 }
 

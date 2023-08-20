@@ -59,6 +59,9 @@ const Layout = ({ children }) => {
         </div>
         <div className="content">
           <div className="header">
+            <div className="header-title">
+              <h4>Work Order Management System</h4>
+            </div>
             <div className="header-content">
               <i><CgProfile/></i>
               <Link to="/profile">{userInfo?.firstName}, {userInfo?.lastName}</Link>
