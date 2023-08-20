@@ -10,10 +10,13 @@ import LoadingBox from '../../../components/LoadingBox'
 import { useSelector } from 'react-redux'
 import { selectToken } from '../../../utils/redux/slices/authSlice'
 
+const { Option } = Select;
+
 const CreateWorkOrder = () => {
   const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const navigate = useNavigate();
 
   // function to handle form submit
@@ -26,6 +29,11 @@ const CreateWorkOrder = () => {
   };
 
   // Function to get all work Locations from Services Api
+  const handleLocationChange = (value) => {
+    setSelectedLocation(value);
+  }
+
+  // Function to get all work Locations from Services Api
   const workLocation = async () => {
     const response = await getWorkLocations({
       withCredentials: true,
@@ -35,8 +43,6 @@ const CreateWorkOrder = () => {
     });
     setLocation(response.data)
   };
-
-  console.log(location)
 
   useEffect(() => {
     workLocation();
@@ -63,10 +69,15 @@ const CreateWorkOrder = () => {
                 required rules={[{ required: true, message: 'Please Select Work Location!' }]}>
               <Select 
                 placeholder='Select Work Location'
+                onChange={handleLocationChange}
+                value={selectedLocation}
                 allowClear
                 style={{ width: '100%' }}
-                options={location}
-              />
+              >
+                {location.map((location) => (
+                  <Option key={location._id} value={location._id}>{location.locationTitle}</Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
