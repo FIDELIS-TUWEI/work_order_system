@@ -4,6 +4,7 @@ import {MdOutlineWork} from 'react-icons/md';
 import {SiGoogleanalytics} from 'react-icons/si';
 import {FaUserPlus} from 'react-icons/fa';
 import {PiUserCircleGearFill} from 'react-icons/pi';
+import {TbReport} from 'react-icons/tb';
 
 export const AdminMenu = [
     
@@ -31,6 +32,11 @@ export const AdminMenu = [
         name: "Analytics",
         path: "/work/analytics",
         icon: <SiGoogleanalytics/>
+    },
+    {
+        name: "Reports",
+        path: "/work/reports",
+        icon: <TbReport />
     },
     {
         name: "Profile",
@@ -74,6 +80,11 @@ export const HodMenu = [
         name: "Analytics",
         path: "/work/analytics",
         icon: <SiGoogleanalytics/>
+    },
+    {
+        name: "Reports",
+        path: "/work/reports",
+        icon: <TbReport />
     },
     {
         name: "Profile",
