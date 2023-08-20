@@ -17,18 +17,16 @@ function App() {
 
   return (
     <>
-    { loading ? (
-      <LoadingBox loading={loading} />
-    ) : (
-      
-  
-        <div className="App">
-          <Outlet />
-        </div>
+      { loading ? (
+        <LoadingBox loading={loading} />
+      ) : (
+          <div className="App">
+            <Outlet />
+          </div>
 
-    )}
+      )}
     </>
-  );
+  )
 }
 
 
