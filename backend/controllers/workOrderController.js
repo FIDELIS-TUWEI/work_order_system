@@ -58,7 +58,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             //requestedBy: userId,
             priority,
             title,
-            location,
+            location: workLocation._id,
             serviceType,
             category,
         });
