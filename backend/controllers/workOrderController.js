@@ -1,4 +1,5 @@
 const WorkOrder = require("../model/workOrder");
+const Location = require("../model/location");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
@@ -13,7 +14,11 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
     if (!user) {
         return next(new ErrorResponse("User not found", 404));
     }
+
+    const workLocation = await Location.find({}).populate("locationTitle");
+
     const { priority, title, location, serviceType, category } = req.body;
+
 
     try {
         // send email notification to cheif engineer
@@ -58,7 +63,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             //requestedBy: userId,
             priority,
             title,
-            location,
+            location: workLocation,
             serviceType,
             category,
         });
