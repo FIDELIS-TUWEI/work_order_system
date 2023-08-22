@@ -27,6 +27,7 @@ const AllWorkOrders = () => {
               Authorization: `Bearer ${token}`
           }
       });
+      const { page, pages } = response.data
       setAllWork(response.data);
       setLoading(false);
   }
