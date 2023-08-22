@@ -55,7 +55,7 @@ const AllWorkOrders = () => {
             {allWork.map((work) => (
               <tr key={work._id}>
                 <td>{work.title}</td>
-                <td>{work.location}</td>
+                <td>{work.location && work.location.locationTitle}</td>
                 <td>{work.serviceType}</td>
                 <td>{work.Date_Created}</td>
                 <td>{work.status}</td>

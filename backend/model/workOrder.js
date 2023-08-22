@@ -18,7 +18,8 @@ const workOrderSchema = new mongoose.Schema({
     },
     location: {
         // Rooms, Open place, Back office, Admin office
-        type: String,
+        type: ObjectId,
+        ref: "Location",
         required: true
     },
     serviceType: {
