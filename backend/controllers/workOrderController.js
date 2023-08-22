@@ -104,11 +104,20 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (async (req, res, next) => {
+    // Enable Pagination
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await WorkOrder.find({}).estimatedDocumentCount();
     try {
-        const workOrders = await WorkOrder.find({}).populate();
+        const workOrders = await WorkOrder.find({}).populate().sort({ Date_Created: -1 }).select("-completedWork")
+            .skip(pageSize * (page -1))
+            .limit(pageSize);
         return res.status(200).json({
             success: true,
-            data: workOrders
+            data: workOrders,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
         })
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
