@@ -12,6 +12,7 @@ const AllWorkOrders = () => {
   const [allWork, setAllWork] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
