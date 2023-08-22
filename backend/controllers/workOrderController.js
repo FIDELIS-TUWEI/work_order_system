@@ -40,11 +40,11 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                         <hr>\n
                             <h3>Work Order Details</h3>\n
                             <p>Work Title: ${savedWorkorder.title}</p>\n
-                            <p>Work Location: ${savedWorkorder.location}</p>\n
                             <p>Priority: ${savedWorkorder.priority}</p>\n
                             <p>Category: ${savedWorkorder.category}</p>\n
                             <p>Service Type: ${savedWorkorder.serviceType}</p>\n
                             <p>Date: ${savedWorkorder.Date_Created}</p>\n
+                            <p>Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details</p>\n
                     `,
                 };
                 const info = await transporter.sendMail(mailOptions);
