@@ -12,25 +12,30 @@ const AllWorkOrders = () => {
   const [allWork, setAllWork] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllWork();
-  }, []);
+  }, [currentPage]);
 
   // Function to get all work orders from Api
   const getAllWork = async () => {
       setLoading(true);
-      let response = await getAllWorkOrders({
+      const { data, page, pages } = await getAllWorkOrders(currentPage, {
           withCredentials: true,
           headers: {
               Authorization: `Bearer ${token}`
           }
       });
-      const { page, pages } = response.data
-      setAllWork(response.data);
+      setAllWork(data);
+      setTotalPages(pages);
       setLoading(false);
+  }
+
+  // function to handle page change
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   }
 
 
@@ -77,6 +82,11 @@ const AllWorkOrders = () => {
             ))}
           </tbody>
         </table>
+        <div>
+          {Array.from({length: totalPages}, (_, index) => index + 1).map((page) => (
+            <Button key={page} onClick={() => handlePageChange(page)} disabled={currentPage === page}>{page}</Button>
+          ))}
+        </div>
     </Layout>
   )
 }
