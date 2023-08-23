@@ -11,7 +11,7 @@ export const createWorkOrder = async (values) => {
 }
 
 // Get all work Orders
-export const getAllWorkOrders = async () => {
+export const getAllWorkOrders = async (page) => {
     try {
         const res = await axios.get(`${WORK_URL}/getall/work?page=${page}`);
         const data = res.data;
