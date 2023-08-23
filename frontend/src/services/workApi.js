@@ -13,7 +13,7 @@ export const createWorkOrder = async (values) => {
 // Get all work Orders
 export const getAllWorkOrders = async () => {
     try {
-        const res = await axios.get(`${WORK_URL}/getall/work?pageNumber=${pageNumber}`);
+        const res = await axios.get(`${WORK_URL}/getall/work?page=${page}`);
         const data = res.data;
         return data;
     } catch (error) {
