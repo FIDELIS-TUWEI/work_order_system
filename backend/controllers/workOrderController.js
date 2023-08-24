@@ -105,7 +105,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     // Enable Pagination
-    const pageSize = 10;
+    const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({}).estimatedDocumentCount();
     try {
