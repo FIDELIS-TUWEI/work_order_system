@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
-import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
+import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Typography, Button } from "antd";
 import { getAllUsers } from "../../../services/usersApi";
@@ -9,7 +9,6 @@ import { getAllUsers } from "../../../services/usersApi";
 
 
 const UsersAll = () => {
-  const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
