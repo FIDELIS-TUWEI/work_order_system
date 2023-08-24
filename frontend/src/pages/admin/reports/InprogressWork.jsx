@@ -1,10 +1,9 @@
-import Layout from "../../../components/Layout"
 
 const InprogressWork = () => {
   return (
-    <Layout>
+    <div>
       <h1>InprogressWork</h1>
-    </Layout>
+    </div>
   )
 }
 

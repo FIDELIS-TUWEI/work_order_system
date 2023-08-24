@@ -1,10 +1,9 @@
-import Layout from "../../../components/Layout";
 
 const ReviewedWork = () => {
   return (
-    <Layout>
+    <div>
       <h1>ReviewedWork</h1>
-    </Layout>
+    </div>
   )
 }
 

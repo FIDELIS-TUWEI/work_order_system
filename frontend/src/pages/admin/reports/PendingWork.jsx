@@ -1,10 +1,9 @@
-import Layout from "../../../components/Layout"
 
 const PendingWork = () => {
   return (
-    <Layout>
+    <div>
       <h1>PendingWork</h1>
-    </Layout>
+    </div>
   )
 }
 
