@@ -4,9 +4,6 @@ const asyncHandler = require("express-async-handler");
 
 // Pending Work Order
 const pendingWorkOrder = asyncHandler (async (req, res, next) => {
-    const pageSize = 5;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await WorkOrder.find({status: "Pending"}).estimatedDocumentCount();
     try {
         const pending = await WorkOrder.find({status: "Pending"}).populate().select("-completedWork");
         if (!pending) {
@@ -15,9 +12,6 @@ const pendingWorkOrder = asyncHandler (async (req, res, next) => {
         return res.status(200).json({
             success: true,
             data: pending,
-            page,
-            pages: Math.ceil(count / pageSize),
-            count
         })
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));

@@ -2,9 +2,9 @@ import axios from 'axios';
 const WORK_URL = "/hin";
 
 // Get pending work Orders
-export const pendingWorkOrders = async (page) => {
+export const pendingWorkOrders = async () => {
     try {
-        const res = await axios.get(`${WORK_URL}/pending/work?page=${page}`);
+        const res = await axios.get(`${WORK_URL}/pending/work`);
         const data = res.data;
         return data;
     } catch (error) {
