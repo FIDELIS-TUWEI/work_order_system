@@ -57,7 +57,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
         //const user = await User.findById(req.params.id);
         const newWorkOrder = await WorkOrder({
-            //requestedBy: userId,
+            requestedBy: userId,
             priority,
             title,
             location,

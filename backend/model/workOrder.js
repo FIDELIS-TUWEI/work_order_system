@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const workOrderSchema = new mongoose.Schema({
-    //requestedBy: {
-    //    type: ObjectId,
-    //    ref: "User",
-    //    required: true
-    //},
+    requestedBy: {
+        type: ObjectId,
+        ref: "User",
+        required: true
+    },
     priority: {
         // High, Medium, Low
         type: String,
