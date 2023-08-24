@@ -53,9 +53,6 @@ const WorkDetails = () => {
                 Requested Date: {workDetails && workDetails.Date_Created}
             </p>
             <p>
-                Work Requested Time: {workDetails && workDetails.time}
-            </p>
-            <p>
                 Assigned To: {workDetails && workDetails.assignedTo}
             </p>
             <p>
