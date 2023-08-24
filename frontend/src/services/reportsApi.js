@@ -12,13 +12,35 @@ export const pendingWorkOrders = async (page) => {
     }
 };
 
+// Get in progress work Orders
+export const inProgressWorkOrders = async (page) => {
+    try {
+        const res = await axios.get(`${WORK_URL}/inprogress/work?page=${page}`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching all in progress work orders", error);
+    }
+}
+
 // Get completed work Orders
 export const completedWorkOrders = async (page) => {
     try {
-        const res = await axios.get(`${WORK_URL}/completed/work?page=${page}`);
+        const res = await axios.get(`${WORK_URL}/work/complete?page=${page}`);
         const data = res.data;
         return data;
     } catch (error) {
         console.log("Error while fetching all completed work orders", error);
     }
 };
+
+// Get reviewed work Orders
+export const reviewedWorkOrders = async (page) => {
+    try {
+        const res = await axios.get(`${WORK_URL}/work/review?page=${page}`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching all reviewed work orders", error);
+    }
+}
