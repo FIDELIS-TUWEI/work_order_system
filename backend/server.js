@@ -18,6 +18,7 @@ const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const workOrderRoutes = require("./routes/workOrderRoutes");
 const locationRoutes = require("./routes/locationRoutes");
+const reportsRoutes = require("./routes/reportRoutes");
 
 // Middleware
 app.use(express.json()); // To parse JSON data in the request body
@@ -43,6 +44,7 @@ app.use("/hin", userRoutes);
 app.use("/hin", taskRoutes);
 app.use("/hin", workOrderRoutes);
 app.use("/hin", locationRoutes);
+app.use("/hin", reportsRoutes);
 
 
 // Error Middleware
