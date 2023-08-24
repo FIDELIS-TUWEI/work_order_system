@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 
 const getAllUsers = asyncHandler (async (req, res, next) => {
     // Enable Pagination
-    const pageSize = 10;
+    const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     const count = await User.find({}).estimatedDocumentCount();
 
