@@ -69,7 +69,7 @@ const completedWorkOrder = asyncHandler (async (req, res, next) => {
     }
 });
 
-const reviewWorkOrder = asyncHandler (async (req, res, next) => {
+const reviewedWorkOrder = asyncHandler (async (req, res, next) => {
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({status: "Reviewed"}).estimatedDocumentCount();
@@ -94,5 +94,5 @@ module.exports = {
     pendingWorkOrder,
     inProgressWorkOrder,
     completedWorkOrder,
-    reviewWorkOrder
+    reviewedWorkOrder
 }
