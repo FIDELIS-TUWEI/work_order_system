@@ -1,4 +1,4 @@
-import { Button, Table, Typography } from "antd"
+import { Button, Typography } from "antd"
 import Layout from "../../../components/Layout"
 import { useNavigate } from "react-router-dom"
 import { getAllWorkOrders } from "../../../services/workApi";
@@ -22,7 +22,7 @@ const AllWorkOrders = () => {
   // Function to get all work orders from Api
   const getAllWork = async () => {
       setLoading(true);
-      const { data, page, pages } = await getAllWorkOrders(currentPage, {
+      const { data, pages } = await getAllWorkOrders(currentPage, {
           withCredentials: true,
           headers: {
               Authorization: `Bearer ${token}`
@@ -38,8 +38,6 @@ const AllWorkOrders = () => {
     setCurrentPage(newPage);
   }
 
-
-    
   return (
     <Layout>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Work Orders</Typography>
