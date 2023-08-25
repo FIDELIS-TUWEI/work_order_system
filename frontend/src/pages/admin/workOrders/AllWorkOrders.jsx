@@ -53,7 +53,7 @@ const AllWorkOrders = () => {
               <th>Title</th>
               <th>Location</th>
               <th>Service Type</th>
-              <th>Date Requested</th>
+              <th>Category</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -64,7 +64,7 @@ const AllWorkOrders = () => {
                 <td>{work.title}</td>
                 <td>{work.location && work.location.locationTitle}</td>
                 <td>{work.serviceType}</td>
-                <td>{work.Date_Created}</td>
+                <td>{work.category}</td>
                 <td>{work.status}</td>
                 <td className="actions__btn">
                   <Button style={{ color: 'green', border: 'none'}} onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
