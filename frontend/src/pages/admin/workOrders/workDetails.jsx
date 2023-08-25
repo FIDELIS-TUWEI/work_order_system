@@ -32,7 +32,7 @@ const WorkDetails = () => {
 
   return (
     <Layout>
-        <Card title="Work Details" style={{ margin: 'auto', width: '300px' }}>
+        <Card title="Work Details" style={{ margin: 'auto', width: '500px' }}>
             <p>Work Id: {id}</p>
             <p>
                 Title: {workDetails && workDetails.title}
