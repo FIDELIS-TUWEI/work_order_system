@@ -3,7 +3,7 @@ import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { Typography, Button } from "antd";
+import { Typography, Button, Card } from "antd";
 import { getAllUsers } from "../../../services/usersApi";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
@@ -43,11 +43,20 @@ const handlePageChange = (newPage) => {
 
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Users</Typography>
       <div className="add-btn">
-        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate("/users/register")}>Add User</Button>
+        <Button 
+          style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+          onClick={() => navigate("/users/register")}
+        >
+          Add User
+        </Button>
       </div>
-      
+
+      <Card
+        loading={loading}
+        title="All Users"
+        style={{ margin: "15px" }}
+      >
       <table>
         <thead>
           <tr>
@@ -77,6 +86,7 @@ const handlePageChange = (newPage) => {
           ))}
         </tbody>
       </table>
+      </Card>
       <div className="pagination">
         {Array.from({length: totalPages}, (_, index) => index + 1).map((page) => (
           <Button
@@ -89,6 +99,8 @@ const handlePageChange = (newPage) => {
           </Button>
         ))}
       </div>
+      
+      
     </Layout>
   )
 }
