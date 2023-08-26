@@ -71,10 +71,7 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    completedWork: {
-        type: Array,
-        default: []
-    },
+    completedWork: [{ type: String }] // Array to store work with Complete status
 },
 
 { 
