@@ -1,4 +1,4 @@
-import { Button, Col, DatePicker, Form, Input, Row, TimePicker, Typography, message } from 'antd'
+import { Button, Card, Col, DatePicker, Form, Input, Row, TimePicker, Typography, message } from 'antd'
 import Layout from '../../../components/Layout';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
@@ -44,9 +44,18 @@ const onFinishHandler = async (values) => {
 
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>User Registration</Typography>
+      <Typography
+        style={{ 
+          display: 'flex', justifyContent: 'center', 
+          alignItems: 'center', fontSize: '1.5rem', fontWeight: 'bold' 
+        }}
+      >
+        Register New User Form
+      </Typography>
+      <Card title="User Details" 
+        style={{ margin: '15px' }}
+      >
       <Form onFinish={onFinishHandler} layout='vertical' style={{ margin: '18px' }}>
-        <Typography style={{ fontSize: '1rem', fontWeight: '500' }}>User Details: </Typography>
         <Row gutter={20}>
           <Col xs={24} md={24} lg={8}>
             <Form.Item 
@@ -105,6 +114,7 @@ const onFinishHandler = async (values) => {
           { loading && <LoadingBox /> }
         </div>
       </Form>
+      </Card>
     </Layout>
   )
 }
