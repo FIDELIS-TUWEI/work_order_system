@@ -98,7 +98,7 @@ const onFinishHandler = async (values) => {
           </Col>
         </Row>
         <div className="user_submit">
-          <Button type="primary" htmlType="submit">Submit</Button>
+          <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Submit</Button>
         </div>
         <Col xs={24} md={24} lg={8}></Col>
         <div className="loader">
