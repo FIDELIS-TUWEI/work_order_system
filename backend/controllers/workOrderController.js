@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const nodemailer = require("nodemailer");
 const { PASS, USER } = require("../utils/env");
+const { completedWorkOrder } = require("./report");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -164,7 +165,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 
 // Clear Complete Work Orders and move to Completed Work array
 const clearWorkOrders = asyncHandler (async (req, res, next) => {
-
+    
 });
 
 
