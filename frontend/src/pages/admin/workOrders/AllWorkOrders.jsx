@@ -70,7 +70,7 @@ const AllWorkOrders = () => {
                   <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
                   {
                     user.role === "admin" || user.role === "superadmin" || user.role === "hod" || user.role === "supervisor" || user.role === "reviewer" ? 
-                      <Button style={{ color: 'red', border: 'none'}} 
+                      <Button danger style={{ border: 'none'}} 
                         onClick={() => navigate(`/edit/work/${work._id}`)}
                       >
                         <BiSolidEditAlt/>
