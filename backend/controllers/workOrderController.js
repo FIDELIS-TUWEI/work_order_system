@@ -162,6 +162,11 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 });
 
 
+// Clear Complete Work Orders and move to Completed Work array
+const clearWorkOrders = asyncHandler (async (req, res, next) => {
+
+});
+
 
 
 
@@ -171,4 +176,5 @@ module.exports = {
     getAllWorkOrders,
     getSingleWorkOrder,
     deleteWorkOrder,
+    clearWorkOrders
 }
