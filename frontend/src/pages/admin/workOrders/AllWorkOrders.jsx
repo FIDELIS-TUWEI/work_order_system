@@ -5,6 +5,8 @@ import { getAllWorkOrders } from "../../../services/workApi";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
+import {AiFillEye} from "react-icons/ai"
+import {BiSolidEditAlt} from "react-icons/bi"
 
 const AllWorkOrders = () => {
   const user = useSelector(selectUserInfo);
@@ -65,13 +67,13 @@ const AllWorkOrders = () => {
                 <td>{work.category}</td>
                 <td>{work.status}</td>
                 <td className="actions__btn">
-                  <Button style={{ color: 'green', border: 'none'}} onClick={() => navigate(`/work/details/${work._id}`)}>View Details</Button>
+                  <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
                   {
                     user.role === "admin" || user.role === "superadmin" || user.role === "hod" || user.role === "supervisor" || user.role === "reviewer" ? 
                       <Button style={{ color: 'red', border: 'none'}} 
                         onClick={() => navigate(`/edit/work/${work._id}`)}
                       >
-                        Edit
+                        <BiSolidEditAlt/>
                       </Button> 
                     : null
                   }
@@ -80,9 +82,15 @@ const AllWorkOrders = () => {
             ))}
           </tbody>
         </table>
-        <div>
+        <div className="pagination">
           {Array.from({length: totalPages}, (_, index) => index + 1).map((page) => (
-            <Button key={page} onClick={() => handlePageChange(page)} disabled={currentPage === page}>{page}</Button>
+            <Button key={page} 
+              onClick={() => handlePageChange(page)} 
+              disabled={currentPage === page} 
+              style={{margin: '0 5px'}}
+            >
+              {page}
+            </Button>
           ))}
         </div>
     </Layout>
