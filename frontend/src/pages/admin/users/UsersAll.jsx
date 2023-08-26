@@ -36,7 +36,7 @@ const getUsers = async () => {
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Users</Typography>
       <div className="add-btn">
-        <Button type="primary" onClick={() => navigate("/users/register")}>Add User</Button>
+        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate("/users/register")}>Add User</Button>
       </div>
       
       <table>
