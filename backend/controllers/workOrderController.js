@@ -165,7 +165,29 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 
 // Clear Complete Work Orders and move to Completed Work array
 const clearWorkOrders = asyncHandler (async (req, res, next) => {
-    
+    const workOrderId = req.params.id;
+
+    try {
+        const work = await WorkOrder.findById(workOrderId);
+
+        if (!work) {
+            return next(new ErrorResponse("Work Order not found", 404));
+        }
+
+        // Find complete work orders and move them
+        const completedWork = work.WorkOrder.filter(item => item.status === "Complete");
+        work.completedWork.push(...completedWork);
+        work.WorkOrder = work.WorkOrder.filter(item => item.status !== "Complete");
+
+        await work.save();
+
+        return res.json({
+            success: true,
+            message: "Work with Complete status moved succesfully"
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 });
 
 
