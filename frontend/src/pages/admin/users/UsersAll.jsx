@@ -3,7 +3,7 @@ import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { Typography, Button, Card } from "antd";
+import { Button, Card } from "antd";
 import { getAllUsers } from "../../../services/usersApi";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
