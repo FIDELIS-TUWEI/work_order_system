@@ -1,4 +1,4 @@
-import { Button, Card, Typography } from "antd"
+import { Button, Card } from "antd"
 import Layout from "../../../components/Layout"
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react";
