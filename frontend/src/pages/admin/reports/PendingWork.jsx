@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { pendingWorkOrders } from "../../../services/reportsApi";
 import { useEffect, useState } from "react";
-import { Card, Typography } from "antd";
+import { Card } from "antd";
 
 const PendingWork = () => {
   const token = useSelector(selectToken);
