@@ -1,12 +1,10 @@
-import { Button, Col, Form, Input, Row, Select, TimePicker, Typography, message } from "antd";
+import { Button, Col, Form, Input, Row, Select, Typography, message } from "antd";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { editUser, getUserInfo } from "../../../services/usersApi";
 import { useEffect, useState } from "react";
-const USERS_URL = "/hin";
 
 
 const EditUser = () => {
