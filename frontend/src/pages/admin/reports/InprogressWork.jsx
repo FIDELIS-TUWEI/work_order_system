@@ -25,12 +25,13 @@ const InprogressWork = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setWorkOrders(response.data);
+      setWorkOrders(response.data.data);
       setFilteredStatus(status);
     } catch (error) {
       console.log("Error fetching work orders", error);
     }
   }
+
 
   // Function to generate PDF from backend
   const generatePDF = async () => {
@@ -54,39 +55,29 @@ const InprogressWork = () => {
     }
   };
 
-  // antd table columns to display data
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: '_id',
-      key: '_id',
-    },
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-    },
-    {
-      title: 'Location',
-      dataIndex: 'location',
-      key: 'location',
-    },
-    {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
-    },
-    {
-      title: 'Service Type',
-      dataIndex: 'serviceType',
-      key: 'serviceType',
-    }
-  ];
-
   return (
     <div>
       <Button onClick={generatePDF}>Generate PDF</Button>
-      <Table columns={columns} dataSource={workOrders} rowKey="_id" />
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Service Type</th>
+            <th>Date Requested</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workOrders.map((work) => (
+            <tr key={work._id}>
+              <td>{work.title}</td>
+              <td>{work.serviceType}</td>
+              <td>{work.Date_Created}</td>
+              <td>{work.status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
