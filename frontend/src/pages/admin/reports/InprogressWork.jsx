@@ -1,3 +1,4 @@
+import { Typography } from "antd";
 
 const InprogressWork = () => {
   return (
