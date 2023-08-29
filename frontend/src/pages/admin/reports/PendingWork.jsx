@@ -3,6 +3,8 @@ import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { pendingWorkOrders } from "../../../services/reportsApi";
 import { useEffect, useState } from "react";
 import { Button, Card } from "antd";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const PendingWork = () => {
   const token = useSelector(selectToken);
@@ -27,6 +29,14 @@ const PendingWork = () => {
   };
 
   // Function to print report
+  const printReport = () => {
+    const doc = new jsPDF();
+
+    doc.text("Pending Work Orders", 10, 10);
+    doc.autoTable({ columns: ["Title", "Service Type", "Date Requested", "Status"], body: pendingWork });
+
+    doc.save("Pending Work Orders.pdf");
+  }
 
   return (
     <>
@@ -52,7 +62,7 @@ const PendingWork = () => {
           ))}
         </tbody>
       </table>
-      <Button>Print Report</Button>
+      <Button onClick={printReport}>Print Report</Button>
     </Card>
     </>
   )
