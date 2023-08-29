@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { selectToken } from "../../../redux/userSlice";
 import { Table, Button } from "antd";
+import {selectToken} from "../../../utils/redux/slices/authSlice";
 import axios from "axios";
 const WORK_URL = "/hin";
 
