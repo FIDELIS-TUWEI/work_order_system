@@ -1,15 +1,15 @@
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { pendingWorkOrders } from "../../../services/reportsApi";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Card } from "antd";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+import { useReactToPrint } from "react-to-print";
 
 const PendingWork = () => {
   const token = useSelector(selectToken);
   const [pendingWork, setPendingWork] = useState([]);
   const [loading, setLoading] = useState(false);
+  const componentPDF = useRef();
 
   useEffect(() => {
     getPendingWork();
@@ -29,40 +29,40 @@ const PendingWork = () => {
   };
 
   // Function to print report
-  const printReport = () => {
-    const doc = new jsPDF();
-
-    doc.text("Pending Work Orders", 10, 10);
-    doc.autoTable({ columns: ["Title", "Service Type", "Date Requested", "Status"], body: pendingWork });
-
-    doc.save("Pending Work Orders.pdf");
-  }
+  const printReport = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: "Pending Work Orders",
+    onAfterPrint: () => {
+      alert("Report Generated Successfully");
+    }
+  })
 
   return (
     <>
     <Card loading={loading} title="Pending Work Orders" style={{ margin: "15px" }}>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Service Type</th>
-            <th>Date Requested</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pendingWork.map((work) => (
-            <tr key={work._id}>
-              <td>{work.title}</td>
-              <td>{work.serviceType}</td>
-              <td>{work.Date_Created}</td>
-              <td>{work.status}</td>
+      <div ref={componentPDF} style={{ width: "100%" }}>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Service Type</th>
+              <th>Date Requested</th>
+              <th>Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <Button onClick={printReport}>Print Report</Button>
+          </thead>
+          <tbody>
+            {pendingWork.map((work) => (
+              <tr key={work._id}>
+                <td>{work.title}</td>
+                <td>{work.serviceType}</td>
+                <td>{work.Date_Created}</td>
+                <td>{work.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <Button onClick={printReport}>Generate Report</Button>
     </Card>
     </>
   )
