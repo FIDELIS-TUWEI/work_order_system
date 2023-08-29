@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { pendingWorkOrders } from "../../../services/reportsApi";
 import { useEffect, useRef, useState } from "react";
-import { Button, Card } from "antd";
+import { Button, Card, message } from "antd";
 import { useReactToPrint } from "react-to-print";
 
 const PendingWork = () => {
@@ -33,7 +33,7 @@ const PendingWork = () => {
     content: () => componentPDF.current,
     documentTitle: "Pending Work Orders",
     onAfterPrint: () => {
-      alert("Report Generated Successfully");
+      message.success("Report Generated Successfully");
     }
   })
 
