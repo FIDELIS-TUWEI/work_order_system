@@ -3,13 +3,14 @@ import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { pendingWorkOrders } from "../../../services/reportsApi";
 import { useEffect, useRef, useState } from "react";
 import { Button, Card, message } from "antd";
-import { useReactToPrint } from "react-to-print";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
+import moment from "moment";
 
 const PendingWork = () => {
   const token = useSelector(selectToken);
   const [pendingWork, setPendingWork] = useState([]);
   const [loading, setLoading] = useState(false);
-  const componentPDF = useRef();
 
   useEffect(() => {
     getPendingWork();
@@ -28,20 +29,20 @@ const PendingWork = () => {
     setLoading(false);
   };
 
-  // Function to print report
-  const printReport = useReactToPrint({
-    content: () => componentPDF.current,
-    documentTitle: "Pending Work Orders",
-    onAfterPrint: () => {
-      message.success("Report Generated Successfully");
-    }
-  })
+  const exportPDF = async () => {
+    const doc = new jsPDF({ orientation: "landscape" });
+
+    doc.autoTable({
+      html: "#table",
+    });
+
+    doc.save("Pending Work Orders.pdf");
+  }
 
   return (
     <>
     <Card loading={loading} title="Pending Work Orders" style={{ margin: "15px" }}>
-      <div ref={componentPDF} style={{ width: "100%" }}>
-        <table>
+        <table id="table">
           <thead>
             <tr>
               <th>Title</th>
@@ -55,14 +56,13 @@ const PendingWork = () => {
               <tr key={work._id}>
                 <td>{work.title}</td>
                 <td>{work.serviceType}</td>
-                <td>{work.Date_Created}</td>
+                <td>{moment(work.Date_Created).format("DD/MM/YYYY, hh:mm a")}</td>
                 <td>{work.status}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-      <Button onClick={printReport}>Generate Report</Button>
+      <Button onClick={exportPDF}>Generate Report</Button>
     </Card>
     </>
   )
