@@ -29,8 +29,16 @@ const PendingWork = () => {
     setLoading(false);
   };
 
+  // Function to generate and export pending work orders
   const exportPDF = async () => {
     const doc = new jsPDF({ orientation: "landscape" });
+    const currentDate = new Date();
+
+    doc.setFontSize(12);
+    doc.text("Pending Work Orders", 20, 10);
+
+    doc.setFontSize(10);
+    doc.text(`Date Printed: ${currentDate}`, 20, 20);
 
     doc.autoTable({
       html: "#table",
