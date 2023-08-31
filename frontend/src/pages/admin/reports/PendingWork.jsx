@@ -35,7 +35,7 @@ const PendingWork = () => {
     const currentDate = new Date();
 
     doc.setFontSize(12);
-    doc.text("Pending Work Orders", 20, 10);
+    doc.text("Pending Work Orders", 20, 10, null, null, "center", "bold", "underline");
 
     doc.setFontSize(10);
     doc.text(`Date Printed: ${currentDate}`, 20, 20);
