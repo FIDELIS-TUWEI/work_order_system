@@ -39,20 +39,21 @@ const PendingWork = () => {
 
     // Add company logo centered
     const imgData = Logo;
-    const logoWidth = 40;
-    const logoHeight = 40;
+    const logoWidth = 30;
+    const logoHeight = 30;
     const logoX = centerX - logoWidth / 2;
     doc.addImage(imgData, "PNG", logoX, 10, logoWidth, logoHeight);
 
     // Add report generation date
     const reportDate = moment().format("DD/MM/YYYY, hh:mm a");
-    doc.text(`Report Generated: ${reportDate}`, 10, 20);
+    doc.setFontSize(6);
+    doc.text(`${reportDate}`, 10, 20);
 
     const initialTableY = 50;
 
 
     doc.setFontSize(12);
-    doc.text("Pending Work Orders", 20, initialTableY - 10);
+    doc.text("Pending Work Orders Report", 60, initialTableY - 10);
 
     doc.autoTable({
       html: "#table",
@@ -65,7 +66,7 @@ const PendingWork = () => {
 
   return (
     <>
-    <Card loading={loading} title="Pending Work Orders" style={{ margin: "15px" }}>
+    <Card loading={loading} title="Pending Work Orders Report" style={{ margin: "15px" }}>
         <table id="table">
           <thead>
             <tr>
