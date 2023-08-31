@@ -47,13 +47,6 @@ const EditWorkOrder = () => {
               Task Title: {workDetails && workDetails.title}
             </Typography>
             
-            {
-              user && user.role === 'admin' || user && user.role === 'hod' || user && user.role === 'superadmin' || user && user.role === 'supervisor' ? (
-                <></>
-              ) : (
-                <></>
-              )
-            }
             <Row gutter={20}>
             {
               workDetails && workDetails.status === 'Pending' ? (
@@ -185,15 +178,13 @@ const EditWorkOrder = () => {
                 </>
               )
             }
-                
-                
-                
+                     
             </Row>
             <div>
-              <Button type="primary" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+              <Button className="submit__button" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
             </div>
             <div className="user_submit">
-              <Button type="primary" htmlType="submit">Update</Button>
+              <Button className="submit__button" htmlType="submit">Update</Button>
             </div>
         </Form>
     </Layout>
