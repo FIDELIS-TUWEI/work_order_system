@@ -181,10 +181,10 @@ const EditWorkOrder = () => {
                      
             </Row>
             <div>
-              <Button className="submit__button" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+              <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
             </div>
             <div className="user_submit">
-              <Button className="submit__button" htmlType="submit">Update</Button>
+              <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
             </div>
         </Form>
     </Layout>
