@@ -34,7 +34,7 @@ const Profile = () => {
         </p>
 
         {user && user.role === "admin" || user && user.role === "superadmin" ? (
-          <Button onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
+          <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
         )
         : null}
       </Card>

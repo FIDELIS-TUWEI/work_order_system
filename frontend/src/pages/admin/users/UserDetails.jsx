@@ -49,7 +49,7 @@ const UserDetails = () => {
           Status: {userDetails && userDetails.active === true ? "Active" : "Not Active"}
         </p>
 
-        <Button onClick={() => {navigate(-1)}}>Back</Button>
+        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => {navigate(-1)}}>Back</Button>
       </Card>
     </Layout>
   )
