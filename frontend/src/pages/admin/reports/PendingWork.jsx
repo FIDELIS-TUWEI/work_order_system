@@ -86,7 +86,7 @@ const PendingWork = () => {
             ))}
           </tbody>
         </table>
-      <Button onClick={exportPDF}>Generate Report</Button>
+      <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={exportPDF}>Generate Report</Button>
     </Card>
     </>
   )
