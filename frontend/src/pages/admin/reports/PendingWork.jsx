@@ -6,6 +6,7 @@ import { Button, Card, message } from "antd";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
+import Logo from "../../../assets/logo.png";
 
 const PendingWork = () => {
   const token = useSelector(selectToken);
@@ -32,16 +33,31 @@ const PendingWork = () => {
   // Function to generate and export pending work orders
   const exportPDF = async () => {
     const doc = new jsPDF({ orientation: "landscape" });
-    const currentDate = new Date();
+
+    // Calculate the center position for the logo
+    const centerX = doc.internal.pageSize.width / 2;
+
+    // Add company logo centered
+    const imgData = Logo;
+    const logoWidth = 40;
+    const logoHeight = 40;
+    const logoX = centerX - logoWidth / 2;
+    doc.addImage(imgData, "PNG", logoX, 10, logoWidth, logoHeight);
+
+    // Add report generation date
+    const reportDate = moment().format("DD/MM/YYYY, hh:mm a");
+    doc.text(`Report Generated: ${reportDate}`, 10, 20);
+
+    const initialTableY = 50;
+
 
     doc.setFontSize(12);
-    doc.text("Pending Work Orders", 20, 10);
+    doc.text("Pending Work Orders", 20, initialTableY - 10);
 
-    doc.setFontSize(10);
-    doc.text(`Date Printed: ${currentDate}`, 20, 20);
 
     doc.autoTable({
       html: "#table",
+      startY: initialTableY,
     });
 
     doc.save("Pending Work Orders.pdf");
