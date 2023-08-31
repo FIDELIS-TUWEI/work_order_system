@@ -62,7 +62,7 @@ const LogIn = () => {
                         { isLoading && <LoadingBox /> }
                     </div>
 
-                    <Button className="submit__button" htmlType="submit">Log In</Button>
+                    <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Log In</Button>
                 </Card>
             </Form>
         </div>
