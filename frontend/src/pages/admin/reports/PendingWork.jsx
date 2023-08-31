@@ -51,9 +51,8 @@ const PendingWork = () => {
 
     const initialTableY = 50;
 
-
     doc.setFontSize(12);
-    doc.text("Pending Work Orders Report", 60, initialTableY - 10);
+    doc.text("Pending Work Orders Report", 15, initialTableY - 10);
 
     doc.autoTable({
       html: "#table",
