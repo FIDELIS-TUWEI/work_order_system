@@ -41,6 +41,7 @@ const PendingWork = () => {
     });
 
     doc.save("Pending Work Orders.pdf");
+    message.success("Report Generated Successfully"); 
   }
 
   return (
