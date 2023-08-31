@@ -133,10 +133,10 @@ const CreateWorkOrder = () => {
           </Col>
         </Row>
         <div>
-          <Button className="submit__button" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+          <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
         </div>
         <div className="user_submit">
-          <Button className="submit__button" htmlType="submit">Submit</Button>
+          <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Submit</Button>
         </div>
         <Col xs={24} md={24} lg={8}></Col>
         <div className="loader">
