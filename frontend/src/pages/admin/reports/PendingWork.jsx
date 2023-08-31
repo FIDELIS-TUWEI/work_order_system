@@ -33,8 +33,6 @@ const PendingWork = () => {
   // Function to generate and export pending work orders
   const exportPDF = async () => {
     const doc = new jsPDF({ orientation: "landscape" });
-<<<<<<< HEAD
-=======
 
     // Calculate the center position for the logo
     const centerX = doc.internal.pageSize.width / 2;
@@ -52,15 +50,10 @@ const PendingWork = () => {
 
     const initialTableY = 50;
 
->>>>>>> table
 
     doc.setFontSize(12);
     doc.text("Pending Work Orders", 20, initialTableY - 10);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> table
     doc.autoTable({
       html: "#table",
       startY: initialTableY,
