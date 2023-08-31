@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../../../components/Layout'
-import { Button, Col, DatePicker, Form, Input, Row, Select, Typography, message } from 'antd'
+import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography, message } from 'antd'
 import { useSelector } from 'react-redux'
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -42,10 +42,8 @@ const EditWorkOrder = () => {
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
             Edit Work Order
         </Typography>
-        <Form onFinish={onFinishHandler} layout='vertical' style={{ margin: '18px' }}>
-            <Typography style={{ fontSize: '1rem', fontWeight: '500', textDecoration: 'underline', marginBottom: '10px' }}>
-              Task Title: {workDetails && workDetails.title}
-            </Typography>
+        <Card title={workDetails && workDetails.title} style={{ margin: '15px' }}>
+        <Form onFinish={onFinishHandler} layout='vertical'>
             
             <Row gutter={20}>
             {
@@ -187,6 +185,7 @@ const EditWorkOrder = () => {
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
             </div>
         </Form>
+        </Card>
     </Layout>
   )
 }
