@@ -6,7 +6,6 @@ import { Button, Card, message } from "antd";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
-import Logo from "../../../assets/logo.png";
 
 const PendingWork = () => {
   const token = useSelector(selectToken);
