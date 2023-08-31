@@ -67,7 +67,7 @@ const WorkDetails = () => {
             <p>
                 Date Reviewed: {workDetails && workDetails.dateReviewed}
             </p>
-            <Button onClick={() => navigate(-1)}>Back</Button>
+            <Button className="submit__button" onClick={() => navigate(-1)}>Back</Button>
         </Card>
     </Layout>
   )
