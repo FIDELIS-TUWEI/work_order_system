@@ -62,7 +62,7 @@ const LogIn = () => {
                         { isLoading && <LoadingBox /> }
                     </div>
 
-                    <Button type="primary" htmlType="submit">Log In</Button>
+                    <Button className="submit__button" htmlType="submit">Log In</Button>
                 </Card>
             </Form>
         </div>
