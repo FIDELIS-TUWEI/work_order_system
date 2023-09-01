@@ -1,5 +1,5 @@
 import { 
-  Button, Col, Form, Input, 
+  Button, Card, Col, Form, Input, 
   Row, Select, Typography, message 
 } from 'antd'
 import Layout from '../../../components/Layout'
@@ -51,6 +51,7 @@ const CreateWorkOrder = () => {
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>New Work Order</Typography>
+      <Card style={{ margin: '15px' }}>
       <Form onFinish={onFinishHandler} layout='vertical' style={{ margin: '18px' }}>
         <Typography style={{ fontSize: '1rem', fontWeight: '500' }}>Work Details: </Typography>
         <Row gutter={20}>
@@ -143,6 +144,7 @@ const CreateWorkOrder = () => {
           { loading && <LoadingBox /> }
         </div>
       </Form>
+      </Card>
     </Layout>
   )
 }
