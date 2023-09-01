@@ -29,7 +29,8 @@ const workOrderSchema = new mongoose.Schema({
     },
     category: {
         // Wi-Fi/ Internet, Bulb/ Lights, Paint, Door/ Lock, Hvac panel, Hvac cold/ Hot
-        type: String,
+        type: ObjectId,
+        ref: "Category",
         required: true
     },
     status: {

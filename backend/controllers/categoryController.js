@@ -30,7 +30,7 @@ const createCategory = asyncHandler(async (req, res) => {
 
 const getAllCategories = asyncHandler(async (req, res) => {
     try {
-        const categories = await Category.find({});
+        const categories = await Category.find({}).populate("category");
 
         if (!categories) {
             return res.status(400).json({ message: "No categories found" });
