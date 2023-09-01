@@ -9,6 +9,7 @@ import { getSingleWorkOrder } from "../../../services/workApi";
 
 const WorkDetails = () => {
     const [workDetails, setWorkDetails] = useState([]);
+    const [loading, setLoading] = useState(false);
     const token = useSelector(selectToken);
     const navigate = useNavigate();
     const {id} = useParams();
@@ -21,6 +22,7 @@ const WorkDetails = () => {
 
     // get work details
     const getSingleWork = async (id) => {
+        setLoading(true);
         const res = await getSingleWorkOrder(id, {
             withCredentials: true,
             headers: {
@@ -28,11 +30,12 @@ const WorkDetails = () => {
             },
         });
         setWorkDetails({...res.data});
+        setLoading(false);
     }
 
   return (
     <Layout>
-        <Card title="Work Details" style={{ margin: 'auto', width: '500px' }}>
+        <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '500px' }}>
             <p>Work Id: {id}</p>
             <p>
                 Title: {workDetails && workDetails.title}
