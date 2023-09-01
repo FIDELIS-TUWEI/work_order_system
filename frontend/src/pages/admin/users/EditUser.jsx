@@ -117,10 +117,10 @@ const EditUser = () => {
             </Col>
             </Row>
             <div>
-              <Button type="primary" htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+              <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
             </div>
             <div className="user_submit">
-              <Button type="primary" htmlType="submit">Update</Button>
+              <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
             </div>
         </Form>
     </Layout>
