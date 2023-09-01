@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import LoadingBox from '../../../components/LoadingBox'
 import { useSelector } from 'react-redux'
 import { selectToken } from '../../../utils/redux/slices/authSlice'
+import { allWorkCategories } from '../../../services/categoryApi'
 
 const { Option } = Select;
 
@@ -17,6 +18,8 @@ const CreateWorkOrder = () => {
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
 
   // function to handle form submit
@@ -28,7 +31,7 @@ const CreateWorkOrder = () => {
     setLoading(false);
   };
 
-  // Function to get all work Locations from Services Api
+  // Function to handle change in location
   const handleLocationChange = (value) => {
     setSelectedLocation(value);
   }
@@ -44,8 +47,25 @@ const CreateWorkOrder = () => {
     setLocation(response.data)
   };
 
+  // Function to handle change in category
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+  }
+
+  // Function to get all categories from Services Api
+  const getCategories = async () => {
+    const response = await allWorkCategories({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setCategory(response.data);
+  }
+
   useEffect(() => {
     workLocation();
+    getCategories();
   }, []);
 
   return (
@@ -104,15 +124,15 @@ const CreateWorkOrder = () => {
                 required rules={[{ required: true, message: 'Please Select a category!' }]}>
               <Select 
                 placeholder='Select Category'
+                onChange={handleCategoryChange}
+                value={selectedCategory}
                 allowClear
                 style={{ width: '100%' }}
-                options={[
-                  { value: 'Electrical', label: 'Electrical' }, { value: 'Plumbing', label: 'Plumbing' },
-                  { value: 'HVAC', label: 'HVAC' }, { value: 'Painting', label: 'Painting' },
-                  { value: 'Door Lock', label: 'Door Lock' }, { value: 'Room-safe', label: 'Room-Safe' },
-                  { value: 'IT', label: 'IT' }, { value: 'Other', label: 'Other' }
-                ]} 
-              />
+              >
+                {category.map((category) => (
+                  <Option key={category._id} value={category._id}>{category.categoryTitle}</Option>
+                ))}
+              </Select>
             </Form.Item>  
           </Col>
           <Col xs={24} md={24} lg={8}>
