@@ -67,7 +67,8 @@ const WorkDetails = () => {
             <p>
                 Date Reviewed: {workDetails && workDetails.dateReviewed}
             </p>
-            <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate(-1)}>Back</Button>
+            <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginRight: '10px' }} onClick={() => navigate(-1)}>Back</Button>
+            <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}>Delete</Button>
         </Card>
     </Layout>
   )
