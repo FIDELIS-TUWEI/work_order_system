@@ -112,6 +112,7 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
         const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
             .populate("requestedBy", "username")
             .populate("category", "categoryTitle")
+            .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
             .limit(pageSize);
         return res.status(200).json({
