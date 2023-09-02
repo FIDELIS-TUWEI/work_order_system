@@ -109,7 +109,7 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({}).estimatedDocumentCount();
     try {
-        const workOrders = await WorkOrder.find({}).populate("location", "locationTitle").sort({ Date_Created: -1 })
+        const workOrders = await WorkOrder.find({}).populate("location", "locationTitle", "category", "categoryTitle").sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
             .limit(pageSize);
         return res.status(200).json({
