@@ -41,13 +41,13 @@ const WorkDetails = () => {
                 Title: {workDetails && workDetails.title}
             </p>
             <p>
-                Work Location: {workDetails && workDetails.location}
+                Work Location: {workDetails && workDetails.location.locationTitle}
             </p>
             <p>
                 Work Service Type: {workDetails && workDetails.serviceType}
             </p>
             <p>
-                Category : {workDetails && workDetails.category}
+                Category : {workDetails && workDetails.category.categoryTitle}
             </p>
             <p>
                 Work Status: {workDetails && workDetails.status}
