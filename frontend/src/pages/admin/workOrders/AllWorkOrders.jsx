@@ -74,7 +74,7 @@ const AllWorkOrders = () => {
                 <td>{work.title}</td>
                 <td>{work.location && work.location.locationTitle}</td>
                 <td>{work.serviceType}</td>
-                <td>{work.category}</td>
+                <td>{work.category && work.category.categoryTitle}</td>
                 <td>{work.status}</td>
                 <td className="actions__btn">
                   <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
