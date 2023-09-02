@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleWorkOrder } from "../../../services/workApi";
-
+import moment from "moment";
 
 const WorkDetails = () => {
     const [workDetails, setWorkDetails] = useState([]);
@@ -40,20 +40,16 @@ const WorkDetails = () => {
             <p>
                 Title: {workDetails && workDetails.title}
             </p>
-            <p>
-                Work Location: {workDetails && workDetails.location.locationTitle}
-            </p>
+            
             <p>
                 Work Service Type: {workDetails && workDetails.serviceType}
             </p>
-            <p>
-                Category : {workDetails && workDetails.category.categoryTitle}
-            </p>
+            
             <p>
                 Work Status: {workDetails && workDetails.status}
             </p>
             <p>
-                Requested Date: {workDetails && workDetails.Date_Created}
+                Requested Date: {moment(workDetails && workDetails.Date_Created).format("DD/MM/YYYY, hh:mm a")}
             </p>
             <p>
                 Assigned To: {workDetails && workDetails.assignedTo}
