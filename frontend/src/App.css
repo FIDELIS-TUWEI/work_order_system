@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+
 .not-found {
     height: 81vh;
     display: flex;
