@@ -10,7 +10,7 @@ import LoadingBox from "../../../components/LoadingBox";
 const WORK_URL = "/hin";
 
 
-const InprogressWork = () => {
+const WorkReport = () => {
   const [workOrders, setWorkOrders] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
   const [loading, setLoading] = useState(false);
@@ -124,4 +124,4 @@ const InprogressWork = () => {
   )
 };
 
-export default InprogressWork;
+export default WorkReport;
