@@ -2,12 +2,13 @@ import {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkOrders } from "../../../services/workApi";
-import { Typography } from "antd";
+import { Card, Typography } from "antd";
 import { Bar } from "react-chartjs-2";
 
 const BarGraph = () => {
     const token = useSelector(selectToken);
     const [workOrders, setWorkOrders] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         allWork();
@@ -15,6 +16,7 @@ const BarGraph = () => {
 
     // Function to get All work orders from API Service
     const allWork = async () => {
+        setLoading(true);
         const { data } = await getAllWorkOrders({
             withCredentials: true,
             headers: {
@@ -22,6 +24,7 @@ const BarGraph = () => {
             }
         });
         setWorkOrders(data);
+        setLoading(false);
     }
 
     // Extract data for the bar graph
@@ -67,8 +70,7 @@ const BarGraph = () => {
 
   return (
     <div>
-        <Typography>Work Orders Assigned To Employees</Typography>
-        <div>
+        <Card title="Work Orders Assigned To Employees" style={{ margin: "15px 25px" }} loading={loading}>
             <Bar 
                 data={data}
                 options={{
@@ -83,7 +85,7 @@ const BarGraph = () => {
                     },
                 }}
             />
-        </div>
+        </Card>
     </div>
   )
 }
