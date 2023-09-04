@@ -66,16 +66,18 @@ const InprogressWork = () => {
   }
 
   return (
-    <Card>
-      <Typography>Pending Work Orders</Typography>
-      <label>Filter By Status
-        <select onChange={(e) => setFilterStatus(e.target.value)}>
-          <option value="">All</option>
-          <option value="Pending">Pending</option>
-          <option value="In_Progress">In Progress</option>
-          <option value="Complete">Completed</option>
-        </select>
-      </label>
+    <Card title="Work Orders" style={{ margin: "15px" }}>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <label style={{ fontWeight: "bold" }}>Filter By Status
+          <select onChange={(e) => setFilterStatus(e.target.value)}>
+            <option value="">All</option>
+            <option value="Pending">Pending</option>
+            <option value="In_Progress">In Progress</option>
+            <option value="Complete">Completed</option>
+          </select>
+        </label>
+      </div>
+      
 
       {loading ? (
         <div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
@@ -106,7 +108,9 @@ const InprogressWork = () => {
               ))}
             </tbody>
           </table>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={exportPDF}>Generate Report</Button>
+          </div>
         </>
         )}
     </Card>
