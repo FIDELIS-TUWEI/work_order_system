@@ -66,27 +66,41 @@ const PendingWork = () => {
   return (
     <>
     <Card loading={loading} title="Pending Work Orders Report" style={{ margin: "15px" }}>
-        <table id="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Service Type</th>
-              <th>Date Requested</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pendingWork.map((work) => (
-              <tr key={work._id}>
-                <td>{work.title}</td>
-                <td>{work.serviceType}</td>
-                <td>{moment(work.Date_Created).format("DD/MM/YYYY, hh:mm a")}</td>
-                <td>{work.status}</td>
+      {pendingWork.length === 0 ? (
+        <p style={{ textAlign: "center" }}>No Pending Work Orders</p> 
+      ) : (
+        <>
+          <table id="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Service Type</th>
+                <th>Date Requested</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={exportPDF}>Generate Report</Button>
+            </thead>
+            <tbody>
+              {pendingWork.map((work) => (
+                <tr key={work._id}>
+                  <td>{work.title}</td>
+                  <td>{work.serviceType}</td>
+                  <td>{moment(work.Date_Created).format("DD/MM/YYYY, hh:mm a")}</td>
+                  <td>{work.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        <Button style={{ 
+            color: 'white', 
+            backgroundColor: 'darkgreen', 
+            border: 'none' 
+          }} 
+          onClick={exportPDF}
+        >
+          Generate Report
+        </Button>
+      </>
+      )}
     </Card>
     </>
   )
