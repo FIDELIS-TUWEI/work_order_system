@@ -2,8 +2,8 @@ import {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkOrders } from "../../../services/workApi";
-import { Card, Typography } from "antd";
-import { Bar } from "react-chartjs-2";
+import { Card } from "antd";
+import { Bar, Line } from "react-chartjs-2";
 
 const BarGraph = () => {
     const token = useSelector(selectToken);
@@ -50,19 +50,9 @@ const BarGraph = () => {
             data: workCounts,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
         }]
@@ -71,20 +61,7 @@ const BarGraph = () => {
   return (
     <div>
         <Card title="Work Orders Assigned To Employees" style={{ margin: "15px 25px" }} loading={loading}>
-            <Bar 
-                data={data}
-                options={{
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Number of Work Orders'
-                            },
-                        },
-                    },
-                }}
-            />
+            <Line data={data} />
         </Card>
     </div>
   )
