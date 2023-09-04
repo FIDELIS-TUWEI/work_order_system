@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Button, Card } from "antd"
+import { Button, Card, message } from "antd"
 import Layout from "../../../components/Layout"
 import { useSelector } from "react-redux"
 import { useEffect, useRef, useState } from "react";
@@ -39,7 +39,10 @@ const WorkDetails = () => {
     const handlePrint = useReactToPrint({
         content: () => componentPDF.current,
         documentTitle: "Work Details",
-        onAfterPrint: () => navigate("/work/list"),
+        onAfterPrint: () => {
+            navigate("/work/list")
+            message.success("Work Details Printed Successfully");
+        },
         pageStyle: "print",
 
     });
