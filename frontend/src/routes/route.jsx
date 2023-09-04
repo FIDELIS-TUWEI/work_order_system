@@ -18,10 +18,7 @@ import UsersAll from '../pages/admin/users/UsersAll';
 import Register from '../pages/admin/users/Register';
 import UserDetails from "../pages/admin/users/UserDetails";
 import Reports from "../pages/admin/reports/Reports";
-import PendingWork from "../pages/admin/reports/PendingWork";
-import InprogressWork from "../pages/admin/reports/InprogressWork";
-import CompleteWork from "../pages/admin/reports/CompleteWork";
-import ReviewedWork from "../pages/admin/reports/ReviewedWork";
+import WorkReport from "../pages/admin/reports/WorkReport";
 
 
 
@@ -40,10 +37,7 @@ export const router = createBrowserRouter(
         <Route path="/users/register" element={ <PrivateRoute> <Register/> </PrivateRoute> } />
         <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
         <Route path="/work/reports" element={ <PrivateRoute> <Reports /> </PrivateRoute> } />
-        <Route path="/work/pending" element={ <PrivateRoute> <PendingWork /> </PrivateRoute> } />
-        <Route path="/work/inprogress" element={ <PrivateRoute> <InprogressWork /> </PrivateRoute> } />
-        <Route path="/work/complete" element={ <PrivateRoute> <CompleteWork /> </PrivateRoute> } />
-        <Route path="/work/review" element={ <PrivateRoute> <ReviewedWork /> </PrivateRoute> } />
+        <Route path="/reports" element={ <PrivateRoute> <WorkReport /> </PrivateRoute> } />
         <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
         <Route path="/user/details/:id" element={ <PrivateRoute> <UserDetails /> </PrivateRoute> } />
         <Route path="/edit/user/:id" element={ <PrivateRoute> <EditUser /> </PrivateRoute> } />
