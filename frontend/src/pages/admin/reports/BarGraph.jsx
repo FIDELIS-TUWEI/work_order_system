@@ -4,14 +4,20 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkOrders } from "../../../services/workApi";
 import { Typography } from "antd";
+import { Chart } from "chart.js";
 
 const BarGraph = () => {
     const token = useSelector(selectToken);
-    const [workOrders, setWorkOrders] = useState();
+    const [workOrders, setWorkOrders] = useState([]);
+    const [chartInstance, setChartInstance] = useState(null);
 
     useEffect(() => {
         allWork();
-    });
+
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+    }, [chartInstance]);
 
     // Function to get All work orders from API Service
     const allWork = async () => {
@@ -22,43 +28,58 @@ const BarGraph = () => {
             }
         });
         setWorkOrders(data);
+        console.log(data);
     }
 
-    // Parse data for the chart
-    const employeeData = {}
+    useEffect(() => {
+        // Parse data for the chart
+        const employeeData = {}
 
-    workOrders.forEach((work) => {
-        const { assignedTo } = work;
+        workOrders.map((work) => {
+            const { assignedTo } = work;
 
-        if (employeeData[assignedTo]) {
-            employeeData[assignedTo]++;
-        } else {
-            employeeData[assignedTo] = 1;
-        }
-    });
+            if (employeeData[assignedTo]) {
+                employeeData[assignedTo]++;
+            } else {
+                employeeData[assignedTo] = 1;
+            }
+        });
 
-    const labels = Object.keys(employeeData);
-    const data = Object.values(employeeData);
+        const labels = Object.keys(employeeData);
+        const data = Object.values(employeeData);
 
-    // Chartjs Configuration
-    const chartData = {
-        labels,
-        datasets: [
-            {
-                label: "Work Orders Assigned",
-                data,
-                backgroundColor: "rgba(75, 192, 192, 0.6)",
-                borderColor: "rgba(75, 192, 192, 1)",
-                borderWidth: 1,
-            },
-        ],
-    };
+        // Chartjs Configuration
+        const chartData = {
+            labels,
+            datasets: [
+                {
+                    label: "Work Orders Assigned",
+                    data,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        // Create chart and store the instance
+        const ctx = document.getElementById("workChart");
+        const newInstance = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+        })
+        setChartInstance(newInstance)
+    }, [workOrders]);
+
+    
+
+    
 
   return (
     <div>
         <Typography>Work Orders Assigned To Employees</Typography>
         <div style={{ width: "80%", margin: "0 auto" }}>
-            <Bar data={chartData} />
+            <canvas id="workChart"></canvas>
         </div>
     </div>
   )
