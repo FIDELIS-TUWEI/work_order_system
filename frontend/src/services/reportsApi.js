@@ -1,6 +1,17 @@
 import axios from 'axios';
 const WORK_URL = "/hin";
 
+// Filter work by status query
+export const filterWorkStatus = async (status) => {
+    try {
+        const res = await axios.get(`${WORK_URL}/work/status=${status}`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching all work orders", error);
+    }
+}
+
 // Get pending work Orders
 export const pendingWorkOrders = async () => {
     try {
