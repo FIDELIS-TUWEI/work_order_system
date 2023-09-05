@@ -22,3 +22,14 @@ export const getWeeklyReport = async () => {
         console.log("Error while fetching weekly work orders report", error);
     }
 };
+
+// Fetch daily counts
+export const getDailyCounts = async () => {
+    try {
+        const res = await axios.get(`${WORK_URL}/daily-report`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching daily counts", error);
+    }
+}

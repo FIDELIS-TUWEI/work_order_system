@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDailyReport } from "../../../services/reportsApi";
+import { getDailyCounts } from "../../../services/reportsApi";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import moment from "moment";
@@ -10,14 +10,16 @@ const Daily = () => {
     
     // Function to get daily report from API Service
     const dailyReport = async () => {
-        const {data} = await getDailyReport({
+        const { data } = await getDailyCounts({
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
         setReports(data);
+        console.log(data);
     }
+    console.log(reports);
 
     useEffect(() => {
         dailyReport();
@@ -31,8 +33,8 @@ const Daily = () => {
                     <th>Work Id</th>
                     <th>Work Title</th>
                     <th>Work Service Type</th>
-                    <th>Work Status</th>
                     <th>Date</th>
+                    <th>Total Work Orders</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +43,8 @@ const Daily = () => {
                         <td>{report._id}</td>
                         <td>{report.title}</td>
                         <td>{report.serviceType}</td>
-                        <td>{report.status}</td>
                         <td>{moment(report.Date_Created).format("DD/MM/YYYY")}</td>
+                        <td>{report.count}</td>
                     </tr>
                 ))}
             </tbody>
