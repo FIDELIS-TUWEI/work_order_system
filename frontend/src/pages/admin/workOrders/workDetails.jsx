@@ -70,7 +70,7 @@ const WorkDetails = () => {
                     Assigned To: {workDetails && workDetails.assignedTo}
                 </p>
                 <p>
-                    Date Completed: {workDetails && workDetails.dateCompleted}
+                    Date Completed: {moment(workDetails && workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")}
                 </p>
                 <p>
                     Reviewed: {workDetails && workDetails.reviewed === true ? "Yes" : "No"}
@@ -79,7 +79,7 @@ const WorkDetails = () => {
                     Reviewed By: {workDetails && workDetails.reviewedBy}
                 </p>
                 <p>
-                    Date Reviewed: {workDetails && workDetails.dateReviewed}
+                    Date Reviewed: {moment(workDetails && workDetails.dateReviewed).format("DD/MM/YYYY, hh:mm a")}
                 </p>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
