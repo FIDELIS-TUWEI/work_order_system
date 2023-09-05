@@ -108,6 +108,7 @@ const WorkReport = () => {
               ))}
             </tbody>
           </table>
+          <p>Total Work Orders: {workOrders.length}</p>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Button style={{ 
               color: 'white', 
