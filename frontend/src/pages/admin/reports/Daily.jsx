@@ -3,50 +3,115 @@ import { getDailyCounts } from "../../../services/reportsApi";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import moment from "moment";
+import { getAllWorkOrders } from "../../../services/workApi";
+import { format } from "date-fns";
+import { useTable, useFilters } from "react-table";
 
 const Daily = () => {
     const token = useSelector(selectToken);
-    const [reports, setReports] = useState([]);
-    
-    // Function to get daily report from API Service
-    const dailyReport = async () => {
-        const { data } = await getDailyCounts({
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        setReports(data);
-        console.log(data);
-    }
-    console.log(reports);
+    const [workOrders, setWorkOrders] = useState([]);
+    const [filteredWorkOrders, setFilteredWorkOrders] = useState([]);
+    const [filterType, setFilterType] = useState("daily");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        dailyReport();
-    })
+        getWorkOrders();
+    }, []);
+
+    // Function to get All work orders from API Service
+    const getWorkOrders = async () => {
+        setLoading(true);
+        const { data } = await getAllWorkOrders({
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        setWorkOrders(data);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        // Filter work orders based on the selected filter type
+        const currentDate = new Date();
+        const filtered = workOrders.filter((work) => {
+            const orderDate = new Date(work.Date_Created);
+            if (filterType === "daily") {
+                return format(orderDate, "YYYY-MM-DD") === format(currentDate, "YYYY-MM-DD");
+            } else if (filterType === "weekly") {
+                return (
+                    format(orderDate, "YYYY-MM-DD") >= format(currentDate, "YYYY-MM-DD") &&
+                    format(orderDate, "YYYY-MM-DD") <= format(addDays(currentDate, 7), "YYYY-MM-DD")
+                );
+            } else if (filterType === "monthly") {
+                return format(orderDate, "YYYY-MM") === format(currentDate, "YYYY-MM");
+            } else {
+                return true;
+            }
+        });
+        setFilteredWorkOrders(filtered);
+    }, [workOrders, filterType]);
+
+    // Define table columns and data
+    const columns = [
+        {
+            Header: "Date",
+            accessor: "Date_Created",
+        },
+        {
+            Header: "Total",
+            accessor: "Total",
+        },
+        {
+            Header: "Completed",
+            accessor: "Completed",
+        }
+    ];
+
+    const data = filteredWorkOrders.map((work) => {
+        return {
+            _id: work._id,
+        };
+    });
+
+    // Initialize table instance
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+        {
+            columns,
+            data,
+        },
+        useFilters
+    );
+    
   return (
     <div>
-        <h3>Daily Report</h3>
-        <table>
+        <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+
+        <table {...getTableProps()} style={{ border: '1px solid black' }}>
             <thead>
-                <tr>
-                    <th>Work Id</th>
-                    <th>Work Title</th>
-                    <th>Work Service Type</th>
-                    <th>Date</th>
-                    <th>Total Work Orders</th>
-                </tr>
-            </thead>
-            <tbody>
-                {reports.map((report) => (
-                    <tr key={report._id}>
-                        <td>{report._id}</td>
-                        <td>{report.title}</td>
-                        <td>{report.serviceType}</td>
-                        <td>{moment(report.Date_Created).format("DD/MM/YYYY")}</td>
-                        <td>{report.count}</td>
+                {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column) => (
+                            <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                        ))}
                     </tr>
                 ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+                {rows.map((row) => {
+                    prepareRow(row);
+                    return (
+                        <tr {...row.getRowProps()}>
+                            {row.cells.map((cell) => {
+                                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                            })}
+                        </tr>
+                    );
+                })}
             </tbody>
         </table>
     </div>
