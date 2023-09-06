@@ -32,7 +32,7 @@ const signupUser = asyncHandler (async (req, res) => {
             role: user.role,
             active: user.active,
             department: user.department,
-            desgination: user.desgination,
+            designation: user.designation,
         })
 
     } catch (error) {
