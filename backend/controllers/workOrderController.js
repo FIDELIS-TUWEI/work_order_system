@@ -34,6 +34,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                 const mailOptions = {
                     from: `workorder.holidayinnnairobi@gmail.com`,
                     to: `fidel.tuwei@holidayinnnairobi.com`,
+                    cc:["fideliofidel9@gmail.com"],
                     subject: "New Work Order created",
                     html: `
                         <h2>A New Work Order was Created</h2>\n\n
