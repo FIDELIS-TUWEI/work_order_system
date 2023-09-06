@@ -40,6 +40,10 @@ const workOrderSchema = new mongoose.Schema({
         enum: ["Pending", "In_Progress" ,"Complete", "Reviewed"],
         default: "Pending"
     },
+    dueDate: {
+        type: Object,
+        required: true
+    },
     assignedTo: {
         type: String,
         default: ""
