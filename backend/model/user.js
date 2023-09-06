@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    department: {
+        type: String,
+        required: true
+    },
+    desgination: {
+        type: String,
+        required: true
+    },
     date: {
         // format YY-MM-DD
         type: Object,
