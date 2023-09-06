@@ -42,7 +42,8 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                             <p>Work Title: ${savedWorkorder.title}</p>\n
                             <p>Priority: ${savedWorkorder.priority}</p>\n
                             <p>Service Type: ${savedWorkorder.serviceType}</p>\n
-                            <p>Date: ${savedWorkorder.Date_Created}</p>\n
+                            <p>Date Created: ${savedWorkorder.Date_Created}</p>\n
+                            <p>Expected Completion Date: ${savedWorkorder.dueDate}</p>\n
                             <p>Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details</p>\n
                     `,
                 };
@@ -62,6 +63,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             location,
             serviceType,
             category,
+            dueDate,
         });
 
         const savedWorkorder = await newWorkOrder.save();
