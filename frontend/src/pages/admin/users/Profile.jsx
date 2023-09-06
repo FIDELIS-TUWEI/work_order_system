@@ -27,6 +27,12 @@ const Profile = () => {
           Username: {user && user.username}
         </p>
         <p>
+          Department: {user && user.department}
+        </p>
+        <p>
+          Designation: {user && user.designation}
+        </p>
+        <p>
           Role: {user && user.role}
         </p>
         <p>
