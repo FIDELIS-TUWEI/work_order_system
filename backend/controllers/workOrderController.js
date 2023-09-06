@@ -14,7 +14,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     }
 
-    const { priority, title, location, serviceType, category } = req.body;
+    const { priority, title, location, serviceType, category, dueDate } = req.body;
 
 
     try {
