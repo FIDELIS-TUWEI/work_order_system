@@ -43,6 +43,12 @@ const UserDetails = () => {
           Username: {userDetails && userDetails.username}
         </p>
         <p>
+          Department: {userDetails && userDetails.department}
+        </p>
+        <p>
+          Designation: {userDetails && userDetails.designation}
+        </p>
+        <p>
           Role: {userDetails && userDetails.role}
         </p>
         <p>
