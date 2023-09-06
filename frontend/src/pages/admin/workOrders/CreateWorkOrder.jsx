@@ -1,7 +1,7 @@
 import { 
-  Button, Card, Col, Form, Input, 
+  Button, Card, Col, DatePicker, Form, Input, 
   Row, Select, Typography, message 
-} from 'antd'
+} from 'antd';
 import Layout from '../../../components/Layout'
 import { useEffect, useState } from 'react'
 import { createWorkOrder, getWorkLocations } from '../../../services/workApi'
@@ -12,6 +12,7 @@ import { selectToken } from '../../../utils/redux/slices/authSlice'
 import { allWorkCategories } from '../../../services/categoryApi'
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const CreateWorkOrder = () => {
   const token = useSelector(selectToken);
@@ -150,6 +151,14 @@ const CreateWorkOrder = () => {
                     { value: 'Normal', label: 'Normal' }, { value: 'Urgent', label: 'Urgent' }
                   ]}
                 />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item 
+                name="dueDate" 
+                label="Due Date" 
+                required rules={[{ required: true, message: 'Please Enter Due Date!' }]}>
+              <RangePicker />
             </Form.Item>
           </Col>
         </Row>
