@@ -16,7 +16,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
     const { priority, title, location, serviceType, category, dueDate } = req.body;
 
-
     try {
         // send email notification to cheif engineer
         // Configure gmail smtp
