@@ -29,7 +29,10 @@ const signupUser = asyncHandler (async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             username: user.username,
-            role: user.role
+            role: user.role,
+            active: user.active,
+            department: user.department,
+            desgination: user.desgination,
         })
 
     } catch (error) {
