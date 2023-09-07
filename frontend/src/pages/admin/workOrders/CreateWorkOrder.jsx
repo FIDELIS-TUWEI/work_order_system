@@ -158,7 +158,7 @@ const CreateWorkOrder = () => {
                 name="dueDate" 
                 label="Due Date" 
                 required rules={[{ required: true, message: 'Please Enter Due Date!' }]}>
-              <RangePicker />
+              <RangePicker format='YYYY-MM-DD' />
             </Form.Item>
           </Col>
         </Row>
