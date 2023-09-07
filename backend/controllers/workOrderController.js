@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const nodemailer = require("nodemailer");
 const { PASS, USER } = require("../utils/env");
+const moment = require("moment");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -15,6 +16,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
     }
 
     const { priority, title, location, serviceType, category, dueDate } = req.body;
+    const formattedDate = moment(dueDate, "YYYY-MM-DD").format("YYYY-MM-DD");
 
     try {
         // send email notification to cheif engineer
@@ -43,7 +45,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                             <p>Priority: ${savedWorkorder.priority}</p>\n
                             <p>Service Type: ${savedWorkorder.serviceType}</p>\n
                             <p>Date Created: ${savedWorkorder.Date_Created}</p>\n
-                            <p>Expected Completion Date: ${savedWorkorder.dueDate}</p>\n
+                            <p>Expected Completion Date: ${savedWorkorder.formattedDate}</p>\n
                             <p>Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details</p>\n
                     `,
                 };
