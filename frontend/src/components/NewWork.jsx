@@ -1,10 +1,10 @@
-import { Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
+import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const NewWork = () => {
+const NewWork = ({ loading, location, category, onFinishHandler, selectedLocation, selectedCategory, handleLocationChange, handleCategoryChange }) => {
   return (
     <>
     <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>New Work Order</Typography>
