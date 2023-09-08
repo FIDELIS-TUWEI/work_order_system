@@ -126,7 +126,7 @@ const EditWorkOrder = () => {
               ) : (
                 <>
                 {
-                  user && user.role === 'admin' || user && user.role === 'reviewer' ? (
+                  user && user.role === 'admin' || user && user.role === 'superadmin' || user && user.role === 'reviewer' ? (
                     <>
                       <Col xs={24} md={24} lg={8}>
                         <Form.Item
