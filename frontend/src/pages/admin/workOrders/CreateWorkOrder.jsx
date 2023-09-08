@@ -1,17 +1,12 @@
-import { 
-  Button, Card, Col, DatePicker, Form, Input, 
-  Row, Select, Typography, message 
-} from 'antd';
+import { message } from 'antd';
 import Layout from '../../../components/Layout'
 import { useEffect, useState } from 'react'
 import { createWorkOrder, getWorkLocations } from '../../../services/workApi'
 import { useNavigate } from 'react-router-dom'
-import LoadingBox from '../../../components/LoadingBox'
 import { useSelector } from 'react-redux'
 import { selectToken } from '../../../utils/redux/slices/authSlice'
 import { allWorkCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
-
 
 
 const CreateWorkOrder = () => {
