@@ -165,8 +165,8 @@
 table {
     border-spacing: 0;
     border: 1px solid #ddd;
-    width: 90%;
-    margin: 0 0 10px 30px;
+    width: 100%;
+    margin: 0 0 10px 5px;
 }
 
 th {
