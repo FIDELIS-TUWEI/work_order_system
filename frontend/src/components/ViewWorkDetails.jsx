@@ -22,6 +22,13 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Requested Date: {moment(workDetails && workDetails.Date_Created).format("DD/MM/YYYY, hh:mm a")}
                 </p>
                 <p>
+                    {workDetails && workDetails.dateCompleted ? (
+                        <span>Completed Date: {moment(workDetails && workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</span>
+                    ) : (
+                        <span>Work order has no Due Date</span>
+                    )}
+                </p>
+                <p>
                     Assigned To: {workDetails && workDetails.assignedTo}
                 </p>
                 <p>
