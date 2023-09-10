@@ -4,7 +4,12 @@ import LoadingBox from "./LoadingBox";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const NewWork = ({ loading, location, category, onFinishHandler, selectedLocation, selectedCategory, handleLocationChange, handleCategoryChange }) => {
+const NewWork = ({ 
+  loading, location, category, 
+  onFinishHandler, selectedLocation, 
+  selectedCategory, handleLocationChange, 
+  handleCategoryChange, dueDate, handleDueDateChange 
+}) => {
   return (
     <>
     <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>New Work Order</Typography>
@@ -93,6 +98,8 @@ const NewWork = ({ loading, location, category, onFinishHandler, selectedLocatio
             <Form.Item 
                 name="dueDate" 
                 label="Due Date" 
+                value={dueDate}
+                onChange={handleDueDateChange}
                 required rules={[{ required: true, message: 'Please Enter Due Date!' }]}>
               <RangePicker format='YYYY-MM-DD' />
             </Form.Item>
