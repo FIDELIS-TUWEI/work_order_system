@@ -16,7 +16,6 @@ const CreateWorkOrder = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [dueDate, setDueDate] = useState([]);
   const navigate = useNavigate();
 
   // function to handle form submit
@@ -65,11 +64,6 @@ const CreateWorkOrder = () => {
     getCategories();
   }, []);
 
-  // Function to handle dueDate change
-  const handleDueDateChange = (values) => {
-    setDueDate(values);
-  }
-
   return (
     <Layout>
       <NewWork 
@@ -81,8 +75,6 @@ const CreateWorkOrder = () => {
         selectedCategory={selectedCategory}
         handleLocationChange={handleLocationChange}
         handleCategoryChange={handleCategoryChange} 
-        dueDate={dueDate}
-        handleDueDateChange={handleDueDateChange}
       />
     </Layout>
   )
