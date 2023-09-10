@@ -14,11 +14,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     }
 
-    const { priority, title, location, serviceType, category, dateRange } = req.body;
-
-    // Calculate the dueDate from the RangePicker values
-    const [startDate, endDate] = dateRange;
-    const dueDate = endDate
+    const { priority, title, location, serviceType, category } = req.body;
 
     try {
         // send email notification to cheif engineer
@@ -67,7 +63,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             location,
             serviceType,
             category,
-            dueDate,
         });
 
         const savedWorkorder = await newWorkOrder.save();
