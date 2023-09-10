@@ -1,9 +1,7 @@
-import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
+import { Button, Card, Col, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
-import { useState } from "react";
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const NewWork = ({ 
   loading, location, category, 
@@ -12,12 +10,6 @@ const NewWork = ({
   handleCategoryChange 
 }) => {
 
-  const [dateRange, setDateRange] = useState([]);
-
-  // Function to handleDateRangeChange
-  const handleDateRangeChange = (value) => {
-    setDateRange(value);
-  }
   return (
     <>
     <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>New Work Order</Typography>
@@ -100,16 +92,6 @@ const NewWork = ({
                     { value: 'Normal', label: 'Normal' }, { value: 'Urgent', label: 'Urgent' }
                   ]}
                 />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item 
-                name="dueDate" 
-                label="Due Date" 
-                value={dateRange}
-                onChange={handleDateRangeChange}
-                required rules={[{ required: true, message: 'Please Enter Due Date!' }]}>
-              <RangePicker format='YYYY-MM-DD' />
             </Form.Item>
           </Col>
         </Row>
