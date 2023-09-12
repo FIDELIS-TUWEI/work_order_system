@@ -2,6 +2,7 @@ import { Button, Card } from "antd"
 import moment from "moment"
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate}) => {
+    console.log(workDetails && workDetails.dueDate);
   return (
     <>
         <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '500px' }}>
@@ -25,8 +26,11 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     {workDetails && workDetails.dateCompleted ? (
                         <span>Completed Date: {moment(workDetails && workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</span>
                     ) : (
-                        <span>Work order has no Due Date</span>
+                        <span>Work order has not been completed yet!</span>
                     )}
+                </p>
+                <p>
+                    Due Date: {moment(workDetails && workDetails.dueDate).format("DD/MM/YYYY, hh:mm a") }
                 </p>
                 <p>
                     Assigned To: {workDetails && workDetails.assignedTo}
