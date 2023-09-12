@@ -70,7 +70,7 @@ const CreateWorkOrder = () => {
         loading={loading} 
         category={category} 
         location={location} 
-        onFinish={onFinishHandler}
+        onFinishHandler={onFinishHandler}
         selectedLocation={selectedLocation}
         selectedCategory={selectedCategory}
         handleLocationChange={handleLocationChange}
