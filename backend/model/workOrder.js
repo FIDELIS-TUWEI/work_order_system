@@ -50,7 +50,7 @@ const workOrderSchema = new mongoose.Schema({
     },
     dueDate: {
         type: Object,
-        required: true
+        required: [true, "Due Date is required"]
     },
     dateCompleted: {
         type: Object,
