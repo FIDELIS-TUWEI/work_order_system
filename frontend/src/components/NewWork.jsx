@@ -1,7 +1,8 @@
-import { Button, Card, Col, Form, Input, Row, Select, Typography } from "antd";
+import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const NewWork = ({ 
   loading, location, category, 
@@ -92,6 +93,14 @@ const NewWork = ({
                     { value: 'Normal', label: 'Normal' }, { value: 'Urgent', label: 'Urgent' }
                   ]}
                 />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item 
+              name="dueDate" 
+              label="Due Date" 
+              required rules={[{ required: true, message: 'Please Select a Due Date!' }]}>
+              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} />
             </Form.Item>
           </Col>
         </Row>
