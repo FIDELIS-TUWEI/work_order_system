@@ -3,6 +3,8 @@ import moment from "moment"
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate}) => {
     console.log(workDetails && workDetails.dueDate);
+    const startDate = moment(workDetails && workDetails.dueDate).format("DD/MM/YYYY, hh:mm a");
+    const endDate = moment(workDetails && workDetails.dueDate).format("DD/MM/YYYY, hh:mm a");
   return (
     <>
         <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '500px' }}>
