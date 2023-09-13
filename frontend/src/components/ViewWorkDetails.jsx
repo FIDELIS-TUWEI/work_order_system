@@ -1,8 +1,19 @@
 import { Button, Card } from "antd"
 import moment from "moment"
+import { useEffect, useState } from "react";
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate}) => {
     console.log(workDetails.dueDate);
+    const [formatDate, setFormatDate] = useState("");
+
+    useEffect(() => {
+        if (workDetails && workDetails.dueDate) {
+            const date = moment(workDetails.dueDate).format("DD/MM/YYYY, hh:mm a");
+            setFormatDate(date);
+        }
+    }, [workDetails]);
+
+    console.log(formatDate);
     
   return (
     <>
@@ -31,7 +42,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     )}
                 </p>
                 <p>
-                    Due Date: {moment(workDetails && workDetails.dueDate).format("DD/MM/YYYY, hh:mm a")}
+                    Due Date: {formatDate}
                 </p>
                 <p>
                     Assigned To: {workDetails && workDetails.assignedTo}
