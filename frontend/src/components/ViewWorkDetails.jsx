@@ -31,7 +31,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     )}
                 </p>
                 <p>
-                    Due Date: {moment(workDetails && workDetails.dueDate).format("DD/MM/YYYY, hh:mm a") }
+                    Due Date: {moment(workDetails && workDetails.dueDate).format("DD/MM/YYYY, hh:mm a")}
                 </p>
                 <p>
                     Assigned To: {workDetails && workDetails.assignedTo}
