@@ -1,6 +1,5 @@
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
-import ViewWorkDetails from "./ViewWorkDetails";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -11,14 +10,6 @@ const NewWork = ({
   selectedCategory, handleLocationChange, 
   handleCategoryChange 
 }) => {
-
-  const [selectedDate, setSelectedDate] = useState([]);
-
-
-  // Function to handle date change
-  const handleDateChange = (dateRange) => {
-    setSelectedDate(dateRange);
-  }
 
   return (
     <>
@@ -109,7 +100,7 @@ const NewWork = ({
               name="dueDate" 
               label="Due Date" 
               required rules={[{ required: true, message: 'Please Select a Due Date!' }]}>
-              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} onChange={handleDateChange} value={selectedDate} />
+              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} />
             </Form.Item>
           </Col>
         </Row>
@@ -125,8 +116,6 @@ const NewWork = ({
         </div>
       </Form>
       </Card>
-
-      <ViewWorkDetails selectedDate={selectedDate} />
       </>
   )
 }
