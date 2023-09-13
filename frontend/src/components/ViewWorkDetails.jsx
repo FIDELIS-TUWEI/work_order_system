@@ -2,7 +2,7 @@ import { Button, Card } from "antd"
 import moment from "moment"
 import { useEffect, useState } from "react";
 
-const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate}) => {
+const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate, selectedDate}) => {
     console.log(workDetails.dueDate);
    
     
@@ -33,7 +33,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     )}
                 </p>
                 <p>
-                    Due Date: {formatDate}
+                    Due Date: {moment(selectedDate[0]).format("DD/MM/YYYY, hh:mm a")} - {moment(selectedDate[1]).format("DD/MM/YYYY, hh:mm a")}
                 </p>
                 <p>
                     Assigned To: {workDetails && workDetails.assignedTo}

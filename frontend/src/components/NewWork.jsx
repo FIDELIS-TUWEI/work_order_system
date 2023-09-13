@@ -1,5 +1,6 @@
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
+import ViewWorkDetails from "./ViewWorkDetails";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -124,6 +125,8 @@ const NewWork = ({
         </div>
       </Form>
       </Card>
+
+      <ViewWorkDetails selectedDate={selectedDate} />
       </>
   )
 }
