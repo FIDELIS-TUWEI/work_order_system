@@ -1,6 +1,5 @@
 import { Button, Card } from "antd"
 import moment from "moment"
-import { useEffect, useState } from "react";
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate }) => {
     console.log(workDetails.dueDate);
