@@ -11,6 +11,14 @@ const NewWork = ({
   handleCategoryChange 
 }) => {
 
+  const [selectedDate, setSelectedDate] = useState([]);
+
+
+  // Function to handle date change
+  const handleDateChange = (dateRange) => {
+    setSelectedDate(dateRange);
+  }
+
   return (
     <>
     <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>New Work Order</Typography>
@@ -100,7 +108,7 @@ const NewWork = ({
               name="dueDate" 
               label="Due Date" 
               required rules={[{ required: true, message: 'Please Select a Due Date!' }]}>
-              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} />
+              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} onChange={handleDateChange} value={selectedDate} />
             </Form.Item>
           </Col>
         </Row>
