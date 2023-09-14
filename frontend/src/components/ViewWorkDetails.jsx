@@ -2,7 +2,6 @@ import { Button, Card } from "antd"
 import moment from "moment"
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate }) => {
-    console.log(workDetails.dueDate);
    
     
   return (
