@@ -1,13 +1,11 @@
-import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
+import { Button, Card, Col, Form, Input, Row, Select, Typography } from "antd";
 
 
 const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
-      <Typography>
-        Username: {userDetails && userDetails.username}
-      </Typography>
+      <Card title={userDetails && userDetails.username} style={{ margin: '15px' }}>
         <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: "18px"}}>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={8}>
@@ -129,6 +127,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
             </div>
         </Form>
+        </Card>
     </div>
   )
 }
