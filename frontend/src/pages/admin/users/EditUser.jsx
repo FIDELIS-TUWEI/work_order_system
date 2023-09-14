@@ -55,6 +55,7 @@ const EditUser = () => {
       <UpdateUser 
         userDetails={userDetails}
         onFinishHandler={onFinishHandler}
+        navigate={navigate}
       />
     </Layout>
   )

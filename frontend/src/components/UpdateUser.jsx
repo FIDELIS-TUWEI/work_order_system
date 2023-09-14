@@ -1,7 +1,7 @@
 import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
 
 
-const UpdateUser = ({ onFinishHandler, userDetails }) => {
+const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
