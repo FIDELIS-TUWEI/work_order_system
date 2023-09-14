@@ -162,15 +162,6 @@ const EditWorkOrder = () => {
                           <Input type='text' placeholder='Enter comments' />
                         </Form.Item>
                       </Col>
-                      <Col xs={24} md={24} lg={8}>
-                        <Form.Item
-                          label="Date Reviewed"
-                          name="dateReviewed"
-                          rules={[{ required: true, message: 'Please Enter Date Reviewed!' }]}
-                        >
-                          <DatePicker format='YYYY-MM-DD' />
-                        </Form.Item>
-                      </Col>
                     </>
                   ) : ''}
                 </>
