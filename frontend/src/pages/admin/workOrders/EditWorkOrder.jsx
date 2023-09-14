@@ -44,6 +44,7 @@ const EditWorkOrder = () => {
           workDetails={workDetails}
           onFinishHandler={onFinishHandler}
           user={user}
+          navigate={navigate}
         />
     </Layout>
   )

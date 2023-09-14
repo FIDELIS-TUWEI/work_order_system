@@ -1,7 +1,7 @@
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd'
 
 
-const UpdateWork = ({ workDetails, onFinishHandler, user }) => {
+const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
   return (
     <div>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
