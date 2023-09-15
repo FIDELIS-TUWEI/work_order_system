@@ -32,7 +32,6 @@ const UserDetails = () => {
   return (
     <Layout>
       <Card title="User Details" style={{ margin: 'auto', width: '300px' }}>
-        <p>User Id: {id}</p>
         <p>
           First Name: {userDetails && userDetails.firstName}
         </p>
