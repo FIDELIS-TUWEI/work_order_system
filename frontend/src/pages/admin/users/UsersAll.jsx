@@ -11,32 +11,34 @@ const UsersAll = () => {
   const token = useSelector(selectToken);
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
   const navigate = useNavigate();
+
+  const pageSize = 5;
 
 
   useEffect(() => {
     getUsers();
-  }, [currentPage]);
+  }, [page]);
 
   // Function to get all users from Api
 const getUsers = async () => {
   setLoading(true);
-  const { data, pages, count } = await getAllUsers(currentPage, {
+  const { data, pages, count } = await getAllUsers(page, {
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
   setAllUsers(data);
-  setTotalPages(pages);
+  setPages(pages);
   setLoading(false);
 };
 
 // function to handle page change
 const handlePageChange = (newPage) => {
-  setCurrentPage(newPage);
+  setPage(newPage);
 }
 
   return (
@@ -44,8 +46,8 @@ const handlePageChange = (newPage) => {
       <AllUsers 
         allUsers={allUsers}
         loading={loading}
-        currentPage={currentPage}
-        totalPages={totalPages}
+        page={page}
+        pages={pages}
         handlePageChange={handlePageChange}
         navigate={navigate}
       />

@@ -3,7 +3,7 @@ import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
 
 
-const AllUsers = ({ allUsers, loading, currentPage, totalPages, handlePageChange, navigate}) => {
+const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate}) => {
   return (
     <div>
         <div className="add-btn">
