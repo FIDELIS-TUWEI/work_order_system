@@ -8,7 +8,6 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
     <>
         <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '500px' }}>
             <div ref={componentPDF}>
-                <p>Work Id: {workDetails && workDetails._id}</p>
                 <p>
                     Title: {workDetails && workDetails.title}
                 </p>
