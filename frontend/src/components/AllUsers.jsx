@@ -1,6 +1,7 @@
 import { Button, Card } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
 
 const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate}) => {
@@ -51,9 +52,13 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate})
       </table>
       </Card>
       <div className="pagination">
-        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)}>Previous</Button>
+        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
+          <GrFormPrevious />
+        </Button>
         <span> Page {page} of {pages}</span>
-        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)}>Next</Button>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
+          <GrFormNext />
+        </Button>
       </div>
     </div>
   )
