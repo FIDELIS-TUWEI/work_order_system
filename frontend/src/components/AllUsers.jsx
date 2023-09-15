@@ -51,16 +51,9 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate})
       </table>
       </Card>
       <div className="pagination">
-        {Array.from({length: totalPages}, (_, index) => index + 1).map((page) => (
-          <Button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            disabled={currentPage === page}
-            style={{margin: '0 5px'}}
-          >
-            {page}
-          </Button>
-        ))}
+        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)}>Previous</Button>
+        <span> Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)}>Next</Button>
       </div>
     </div>
   )
