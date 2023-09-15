@@ -2,9 +2,9 @@ import axios from 'axios';
 const USERS_URL = "/hin";
 
 // Get all users From Database
-export const getAllUsers = async () => {
+export const getAllUsers = async (page) => {
     try {
-        const response = await axios.get(`${USERS_URL}/all-users`)
+        const response = await axios.get(`${USERS_URL}/all-users?pageNumber=${page}`);
         const data = response.data;
         return data;
     } catch (error) {
