@@ -39,18 +39,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date: {
-        // format YY-MM-DD
-        type: Object,
-        match: /^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/,
-        required: true,
-    },
-    time: {
-        // format HH:MM:SS
-        type: Object,
-        match: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/,
-        required: true,
-    },
     workOrders: [
         {
             type: ObjectId,
@@ -58,7 +46,6 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     ],
-    passwordChangedAt: Date,
 }, 
 { 
     timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" }, 
@@ -77,16 +64,6 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.comparePassword = async function(enteredPassword) {
     const isMatch = await bcrypt.compare(enteredPassword, this.password);
     return isMatch;
-}
-
-userSchema.methods.isPasswordChanged = async function (JWTTimestamp) {
-    if (this.passwordChangedAt) {
-        const pswdChangedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
-        console.log(pswdChangedTimestamp, JWTTimestamp);
-
-        return JWTTimestamp < pswdChangedTimestamp;
-    }
-    return false;
 }
 
 module.exports = mongoose.model('User', userSchema);
