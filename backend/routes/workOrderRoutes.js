@@ -8,6 +8,6 @@ router.post("/create/work", protect, restrict(["admin", "hod", "user", "supervis
 router.get("/getall/work", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer"]), getAllWorkOrders);
 router.get("/single/work/:id", protect, restrict(["admin", "supervisor", "superadmin", "hod", "reviewer", "engineer"]), getSingleWorkOrder);
 router.put("/update/work/:id", protect, restrict(["admin", "supervisor", "superadmin", "reviewer", "engineer"]), updateWorkOrder);
-router.delete("/delete/work/:id", protect, restrict(["admin"]), deleteWorkOrder);
+router.delete("/delete/work/:id", protect, restrict(["admin", "superadmin"]), deleteWorkOrder);
 
 module.exports = router;

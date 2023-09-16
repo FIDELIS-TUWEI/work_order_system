@@ -97,7 +97,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
                   allowClear
                   style={{ width: '100%' }}
                   options={[
-                    { value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }, 
+                    { value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }, { value: 'engineer', label: 'Engineer' }, 
                     { value: 'hod', label: 'HoD' }, { value: 'superadmin', label: 'Super Admin' },
                     { value: 'supervisor', label: 'Supervisor' }, { value: 'reviewer', label: 'Reviewer' }
                   ]}
