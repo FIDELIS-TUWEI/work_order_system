@@ -4,8 +4,8 @@ import { Button, Card, Typography, message } from "antd";
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import Logo from "../../../assets/logo.png";
-import LoadingBox from "./LoadingBox";
+import Logo from "../assets/logo.png";
+import LoadingBox from "../components/LoadingBox";
 
 const WORK_URL = "/hin";
 
