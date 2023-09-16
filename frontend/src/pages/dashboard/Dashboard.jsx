@@ -18,7 +18,7 @@ const Dashboard = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    setPendingWorkCount(res.count);
+    setPendingWorkCount(res.countPending);
   }
 
   useEffect(() => {
