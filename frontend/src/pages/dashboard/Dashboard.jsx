@@ -1,28 +1,74 @@
 import { useSelector } from "react-redux";
 import Layout from "../../components/Layout"
-import { Card, Typography } from "antd";
+import { Card, Col, Row } from "antd";
 import { selectUserInfo } from "../../utils/redux/slices/authSlice";
-import Logo from "../../assets/logo.png"
 
 const Dashboard = () => {
   const user = useSelector(selectUserInfo);
 
   return (
     <Layout>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <img style={{ marginTop: "20px" }} src={Logo} alt="Company Logo" />
-      </div>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
-          Welcome To Holiday Inn Nairobi
-        </Typography>
-      <Card style={{ margin: "auto", width: "300px" }}>
-        <Typography style={{ textAlign: 'center', fontSize: '1rem', fontWeight: 'bold' }}>
-          User: {user && user.firstName}, {user && user.lastName}
-        </Typography>
-        <Typography style={{ textAlign: 'center', fontSize: '1rem', fontWeight: 'bold' }}>
-          Department: {user && user.department} 
-        </Typography>
-      </Card>
+      <Row gutter={16} >
+        {
+          user && user.role === "admin" || user && user.role === "superadmin" ? (
+            <>
+            <Col span={8}>
+              <Card title="Total Work Orders" bordered={false}>
+                4
+              </Card>
+            </Col>
+
+            <Col span={8}>
+              <Card title="Total Users" bordered={false}>
+                6
+              </Card>
+            </Col>
+
+            <Col span={8}>
+                <Card title="Pending Work Orders" bordered={false}>
+                  2
+                </Card>
+              </Col>
+
+              <Col span={8}>
+                <Card title="In Progress Work Orders" bordered={false}>
+                  1
+                </Card>
+              </Col>
+
+              <Col span={8}>
+                <Card title="Completed Work Orders" bordered={false}>
+                  2
+                </Card>
+              </Col>
+            </>
+          ) : (
+            <>
+              <Col span={8}>
+                <Card title="Pending Work Orders" bordered={false}>
+                  2
+                </Card>
+              </Col>
+
+              <Col span={8}>
+                <Card title="In Progress Work Orders" bordered={false}>
+                  1
+                </Card>
+              </Col>
+
+              <Col span={8}>
+                <Card title="Completed Work Orders" bordered={false}>
+                  2
+                </Card>
+              </Col>
+            </>
+          )
+        }
+        
+
+        
+      </Row>
+      
       
     </Layout>
   )
