@@ -9,9 +9,9 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
  
   return (
     <Card title="Work Orders" style={{ margin: "15px" }}>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <label style={{ fontWeight: "bold" }}>Filter By Status
-          <select onChange={(e) => setFilterStatus(e.target.value)}>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
+        <label style={{ fontWeight: "bold" }}>Filter By Status:
+          <select onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px" }}>
             <option value="">All</option>
             <option value="Pending">Pending</option>
             <option value="In_Progress">In Progress</option>
