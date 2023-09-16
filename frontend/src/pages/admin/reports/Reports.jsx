@@ -1,5 +1,5 @@
 import Layout from "../../../components/Layout";
-import WorkReport from "./WorkReport";
+import WorkReport from "../../../components/WorkReport";
 
 import { Typography } from "antd";
 
