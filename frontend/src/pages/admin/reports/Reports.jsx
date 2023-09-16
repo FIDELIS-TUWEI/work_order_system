@@ -1,13 +1,13 @@
 import axios from "axios";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
-import Logo from "../assets/logo.png";
+import Logo from "../../../assets/logo.png";
 import Layout from "../../../components/Layout";
 import WorkReport from "../../../components/WorkReport";
 import { Typography, message } from "antd";
 
 const WORK_URL = "/hin";
-
 
 const Reports = () => {
   const [workOrders, setWorkOrders] = useState([]);
@@ -69,11 +69,9 @@ const Reports = () => {
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Reports</Typography>
       <WorkReport 
         workOrders={workOrders}
-        filterStatus={filterStatus}
-        setFilterStatus={setFilterStatus}
         loading={loading}
+        setFilterStatus={setFilterStatus}
         exportPDF={exportPDF}
-        
       />
       
     </Layout>

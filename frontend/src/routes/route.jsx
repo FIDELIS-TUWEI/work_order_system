@@ -18,7 +18,7 @@ import UsersAll from '../pages/admin/users/UsersAll';
 import Register from '../pages/admin/users/Register';
 import UserDetails from "../pages/admin/users/UserDetails";
 import Reports from "../pages/admin/reports/Reports";
-import WorkReport from "../pages/admin/reports/WorkReport";
+import WorkReport from "../components/WorkReport";
 
 
 

@@ -5,7 +5,7 @@ import LoadingBox from "../components/LoadingBox";
 
 
 
-const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, filterStatus }) => {
+const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
  
   return (
     <Card title="Work Orders" style={{ margin: "15px" }}>
