@@ -15,13 +15,6 @@ const UsersAll = () => {
   const [pages, setPages] = useState(1);
   const navigate = useNavigate();
 
-  const pageSize = 5;
-
-
-  useEffect(() => {
-    getUsers();
-  }, [page]);
-
   // Function to get all users from Api
 const getUsers = async () => {
   setLoading(true);
@@ -35,6 +28,10 @@ const getUsers = async () => {
   setPages(pages);
   setLoading(false);
 };
+
+useEffect(() => {
+  getUsers();
+}, [page]);
 
 // function to handle page change
 const handlePageChange = (newPage) => {

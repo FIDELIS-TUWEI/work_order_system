@@ -16,10 +16,6 @@ const AllWorkOrders = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
-  useEffect(() => {
-    getAllWork();
-  }, [page]);
-
   // Function to get all work orders from Api
   const getAllWork = async () => {
       setLoading(true);
@@ -33,6 +29,10 @@ const AllWorkOrders = () => {
       setPages(pages);
       setLoading(false);
   }
+
+  useEffect(() => {
+    getAllWork();
+  }, [page]);
 
   // function to handle page change
   const handlePageChange = (newPage) => {
