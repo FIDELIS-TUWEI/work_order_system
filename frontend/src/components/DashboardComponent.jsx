@@ -1,7 +1,7 @@
 import { Card, Col, Row, Typography } from "antd";
 
 
-const DashboardComponent = ({ user }) => {
+const DashboardComponent = ({ user, pendingWorkCount }) => {
   return (
     <>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
@@ -12,14 +12,14 @@ const DashboardComponent = ({ user }) => {
             user && user.role === "admin" || user && user.role === "superadmin" ? (
                 <>
                 <Col span={8}>
-                <Card title="Total Work Orders" bordered={false} style={{ marginBottom: '16px'}} className="custom-card">
-                    4
-                </Card>
+                    <Card title="Total Work Orders" bordered={false} style={{ marginBottom: '16px'}} className="custom-card">
+                        4
+                    </Card>
                 </Col>
 
                 <Col span={8}>
                     <Card title="Pending Work Orders" bordered={false} className="custom-card">
-                    2
+                        {pendingWorkCount}
                     </Card>
                 </Col>
 

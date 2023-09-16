@@ -21,8 +21,8 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
 // Count Work Orders with Pending status
 const countPendingWorkOrders = asyncHandler (async (req, res, next) => {
     try {
-        const workOrders = await WorkOrder.countDocuments({ status: "Pending" });
-        res.json(workOrders);
+        const count = await WorkOrder.countDocuments({ status: "Pending" });
+        res.json({ count });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
