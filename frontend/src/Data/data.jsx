@@ -92,3 +92,32 @@ export const HodMenu = [
         icon: <PiUserCircleGearFill/>
     },
 ]
+
+export const EngineerMenu = [
+    
+    {
+        name: "Dashboard",
+        path: "/private",
+        icon: <MdDashboard/>
+    },
+    {
+        name: "Work Order",
+        path: "/work/list",
+        icon: <MdOutlineWork/>
+    },
+    {
+        name: "Analytics",
+        path: "/work/analytics",
+        icon: <SiGoogleanalytics/>
+    },
+    {
+        name: "Reports",
+        path: "/work/reports",
+        icon: <TbReport />
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+        icon: <PiUserCircleGearFill/>
+    },
+]
