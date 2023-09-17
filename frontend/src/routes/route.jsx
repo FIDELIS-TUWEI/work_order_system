@@ -20,6 +20,7 @@ import UserDetails from "../pages/admin/users/UserDetails";
 import Reports from "../pages/admin/reports/Reports";
 import WorkReport from "../components/WorkReport";
 import NewCategory from "../pages/admin/category/NewCategory";
+import AllCategories from "../pages/admin/category/AllCategories";
 
 
 
@@ -33,6 +34,7 @@ export const router = createBrowserRouter(
         <Route path="/work/list" element={ <PrivateRoute> <AllWorkOrders /> </PrivateRoute> } />
         <Route path="/new/work" element={ <PrivateRoute> <CreateWorkOrder /> </PrivateRoute> } />
         <Route path="/new/category" element={ <PrivateRoute> <NewCategory /> </PrivateRoute>} />
+        <Route path="/all-categories" element={ <PrivateRoute> <AllCategories /> </PrivateRoute>} />
         <Route path="/work/details/:id" element={ <PrivateRoute> <WorkDetails /> </PrivateRoute> } />
         <Route path="/edit/work/:id" element={ <PrivateRoute> <EditWorkOrder /> </PrivateRoute> } />
         <Route path="/users/all" element={ <PrivateRoute> <UsersAll/> </PrivateRoute> } />

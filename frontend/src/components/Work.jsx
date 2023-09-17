@@ -25,6 +25,13 @@ const Work = ({allWork, user, loading}) => {
                         >
                             Add Category
                         </Button>
+
+                        <Button
+                            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+                            onClick={() => navigate("/all-categories")}
+                        >
+                            View Categories
+                        </Button>
                     </>
                 ) : null
             }
