@@ -20,8 +20,7 @@ const Work = ({allWork, user, loading}) => {
 
         <Card 
             loading={loading} 
-            title="All Work Orders" 
-            style={{ margin: "15px" }}
+            title="All Work Orders"
         >
             
         <table>

@@ -1,15 +1,18 @@
-import { Button } from "antd"
+import { Button, Card } from "antd"
 
-const ViewAllCategories = ({ navigate }) => {
+const ViewAllCategories = ({ navigate, loading }) => {
   return (
     <div>
-        <Button
-            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-            onClick={() => navigate("/new/category")}
-        >
-            Add Category
-        </Button>
-        ViewAllCategories
+        <div className="add-btn">
+            <Button
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+                onClick={() => navigate("/new/category")}
+            >
+                Add Category
+            </Button>
+        </div>
+        
+        <Card loading={loading} title="All Categories" style={{ margin: "auto", width: "300px" }}></Card>
     </div>
   )
 }
