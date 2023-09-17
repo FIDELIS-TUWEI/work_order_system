@@ -22,3 +22,14 @@ export const countInProgressWork = async () => {
         console.log("Error while fetching all work orders by in progress status", error);
     }
 }
+
+// API Service to count completed work orders by status
+export const countCompletedWork = async () => {
+    try {
+        const res = await axios.get(`${WORK_URL}/count/completed-status`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error While fetching all work orders by completed status", error);
+    }
+}
