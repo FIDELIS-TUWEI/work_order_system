@@ -17,7 +17,7 @@ const CreateCategory = ({ loading, onFinishHandler }) => {
                 <Row gutter={16}>
                     <Col xs={24} md={24} lg={8}>
                         <Form.Item
-                            name="category"
+                            name="categoryTitle"
                             label="Create Category"
                             required rules={[{ required: true, message: "Please Enter new Category" }]}
                         >
