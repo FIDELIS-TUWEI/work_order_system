@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import Layout from "../../components/Layout"
 import { selectToken, selectUserInfo } from "../../utils/redux/slices/authSlice";
 import DashboardComponent from "../../components/DashboardComponent";
-import { countCompletedWork, countInProgressWork, countPendingWork, countReviewedWork } from "../../services/reportApi";
+import { countCompletedWork, countInProgressWork, countPendingWork, countReviewedWork, countTotalWork } from "../../services/reportApi";
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [inProgressCount, setInProgressCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
   const [reviewedCount, setReviewedCount] = useState(0);
+  const [totalWorkCount, setTotalWorkCount] = useState(0);
 
   // Function to get work orders with pending status from API Service
   const getPendingWorkCount = async () => {
@@ -22,7 +23,7 @@ const Dashboard = () => {
       },
     });
     setPendingWorkCount(res.countPending);
-  }
+  };
 
   // Function to get work orders with In_Progress status from API Service
   const getInProgressWorkCount = async () => {
@@ -33,7 +34,7 @@ const Dashboard = () => {
       },
     });
     setInProgressCount(res.countInProgress);
-  }
+  };
 
   // Function to get work orders with completed status from API Service
   const getCompletedWorkCount = async () => {
@@ -44,7 +45,7 @@ const Dashboard = () => {
       },
     });
     setCompletedCount(res.countCompleted);
-  }
+  };
 
   // Function to get work orders with reviewed status from API Service
   const getReviewedWorkCount = async () => {
@@ -55,13 +56,26 @@ const Dashboard = () => {
       },
     });
     setReviewedCount(res.countReviewed);
-  }
+  };
 
+  // Function to get total work count
+  const getTotalWorkCount = async () => {
+    const res = await countTotalWork({
+      withCredentials: true,
+      headers: {
+        Authoization: `Bearer ${token}`,
+      },
+    });
+    setTotalWorkCount(res.totalWorkCount);
+  };
+
+  // UseEffect hook
   useEffect(() => {
     getPendingWorkCount();
     getInProgressWorkCount();
     getCompletedWorkCount();
     getReviewedWorkCount();
+    getTotalWorkCount();
   }, []);
 
   return (
