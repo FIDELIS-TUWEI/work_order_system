@@ -16,33 +16,6 @@ const Work = ({allWork, user, loading}) => {
             New Work
             </Button>
 
-            {
-                user && user.role === "admin" || user && user.role === "superadmin" ? (
-                    <>
-                        <Button
-                            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-                            onClick={() => navigate("/new/category")}
-                        >
-                            Add Category
-                        </Button>
-
-                        <Button
-                            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-                            onClick={() => navigate("/all-categories")}
-                        >
-                            View Categories
-                        </Button>
-
-                        <Button
-                            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-                            onClick={() => navigate("/all-locations")}
-                        >
-                            View Locations
-                        </Button>
-                    </>
-                ) : null
-            }
-
         </div>
 
         <Card 

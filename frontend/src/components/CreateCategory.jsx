@@ -1,7 +1,7 @@
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 import LoadingBox from "./LoadingBox"
 
-const CreateCategory = ({ loading, onFinishHandler }) => {
+const CreateCategory = ({ loading, onFinishHandler, navigate }) => {
   return (
     <div>
         <Typography
@@ -25,6 +25,9 @@ const CreateCategory = ({ loading, onFinishHandler }) => {
                         </Form.Item>
                     </Col>
                 </Row>
+                <div>
+                    <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+                </div>
                 <div className="user_submit">
                     <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Submit</Button>
                 </div>

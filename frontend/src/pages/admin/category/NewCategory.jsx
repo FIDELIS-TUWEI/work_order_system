@@ -22,6 +22,7 @@ const NewCategory = () => {
         <CreateCategory 
             onFinishHandler={onFinishHandler}
             loading={loading}
+            navigate={navigate}
         />
     </Layout>
   )
