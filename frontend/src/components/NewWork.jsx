@@ -8,7 +8,7 @@ const NewWork = ({
   loading, location, category, 
   onFinishHandler, selectedLocation, 
   selectedCategory, handleLocationChange, 
-  handleCategoryChange 
+  handleCategoryChange, navigate
 }) => {
 
   return (

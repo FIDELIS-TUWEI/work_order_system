@@ -10,4 +10,13 @@ export const allWorkCategories = async () => {
     } catch (error) {
         console.log("Error while fetching all work categories", error);
     }
+};
+
+// Create Work category
+export const createNewCategory = async (values) => {
+    try {
+        return axios.post(`${WORK_URL}/new/category`, values);
+    } catch (error) {
+        console.log("Error while creating new category");
+    }
 }
