@@ -40,7 +40,18 @@ export const countAllUsers = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error While fetchin total number of users", error);
+        console.log("Error While fetching total number of users", error);
+    }
+};
+
+// API Service to count active users
+export const countActiveUsers = async () => {
+    try {
+        const res = await axios.get(`${USERS_URL}/count/active-users`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error While fetching total number of active users", error);
     }
 };
 
