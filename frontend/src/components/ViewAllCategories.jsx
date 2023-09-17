@@ -1,5 +1,5 @@
 import { Button, Card } from "antd";
-import {AiFillEye} from "react-icons/ai";
+import {MdDelete} from "react-icons/md";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
@@ -28,16 +28,15 @@ const ViewAllCategories = ({ navigate, loading, categories, user, page, pages, h
                         <tr key={category._id}>
                             <td>{category.categoryTitle}</td>
                             <td className="actions__btn">
-                                <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
-                                {
-                                    user.role === "admin" || user.role === "superadmin" || user.role === "hod" || user.role === "supervisor" || user.role === "reviewer" ? 
-                                    <Button danger style={{ border: 'none'}} 
-                                        onClick={() => navigate(`/edit/work/${category._id}`)}
-                                    >
-                                        <BiSolidEditAlt/>
-                                    </Button> 
-                                    : null
-                                }
+                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }} 
+                                    onClick={() => navigate(`/edit/work/${category._id}`)}
+                                >
+                                    <BiSolidEditAlt/>
+                                </Button> 
+
+                                <Button danger style={{ border: "none" }}>
+                                    <MdDelete />
+                                </Button>  
                             </td>
                         </tr>
                     ))}

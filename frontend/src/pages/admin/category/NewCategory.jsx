@@ -13,7 +13,7 @@ const NewCategory = () => {
     const onFinishHandler = async (values) => {
         setLoading(true);
         await createNewCategory(values);
-        navigate("/work/list");
+        navigate("/all-categories");
         message.success("New Category Created Succesfully");
         setLoading(false);
     }
