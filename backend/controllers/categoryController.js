@@ -29,8 +29,14 @@ const createCategory = asyncHandler(async (req, res) => {
 });
 
 const getAllCategories = asyncHandler(async (req, res) => {
+    // Enable Pagination
+    const pageSize = 5;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Category.find({}).estimatedDocumentCount();
     try {
-        const categories = await Category.find({});
+        const categories = await Category.find({})
+            .skip(pageSize * (page - 1))
+            .limit(pageSize)
 
         if (!categories) {
             return res.status(400).json({ message: "No categories found" });
@@ -38,7 +44,10 @@ const getAllCategories = asyncHandler(async (req, res) => {
         
         res.status(200).json({
             success: true,
-            data: categories
+            data: categories,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
         });
     } catch (error) {
         res.status(500).json({
