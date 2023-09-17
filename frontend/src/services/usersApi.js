@@ -21,7 +21,7 @@ export const getUserInfo = async (id) => {
     } catch (error) {
         console.error("Error while fetching single user", error);
     }
-}
+};
 
 // Get user by id and edit
 export const editUser = async (id, values) => {
@@ -31,5 +31,16 @@ export const editUser = async (id, values) => {
     } catch (error) {
         console.error("Error while Updating user", error);
     }
-}
+};
+
+// API Service to count Total users
+export const countAllUsers = async () => {
+    try {
+        const res = await axios.get(`${USERS_URL}/count/total-users`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error While fetchin total number of users", error);
+    }
+};
 
