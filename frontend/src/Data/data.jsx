@@ -1,10 +1,9 @@
-import {MdDashboard} from 'react-icons/md';
-import {FaUsers} from 'react-icons/fa';
-import {MdOutlineWork} from 'react-icons/md';
+import {MdDashboard, MdOutlineWork} from 'react-icons/md';
+import {FaUsers, FaUserPlus} from 'react-icons/fa';
 import {SiGoogleanalytics} from 'react-icons/si';
-import {FaUserPlus} from 'react-icons/fa';
 import {PiUserCircleGearFill} from 'react-icons/pi';
 import {TbReport} from 'react-icons/tb';
+import {BiSolidCategory} from "react-icons/bi"
 
 export const AdminMenu = [
     
@@ -27,6 +26,11 @@ export const AdminMenu = [
         name: "Work Order",
         path: "/work/list",
         icon: <MdOutlineWork/>
+    },
+    {
+        name: "Categories",
+        path: "/all-categories",
+        icon: <BiSolidCategory />
     },
     {
         name: "Analytics",

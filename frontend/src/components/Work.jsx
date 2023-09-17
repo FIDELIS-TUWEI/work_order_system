@@ -32,6 +32,13 @@ const Work = ({allWork, user, loading}) => {
                         >
                             View Categories
                         </Button>
+
+                        <Button
+                            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+                            onClick={() => navigate("/all-locations")}
+                        >
+                            View Locations
+                        </Button>
                     </>
                 ) : null
             }
