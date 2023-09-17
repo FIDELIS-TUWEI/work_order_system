@@ -86,6 +86,7 @@ const Dashboard = () => {
         inProgressCount={inProgressCount}
         completedCount={completedCount}
         reviewedCount={reviewedCount}
+        totalWorkCount={totalWorkCount}
       />
     </Layout>
   )
