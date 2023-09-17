@@ -56,6 +56,16 @@ const countReviewedWorkOrders = asyncHandler (async (req, res, next) => {
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
+});
+
+// Count All Work Orders
+const countAllWorkOrders = asyncHandler (async (req, res, next) => {
+    try {
+        const totalWorkCount = await WorkOrder.countDocuments();
+        res.json({ totalWorkCount });
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 })
 
 
@@ -64,5 +74,6 @@ module.exports = {
     countPendingWorkOrders,
     countInProgressWorkOrders,
     countCompletedWorkOrders,
-    countReviewedWorkOrders
+    countReviewedWorkOrders,
+    countAllWorkOrders
 }
