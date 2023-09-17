@@ -16,12 +16,19 @@ const Work = ({allWork, user, loading}) => {
             New Work
             </Button>
 
-            <Button
-                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-                onClick={() => navigate("/new/category")}
-            >
-                Add Category
-            </Button>
+            {
+                user && user.role === "admin" || user && user.role === "superadmin" ? (
+                    <>
+                        <Button
+                            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+                            onClick={() => navigate("/new/category")}
+                        >
+                            Add Category
+                        </Button>
+                    </>
+                ) : null
+            }
+
         </div>
 
         <Card 
