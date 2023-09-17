@@ -1,7 +1,7 @@
 import { Card, Col, Row, Typography } from "antd";
 
 
-const DashboardComponent = ({ user, pendingWorkCount, inProgressCount }) => {
+const DashboardComponent = ({ user, pendingWorkCount, inProgressCount, completedCount }) => {
   return (
     <>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
@@ -31,7 +31,7 @@ const DashboardComponent = ({ user, pendingWorkCount, inProgressCount }) => {
 
                 <Col span={8}>
                     <Card title="Completed Work Orders" bordered={false} className="custom-card">
-                    2
+                        {completedCount}
                     </Card>
                 </Col>
 
