@@ -2,9 +2,9 @@ import axios from 'axios';
 const WORK_URL = "/hin";
 
 // All work categories
-export const allWorkCategories = async () => {
+export const allWorkCategories = async (page) => {
     try {
-        const res = await axios.get(`${WORK_URL}/all/categories`);
+        const res = await axios.get(`${WORK_URL}/all/categories?pageNumber=${page}`);
         const data = res.data;
         return data;
     } catch (error) {

@@ -1,9 +1,9 @@
 import { Button, Card } from "antd";
-import {AiFillEye} from "react-icons/ai"
-import {BiSolidEditAlt} from "react-icons/bi"
+import {AiFillEye} from "react-icons/ai";
+import {BiSolidEditAlt} from "react-icons/bi";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
-const ViewAllCategories = ({ navigate, loading, categories, user }) => {
-    console.log(categories)
+const ViewAllCategories = ({ navigate, loading, categories, user, page, pages, handlePageChange }) => {
   return (
     <div>
         <div className="add-btn">
@@ -15,7 +15,7 @@ const ViewAllCategories = ({ navigate, loading, categories, user }) => {
             </Button>
         </div>
         
-        <Card loading={loading} title="All Categories" style={{ margin: "auto", width: "400px" }}>
+        <Card loading={loading} title="All Categories" style={{ margin: "auto", width: "500px" }}>
             <table>
                 <thead>
                     <tr>
@@ -44,6 +44,15 @@ const ViewAllCategories = ({ navigate, loading, categories, user }) => {
                 </tbody>
             </table>
         </Card>
+        <div className="pagination">
+            <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
+                <GrFormPrevious />
+            </Button>
+        <span> Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
+          <GrFormNext />
+        </Button>
+      </div>
     </div>
   )
 }

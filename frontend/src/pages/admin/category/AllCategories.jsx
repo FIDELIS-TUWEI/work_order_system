@@ -10,26 +10,34 @@ const AllCategories = () => {
     const user = useSelector(selectUserInfo);
     const token = useSelector(selectToken);
     const [categories, setCategories] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pages, setPages] = useState(1);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     // Function to get all Work Categories
     const getCategories = async () => {
         setLoading(true)
-        const res = await allWorkCategories({
+        const { data, pages } = await allWorkCategories(page, {
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        setCategories(res.data);
+        setCategories(data);
+        setPages(pages);
         setLoading(false);
     }
 
     // UseEffect hook
     useEffect(() => {
         getCategories();
-    }, [])
+    }, [page]);
+
+    // Function to handle page change
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    }
     
   return (
     <Layout>
@@ -38,6 +46,9 @@ const AllCategories = () => {
             loading={loading}
             categories={categories}
             user={user}
+            page={page}
+            pages={pages}
+            handlePageChange={handlePageChange}
         />
     </Layout>
   )
