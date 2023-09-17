@@ -91,7 +91,17 @@ const countAllUsers = asyncHandler (async (req, res, next) => {
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
-})
+});
+
+// Controller function to count all users active
+const countActiveUsers = asyncHandler (async (req, res, next) => {
+    try {
+        const activeUsersCount = await User.countDocuments({ active: true });
+        res.json({ activeUsersCount });
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
+});
 
 
 module.exports = {
@@ -100,4 +110,5 @@ module.exports = {
     editUser,
     deleteUser,
     countAllUsers,
+    countActiveUsers
 };
