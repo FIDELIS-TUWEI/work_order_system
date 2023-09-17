@@ -15,6 +15,13 @@ const Work = ({allWork, user, loading}) => {
             >
             New Work
             </Button>
+
+            <Button
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+                onClick={() => navigate("/new/category")}
+            >
+                Add Category
+            </Button>
         </div>
 
         <Card 
