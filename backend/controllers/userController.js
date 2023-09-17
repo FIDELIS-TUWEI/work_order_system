@@ -2,7 +2,7 @@ const User = require("../model/user");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 
-
+// Controller function to get all users
 const getAllUsers = asyncHandler (async (req, res, next) => {
     // Enable Pagination
     const pageSize = 5;
@@ -26,6 +26,7 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Controller function to get single user
 const singleUser = asyncHandler (async (req, res, next) => {
     try {
         // find user by ID
@@ -44,6 +45,7 @@ const singleUser = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Controller function to edit user
 const editUser = asyncHandler (async (req, res, next) => {
     try {
         // update user
@@ -61,7 +63,7 @@ const editUser = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Delete User
+// Controller function to Delete User
 const deleteUser = asyncHandler (async (req, res, next) => {
     try {
         const user = await User.findByIdAndRemove(req.params.id);
@@ -81,10 +83,21 @@ const deleteUser = asyncHandler (async (req, res, next) => {
     
 });
 
+// Controller function to count all users
+const countAllUsers = asyncHandler (async (req, res, next) => {
+    try {
+        const totalUsers = await User.countDocuments();
+        res.json({ totalUsers });
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
+})
+
 
 module.exports = {
     getAllUsers,
     singleUser,
     editUser,
     deleteUser,
+    countAllUsers,
 };
