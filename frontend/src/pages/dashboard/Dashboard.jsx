@@ -4,7 +4,7 @@ import { selectToken, selectUserInfo } from "../../utils/redux/slices/authSlice"
 import DashboardComponent from "../../components/DashboardComponent";
 import { countCompletedWork, countInProgressWork, countPendingWork, countReviewedWork, countTotalWork } from "../../services/reportApi";
 import { useEffect, useState } from "react";
-import { countAllUsers } from "../../services/usersApi";
+import { countActiveUsers, countAllUsers } from "../../services/usersApi";
 
 const Dashboard = () => {
   const user = useSelector(selectUserInfo);
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [reviewedCount, setReviewedCount] = useState(0);
   const [totalWorkCount, setTotalWorkCount] = useState(0);
   const [totalUsersCount, setTotalUsersCount] = useState(0);
+  const [activeUsersCount, setActiveUsersCount] = useState(0);
 
   // Function to get work orders with pending status from API Service
   const getPendingWorkCount = async () => {
@@ -80,6 +81,17 @@ const Dashboard = () => {
       },
     });
     setTotalUsersCount(res.totalUsers);
+  };
+
+  // Function to get total active users
+  const getTotalActiveUsers = async () => {
+    const res = await countActiveUsers({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setActiveUsersCount(res.activeUsersCount);
   }
 
   // UseEffect hook
@@ -90,6 +102,7 @@ const Dashboard = () => {
     getReviewedWorkCount();
     getTotalWorkCount();
     getTotalUsersCount();
+    getTotalActiveUsers();
   }, []);
 
   return (
@@ -102,6 +115,7 @@ const Dashboard = () => {
         reviewedCount={reviewedCount}
         totalWorkCount={totalWorkCount}
         totalUsersCount={totalUsersCount}
+        activeUsersCount={activeUsersCount}
       />
     </Layout>
   )
