@@ -1,5 +1,6 @@
 const Category = require("../model/category");
 const asyncHandler = require("express-async-handler");
+const ErrorResponse = require("../utils/errorResponse");
 
 
 // Create category
@@ -58,7 +59,7 @@ const getAllCategories = asyncHandler(async (req, res) => {
 });
 
 // Update category
-const updateCategory = asyncHandler(async (req, res) => {
+const updateCategory = asyncHandler(async (req, res, next) => {
     try {
         const catId = req.params.id;
         const updates = req.body;
