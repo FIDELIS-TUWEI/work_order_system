@@ -194,6 +194,7 @@ table tr:hover {
     justify-content: center;
     align-items: center;
     padding-bottom: 0.8rem;
+    margin-top: 10px;
 }
 
 .custom-card {
