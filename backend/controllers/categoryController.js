@@ -55,9 +55,30 @@ const getAllCategories = asyncHandler(async (req, res) => {
             message: error.message
         });
     }
+});
+
+// Update category
+const updateCategory = asyncHandler(async (req, res) => {
+    try {
+        const catId = req.params.id;
+        const updates = req.body;
+        const updatedCategory = await Category.findById(catId, updates, { new: true, runValidators: true });
+
+        if (!updatedCategory) {
+            return res.status(404).json({ message: "Category not found" });
+        };
+
+        res.status(200).json({
+            success: true,
+            data: updatedCategory
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 })
 
 module.exports = {
     createCategory,
-    getAllCategories
+    getAllCategories,
+    updateCategory
 }
