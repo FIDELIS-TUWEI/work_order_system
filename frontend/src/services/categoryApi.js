@@ -38,5 +38,6 @@ export const deleteCategory = async (id) => {
         return res.data;
     } catch (error) {
         console.log("Error while deleting work category", error);
+        throw new Error("Error while deleting work category");
     }
 };

@@ -1,9 +1,48 @@
-import { Button, Card } from "antd";
+import { Button, Card, Modal, message } from "antd";
 import {MdDelete} from "react-icons/md";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+import { selectToken } from "../utils/redux/slices/authSlice";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { deleteCategory } from "../services/categoryApi";
 
-const ViewAllCategories = ({ navigate, loading, categories, user, page, pages, handlePageChange }) => {
+const ViewAllCategories = ({ 
+    navigate, loading, categories, 
+    page, pages, handlePageChange, getCategories
+}) => {
+    const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const token = useSelector(selectToken);
+
+    // Function to handle delete category
+    const showModal = async (category) => {
+        setSelectedCategoryToDelete(category);
+        setIsModalVisible(true);
+    };
+
+    // Function to confirm modal delete
+    const handleDelete = async () => {
+        try {
+            const { data } = await deleteCategory(selectedCategoryToDelete._id, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            message.success("Category deleted successfully");
+            setIsModalVisible(false);
+            getCategories();
+        } catch (error) {
+            console.error(error);
+            message.error("An error occurred while deleting the category", error);
+        }
+    };
+
+    // Function to handle modal cancel
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    }
   return (
     <div>
         <div className="add-btn">
@@ -34,7 +73,9 @@ const ViewAllCategories = ({ navigate, loading, categories, user, page, pages, h
                                     <BiSolidEditAlt/>
                                 </Button> 
 
-                                <Button danger style={{ border: "none" }}>
+                                <Button danger style={{ border: "none" }}
+                                    onClick={() => showModal(category)}
+                                >
                                     <MdDelete />
                                 </Button>  
                             </td>
@@ -42,6 +83,19 @@ const ViewAllCategories = ({ navigate, loading, categories, user, page, pages, h
                     ))}
                 </tbody>
             </table>
+
+            <Modal 
+                title="Confirm Delete Category" 
+                open={isModalVisible} 
+                onOk={handleDelete} 
+                onCancel={handleCancel}
+                okText="Delete"
+                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+            >
+                <p>Are you sure you want to delete this category?</p>
+            </Modal>
+
         </Card>
         <div className="pagination">
             <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
