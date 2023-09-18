@@ -24,7 +24,7 @@ const ViewAllCategories = ({
     // Function to confirm modal delete
     const handleDelete = async () => {
         try {
-            const { data } = await deleteCategory(selectedCategoryToDelete._id, {
+            await deleteCategory(selectedCategoryToDelete._id, {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${token}`,
