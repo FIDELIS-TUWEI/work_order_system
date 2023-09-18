@@ -75,10 +75,30 @@ const updateCategory = asyncHandler(async (req, res) => {
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
+});
+
+// Delete Category
+const deleteCategory = asyncHandler(async (req, res) => {
+    try {
+        const catId = req.params.id;
+        const deletedCategory = await Category.findByIdAndDelete(catId);
+
+        if (!deletedCategory) {
+            return res.status(404).json({ message: "Category not found" });
+        };
+
+        return res.status(200).json({
+            success: true,
+            message: "Category deleted"
+        });
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 })
 
 module.exports = {
     createCategory,
     getAllCategories,
-    updateCategory
+    updateCategory,
+    deleteCategory
 }
