@@ -11,11 +11,11 @@ const ViewAllCategories = ({
     navigate, loading, categories, 
     page, pages, handlePageChange, getCategories
 }) => {
-    const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
     const token = useSelector(selectToken);
 
-    // Function to handle delete category
+    // Function to show modal to delete category
     const showModal = async (category) => {
         setSelectedCategoryToDelete(category);
         setIsModalVisible(true);
@@ -42,7 +42,8 @@ const ViewAllCategories = ({
     // Function to handle modal cancel
     const handleCancel = () => {
         setIsModalVisible(false);
-    }
+    };
+    
   return (
     <div>
         <div className="add-btn">
@@ -67,9 +68,7 @@ const ViewAllCategories = ({
                         <tr key={category._id}>
                             <td>{category.categoryTitle}</td>
                             <td className="actions__btn">
-                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }} 
-                                    onClick={() => navigate(`/edit/work/${category._id}`)}
-                                >
+                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }}>
                                     <BiSolidEditAlt/>
                                 </Button> 
 
