@@ -24,8 +24,9 @@ export const createNewCategory = async (values) => {
 // Update Work category
 export const editCategory = async (id, values) => {
     try {
-        return axios.put(`${WORK_URL}/edit/category/${id}`, values);
+        const res = await axios.put(`${WORK_URL}/edit/category/${id}`, values);
+        return res.data;
     } catch (error) {
         console.log("Error while updating work category", error);
     }
-}
+};
