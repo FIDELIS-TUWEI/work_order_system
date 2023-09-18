@@ -17,6 +17,15 @@ export const createNewCategory = async (values) => {
     try {
         return axios.post(`${WORK_URL}/new/category`, values);
     } catch (error) {
-        console.log("Error while creating new category");
+        console.log("Error while creating new category", error);
+    }
+};
+
+// Update Work category
+export const editCategory = async (id, values) => {
+    try {
+        return axios.put(`${WORK_URL}/edit/category/${id}`, values);
+    } catch (error) {
+        console.log("Error while updating work category", error);
     }
 }
