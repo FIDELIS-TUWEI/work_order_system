@@ -30,3 +30,13 @@ export const editCategory = async (id, values) => {
         console.log("Error while updating work category", error);
     }
 };
+
+// Delete Work category
+export const deleteCategory = async (id) => {
+    try {
+        const res = await axios.delete(`${WORK_URL}/delete/category/${id}`);
+        return res.data;
+    } catch (error) {
+        console.log("Error while deleting work category", error);
+    }
+};
