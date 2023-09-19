@@ -21,6 +21,7 @@ import Reports from "../pages/admin/reports/Reports";
 import WorkReport from "../components/WorkReport";
 import NewCategory from "../pages/admin/category/NewCategory";
 import AllCategories from "../pages/admin/category/AllCategories";
+import AllLocations from "../pages/admin/locations/AllLocations";
 
 
 
@@ -40,6 +41,7 @@ export const router = createBrowserRouter(
         <Route path="/users/all" element={ <PrivateRoute> <UsersAll/> </PrivateRoute> } />
         <Route path="/users/register" element={ <PrivateRoute> <Register/> </PrivateRoute> } />
         <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
+        <Route path="/all-locations" element={ <PrivateRoute> <AllLocations /> </PrivateRoute> } />
         <Route path="/work/reports" element={ <PrivateRoute> <Reports /> </PrivateRoute> } />
         <Route path="/reports" element={ <PrivateRoute> <WorkReport /> </PrivateRoute> } />
         <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />

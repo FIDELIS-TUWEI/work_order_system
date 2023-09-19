@@ -3,7 +3,8 @@ import {FaUsers, FaUserPlus} from 'react-icons/fa';
 import {SiGoogleanalytics} from 'react-icons/si';
 import {PiUserCircleGearFill} from 'react-icons/pi';
 import {TbReport} from 'react-icons/tb';
-import {BiSolidCategory} from "react-icons/bi"
+import {BiSolidCategory} from "react-icons/bi";
+import {IoLocation} from "react-icons/io5";
 
 export const AdminMenu = [
     
@@ -31,6 +32,11 @@ export const AdminMenu = [
         name: "Categories",
         path: "/all-categories",
         icon: <BiSolidCategory />
+    },
+    {
+        name: "Locations",
+        path: "/all-locations",
+        icon: <IoLocation />
     },
     {
         name: "Analytics",

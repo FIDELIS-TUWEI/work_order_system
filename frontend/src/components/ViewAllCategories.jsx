@@ -1,6 +1,5 @@
-import { Button, Card, Form, Input, Modal, message } from "antd";
+import { Button, Card, Modal, message } from "antd";
 import {MdDelete} from "react-icons/md";
-import {BiSolidEditAlt} from "react-icons/bi";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { selectToken } from "../utils/redux/slices/authSlice";
 import { useSelector } from "react-redux";
