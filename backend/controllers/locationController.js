@@ -51,9 +51,35 @@ const getAllLocations = asyncHandler(async (req, res) => {
             message: error.message
         });
     }
+});
+
+// @desc Delete location
+// @route DELETE /delete/location/:id
+// @access Private
+const deleteLocation = asyncHandler(async (req, res) => {
+    try {
+        const locationId = req.params.id;
+        const deleteLocation = await Location.findByIdAndDelete(locationId);
+
+        if (!deleteLocation) {
+            return res.status(404).json({ message: "Location not found" });
+        };
+
+        return res.status(200).json({
+            success: true,
+            message: "Location deleted successfully"
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+        
+    }
 })
 
 module.exports = {
     createLocation,
-    getAllLocations
+    getAllLocations,
+    deleteLocation
 }

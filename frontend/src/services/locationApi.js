@@ -20,3 +20,12 @@ export const createNewLocation = async (values) => {
         console.log("Error while creating new location", error);
     }
 }
+
+// Delete Location
+export const deleteLocation = async (id) => {
+    try {
+        return axios.delete(`${WORK_URL}/delete/location/${id}`);
+    } catch (error) {
+        console.log("Error while deleting location", error);
+    }
+}
