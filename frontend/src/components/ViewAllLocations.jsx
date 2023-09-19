@@ -1,11 +1,46 @@
-import { Button, Card } from "antd";
+import { Button, Card, Modal, message } from "antd";
+import { useState } from "react";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
+import { useSelector } from "react-redux";
+import { selectToken } from "../utils/redux/slices/authSlice";
+import { deleteLocation } from "../services/locationApi";
 
 const ViewAllLocations = ({ navigate, loading, 
     locations, page, pages, handlePageChange, getLocations 
 }) => {
-    
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedLocationToDelete, setSelectedLocationToDelete] = useState(null);
+    const token = useSelector(selectToken);
+
+    // Function to show modal to delete category
+    const showModal = async (location) => {
+        setSelectedLocationToDelete(location);
+        setIsModalVisible(true);
+    };
+
+    // Function to confirm modal delete
+    const handleDelete = async () => {
+        try {
+            await deleteLocation(selectedLocationToDelete._id, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            message.success("Location deleted successfully");
+            setIsModalVisible(false);
+            getLocations();
+        } catch (error) {
+            console.error(error);
+            message.error("An error occurred while deleting the location", error);
+        }
+    };
+
+    // Function to handle modal cancel
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
 
   return (
     <>
@@ -41,6 +76,22 @@ const ViewAllLocations = ({ navigate, loading,
                     ))}
                 </tbody>
             </table>
+
+            <Modal
+                title="Delete Location"
+                open={isModalVisible}
+                onCancel={handleCancel}
+                footer={[
+                    <Button key="back" onClick={handleCancel}>
+                        Cancel
+                    </Button>,
+                    <Button key="submit" type="primary" danger onClick={handleDelete}>
+                        Delete
+                    </Button>,
+                ]}
+            >
+                <p>Are you sure you want to delete this location?</p>
+            </Modal>
         </Card>
         <div className="pagination">
             <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
