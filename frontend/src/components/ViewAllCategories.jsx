@@ -1,11 +1,11 @@
-import { Button, Card, Modal, message } from "antd";
+import { Button, Card, Form, Input, Modal, message } from "antd";
 import {MdDelete} from "react-icons/md";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { selectToken } from "../utils/redux/slices/authSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { deleteCategory } from "../services/categoryApi";
+import { deleteCategory, editCategory } from "../services/categoryApi";
 
 const ViewAllCategories = ({ 
     navigate, loading, categories, 
@@ -13,13 +13,40 @@ const ViewAllCategories = ({
 }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
+    const [selectedCategoryToEdit, setSelectedCategoryToEdit] = useState(null);
+    const [isModalEditVisible, setIsModalEditVisible] = useState(false);
     const token = useSelector(selectToken);
+
+    // Function to show modal to edit category
+    const showEditModal = async (category) => {
+        setSelectedCategoryToEdit(category);
+        setIsModalEditVisible(true);
+    }
 
     // Function to show modal to delete category
     const showModal = async (category) => {
         setSelectedCategoryToDelete(category);
         setIsModalVisible(true);
     };
+
+    // Function to confirm modal edit
+    const handleEdit = async () => {
+        try {
+            await editCategory(selectedCategoryToEdit._id, {categoryTitle: selectedCategoryToEdit.categoryTitle}, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setSelectedCategoryToEdit(editCategory);
+            message.success("Category edited successfully");
+            setIsModalEditVisible(false);
+            getCategories();
+        } catch (error) {
+            console.error(error);
+            message.error("An error occurred while editing the category", error);
+        }
+    }
 
     // Function to confirm modal delete
     const handleDelete = async () => {
@@ -42,6 +69,7 @@ const ViewAllCategories = ({
     // Function to handle modal cancel
     const handleCancel = () => {
         setIsModalVisible(false);
+        setIsModalEditVisible(false);
     };
     
   return (
@@ -68,7 +96,9 @@ const ViewAllCategories = ({
                         <tr key={category._id}>
                             <td>{category.categoryTitle}</td>
                             <td className="actions__btn">
-                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }}>
+                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }}
+                                    onClick={() => showEditModal(category)}
+                                >
                                     <BiSolidEditAlt/>
                                 </Button> 
 
@@ -82,6 +112,26 @@ const ViewAllCategories = ({
                     ))}
                 </tbody>
             </table>
+
+            <Modal
+                title="Confirm Edit Category"
+                open={isModalEditVisible}
+                onOk={handleEdit}
+                onCancel={handleCancel}
+                okText="Edit"
+                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+            >
+                <p>Are you sure you want to Edit this category?</p>
+                <Form layout="vertical" onFinish={handleEdit}>
+                    <Form.Item>
+                        <Input 
+                            value={selectedCategoryToEdit ? selectedCategoryToEdit.categoryTitle : ""}
+                            onChange={(e) => setSelectedCategoryToEdit({...selectedCategoryToEdit, categoryTitle: e.target.value})}
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
 
             <Modal 
                 title="Confirm Delete Category" 
