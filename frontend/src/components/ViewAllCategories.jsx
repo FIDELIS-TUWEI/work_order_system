@@ -68,10 +68,6 @@ const ViewAllCategories = ({
                         <tr key={category._id}>
                             <td>{category.categoryTitle}</td>
                             <td className="actions__btn">
-                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }}>
-                                    <BiSolidEditAlt/>
-                                </Button> 
-
                                 <Button danger style={{ border: "none" }}
                                     onClick={() => showModal(category)}
                                 >
@@ -82,26 +78,6 @@ const ViewAllCategories = ({
                     ))}
                 </tbody>
             </table>
-
-            <Modal
-                title="Confirm Edit Category"
-                open={isModalEditVisible}
-                onOk={handleEdit}
-                onCancel={handleCancel}
-                okText="Edit"
-                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
-            >
-                <p>Are you sure you want to Edit this category?</p>
-                <Form layout="vertical" onFinish={handleEdit}>
-                    <Form.Item>
-                        <Input 
-                            value={selectedCategoryToEdit ? selectedCategoryToEdit.categoryTitle : ""}
-                            onChange={(e) => setSelectedCategoryToEdit({...selectedCategoryToEdit, categoryTitle: e.target.value})}
-                        />
-                    </Form.Item>
-                </Form>
-            </Modal>
 
             <Modal 
                 title="Confirm Delete Category" 
