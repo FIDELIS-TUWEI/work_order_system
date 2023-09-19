@@ -5,7 +5,7 @@ import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { selectToken } from "../utils/redux/slices/authSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { deleteCategory, editCategory } from "../services/categoryApi";
+import { deleteCategory } from "../services/categoryApi";
 
 const ViewAllCategories = ({ 
     navigate, loading, categories, 
@@ -13,40 +13,13 @@ const ViewAllCategories = ({
 }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
-    const [selectedCategoryToEdit, setSelectedCategoryToEdit] = useState(null);
-    const [isModalEditVisible, setIsModalEditVisible] = useState(false);
     const token = useSelector(selectToken);
-
-    // Function to show modal to edit category
-    const showEditModal = async (category) => {
-        setSelectedCategoryToEdit(category);
-        setIsModalEditVisible(true);
-    }
 
     // Function to show modal to delete category
     const showModal = async (category) => {
         setSelectedCategoryToDelete(category);
         setIsModalVisible(true);
     };
-
-    // Function to confirm modal edit
-    const handleEdit = async () => {
-        try {
-            await editCategory(selectedCategoryToEdit._id, {categoryTitle: selectedCategoryToEdit.categoryTitle}, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setSelectedCategoryToEdit(editCategory);
-            message.success("Category edited successfully");
-            setIsModalEditVisible(false);
-            getCategories();
-        } catch (error) {
-            console.error(error);
-            message.error("An error occurred while editing the category", error);
-        }
-    }
 
     // Function to confirm modal delete
     const handleDelete = async () => {
@@ -69,7 +42,6 @@ const ViewAllCategories = ({
     // Function to handle modal cancel
     const handleCancel = () => {
         setIsModalVisible(false);
-        setIsModalEditVisible(false);
     };
     
   return (
@@ -96,9 +68,7 @@ const ViewAllCategories = ({
                         <tr key={category._id}>
                             <td>{category.categoryTitle}</td>
                             <td className="actions__btn">
-                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }}
-                                    onClick={() => showEditModal(category)}
-                                >
+                                <Button style={{ color: "green", border: 'none', marginRight: "8px" }}>
                                     <BiSolidEditAlt/>
                                 </Button> 
 
