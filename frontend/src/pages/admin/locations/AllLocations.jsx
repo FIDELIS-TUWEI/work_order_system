@@ -42,7 +42,7 @@ const AllLocations = () => {
 
     // Function to jump to the last page
     const jumpToLastPage = () => {
-        setPage(lastPage);
+        setPage(pages);
     }
 
   return (
@@ -55,6 +55,7 @@ const AllLocations = () => {
             pages={pages}
             handlePageChange={handlePageChange}
             getLocations={getLocations}
+            lastPage={lastPage}
             jumpToLastPage={jumpToLastPage}
         />
     </Layout>

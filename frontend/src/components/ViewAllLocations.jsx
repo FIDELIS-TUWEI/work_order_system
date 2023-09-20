@@ -7,7 +7,7 @@ import { selectToken } from "../utils/redux/slices/authSlice";
 import { deleteLocation } from "../services/locationApi";
 
 const ViewAllLocations = ({ navigate, loading, 
-    locations, page, pages, handlePageChange, getLocations, jumpToLastPage 
+    locations, page, pages, handlePageChange, getLocations, jumpToLastPage, lastPage
 }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedLocationToDelete, setSelectedLocationToDelete] = useState(null);
@@ -97,17 +97,18 @@ const ViewAllLocations = ({ navigate, loading,
             <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
                 <GrFormPrevious />
             </Button>
-        <span> Page {page} of {pages}</span>
-        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
-          <GrFormNext />
-        </Button>
+            <span> Page {page} of {pages}</span>
+            <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
+                <GrFormNext />
+            </Button>
 
-        <Button 
-            onClick={jumpToLastPage} 
-            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-        >
-            Last Page
-        </Button>
+            <Button 
+                onClick={jumpToLastPage} 
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: "10px" }}
+                disabled={page === pages}
+            >
+                Last Page
+            </Button>
       </div>
     </>
   )
