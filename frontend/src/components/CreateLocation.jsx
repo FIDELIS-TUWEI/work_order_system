@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Row, Typography } from "antd"
+import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 import LoadingBox from "./LoadingBox"
 
 const CreateLocation = ({ loading, onFinishHandler, navigate }) => {

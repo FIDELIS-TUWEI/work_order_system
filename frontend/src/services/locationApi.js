@@ -15,7 +15,7 @@ export const allLocations = async (page) => {
 // Create Location
 export const createNewLocation = async (values) => {
     try {
-        return axios.post(`${WORK_URL}/new/location`, values);
+        return axios.post(`${WORK_URL}/create/location`, values);
     } catch (error) {
         console.log("Error while creating new location", error);
     }

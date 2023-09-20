@@ -3,6 +3,7 @@ import CreateLocation from "../../../components/CreateLocation"
 import Layout from "../../../components/Layout"
 import { useNavigate } from "react-router-dom";
 import { createNewLocation } from "../../../services/locationApi";
+import { message } from "antd";
 
 const NewLocation = () => {
     const [loading, setLoading] = useState(false);
