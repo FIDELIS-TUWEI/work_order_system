@@ -7,7 +7,25 @@ const asyncHandler = require("express-async-handler");
 
 const createLocation = asyncHandler(async (req, res) => {
     try {
+        // Check duplicate location
+        const duplicate = await Location.findOne({ locationTitle: req.body.locationTitle });
+        if (duplicate) {
+            return res.status(400).json({
+                success: false,
+                message: "Location already exists",
+            });
+        };
+        
+        // Create new location
         const newWorkLocation = new Location(req.body);
+        if (!newWorkLocation) {
+            return res.status(400).json({
+                success: false,
+                message: "Location not created",
+            });
+        };
+
+        // Save the created location
         await newWorkLocation.save();
         res.status(201).json({
             success: true,

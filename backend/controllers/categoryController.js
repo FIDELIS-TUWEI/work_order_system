@@ -16,6 +16,14 @@ const createCategory = asyncHandler(async (req, res) => {
 
         // create new category
         const newCategory = new Category(req.body);
+        if (!newCategory) {
+            return res.status(400).json({
+                success: false,
+                message: "Category not created",
+            });
+        }
+
+        // Save the created category
         await newCategory.save();
         res.status(201).json({
             success: true,
