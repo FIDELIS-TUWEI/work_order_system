@@ -7,7 +7,7 @@ import { selectToken } from "../utils/redux/slices/authSlice";
 import { deleteLocation } from "../services/locationApi";
 
 const ViewAllLocations = ({ navigate, loading, 
-    locations, page, pages, handlePageChange, getLocations, jumpToLastPage, lastPage
+    locations, page, pages, handlePageChange, getLocations, jumpToLastPage, jumpToFirstPage
 }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedLocationToDelete, setSelectedLocationToDelete] = useState(null);
@@ -94,6 +94,13 @@ const ViewAllLocations = ({ navigate, loading,
             </Modal>
         </Card>
         <div className="pagination">
+            <Button 
+                onClick={jumpToFirstPage} 
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginRight: "10px" }}
+                disabled={page === 1}
+            >
+                First Page
+            </Button>
             <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
                 <GrFormPrevious />
             </Button>

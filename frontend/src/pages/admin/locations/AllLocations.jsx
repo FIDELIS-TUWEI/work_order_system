@@ -11,7 +11,6 @@ const AllLocations = () => {
     const [locations, setLocations] = useState([]);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(1);
-    const [lastPage, setLastPage] = useState(0);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -26,7 +25,6 @@ const AllLocations = () => {
         });
         setLocations(data);
         setPages(pages);
-        setLastPage(pages - 1)
         setLoading(false);
     }
 
@@ -40,9 +38,18 @@ const AllLocations = () => {
         setPage(newPage);
     };
 
+    // Function to jump to first page
+    const jumpToFirstPage = () => {
+        if (page !== 1); {
+            handlePageChange(1);
+        }
+    }
+
     // Function to jump to the last page
     const jumpToLastPage = () => {
-        setPage(pages);
+        if (page !== pages) {
+            handlePageChange(pages);
+        }
     }
 
   return (
@@ -55,8 +62,8 @@ const AllLocations = () => {
             pages={pages}
             handlePageChange={handlePageChange}
             getLocations={getLocations}
-            lastPage={lastPage}
             jumpToLastPage={jumpToLastPage}
+            jumpToFirstPage={jumpToFirstPage}
         />
     </Layout>
   )
