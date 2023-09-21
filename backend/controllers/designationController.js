@@ -70,7 +70,34 @@ const getAllDesignations = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc Delete designation
+// @route DELETE /delete/designation/:id
+// @access Private
+const deleteDesignation = asyncHandler(async (req, res) => {
+    try {
+        const designationId = req.params.id;
+        const designation = await Designation.findByIdAndDelete(designationId);
+        if (!designation) {
+            return res.status(400).json({
+                success: false,
+                message: "Designation not found",
+            });
+        };
+
+        res.status(200).json({
+            success: true,
+            message: "Designation deleted successfully",
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+})
+
 module.exports = {
     createDesignation,
-    getAllDesignations
+    getAllDesignations,
+    deleteDesignation
 }
