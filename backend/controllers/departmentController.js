@@ -68,9 +68,31 @@ const getAllDepartments = asyncHandler(async (req, res) => {
             message: error.message
         });
     }
+});
+
+// @desc Delete department
+const deleteDepartment = asyncHandler(async (req, res) => {
+    try {
+        const departmentId = req.params.id;
+        const deleteDepartment = await Department.findByIdAndDelete(departmentId);
+        if (!deleteDepartment) {
+            return res.status(404).json({ message: "Department not found" });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Department deleted successfully"
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
 })
 
 module.exports = {
     createDepartment,
-    getAllDepartments
+    getAllDepartments,
+    deleteDepartment
 }
