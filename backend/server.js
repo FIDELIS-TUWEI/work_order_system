@@ -20,6 +20,7 @@ const locationRoutes = require("./routes/locationRoutes");
 const reportsRoutes = require("./routes/reportRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const departmentRoutes = require("./routes/departmentRoutes");
+const designationRoutes = require("./routes/designationRoutes");
 
 // Middleware
 app.use(express.json()); // To parse JSON data in the request body
@@ -47,6 +48,7 @@ app.use("/hin", locationRoutes);
 app.use("/hin", reportsRoutes);
 app.use("/hin", categoryRoutes);
 app.use("/hin", departmentRoutes);
+app.use("/hin", designationRoutes);
 
 
 // Error Middleware
