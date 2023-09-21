@@ -37,6 +37,40 @@ const createDesignation = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc Get all designations
+// @route GET /all-designations
+// @access Private
+const getAllDesignations = asyncHandler(async (req, res) => {
+    // Enable Pagination
+    const pageSize = 5;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Designation.find({}).estimatedDocumentCount();
+    try {
+        const designations = await Designation.find({})
+            .skip(pageSize * (page - 1))
+            .limit(pageSize)
+            .exec();
+
+        if (!designations) {
+            return res.status(400).json({ message: "No designations found" });
+        };
+
+        res.status(200).json({
+            success: true,
+            data: designations,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
 module.exports = {
-    createDesignation
+    createDesignation,
+    getAllDesignations
 }
