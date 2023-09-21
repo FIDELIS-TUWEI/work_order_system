@@ -71,6 +71,8 @@ const getAllDepartments = asyncHandler(async (req, res) => {
 });
 
 // @desc Delete department
+// @route DELETE /delete/department/:id
+// @access Private
 const deleteDepartment = asyncHandler(async (req, res) => {
     try {
         const departmentId = req.params.id;
