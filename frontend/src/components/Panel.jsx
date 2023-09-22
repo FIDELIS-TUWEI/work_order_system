@@ -29,7 +29,7 @@ const Panel = () => {
             </Col>
             <Col span={8}>
                 <Card bordered={false} title="Locations">
-                    <Button>
+                    <Button onClick={() => navigate("/all-locations")}>
                         <IoLocation />
                         Locations
                     </Button>
