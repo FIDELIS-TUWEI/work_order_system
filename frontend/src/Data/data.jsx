@@ -3,7 +3,6 @@ import {FaUsers, FaUserPlus} from 'react-icons/fa';
 import {SiGoogleanalytics} from 'react-icons/si';
 import {PiUserCircleGearFill} from 'react-icons/pi';
 import {TbReport} from 'react-icons/tb';
-import {IoLocation} from "react-icons/io5";
 
 export const AdminMenu = [
     
@@ -26,11 +25,6 @@ export const AdminMenu = [
         name: "Work Order",
         path: "/work/list",
         icon: <MdOutlineWork/>
-    },
-    {
-        name: "Locations",
-        path: "/all-locations",
-        icon: <IoLocation />
     },
     {
         name: "Analytics",
