@@ -1,4 +1,4 @@
-const Department = require("../model/department");
+const Department = require("../model/departments");
 const asyncHandler = require("express-async-handler");
 
 // @desc Post create departments

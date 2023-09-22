@@ -1,4 +1,4 @@
-const Designation = require('../models/Designation');
+const Designation = require('../model/designation');
 const asyncHandler = require('express-async-handler');
 
 // @desc Create designations

@@ -23,6 +23,7 @@ import NewCategory from "../pages/admin/category/NewCategory";
 import AllCategories from "../pages/admin/category/AllCategories";
 import AllLocations from "../pages/admin/locations/AllLocations";
 import NewLocation from "../pages/admin/locations/NewLocation";
+import AdminPanel from "../pages/admin/AdminPanel";
 
 
 
@@ -33,6 +34,7 @@ export const router = createBrowserRouter(
         <Route index={true} path="/" element={<PublicRoute> <Home /> </PublicRoute>} />
         <Route path="/login" element={ <PublicRoute> <LogIn /> </PublicRoute>} />
         <Route path="/private" element={ <PrivateRoute> <Dashboard /> </PrivateRoute> } />
+        <Route path="/admin/panel" element={ <PrivateRoute> <AdminPanel /> </PrivateRoute> } />
         <Route path="/work/list" element={ <PrivateRoute> <AllWorkOrders /> </PrivateRoute> } />
         <Route path="/new/work" element={ <PrivateRoute> <CreateWorkOrder /> </PrivateRoute> } />
         <Route path="/new/category" element={ <PrivateRoute> <NewCategory /> </PrivateRoute>} />
