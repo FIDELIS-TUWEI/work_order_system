@@ -17,6 +17,8 @@ const Panel = () => {
                         Users
                     </Button>
                 </Card>
+                </Col>
+            <Col span={8}>
                 <Card bordered={false}>
                     <Typography>Categories</Typography>
                     <Button onClick={() => navigate("/all-categories")}> 
