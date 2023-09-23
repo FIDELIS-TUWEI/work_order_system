@@ -1,7 +1,9 @@
-import { Button } from "antd"
+import { Button, Card } from "antd";
 import { useNavigate } from "react-router-dom";
+import {MdDelete} from "react-icons/md";
 
-const ViewAllDepartments = () => {
+
+const ViewAllDepartments = ({ departments, loading, handlePageChange, page, pages }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -13,6 +15,30 @@ const ViewAllDepartments = () => {
                 Add Department
             </Button>
         </div>
+
+      <Card loading={loading} title="All Departments" style={{ margin: "auto", width: "500px" }}>
+        <table>
+          <thead>
+            <tr>
+              <th>DepartmentS</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {departments.map((department) => (
+              <tr key={department._id}>
+                <td>{department.departmentName}</td>
+                <td className="actions__btn">
+                  <Button danger style={{ border: "none" }}
+                  >
+                    <MdDelete />
+                  </Button>  
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
     </>
   )
 }

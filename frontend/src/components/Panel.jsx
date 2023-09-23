@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {FaUsers} from 'react-icons/fa';
 import {BiSolidCategory} from "react-icons/bi";
 import {IoLocation} from "react-icons/io5";
-import {FcDepartment} from "react-icons/fc";
+import {HiOfficeBuilding} from "react-icons/hi";
 
 
 
@@ -39,7 +39,7 @@ const Panel = () => {
             <Col span={8}>
                 <Card bordered={false} title="All Departments">
                     <Button onClick={() => navigate("/all-departments")}>
-                        <FcDepartment />
+                        <HiOfficeBuilding />
                         Departments
                     </Button>
                 </Card>
