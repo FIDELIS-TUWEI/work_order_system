@@ -1,10 +1,48 @@
-import { Button, Card } from "antd";
+import { Button, Card, Modal, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectToken } from "../utils/redux/slices/authSlice";
+import { deleteDepartment } from "../services/departmentApi";
 
 
-const ViewAllDepartments = ({ departments, loading, handlePageChange, page, pages }) => {
+const ViewAllDepartments = ({ departments, loading, handlePageChange, page, pages, getDepartments }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedDepartmentToDelete, setSelectedDepartmentToDelete] = useState(null);
+  const token = useSelector(selectToken);
   const navigate = useNavigate();
+
+  // Function to show modal to delete department
+  const showModal = async (department) => {
+    setSelectedDepartmentToDelete(department);
+    setIsModalVisible(true);
+  }
+
+  // Function to confirm modal delete department
+  const handleDelete = async () => {
+    try {
+      await deleteDepartment(selectedDepartmentToDelete._id, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      message.success("Department deleted successfully");
+      setIsModalVisible(false);
+      getDepartments();
+    } catch (error) {
+      console.error(error);
+      message.error("An error occurred while deleting the department", error);
+    }
+  };
+
+  // Function to handle modal cancel
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  }
+
   return (
     <>
       <div className="add-btn">
@@ -20,7 +58,7 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
         <table>
           <thead>
             <tr>
-              <th>DepartmentS</th>
+              <th>Departments</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -30,6 +68,7 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
                 <td>{department.departmentName}</td>
                 <td className="actions__btn">
                   <Button danger style={{ border: "none" }}
+                    onClick={() => showModal(department)}
                   >
                     <MdDelete />
                   </Button>  
@@ -38,9 +77,34 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
             ))}
           </tbody>
         </table>
+
+        <Modal
+          title="Delete Department"
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button key="submit" type="primary" onClick={handleDelete}>
+              Delete
+            </Button>,
+          ]}
+        >
+          <p>Are you sure you want to delete this department?</p>
+        </Modal>
       </Card>
+      <div className="pagination">
+        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
+          <GrFormPrevious />
+        </Button>
+        <span> Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
+          <GrFormNext />
+        </Button>
+      </div>
     </>
   )
 }
 
-export default ViewAllDepartments
+export default ViewAllDepartments;

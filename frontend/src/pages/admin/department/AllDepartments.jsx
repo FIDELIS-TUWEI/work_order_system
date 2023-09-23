@@ -44,6 +44,7 @@ const AllDepartments = () => {
         handlePageChange={handlePageChange}
         page={page}
         pages={pages}
+        getDepartments={getDepartments}
       />
     </Layout>
   )
