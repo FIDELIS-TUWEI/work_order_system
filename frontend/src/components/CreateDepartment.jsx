@@ -17,7 +17,7 @@ const CreateDepartment = ({loading, onFinishHandler, navigate}) => {
           <Row gutter={16}>
             <Col xs={24} md={24} lg={8}>
               <Form.Item
-                name="departmentTitle"
+                name="departmentName"
                 label="Create Department"
                 required rules={[{ required: true, message: "Please Enter new Department" }]}
               >
