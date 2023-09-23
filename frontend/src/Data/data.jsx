@@ -1,5 +1,5 @@
 import {MdDashboard, MdOutlineWork, MdAdminPanelSettings} from 'react-icons/md';
-import {FaUsers, FaUserPlus} from 'react-icons/fa';
+import { FaUserPlus} from 'react-icons/fa';
 import {SiGoogleanalytics} from 'react-icons/si';
 import {PiUserCircleGearFill} from 'react-icons/pi';
 import {TbReport} from 'react-icons/tb';
