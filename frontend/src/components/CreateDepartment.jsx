@@ -41,4 +41,4 @@ const CreateDepartment = ({loading, onFinishHandler, navigate}) => {
   )
 }
 
-export default CreateDepartment
+export default CreateDepartment;

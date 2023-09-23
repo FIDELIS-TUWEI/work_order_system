@@ -39,7 +39,7 @@ const Panel = () => {
             </Col>
             <Col span={8}>
                 <Card bordered={false} title="All Departments">
-                    <Button onClick={() => navigate("/all-departments")}>
+                    <Button onClick={() => navigate("/all/departments")}>
                         <HiOfficeBuilding />
                         Departments
                     </Button>
@@ -47,7 +47,7 @@ const Panel = () => {
             </Col>
             <Col span={8}>
                 <Card bordered={false} title="All Designations">
-                    <Button onClick={() => navigate("/all-designations")}>
+                    <Button onClick={() => navigate("/all/designations")}>
                         <MdManageAccounts />
                         Designations
                     </Button>

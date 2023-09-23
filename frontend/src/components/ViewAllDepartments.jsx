@@ -48,7 +48,7 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
       <div className="add-btn">
             <Button
                 style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-                onClick={() => navigate("/new/department")}
+                onClick={() => navigate("/create/department")}
             >
                 Add Department
             </Button>

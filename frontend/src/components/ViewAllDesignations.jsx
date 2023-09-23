@@ -48,7 +48,7 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
       <div className="add-btn">
       <Button
           style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-          onClick={() => navigate("/new/designation")}
+          onClick={() => navigate("/create/designation")}
       >
           Add Designation
       </Button>
