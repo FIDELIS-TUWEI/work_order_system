@@ -1,8 +1,11 @@
-import Layout from '../../components/Layout';
+import Layout from '../../../components/Layout';
+import ViewAllDesignations from '../../../components/ViewAllDesignations';
 
 const AllDesignations = () => {
   return (
-    <Layout>AllDesignations</Layout>
+    <Layout>
+      <ViewAllDesignations />
+    </Layout>
   )
 }
 

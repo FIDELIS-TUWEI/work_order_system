@@ -1,8 +1,11 @@
-import Layout from '../../components/Layout';
+import CreateDesignation from '../../../components/CreateDesignation';
+import Layout from '../../../components/Layout';
 
 const NewDesignation = () => {
   return (
-    <Layout>NewDesignation</Layout>
+    <Layout>
+      <CreateDesignation />
+    </Layout>
   )
 }
 

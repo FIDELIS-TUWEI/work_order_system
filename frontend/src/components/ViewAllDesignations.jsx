@@ -5,4 +5,4 @@ const ViewAllDesignations = () => {
   )
 }
 
-export default ViewAllDesignations
+export default ViewAllDesignations;

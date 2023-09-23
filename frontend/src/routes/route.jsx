@@ -26,6 +26,8 @@ import NewLocation from "../pages/admin/locations/NewLocation";
 import AdminPanel from "../pages/admin/AdminPanel";
 import NewDepartment from "../pages/admin/department/NewDepartment";
 import AllDepartments from "../pages/admin/department/AllDepartments";
+import AllDesignations from "../pages/admin/designation/AllDesignations";
+import NewDesignation from "../pages/admin/designation/NewDesignation";
 
 
 
@@ -43,6 +45,8 @@ export const router = createBrowserRouter(
         <Route path="/all-categories" element={ <PrivateRoute> <AllCategories /> </PrivateRoute>} />
         <Route path="/all-departments" element={ <PrivateRoute> <AllDepartments /> </PrivateRoute>} />
         <Route path="/new/department" element={ <PrivateRoute> <NewDepartment /> </PrivateRoute>} />
+        <Route path="/all-designations" element={ <PrivateRoute> <AllDesignations /> </PrivateRoute>} />
+        <Route path="/new/designation" element={ <PrivateRoute> <NewDesignation /> </PrivateRoute>} />
         <Route path="/work/details/:id" element={ <PrivateRoute> <WorkDetails /> </PrivateRoute> } />
         <Route path="/edit/work/:id" element={ <PrivateRoute> <EditWorkOrder /> </PrivateRoute> } />
         <Route path="/users/all" element={ <PrivateRoute> <UsersAll/> </PrivateRoute> } />

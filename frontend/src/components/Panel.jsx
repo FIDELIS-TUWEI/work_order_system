@@ -4,6 +4,7 @@ import {FaUsers} from 'react-icons/fa';
 import {BiSolidCategory} from "react-icons/bi";
 import {IoLocation} from "react-icons/io5";
 import {HiOfficeBuilding} from "react-icons/hi";
+import {MdManageAccounts} from "react-icons/md";
 
 
 
@@ -41,6 +42,14 @@ const Panel = () => {
                     <Button onClick={() => navigate("/all-departments")}>
                         <HiOfficeBuilding />
                         Departments
+                    </Button>
+                </Card>
+            </Col>
+            <Col span={8}>
+                <Card bordered={false} title="All Designations">
+                    <Button onClick={() => navigate("/all-designations")}>
+                        <MdManageAccounts />
+                        Designations
                     </Button>
                 </Card>
             </Col>
