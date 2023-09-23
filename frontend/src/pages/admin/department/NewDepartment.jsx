@@ -13,7 +13,7 @@ const NewDepartment = () => {
   const onFinishHandler = async (values) => {
     setLoading(true);
     await createNewDepartment(values);
-    navigate("/all-departments");
+    navigate("/all/departments");
     message.success("New Department Created Succesfully");
     setLoading(false);
   };
