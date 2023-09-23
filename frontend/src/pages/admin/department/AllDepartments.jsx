@@ -1,8 +1,11 @@
-import Layout from '../../../components/Layout'
+import Layout from '../../../components/Layout';
+import ViewAllDepartments from '../../../components/ViewAllDepartments';
 
 const AllDepartments = () => {
   return (
-    <Layout>AllDepartments</Layout>
+    <Layout>
+      <ViewAllDepartments />
+    </Layout>
   )
 }
 
