@@ -1,11 +1,16 @@
 import { Button, Card } from "antd"
 import moment from "moment"
+import LoadingBox from "./LoadingBox";
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate }) => {
+    // Conditional statement to check if dueDate is empty
     if (!workDetails.dueDate || !workDetails.dueDate.length === 0) {
-        return null
+        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '150px' }}>
+            <LoadingBox />
+        </div>
     }
 
+    // Function to convert dueDate values from Object to date string format to YYYY-MM-DD
     const [startDate, endDate] = workDetails.dueDate.map((dateString) => 
     moment(dateString).format("YYYY-MM-DD"));
 
