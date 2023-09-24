@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const bcrypt = require("bcryptjs");
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -113,6 +114,43 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+// @desc Update user password
+// @route PUT /hin/updatePassword
+// @access Private
+const updatePassword = asyncHandler (async (req, res, next) => {
+    const { username } = req.params;
+    const { newPassword } = req.body;
+
+    // check if the user making the request is an admin or superadmin
+    if (req.user.role !== "admin" || req.user.role !== "superadmin") {
+        return next(new ErrorResponse("You are not authorized to change password, only admins", 401));
+    }
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return next(new ErrorResponse("User not found", 404));
+        };
+
+        // Hash the new password before saving to database
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update the user's password
+        user.password = hashedPassword;
+
+        // save the user with the new password
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Password updated successfully"
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 })
 
 
@@ -120,5 +158,6 @@ module.exports = {
     signupUser,
     login,
     logout,
-    getUserInfo
+    getUserInfo,
+    updatePassword
 }
