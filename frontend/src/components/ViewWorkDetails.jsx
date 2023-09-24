@@ -2,8 +2,13 @@ import { Button, Card } from "antd"
 import moment from "moment"
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate }) => {
-   
-    
+    if (!workDetails.dueDate || !workDetails.dueDate.length === 0) {
+        return null
+    }
+
+    const [startDate, endDate] = workDetails.dueDate.map((dateString) => 
+    moment(dateString).format("YYYY-MM-DD"));
+
   return (
     <>
         <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '500px' }}>
@@ -30,7 +35,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     )}
                 </p>
                 <p>
-                    Due Date: 
+                    Due Date: {startDate} - {endDate}
                 </p>
                 <p>
                     Assigned To: {workDetails && workDetails.assignedTo}

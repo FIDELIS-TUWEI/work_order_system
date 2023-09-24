@@ -7,7 +7,8 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
 
   const disabledDate = current => {
     return !current.isSame(today, 'day');
-  }
+  };
+  
   return (
     <div>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>

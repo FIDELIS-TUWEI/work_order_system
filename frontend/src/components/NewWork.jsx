@@ -1,5 +1,6 @@
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
+import moment from "moment";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -10,6 +11,10 @@ const NewWork = ({
   selectedCategory, handleLocationChange, 
   handleCategoryChange, navigate
 }) => {
+
+  const disabledDate = current => {
+    return current && current < moment().startOf('day');
+  }
 
   return (
     <>
@@ -100,7 +105,7 @@ const NewWork = ({
               name="dueDate" 
               label="Due Date" 
               required rules={[{ required: true, message: 'Please Select a Due Date!' }]}>
-              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} />
+              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} disabledDate={disabledDate} />
             </Form.Item>
           </Col>
         </Row>
