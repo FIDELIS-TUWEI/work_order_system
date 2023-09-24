@@ -85,9 +85,10 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
     try {
+        const userId = req.user._id;
         const workOrderId = req.params.id;
         const updates = req.body;
-        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {new: true, runValidators: true}).populate();
+        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {reviewedBy: userId}, {new: true, runValidators: true}).populate();
 
         if (!updatedWorkorder) {
             return next(new ErrorResponse("Work Order not found", 404));
