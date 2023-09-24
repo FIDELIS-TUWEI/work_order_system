@@ -120,7 +120,7 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @route PUT /hin/updatePassword
 // @access Private
 const updatePassword = asyncHandler (async (req, res, next) => {
-    const { username } = req.params;
+    const { id } = req.params;
     const { newPassword } = req.body;
 
     // check if the user making the request is an admin or superadmin
@@ -129,7 +129,7 @@ const updatePassword = asyncHandler (async (req, res, next) => {
     }
 
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findById(id);
 
         if (!user) {
             return next(new ErrorResponse("User not found", 404));

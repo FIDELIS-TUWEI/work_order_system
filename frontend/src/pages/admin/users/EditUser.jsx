@@ -50,6 +50,8 @@ const EditUser = () => {
     setUserDetails({...res.data});
   }
 
+  // Function to edit user password
+
   return (
     <Layout>
       <UpdateUser 
