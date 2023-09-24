@@ -4,7 +4,6 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const nodemailer = require("nodemailer");
 const { PASS, USER } = require("../utils/env");
-const { ObjectId } = require("mongoose").Types;
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -84,11 +83,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
 // Update Work Order
 const updateWorkOrder = asyncHandler (async (req, res, next) => {
-    // Create a function to create a new objectId instance
-    const createObjectId = (id) => {
-        return new ObjectId(id);
-    }
-
     try {
         const userId = req.user._id;
         const user = await User.findById(userId).select("-password");
@@ -99,12 +93,10 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("User not found", 404));
         }
 
-        // populate the reviewedBy field with the current user's username 
-        updates.reviewedBy = createObjectId(user._id);
-
         const updatedWorkorder = await WorkOrder.findByIdAndUpdate(
             workOrderId, 
             updates, 
+            user,
             {new: true, runValidators: true}
             ).populate("reviewedBy", "username" );
 
