@@ -71,6 +71,24 @@ const getAllLocations = asyncHandler(async (req, res) => {
     }
 });
 
+// Query to get all locations
+const queryAllLocations = asyncHandler(async (req, res) => {
+    const { query } = req.query;
+    try {
+        const locations = await Location.find({ locationTitle: { $regex: query, $options: "i" } });
+        res.status(200).json({
+            success: true,
+            data: locations
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+        
+    }
+})
+
 // @desc Delete location
 // @route DELETE /delete/location/:id
 // @access Private
