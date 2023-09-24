@@ -16,6 +16,8 @@ const CreateWorkOrder = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filteredLocation, setFilteredLocation] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
 
   // function to handle form submit
@@ -40,7 +42,8 @@ const CreateWorkOrder = () => {
         Authorization: `Bearer ${token}`
       }
     });
-    setLocation(response.data)
+    setLocation(response.data);
+    setFilteredLocation(response.data);
   };
 
   // Function to handle change in category
@@ -57,6 +60,16 @@ const CreateWorkOrder = () => {
       }
     });
     setCategory(response.data);
+  };
+
+  // Function to handle search input change and filter the locations
+  const handleSearchInputChange = (value) => {
+    setSearchInput(value);
+    // Filter the locations based on search input
+    const filtered = location.filter((locations) => {
+      return locations.locationTitle.toLowerCase().includes(searchInput.toLowerCase());
+    });
+    setFilteredLocation(filtered);
   }
 
   useEffect(() => {
@@ -76,6 +89,8 @@ const CreateWorkOrder = () => {
         handleLocationChange={handleLocationChange}
         handleCategoryChange={handleCategoryChange} 
         navigate={navigate}
+        handleSearchInputChange={handleSearchInputChange}
+        filteredLocation={filteredLocation}
       />
     </Layout>
   )

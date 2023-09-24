@@ -9,7 +9,7 @@ const NewWork = ({
   loading, location, category, 
   onFinishHandler, selectedLocation, 
   selectedCategory, handleLocationChange, 
-  handleCategoryChange, navigate
+  handleCategoryChange, navigate, handleSearchInputChange, filteredLocation
 }) => {
 
   const disabledDate = current => {
@@ -42,8 +42,10 @@ const NewWork = ({
                 value={selectedLocation}
                 allowClear
                 style={{ width: '100%' }}
+                showSearch
+                onSearch={handleSearchInputChange}
               >
-                {location.map((location) => (
+                {filteredLocation.map((location) => (
                   <Option key={location._id} value={location._id}>{location.locationTitle}</Option>
                 ))}
               </Select>
