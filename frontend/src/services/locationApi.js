@@ -10,6 +10,17 @@ export const allLocations = async (page) => {
     } catch (error) {
         console.log("Error while fetching all locations", error);
     }
+};
+
+// Query to get all locations
+export const queryLocations = async (query) => {
+    try {
+        const res = await axios.get(`${WORK_URL}/search/location?query=${query}`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching all locations", error);
+    }
 }
 
 // Create Location
