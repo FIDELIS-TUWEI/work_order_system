@@ -46,7 +46,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Reviewed: {workDetails && workDetails.reviewed === true ? "Yes" : "No"}
                 </p>
                 <p>
-                    Reviewed By: {workDetails && workDetails.reviewedBy?.username}
+                    Reviewed By: {workDetails && workDetails.reviewedBy}
                 </p>
                 <p>
                     {workDetails && workDetails.dateReviewed ? (
