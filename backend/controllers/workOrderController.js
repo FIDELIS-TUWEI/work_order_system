@@ -86,13 +86,28 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
     try {
         const userId = req.user._id;
+        const user = await User.findById(userId).select("-password");
         const workOrderId = req.params.id;
         const updates = req.body;
-        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(workOrderId, updates, {reviewedBy: userId}, {new: true, runValidators: true}).populate();
+
+        if (!user) {
+            return next(new ErrorResponse("User not found", 404));
+        }
+        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(
+            workOrderId, 
+            updates, 
+            {new: true, runValidators: true}
+            ).populate("reviewedBy", "username" );
 
         if (!updatedWorkorder) {
             return next(new ErrorResponse("Work Order not found", 404));
-        }
+        };
+
+        // update the reviewedBy field with the current user logged in
+        updatedWorkorder.reviewedBy = userId;
+
+        // save the updated work order
+        await updatedWorkorder.save();
 
         return res.status(200).json({
             success: true,

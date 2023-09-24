@@ -111,15 +111,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
                       </Col>
                       <Col xs={24} md={24} lg={8}>
                         <Form.Item
-                          label="Reviewed By"
-                          name="reviewedBy"
-                          rules={[{ required: true, message: 'Please Enter Your Name!' }]}
-                        >
-                          <Input type='text' placeholder='Enter your name' />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={24} lg={8}>
-                        <Form.Item
                           label="Review Comments"
                           name="reviewComments"
                           rules={[{ required: true, message: 'Please Enter Review Comments!' }]}
