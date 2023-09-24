@@ -2,6 +2,12 @@ import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } f
 
 
 const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
+  // Function to disable past dates and future dates. Allow only today
+  const today = new Date();
+
+  const disabledDate = current => {
+    return !current.isSame(today, 'day');
+  }
   return (
     <div>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
@@ -46,7 +52,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
                       name="dateAssigned"
                       rules={[{ required: true, message: 'Please Enter Date Assigned!' }]}
                     >
-                      <DatePicker format='YYYY-MM-DD' />
+                      <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
                     </Form.Item>
                   </Col>
                 </>
@@ -84,7 +90,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
                         name="dateCompleted"
                         rules={[{ required: true, message: 'Please Enter Date Completed!' }]}
                       >
-                        <DatePicker format='YYYY-MM-DD' />
+                        <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
                       </Form.Item>
                     </Col>
                 </>
