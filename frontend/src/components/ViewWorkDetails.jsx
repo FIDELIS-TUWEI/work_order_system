@@ -30,7 +30,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     )}
                 </p>
                 <p>
-                    Due Date
+                    Due Date: 
                 </p>
                 <p>
                     Assigned To: {workDetails && workDetails.assignedTo}
@@ -49,11 +49,8 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Reviewed By: {workDetails && workDetails.reviewedBy}
                 </p>
                 <p>
-                    {workDetails && workDetails.dateReviewed ? (
-                        <span>Reviewed Date: {moment(workDetails && workDetails.dateReviewed).format("DD/MM/YYYY, hh:mm a")}</span>
-                    ) : (
-                        <span>No Date Reviewed</span>
-                    )}
+                    Reviewed Date: {moment(workDetails && workDetails.Date_Updated).format("DD/MM/YYYY, hh:mm a")}
+                    
                 </p>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
