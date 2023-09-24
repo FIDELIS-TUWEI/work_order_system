@@ -117,5 +117,6 @@ const deleteLocation = asyncHandler(async (req, res) => {
 module.exports = {
     createLocation,
     getAllLocations,
+    queryAllLocations,
     deleteLocation
 }
