@@ -75,7 +75,7 @@ const getAllLocations = asyncHandler(async (req, res) => {
 const queryAllLocations = asyncHandler(async (req, res) => {
     const { query } = req.query;
     try {
-        const locations = await Location.find({ locationTitle: { $regex: query, $options: "i" } });
+        const locations = await Location.find({ locationTitle: { $regex: new RegExp(query, "i")} });
         res.status(200).json({
             success: true,
             data: locations

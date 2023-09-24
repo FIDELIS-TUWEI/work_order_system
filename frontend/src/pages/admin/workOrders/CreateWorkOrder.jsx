@@ -1,12 +1,15 @@
 import { message } from 'antd';
 import Layout from '../../../components/Layout'
 import { useEffect, useState } from 'react'
-import { createWorkOrder, getWorkLocations } from '../../../services/workApi'
+import { createWorkOrder } from '../../../services/workApi'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectToken } from '../../../utils/redux/slices/authSlice'
 import { allWorkCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
+import { queryLocations } from '../../../services/locationApi';
+import axios from 'axios';
+const WORK_URL = "/hin";
 
 
 const CreateWorkOrder = () => {
@@ -33,14 +36,15 @@ const CreateWorkOrder = () => {
   }
 
   // Function to get all work Locations from Services Api
-  const workLocation = async () => {
-    const response = await getWorkLocations({
+  const workLocation = async (query) => {
+    const response = await axios.get(`${WORK_URL}/search/location?query=${query}`, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`
       }
-    });
-    setLocation(response.data)
+    })
+    const data = response.data
+    setLocation(data)
   };
 
   // Function to handle change in category
@@ -76,6 +80,7 @@ const CreateWorkOrder = () => {
         handleLocationChange={handleLocationChange}
         handleCategoryChange={handleCategoryChange} 
         navigate={navigate}
+        workLocation={workLocation}
       />
     </Layout>
   )
