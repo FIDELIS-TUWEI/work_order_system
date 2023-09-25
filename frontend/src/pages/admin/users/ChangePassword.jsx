@@ -1,7 +1,11 @@
+import EditUserPassword from "../../../components/EditUserPassword"
+import Layout from "../../../components/Layout"
 
 const ChangePassword = () => {
   return (
-    <div>ChangePassword</div>
+    <Layout>
+      <EditUserPassword />
+    </Layout>
   )
 }
 
