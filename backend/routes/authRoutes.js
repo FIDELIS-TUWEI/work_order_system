@@ -6,7 +6,7 @@ const { protect, restrict } = require("../middleware/authMiddleware");
 router.post("/register", protect, restrict(["admin", "superadmin"]), signupUser);
 router.post("/login",  login);
 router.post("/logout", logout);
+router.post("/updatePassword/", protect, restrict(["admin", "superadmin"]), updatePassword);
 router.get("/userInfo", protect, getUserInfo);
-router.put("/updatePassword/:id", protect, restrict(["admin", "superadmin"]), updatePassword);
 
 module.exports = router;
