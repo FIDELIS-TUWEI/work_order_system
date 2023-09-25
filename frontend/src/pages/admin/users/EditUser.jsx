@@ -1,7 +1,7 @@
 import { message } from "antd";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
-import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
+import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { editUser, getUserInfo } from "../../../services/usersApi";
 import { useEffect, useState } from "react";
@@ -9,7 +9,6 @@ import UpdateUser from "../../../components/UpdateUser";
 
 
 const EditUser = () => {
-  const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
   const navigate = useNavigate();
@@ -49,8 +48,6 @@ const EditUser = () => {
     });
     setUserDetails({...res.data});
   }
-
-  // Function to edit user password
 
   return (
     <Layout>
