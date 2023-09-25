@@ -120,21 +120,22 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @route PUT /hin/updatePassword
 // @access Private
 const updatePassword = asyncHandler (async (req, res, next) => {
-
     try {
-        const userId = req.user.id;
-        const user = await User.findById(userId);
+        const { oldPassword, newPassword } = req.body;
+
+        // Find the user in the database
+        const user = await User.findOne({ _id: req.user._id });
 
         // check if the current password is correct
-        const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, user.password);
+        const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
 
-        if (!isPasswordMatch) {
-            return next(new ErrorResponse("Current Password is incorrect", 500));
+        if (!isPasswordCorrect) {
+            return next(new ErrorResponse("Old Password is incorrect", 400));
         }
 
         // Hash the password and update the new password
         const salt = await bcrypt.genSalt(10);
-        const newHashedPassword = await bcrypt.hash(req.body.newPassword, salt);
+        const newHashedPassword = await bcrypt.hash(newPassword, salt);
 
         //Update the user's password in the database
         user.password = newHashedPassword;
