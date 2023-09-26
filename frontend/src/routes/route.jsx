@@ -28,6 +28,7 @@ import NewDepartment from "../pages/admin/department/NewDepartment";
 import AllDepartments from "../pages/admin/department/AllDepartments";
 import AllDesignations from "../pages/admin/designation/AllDesignations";
 import NewDesignation from "../pages/admin/designation/NewDesignation";
+import ChangePassword from "../pages/admin/users/ChangePassword";
 
 
 
@@ -57,6 +58,7 @@ export const router = createBrowserRouter(
         <Route path="/work/reports" element={ <PrivateRoute> <Reports /> </PrivateRoute> } />
         <Route path="/reports" element={ <PrivateRoute> <WorkReport /> </PrivateRoute> } />
         <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
+        <Route path="/updatePassword" element={ <PrivateRoute> <ChangePassword /> </PrivateRoute> } />
         <Route path="/user/details/:id" element={ <PrivateRoute> <UserDetails /> </PrivateRoute> } />
         <Route path="/edit/user/:id" element={ <PrivateRoute> <EditUser /> </PrivateRoute> } />
         <Route path="*" element={<NotFound />} />

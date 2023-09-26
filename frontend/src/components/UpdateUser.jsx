@@ -5,15 +5,16 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
-      <Card title={userDetails && userDetails.username} style={{ margin: '15px' }}>
+      <Card title={userDetails?.username} style={{ margin: '15px' }}>
         <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: "18px"}}>
+          <Button onClick={() => {navigate("/updatePassword")}}>Change Password</Button>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={8}>
               <Form.Item 
                 name="firstName" 
                 label="First Name"
               > 
-                <Input type='text' placeholder={userDetails && userDetails.firstName} />
+                <Input type='text' placeholder={userDetails?.firstName} />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
@@ -21,7 +22,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
                 name="lastName" 
                 label="Last Name" 
               >
-                <Input type='text' placeholder={userDetails && userDetails.lastName} />
+                <Input type='text' placeholder={userDetails?.lastName} />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
@@ -77,14 +78,6 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
               />
             </Form.Item>
           </Col>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item 
-                  name="password" 
-                  label="Password" 
-                >
-                <Input type='password' placeholder='Enter Password' />
-              </Form.Item>  
-            </Col>
             <Col xs={24} md={24} lg={8}>
               <Form.Item
                 name="role"
