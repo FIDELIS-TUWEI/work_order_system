@@ -7,7 +7,7 @@ router.post("/register", protect, restrict(["admin", "superadmin"]), signupUser)
 router.post("/login",  login);
 router.post("/logout", logout);
 router.get("/userInfo", protect, getUserInfo);
-router.put("/update/password", protect, restrict(["admin", "superadmin"]), updatePassword);
+router.put("/update/password/:id", protect, restrict(["admin", "superadmin"]), updatePassword);
 
 
 module.exports = router;

@@ -34,9 +34,9 @@ export const editUser = async (id, values) => {
 };
 
 // update user password
-export const updateUserPassword = async (values) => {
+export const updateUserPassword = async (id, values) => {
     try {
-        const res = await axios.put(`${USERS_URL}/update/password`, values);
+        const res = await axios.put(`${USERS_URL}/update/password/${id}`, values);
         return res.data;
     } catch (error) {
         console.error("Error while updating user password", error);

@@ -120,7 +120,7 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @route PUT /hin/updatePassword
 // @access Private
 const updatePassword = asyncHandler (async (req, res, next) => {
-    const { oldPassword, newPassword } = req.body;
+    const { newPassword } = req.body;
     try {
         
         // Find the user in the database
@@ -134,13 +134,6 @@ const updatePassword = asyncHandler (async (req, res, next) => {
         if (user.role !== "admin" && user.role !== "superadmin") {
             return next(new ErrorResponse("You are not authorized to perform this action", 403));
         };
-
-        // check if the current password is correct
-        const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
-
-        if (!isPasswordCorrect) {
-            return next(new ErrorResponse("Old Password is incorrect", 400));
-        }
 
         // Hash the password and update the new password
         const salt = await bcrypt.genSalt(10);

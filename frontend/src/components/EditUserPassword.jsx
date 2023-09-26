@@ -17,15 +17,6 @@ const EditUserPassword = ({ onFinishHandler, oldPassword, newPassword, setOldPas
                 <Row gutter={20}>
                     <Col xs={24} md={24} lg={8}>
                         <Form.Item
-                            name="oldPassword"
-                            label="Old Password"
-                            required rules={[{ required: true, message: "Please Enter your Old Password" }]}
-                        >
-                            <Input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} placeholder="Enter Old Password" />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={24} lg={8}>
-                        <Form.Item
                             name="newPassword"
                             label="New Password"
                             required rules={[
