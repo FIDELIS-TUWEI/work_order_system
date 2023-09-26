@@ -1,6 +1,6 @@
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 
-const EditUserPassword = ({ onFinishHandler }) => {
+const EditUserPassword = ({ onFinishHandler, oldPassword, newPassword, setOldPassword, setNewPassword }) => {
   return (
     <>
         <Typography
@@ -21,7 +21,7 @@ const EditUserPassword = ({ onFinishHandler }) => {
                             label="Old Password"
                             required rules={[{ required: true, message: "Please Enter your Old Password" }]}
                         >
-                            <Input type="password" value="" onChange={(e) => setOldPassword(e.target.value)} placeholder="Enter Old Password" />
+                            <Input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} placeholder="Enter Old Password" />
                         </Form.Item>
                     </Col>
                     <Col xs={24} md={24} lg={8}>
@@ -33,7 +33,7 @@ const EditUserPassword = ({ onFinishHandler }) => {
                                 { min: 8, message: "Password must be atleast 8 characters long" },
                             ]}
                         >
-                            <Input type="password" value="" onChange={(e) => setNewPassword(e.target.value)} placeholder="Enter New Password" />
+                            <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Enter New Password" />
                         </Form.Item>
                     </Col>
                 </Row>

@@ -18,14 +18,18 @@ const ChangePassword = () => {
       await updateUserPassword(values, {
         withCredentials: true,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
         message.success("Password Updated Successfully");
-        navigate("/profile");
+        navigate("/users/all");
     } catch (error) {
-      message.error("Password Update Failed");
-      console.error(error);
+      if (error.response && error.response.status === 400) {
+        message.error("Incorrect Password, Try Again");
+      } else {
+        message.error("Password Update Failed");
+        console.error(error);
+      }
     }
   }
 
@@ -33,6 +37,10 @@ const ChangePassword = () => {
     <Layout>
       <EditUserPassword 
         onFinishHandler={onFinishHandler}
+        oldPassword={oldPassword}
+        newPassword={newPassword}
+        setOldPassword={setOldPassword}
+        setNewPassword={setNewPassword}
       />
     </Layout>
   )
