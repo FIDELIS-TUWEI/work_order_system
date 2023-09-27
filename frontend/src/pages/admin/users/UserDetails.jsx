@@ -53,7 +53,7 @@ const UserDetails = () => {
         <p>
           Status: {userDetails && userDetails.active === true ? "Active" : "Not Active"}
         </p>
-
+        <Button onClick={() => {navigate(`/updatePassword/${userDetails?._id}`)}}>Change Password</Button>
         <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => {navigate(-1)}}>Back</Button>
       </Card>
     </Layout>

@@ -7,7 +7,6 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
       <Card title={userDetails?.username} style={{ margin: '15px' }}>
         <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: "18px"}}>
-          <Button onClick={() => {navigate(`/updatePassword/${userDetails?._id}`)}}>Change Password</Button>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={8}>
               <Form.Item 

@@ -33,11 +33,9 @@ const userSchema = new mongoose.Schema({
     },
     department: {
         type: String,
-        required: true
     },
     designation: {
         type: String,
-        required: true
     },
     workOrders: [
         {

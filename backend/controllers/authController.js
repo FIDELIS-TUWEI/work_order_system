@@ -52,7 +52,15 @@ const login = asyncHandler (async (req, res, next) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
-        const passwordIsMatch = await user.comparePassword(password);
+
+        if (!user) {
+            return next(new ErrorResponse("Invalid Credentials", 401));
+        }
+        const passwordIsMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordIsMatch) {
+            return next(new ErrorResponse("Invalid Credentials", 401));
+        }
 
         // Generate Token
         const token = signToken(user._id);
@@ -121,10 +129,11 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @access Private
 const updatePassword = asyncHandler (async (req, res, next) => {
     const { newPassword } = req.body;
+    const { userId } = req.params;
     try {
         
         // Find the user in the database
-        const user = await User.findOne({ _id: req.user._id });
+        const user = await User.findById(userId);
 
         if (!user) {
             return next(new ErrorResponse("User not found", 404));
