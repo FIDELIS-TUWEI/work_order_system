@@ -6,7 +6,7 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const NewWork = ({ 
-  loading, locations, category, 
+  loading, location, category, 
   onFinishHandler, selectedLocation, 
   selectedCategory, handleLocationChange, 
   handleCategoryChange, navigate, workLocation
@@ -46,7 +46,7 @@ const NewWork = ({
                 onSearch={workLocation}
                 filterOption={false}
               >
-                {locations.map((location) => (
+                {location.map((location) => (
                   <Option key={location._id} value={location._id}>{location.locationTitle}</Option>
                 ))}
               </Select>

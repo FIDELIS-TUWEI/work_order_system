@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { selectToken } from '../../../utils/redux/slices/authSlice'
 import { allWorkCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
-
+import { queryLocations } from '../../../services/locationApi';
 import axios from 'axios';
 const WORK_URL = "/hin";
 
@@ -15,7 +15,7 @@ const WORK_URL = "/hin";
 const CreateWorkOrder = () => {
   const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
-  const [locations, setLocations] = useState([]);
+  const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -36,15 +36,15 @@ const CreateWorkOrder = () => {
   }
 
   // Function to get all work Locations from Services Api
-  const workLocation = async () => {
-    const response = await axios.get(`${WORK_URL}/query/locations`, {
+  const workLocation = async (query) => {
+    const response = await axios.get(`${WORK_URL}/search/location?query=${query}`, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
     const data = response.data
-    setLocations(data)
+    setLocation(data)
   };
 
   // Function to handle change in category
@@ -73,7 +73,7 @@ const CreateWorkOrder = () => {
       <NewWork 
         loading={loading} 
         category={category} 
-        locations={locations} 
+        location={location} 
         onFinishHandler={onFinishHandler}
         selectedLocation={selectedLocation}
         selectedCategory={selectedCategory}

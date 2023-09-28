@@ -6,7 +6,7 @@ const { protect, restrict } = require('../middleware/authMiddleware');
 
 router.post("/create/location", protect, restrict(["admin", "superadmin"]), createLocation);
 router.get("/all-locations", protect, restrict(["admin", "superadmin"]), getAllLocations);
-router.get("/query/locations", protect, restrict(["admin", "superadmin", "hod", "reviewer", "engineer", "user"]), queryAllLocations);
+router.get("/search/location", protect, restrict(["admin", "superadmin", "hod", "reviewer", "engineer", "user"]), queryAllLocations);
 router.delete("/delete/location/:id", protect, restrict(["admin", "superadmin"]), deleteLocation);
 
 module.exports = router;
