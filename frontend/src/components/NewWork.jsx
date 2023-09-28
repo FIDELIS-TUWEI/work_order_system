@@ -11,7 +11,7 @@ const NewWork = ({
   selectedCategory, handleLocationChange, 
   handleCategoryChange, navigate, workLocation
 }) => {
-
+  // Function to disable past dates and future dates. Allow only today
   const disabledDate = current => {
     return current && current < moment().startOf('day');
   }
