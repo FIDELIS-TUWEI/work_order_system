@@ -13,9 +13,9 @@ export const allLocations = async (page) => {
 };
 
 // Query to get all locations
-export const queryLocations = async (query) => {
+export const queryLocations = async () => {
     try {
-        const res = await axios.get(`${WORK_URL}/search/location?query=${query}`);
+        const res = await axios.get(`${WORK_URL}/search/location`);
         const data = res.data;
         return data;
     } catch (error) {

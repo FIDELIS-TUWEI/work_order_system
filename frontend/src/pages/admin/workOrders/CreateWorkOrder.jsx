@@ -36,15 +36,14 @@ const CreateWorkOrder = () => {
   }
 
   // Function to get all work Locations from Services Api
-  const workLocation = async (query) => {
-    const response = await axios.get(`${WORK_URL}/search/location?query=${query}`, {
+  const workLocation = async () => {
+    const { data } = await queryLocations({
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`
       }
-    })
-    const data = response.data
-    setLocation(data)
+    });
+    setLocation(data);
   };
 
   // Function to handle change in category
