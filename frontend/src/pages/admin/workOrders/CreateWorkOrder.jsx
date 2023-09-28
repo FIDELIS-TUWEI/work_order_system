@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { selectToken } from '../../../utils/redux/slices/authSlice'
 import { allWorkCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
-import { queryLocations } from '../../../services/locationApi';
+
 import axios from 'axios';
 const WORK_URL = "/hin";
 
@@ -15,7 +15,7 @@ const WORK_URL = "/hin";
 const CreateWorkOrder = () => {
   const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -44,7 +44,7 @@ const CreateWorkOrder = () => {
       }
     })
     const data = response.data
-    setLocation(data)
+    setLocations(data)
   };
 
   // Function to handle change in category
@@ -73,7 +73,7 @@ const CreateWorkOrder = () => {
       <NewWork 
         loading={loading} 
         category={category} 
-        location={location} 
+        locations={locations} 
         onFinishHandler={onFinishHandler}
         selectedLocation={selectedLocation}
         selectedCategory={selectedCategory}
