@@ -76,10 +76,10 @@ const queryAllLocations = asyncHandler(async (req, res) => {
     try {
         const locations = await Location.find({});
 
-        if (!locations) {
+        if (!locations || locations.length === 0) {
             return res.status(400).json({ message: "No locations found" });
         };
-        
+
         res.status(200).json({
             success: true,
             data: locations
