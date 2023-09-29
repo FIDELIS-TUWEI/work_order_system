@@ -29,7 +29,18 @@ const Layout = ({ children }) => {
   }
 
   // Rendering menu list
-  const adminMenu = userInfo?.role === "admin" || userInfo?.role === "superadmin" ? AdminMenu : userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer" || userInfo?.role === "engineer" ? HodMenu : UserMenu;
+  //const adminMenu = userInfo?.role === "admin" || userInfo?.role === "superadmin" ? AdminMenu : userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer" || userInfo?.role === "engineer" ? HodMenu : UserMenu;
+
+  // function to render menu list
+  const renderMenu = () => {
+    if (userInfo?.role === "admin" || userInfo?.role === "superadmin") {
+      return AdminMenu;
+    } else if (userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer" || userInfo?.role === "engineer") {
+      return HodMenu;
+    } else {
+      return UserMenu;
+    }
+  }
 
   return (
     <div className="main">
@@ -40,7 +51,7 @@ const Layout = ({ children }) => {
             <hr />
           </div>
           <div className="menu">
-            {adminMenu.map((menu) => {
+            {renderMenu().map((menu) => {
               const isActive = location.pathname === menu.path;
               return (
                 <div key={menu.name}>
