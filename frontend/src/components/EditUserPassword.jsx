@@ -15,6 +15,18 @@ const EditUserPassword = ({ onFinishHandler, oldPassword, newPassword, setOldPas
         <Card title="Change Password" style={{ margin: "15px" }}>
             <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: '18px' }}>
                 <Row gutter={20}>
+                <Col xs={24} md={24} lg={8}>
+                    <Form.Item
+                        name="oldPassword"
+                        label="Old Password"
+                        required rules={[
+                            { required: true, message: "Please Enter your Old Password" },
+                            { min: 8, message: "Password must be atleast 8 characters long" },
+                        ]}
+                    >
+                        <Input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} placeholder="Enter New Password" />
+                    </Form.Item>
+                    </Col>
                     <Col xs={24} md={24} lg={8}>
                         <Form.Item
                             name="newPassword"

@@ -128,37 +128,35 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @route PUT /hin/updatePassword
 // @access Private
 const updatePassword = asyncHandler (async (req, res, next) => {
-    const { newPassword } = req.body;
-    const { userId } = req.params;
     try {
-        
-        // Find the user in the database
-        const user = await User.findById(userId);
+        const user = await User.findById(req.user.id);
 
-        if (!user) {
-            return next(new ErrorResponse("User not found", 404));
-        };
+        // verify the old password
+        const isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
 
-        // Check if user is an admin or superadmin
-        if (user.role !== "admin" && user.role !== "superadmin") {
-            return next(new ErrorResponse("You are not authorized to perform this action", 403));
-        };
+        if (!isMatch) {
+            return next(new ErrorResponse("Invalid Old Password", 400));
+        }
 
-        // Hash the password and update the new password
+        // Generate a salt and hash the new password
         const salt = await bcrypt.genSalt(10);
-        const newHashedPassword = await bcrypt.hash(newPassword, salt);
+        const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
 
-        //Update the user's password in the database
-        user.password = newHashedPassword;
+        // update the user's password
+        user.password = hashedPassword;
         await user.save();
-        
+
         res.status(200).json({
             success: true,
-            message: "Password changed succesfully"
-        })
+            message: "Password updated successfully"
+        });
 
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+        next(error);
     }
 })
 

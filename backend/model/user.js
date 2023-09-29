@@ -64,4 +64,11 @@ userSchema.methods.comparePassword = async function(enteredPassword) {
     return isMatch;
 }
 
+// change user password
+userSchema.methods.changePassword = async function(newPassword) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(newPassword, salt);
+    return this;
+}
+
 module.exports = mongoose.model('User', userSchema);
