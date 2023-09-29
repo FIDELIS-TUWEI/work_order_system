@@ -39,9 +39,16 @@ const restrict = (role) => {
         }
         next();
     };
-}
+};
+
+// Middleware to set the reviewedBy field
+const setReviewedBy = asyncHandler(async (req, res, next) => {
+    req.body.reviewedBy = req.user._id;
+    next();
+})
 
 module.exports = {
     protect,
     restrict,
+    setReviewedBy
 }

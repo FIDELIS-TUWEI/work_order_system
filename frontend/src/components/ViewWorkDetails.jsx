@@ -14,8 +14,6 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
     const [startDate, endDate] = workDetails.dueDate.map((dateString) => 
     moment(dateString).format("YYYY-MM-DD"));
 
-    const requestedByUsername = workDetails.reviewedBy?.username;
-    console.log("requestedByUsername:", requestedByUsername);
 
   return (
     <>

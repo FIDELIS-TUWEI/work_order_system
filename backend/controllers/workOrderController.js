@@ -88,7 +88,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const updateWorkOrder = await WorkOrder.findByIdAndUpdate(id, req.body, { new: true }).populate("reviewedBy");
+        const updateWorkOrder = await WorkOrder.findByIdAndUpdate(id, req.body, { new: true }).populate("reviewedBy", "username");
 
         // check if work order exists
         if (!updateWorkOrder) {
