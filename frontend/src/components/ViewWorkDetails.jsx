@@ -34,6 +34,9 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Requested Date: {moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}
                 </p>
                 <p>
+                    Requested By: {workDetails?.requestedBy.username}
+                </p>
+                <p>
                     {workDetails?.dateCompleted ? (
                         <span>Completed Date: {moment(workDetails?.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</span>
                     ) : (
