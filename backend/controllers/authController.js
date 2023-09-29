@@ -124,6 +124,32 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
     }
 });
 
+// @desc Reset user password
+// @route POST /hin/resetPassword
+// @access Private
+const resetPassword = asyncHandler (async (req, res, next) => {
+    try {
+        const { password } = req.body;
+
+        // Find user
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return next(new ErrorResponse("User not found", 404));
+        };
+
+        user.password = password;
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Password reset successfully"
+        })
+    } catch (error) {
+        
+    }
+})
+
 
 
 module.exports = {
@@ -131,4 +157,5 @@ module.exports = {
     login,
     logout,
     getUserInfo,
+    resetPassword
 }
