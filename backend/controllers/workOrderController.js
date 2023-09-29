@@ -85,31 +85,23 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
 // Update Work Order
 const updateWorkOrder = asyncHandler (async (req, res, next) => {
+    const { id } = req.params;
+    const { reviewedBy } = req.user;
+
     try {
-        const userId = req.user._id;
-        const user = await User.findById(userId).select("-password");
-        const workOrderId = req.params.id;
-        const updates = req.body;
+        const updateWorkOrder = await WorkOrder.findByIdAndUpdate(id, { reviewedBy }, { new: true });
 
-        if (!user) {
-            return next(new ErrorResponse("User not found", 404));
-        }
-
-        const updatedWorkorder = await WorkOrder.findByIdAndUpdate(
-            workOrderId, 
-            updates, 
-            user,
-            {new: true, runValidators: true}
-            ).populate("reviewedBy", "username" );
-
-        if (!updatedWorkorder) {
+        // check if work order exists
+        if (!updateWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
+        // Return a response
         return res.status(200).json({
             success: true,
-            data: updatedWorkorder
-        })
+            data: updateWorkOrder
+        });
+
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
