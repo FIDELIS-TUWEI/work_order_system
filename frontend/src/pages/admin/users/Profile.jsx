@@ -18,28 +18,28 @@ const Profile = () => {
       <Card title="Profile" style={{ margin: 'auto', width: '300px' }}>
         <RxAvatar style={{ fontSize: '3rem' }} />
         <p>
-          First Name: {user && user.firstName}
+          First Name: {user?.firstName}
         </p>
         <p>
-          Last Name: {user && user.lastName}
+          Last Name: {user?.lastName}
         </p>
         <p>
-          Username: {user && user.username}
+          Username: {user?.username}
         </p>
         <p>
-          Department: {user && user.department}
+          Department: {user?.department}
         </p>
         <p>
-          Designation: {user && user.designation}
+          Designation: {user?.designation}
         </p>
         <p>
-          Role: {user && user.role}
+          Role: {user?.role}
         </p>
         <p>
-          Status: {user && user.active === true ? "Active" : "Not Active"}
+          Status: {user?.active === true ? "Active" : "Not Active"}
         </p>
 
-        {user && user.role === "admin" || user && user.role === "superadmin" ? (
+        {user?.role === "admin" || user?.role === "superadmin" ? (
           <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => {navigate(`/edit/user/${user._id}`)}}>Edit</Button>
         )
         : null}
