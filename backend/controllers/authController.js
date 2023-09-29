@@ -146,7 +146,7 @@ const resetPassword = asyncHandler (async (req, res, next) => {
             message: "Password reset successfully"
         })
     } catch (error) {
-        
+        next(error);
     }
 })
 

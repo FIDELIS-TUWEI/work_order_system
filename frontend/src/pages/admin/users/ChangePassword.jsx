@@ -16,15 +16,19 @@ const ChangePassword = () => {
   const navigate = useNavigate();
   const {id} = useParams();
 
-  const onFinishHandler = async (values) => {
-    try {
-      await axios.put (`${USERS_URL}/update/password/${id}`, values);
-      navigate('/users/all');
+const onFinishHandler = async (values) => {
+  try {
+    const response = await axios.put(`${USERS_URL}/update/password/${id}`, values);
+    navigate('/users/all');
+    if (response.status === 200) {
       message.success("User Updated Successfully");
-    } catch (error) {
-      console.error("Error while updating user password", error);
+    } else {
+      throw new Error("Error while updating user password");
     }
-  };
+  } catch (error) {
+    console.error("Error while updating user password", error);
+  }
+};
 
   return (
     <Layout>
