@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/connectDB");
 const mongoose = require("mongoose");
 const errorHandler = require("./middleware/error");
+const mongoSanitize = require("express-mongo-sanitize");
 
 connectDB();
 
@@ -53,6 +54,9 @@ app.use("/hin", designationRoutes);
 
 // Error Middleware
 app.use(errorHandler);
+
+// Prevent SQL Injection
+app.use(mongoSanitize());
 
 
 const PORT = process.env.PORT || 5000
