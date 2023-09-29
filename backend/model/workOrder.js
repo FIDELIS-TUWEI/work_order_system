@@ -65,9 +65,8 @@ const workOrderSchema = new mongoose.Schema({
         default: false
     },
     reviewedBy: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: false
     },
     reviewComments: {
         type: String,
