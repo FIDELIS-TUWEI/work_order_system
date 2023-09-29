@@ -89,7 +89,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     const { reviewedBy } = req.user;
 
     try {
-        const updateWorkOrder = await WorkOrder.findByIdAndUpdate(id, { reviewedBy }, { new: true });
+        const updateWorkOrder = await WorkOrder.findByIdAndUpdate(id, req.body, { reviewedBy }, { new: true });
 
         // check if work order exists
         if (!updateWorkOrder) {

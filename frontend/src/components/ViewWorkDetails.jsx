@@ -14,27 +14,30 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
     const [startDate, endDate] = workDetails.dueDate.map((dateString) => 
     moment(dateString).format("YYYY-MM-DD"));
 
+    const requestedByUsername = workDetails.reviewedBy?.username;
+    console.log("requestedByUsername:", requestedByUsername);
+
   return (
     <>
         <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '500px' }}>
             <div ref={componentPDF}>
                 <p>
-                    Title: {workDetails && workDetails.title}
+                    Title: {workDetails?.title}
                 </p>
                 
                 <p>
-                    Work Service Type: {workDetails && workDetails.serviceType}
+                    Work Service Type: {workDetails?.serviceType}
                 </p>
                 
                 <p>
-                    Work Status: {workDetails && workDetails.status}
+                    Work Status: {workDetails?.status}
                 </p>
                 <p>
-                    Requested Date: {moment(workDetails && workDetails.Date_Created).format("DD/MM/YYYY, hh:mm a")}
+                    Requested Date: {moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}
                 </p>
                 <p>
-                    {workDetails && workDetails.dateCompleted ? (
-                        <span>Completed Date: {moment(workDetails && workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</span>
+                    {workDetails?.dateCompleted ? (
+                        <span>Completed Date: {moment(workDetails?.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</span>
                     ) : (
                         <span>Work order has not been completed yet!</span>
                     )}
@@ -43,30 +46,29 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Due Date: {startDate} - {endDate}
                 </p>
                 <p>
-                    Assigned To: {workDetails && workDetails.assignedTo}
+                    Assigned To: {workDetails?.assignedTo}
                 </p>
                 <p>
-                    {workDetails && workDetails.dateAssigned ? (
-                        <span>Assigned Date: {moment(workDetails && workDetails.dateAssigned).format("DD/MM/YYYY, hh:mm a")}</span>
+                    {workDetails?.dateAssigned ? (
+                        <span>Assigned Date: {moment(workDetails?.dateAssigned).format("DD/MM/YYYY, hh:mm a")}</span>
                     ) : (
                         <span>Work order has not been assigned!</span>
                     )}
                 </p>
                 <p>
-                    Reviewed: {workDetails && workDetails.reviewed === true ? "Yes" : "No"}
+                    Reviewed: {workDetails?.reviewed === true ? "Yes" : "No"}
                 </p>
                 <p>
-                    Reviewed By: {workDetails && workDetails.reviewedBy}
+                    Reviewed By: {workDetails.reviewedBy?.username}
                 </p>
                 <p>
-                    Reviewed Date: {moment(workDetails && workDetails.Date_Updated).format("DD/MM/YYYY, hh:mm a")}
+                    Reviewed Date: {moment(workDetails?.Date_Updated).format("DD/MM/YYYY, hh:mm a")}
                     
                 </p>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none'}} onClick={() => navigate(-1)}>Back</Button>
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={handlePrint}>Print</Button>
-            <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}>Delete</Button>
             </div>
             
         </Card>
