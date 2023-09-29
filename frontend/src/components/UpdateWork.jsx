@@ -14,7 +14,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
             Edit Work Order
         </Typography>
-        <Card title={workDetails && workDetails.title} style={{ margin: '15px' }}>
+        <Card title={workDetails?.title} style={{ margin: '15px' }}>
         <Form onFinish={onFinishHandler} layout='vertical'>
             
             <Row gutter={20}>
