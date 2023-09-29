@@ -10,6 +10,7 @@ const connectDB = require("./config/connectDB");
 const mongoose = require("mongoose");
 const errorHandler = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
+const rateLimit = require("express-rate-limit");
 
 connectDB();
 
@@ -39,6 +40,16 @@ app.use(cors({
     credentials: true,
     origin: "http://localhost:3000"
 }));
+// Prevent SQL Injection
+app.use(mongoSanitize());
+// Rate Limit
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+app.use(limiter);
 
 
 // Routes Middleware
@@ -54,9 +65,6 @@ app.use("/hin", designationRoutes);
 
 // Error Middleware
 app.use(errorHandler);
-
-// Prevent SQL Injection
-app.use(mongoSanitize());
 
 
 const PORT = process.env.PORT || 5000
