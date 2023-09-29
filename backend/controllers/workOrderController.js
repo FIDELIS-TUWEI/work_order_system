@@ -86,6 +86,8 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 // Update Work Order
 const updateWorkOrder = asyncHandler (async (req, res, next) => {
     const { id } = req.params;
+    const  userId = req.user._id;
+    const user = await User.findById(userId).select("-password");
 
     try {
         const updateWorkOrder = await WorkOrder.findByIdAndUpdate(id, req.body, { new: true }).populate("reviewedBy", "username");
@@ -98,7 +100,10 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         // Return a response
         return res.status(200).json({
             success: true,
-            data: updateWorkOrder
+            data: {
+                updateWorkOrder,
+                reviewedBy: user
+            }
         });
 
     } catch (error) {
