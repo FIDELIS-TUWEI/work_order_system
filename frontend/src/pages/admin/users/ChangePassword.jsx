@@ -18,7 +18,12 @@ const ChangePassword = () => {
 
 const onFinishHandler = async (values) => {
   try {
-    const response = await axios.put(`${USERS_URL}/update/password/${id}`, values);
+    const response = await axios.put(`${USERS_URL}/update/password/${id}`, values, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     navigate('/users/all');
     if (response.status === 200) {
       message.success("User Updated Successfully");
