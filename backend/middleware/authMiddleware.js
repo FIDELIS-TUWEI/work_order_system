@@ -41,6 +41,15 @@ const restrict = (role) => {
     };
 };
 
+// Is admin middleware
+const isAdmin = asyncHandler(async (req, res, next) => {
+    const user = await User.findOne({ _id: req.user.id });
+    if (!user?.isAdmin) {
+        return next(new ErrorResponse("You are not authorized to access this route", 401));
+    }
+    next();
+})
+
 // Middleware to set the reviewedBy field
 const setReviewedBy = asyncHandler(async (req, res, next) => {
     req.body.reviewedBy = req.user._id;
@@ -50,5 +59,6 @@ const setReviewedBy = asyncHandler(async (req, res, next) => {
 module.exports = {
     protect,
     restrict,
+    isAdmin,
     setReviewedBy
 }
