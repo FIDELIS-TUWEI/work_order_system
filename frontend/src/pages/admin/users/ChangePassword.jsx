@@ -16,34 +16,19 @@ const ChangePassword = () => {
 
   const onFinishHandler = async (values) => {
     try {
-      const res = await updateUserPassword(id, values, {
+      await updateUserPassword(id, values, {
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-        if (res) {
-          message.success("Password Updated Successfully");
-          navigate("/users/all");
-        } else {
-          message.error("Password Update Failed");
-        }
+      navigate('/work/list');
+      message.success('Password Updated Successfully');
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        message.error("Incorrect Password, Try Again");
-      } else {
-        message.error("Password Update Failed");
-        console.error(error);
-      }
+      console.log(error);
+      message.error('Password Update Failed');
     }
-  };
-
-  useEffect(() => {
-    if (id) {
-      setOldPassword("");
-      setNewPassword("");
-    }
-  }, [id]);
+  }
 
   return (
     <Layout>

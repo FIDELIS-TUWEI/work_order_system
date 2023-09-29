@@ -129,17 +129,18 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @access Private
 const resetPassword = asyncHandler (async (req, res, next) => {
     try {
-        const { password } = req.body;
+        const { newPassword } = req.body;
+        const { userId } = req.params;
 
-        // Find user
-        const user = await User.findById(req.user._id);
+        // Hash password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        if (!user) {
+        // Find user and update password in DB
+        const updateUser = await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
+
+        if (!updateUser) {
             return next(new ErrorResponse("User not found", 404));
         };
-
-        user.password = password;
-        await user.save();
 
         res.status(200).json({
             success: true,

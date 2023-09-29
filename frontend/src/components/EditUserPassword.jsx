@@ -1,6 +1,6 @@
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 
-const EditUserPassword = ({ onFinishHandler, oldPassword, newPassword, setOldPassword, setNewPassword }) => {
+const EditUserPassword = ({ onFinishHandler, newPassword, setNewPassword }) => {
   return (
     <>
         <Typography
