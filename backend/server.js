@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const errorHandler = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
 
 connectDB();
 
@@ -50,6 +51,8 @@ const limiter = rateLimit({
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 app.use(limiter);
+// Prevent HTTP Parameter pollution
+app.use(hpp());
 
 
 // Routes Middleware
