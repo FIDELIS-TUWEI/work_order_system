@@ -124,41 +124,6 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
     }
 });
 
-// @desc Update user password
-// @route PUT /hin/updatePassword
-// @access Private
-const updatePassword = asyncHandler (async (req, res, next) => {
-    try {
-        const user = await User.findById(req.user.id);
-
-        // verify the old password
-        const isMatch = await bcrypt.compare(req.body.oldPassword, user.password);
-
-        if (!isMatch) {
-            return next(new ErrorResponse("Invalid Old Password", 400));
-        }
-
-        // Generate a salt and hash the new password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
-
-        // update the user's password
-        user.password = hashedPassword;
-        await user.save();
-
-        res.status(200).json({
-            success: true,
-            message: "Password updated successfully"
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-        next(error);
-    }
-})
 
 
 module.exports = {
@@ -166,5 +131,4 @@ module.exports = {
     login,
     logout,
     getUserInfo,
-    updatePassword
 }
