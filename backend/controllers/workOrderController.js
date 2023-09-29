@@ -54,7 +54,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             
         }
 
-        //const user = await User.findById(req.params.id);
+        // Create Work Order
         const newWorkOrder = await WorkOrder({
             requestedBy: userId,
             priority,
@@ -65,11 +65,13 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             dueDate
         });
 
+        // Save Work Order
         const savedWorkorder = await newWorkOrder.save();
+
+        // Send Email notification
         sendMail(savedWorkorder);
-        // push savedWorkOrder to the user's workOrders array
-        await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id } });
         
+        // Return a response
         return res.status(201).json({
             success: true,
             data: {
