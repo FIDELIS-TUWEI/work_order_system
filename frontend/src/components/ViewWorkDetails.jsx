@@ -59,7 +59,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Reviewed: {workDetails?.reviewed === true ? "Yes" : "No"}
                 </p>
                 <p>
-                    Reviewed By: {workDetails.reviewedBy ? workDetails.reviewedBy.username : "Not Reviewed"} 
+                    Reviewed By: {workDetails.reviewedBy ? workDetails.reviewedBy : "Not Reviewed"} 
                 </p>
                 <p>
                     Reviewed Date: {moment(workDetails?.Date_Updated).format("DD/MM/YYYY, hh:mm a")}
