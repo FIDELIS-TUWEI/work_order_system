@@ -1,6 +1,6 @@
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 
-const EditUserPassword = ({ onFinishHandler, newPassword, setNewPassword }) => {
+const EditUserPassword = ({ onFinishHandler, oldPassword, newPassword, setOldPassword, setNewPassword }) => {
   return (
     <>
         <Typography
@@ -17,7 +17,7 @@ const EditUserPassword = ({ onFinishHandler, newPassword, setNewPassword }) => {
                 <Row gutter={20}>
                     <Col xs={24} md={24} lg={8}>
                         <Form.Item
-                            name="password"
+                            name="newPassword"
                             label="New Password"
                             required rules={[
                                 { required: true, message: "Please Enter your New Password" },

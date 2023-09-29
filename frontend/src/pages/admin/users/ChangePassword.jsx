@@ -6,40 +6,52 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-const USERS_URL = "/hin";
-
 
 const ChangePassword = () => {
   const token = useSelector(selectToken);
+  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const navigate = useNavigate();
   const {id} = useParams();
 
-const onFinishHandler = async (values) => {
-  try {
-    const response = await axios.put(`${USERS_URL}/update/password/${id}`, values, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
+  const onFinishHandler = async (values) => {
+    try {
+      const res = await updateUserPassword(id, values, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+        if (res) {
+          message.success("Password Updated Successfully");
+          navigate("/users/all");
+        } else {
+          message.error("Password Update Failed");
+        }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        message.error("Incorrect Password, Try Again");
+      } else {
+        message.error("Password Update Failed");
+        console.error(error);
       }
-    });
-    navigate('/users/all');
-    if (response.status === 200) {
-      message.success("User Updated Successfully");
-    } else {
-      throw new Error("Error while updating user password");
     }
-  } catch (error) {
-    console.error("Error while updating user password", error);
-  }
-};
+  };
+
+  useEffect(() => {
+    if (id) {
+      setOldPassword("");
+      setNewPassword("");
+    }
+  }, [id]);
 
   return (
     <Layout>
       <EditUserPassword 
         onFinishHandler={onFinishHandler}
+        oldPassword={oldPassword}
         newPassword={newPassword}
+        setOldPassword={setOldPassword}
         setNewPassword={setNewPassword}
       />
     </Layout>
