@@ -42,6 +42,14 @@ const CreateUser = ({ onFinishHandler, loading}) => {
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
+            <Form.Item 
+                name="email" 
+                label="Email" 
+                required rules={[{ required: true, message: 'Please Enter your Company email!' }]}>
+              <Input type='text' placeholder='Enter Email' />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={8}>
             <Form.Item
                 name="department"
                 label="Department"
