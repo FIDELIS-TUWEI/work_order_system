@@ -4,6 +4,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
+const sendEmail = require("../utils/email");
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -143,6 +144,26 @@ const forgotPassword = asyncHandler (async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
 
     // 3. Send the token to user email
+    const resetUrl = `${req.protocol}://${req.get("host")}/hin/resetPassword/${resetToken}`;
+    const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please use this link to reset your password: 
+        \n\n ${resetUrl}\n\nThis link is valid for only 10 minutes.
+        \n\n If you did not request this, please ignore this email and your password will remain unchanged.`;
+
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: "Password Reset",
+                text: message
+            });
+
+            res.status(200).json({ success: true, message: "Password reset link sent" });
+        } catch (error) {
+            user.passwordResetToken = undefined;
+            user.passwordResetExpires = undefined;
+            await user.save({ validateBeforeSave: false });
+            return next(new ErrorResponse("There was an error sending the password reset email. Please Try again later", 500));
+            
+        }
 });
 
 // @desc Reset user password
