@@ -4,6 +4,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const sendEmail = require("../utils/email");
 
 const signToken = (id) => {
@@ -170,7 +171,31 @@ const forgotPassword = asyncHandler (async (req, res, next) => {
 // @route POST /hin/resetPassword
 // @access Private
 const resetPassword = asyncHandler (async (req, res, next) => {
-    
+    // 1. If the user exists, then check if the token is valid
+    const token = crypto.createHash("sha256").update(req.params.token).digest("hex");
+    const user = await User.findOne({ passwordResetToken: token, passwordResetExpires: { $gt: Date.now() } });
+
+    if (!user) {
+        return next(new ErrorResponse("Invalid Token or Token has Expired", 400));
+    };
+
+    // 2. If the token is valid, then set the new password
+    user.password = req.body.newPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    user.passwordChangedAt = Date.now();
+
+    // Save user
+    await user.save();
+
+    // 3. Log the user in, send JWT
+    const loginToken = signToken(user._id);
+
+    res.status(200).json({
+        success: true,
+        message: "Password reset successfully",
+        token: loginToken
+    })
 });
 
 
