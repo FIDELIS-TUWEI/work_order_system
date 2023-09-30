@@ -129,13 +129,17 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @route POST /hin/forgotPassword
 // @access Private
 const forgotPassword = asyncHandler (async (req, res, next) => {
-    
+    // 1. Get user based on email
+
+    // 2. Generate a random reset token
+
+    // 3. Send the token to user email
 });
 
 // @desc Reset user password
 // @route POST /hin/resetPassword
 // @access Private
-const passwordReset = asyncHandler (async (req, res, next) => {
+const resetPassword = asyncHandler (async (req, res, next) => {
     
 });
 
@@ -147,5 +151,5 @@ module.exports = {
     logout,
     getUserInfo,
     forgotPassword,
-    passwordReset
+    resetPassword
 }
