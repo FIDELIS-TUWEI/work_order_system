@@ -30,6 +30,7 @@ const signupUser = asyncHandler (async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             username: user.username,
+            email: user.email,
             role: user.role,
             active: user.active,
             department: user.department,
