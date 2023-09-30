@@ -33,6 +33,9 @@ const Profile = () => {
           Designation: {user?.designation}
         </p>
         <p>
+          Email: {user?.email}
+        </p>
+        <p>
           Role: {user?.role}
         </p>
         <p>
