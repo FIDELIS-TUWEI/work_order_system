@@ -25,6 +25,14 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
+              <Form.Item 
+                name="email" 
+                label="Email Address" 
+              >
+                <Input type='text' placeholder={userDetails?.email} />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={8}>
             <Form.Item
                 name="department"
                 label="Department"
