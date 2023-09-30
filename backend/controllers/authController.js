@@ -130,8 +130,17 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 // @access Private
 const forgotPassword = asyncHandler (async (req, res, next) => {
     // 1. Get user based on email
+    const user = await User.findOne({ email: req.body.email });
+
+    // Check if user exists
+    if (!user) {
+        return next(new ErrorResponse("User not found", 404));
+    };
 
     // 2. Generate a random reset token
+    const resetToken = user.createResetPasswordToken();
+
+    await user.save({ validateBeforeSave: false });
 
     // 3. Send the token to user email
 });
