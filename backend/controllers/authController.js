@@ -125,41 +125,18 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 });
 
 // @desc Reset user password
+// @route POST /hin/forgotPassword
+// @access Private
+const forgotPassword = asyncHandler (async (req, res, next) => {
+    
+});
+
+// @desc Reset user password
 // @route POST /hin/resetPassword
 // @access Private
-const resetPassword = asyncHandler (async (req, res, next) => {
-    try {
-        const { newPassword } = req.body;
-        
-        // Check if user exists
-        const user = await User.findOne({ _id: req.user._id });
-
-        if (!user) {
-            return next(new ErrorResponse("User not found", 404));
-        }
-
-        // Check if current password is correct
-        //const passwordIsMatch = await user.comparePassword(currentPassword, user.password);
-
-        //if (!passwordIsMatch) {
-        //    return next(new ErrorResponse("Current password is Incorrect", 401));
-        //}
-
-        // Hash new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-        // Update password in DB
-        user.password = hashedPassword;
-        await user.save();
-
-        res.status(200).json({
-            success: true,
-            message: "Password updated successfully, please login with new password"
-        })
-    } catch (error) {
-        next(error);
-    }
-})
+const passwordReset = asyncHandler (async (req, res, next) => {
+    
+});
 
 
 
@@ -168,5 +145,6 @@ module.exports = {
     login,
     logout,
     getUserInfo,
-    resetPassword
+    forgotPassword,
+    passwordReset
 }
