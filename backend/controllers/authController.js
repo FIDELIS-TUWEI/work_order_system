@@ -130,21 +130,31 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
 const resetPassword = asyncHandler (async (req, res, next) => {
     try {
         const { newPassword } = req.body;
-        const { userId } = req.params;
+        
+        // Check if user exists
+        const user = await User.findOne({ _id: req.user._id });
 
-        // Hash password
+        if (!user) {
+            return next(new ErrorResponse("User not found", 404));
+        }
+
+        // Check if current password is correct
+        //const passwordIsMatch = await user.comparePassword(currentPassword, user.password);
+
+        //if (!passwordIsMatch) {
+        //    return next(new ErrorResponse("Current password is Incorrect", 401));
+        //}
+
+        // Hash new password
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        // Find user and update password in DB
-        const updateUser = await User.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
-
-        if (!updateUser) {
-            return next(new ErrorResponse("User not found", 404));
-        };
+        // Update password in DB
+        user.password = hashedPassword;
+        await user.save();
 
         res.status(200).json({
             success: true,
-            message: "Password reset successfully"
+            message: "Password updated successfully, please login with new password"
         })
     } catch (error) {
         next(error);
