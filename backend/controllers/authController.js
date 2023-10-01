@@ -93,6 +93,39 @@ const login = asyncHandler (async (req, res, next) => {
     }
 });
 
+// @desc Refresh Token
+// @route GET /hin/refresh
+// @access Private
+const refreshToken = (req, res, next) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({ success: false, message: "No token found" });
+    }
+
+    // Verify token and generate new token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ success: false, message: "Invalid token" });
+        }
+
+        const userId = decoded.id;
+        const newToken = signToken(userId);
+
+        // Send Http-Only cookie
+        res.cookie("token", newToken, {
+            path: "/",
+            httpOnly: true,
+            secure: true,
+            signed: false,
+            sameSite: 'None',
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        });
+
+        res.status(200).json({ success: true, message: "Token refreshed successfully" });
+    });
+};
+
 // @desc Logout user
 // @route POST /hin/logout
 // @access Private
@@ -203,6 +236,7 @@ const resetPassword = asyncHandler (async (req, res, next) => {
 module.exports = {
     signupUser,
     login,
+    refreshToken,
     logout,
     getUserInfo,
     forgotPassword,
