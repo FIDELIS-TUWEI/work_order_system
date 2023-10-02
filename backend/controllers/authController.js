@@ -8,8 +8,8 @@ const crypto = require("crypto");
 const sendEmail = require("../utils/email");
 
 const signToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.LOGIN_EXPIRES,
+    return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: process.env.REFRESH_EXPIRES,
     });
 }
 
@@ -65,17 +65,26 @@ const login = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Invalid Credentials", 401));
         }
 
+        // Generate access Token
+        const accessToken = jwt.sign({
+            id: user._id,
+            username: user.username,
+            role: user.role,
+        }, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRE
+        });
+
         // Generate Token
-        const token = signToken(user._id);
+        const refreshToken = signToken(user._id);
 
         // Send Http-Only cookie
-        res.cookie("token", token, {
+        res.cookie("token", refreshToken, {
             path: "/",
             httpOnly: true,
             secure: true,
             signed: false,
             sameSite: 'None',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         })
 
         if (user && passwordIsMatch) {
@@ -83,7 +92,7 @@ const login = asyncHandler (async (req, res, next) => {
                 success: true,
                 message: "User logged in successfully",
                 user,
-                token
+                accessToken
             })
         } else {
             return next(new ErrorResponse("Invalid Credentials", 401));
@@ -92,6 +101,39 @@ const login = asyncHandler (async (req, res, next) => {
         next(error);
     }
 });
+
+// @desc Refresh Token
+// @route GET /hin/refresh
+// @access Private
+const refreshToken = (req, res, next) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({ success: false, message: "No token found" });
+    }
+
+    // Verify token and generate new token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ success: false, message: "Invalid token" });
+        }
+
+        const userId = decoded.id;
+        const newToken = signToken(userId);
+
+        // Send Http-Only cookie
+        res.cookie("token", newToken, {
+            path: "/",
+            httpOnly: true,
+            secure: true,
+            signed: false,
+            sameSite: 'None',
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        });
+
+        res.status(200).json({ success: true, message: "Token refreshed successfully" });
+    });
+};
 
 // @desc Logout user
 // @route POST /hin/logout
