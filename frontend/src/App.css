@@ -49,10 +49,10 @@
     min-height: 100%;
     width: 300px;
     border-radius: 5px;
-    background-color: darkgreen;
+    background-color: #fff;
     box-shadow: 0 0  2px gray;
     margin-right: 20px;
-    color: white;
+    color: #000;
 }
 
 .content {
@@ -125,7 +125,7 @@
 }
 
 .menu-item a {
-    color: white;
+    color: black;
     text-decoration: none;
     font-size: 1.2rem;
 }
@@ -136,8 +136,16 @@
 }
 
 .active {
-    background-color: white;
+    background-color: darkgreen;
     padding: 10px;
+}
+
+.menu-item.active a {
+    color: #fff;
+}
+
+.menu-item.active i {
+    color: #fff;
 }
 
 .active a,
