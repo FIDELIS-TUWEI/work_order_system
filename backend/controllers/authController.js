@@ -106,33 +106,33 @@ const login = asyncHandler (async (req, res, next) => {
 // @route GET /hin/refresh
 // @access Private
 const refreshToken = (req, res, next) => {
-    const token = req.cookies.token;
+    const cookies = req.cookies;
+    if (!cookies?.token) return res.status(401).json({ success: false, message: "Unauthorized" });
+    const refreshToken = cookies.token;
 
-    if (!token) {
-        return res.status(401).json({ success: false, message: "No token found" });
-    }
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, asyncHandler(async (err, decoded) => {
+        if (err) return res.status(403).json({ success: false, message: "Forbidden" });
 
-    // Verify token and generate new token
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ success: false, message: "Invalid token" });
+        const user = await User.findOne({ username: decoded.username });
+
+        if (!user) {
+            return res.status(401).json({ success: false, message: "Unauthorized" });
         }
 
-        const userId = decoded.id;
-        const newToken = signToken(userId);
-
-        // Send Http-Only cookie
-        res.cookie("token", newToken, {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            signed: false,
-            sameSite: 'None',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        const accessToken = jwt.sign({
+            id: user._id,
+            username: user.username,
+            role: user.role,
+        }, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRE
         });
 
-        res.status(200).json({ success: true, message: "Token refreshed successfully" });
-    });
+        res.json({
+            success: true,
+            message: "Token refreshed successfully",
+            accessToken
+        })
+    }));
 };
 
 // @desc Logout user
