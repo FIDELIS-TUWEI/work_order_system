@@ -105,7 +105,7 @@ const login = asyncHandler (async (req, res, next) => {
 // @desc Refresh Token
 // @route GET /hin/refresh
 // @access Private
-const refreshToken = (req, res, next) => {
+const refresh = (req, res, next) => {
     const cookies = req.cookies;
     if (!cookies?.token) return res.status(401).json({ success: false, message: "Unauthorized" });
     const refreshToken = cookies.token;
@@ -245,7 +245,7 @@ const resetPassword = asyncHandler (async (req, res, next) => {
 module.exports = {
     signupUser,
     login,
-    refreshToken,
+    refresh,
     logout,
     getUserInfo,
     forgotPassword,
