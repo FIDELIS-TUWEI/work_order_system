@@ -87,14 +87,18 @@ const login = asyncHandler (async (req, res, next) => {
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         })
 
+
         if (user && passwordIsMatch) {
+            const { password, ...restParams } = user._doc;
+
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
-                firstName: user.firstName,
-                lastName: user.lastName,
-                username: user.username,
-                role: user.role,
+                //firstName: user.firstName,
+                //lastName: user.lastName,
+                //username: user.username,
+                //role: user.role,
+                user: restParams,
                 accessToken, 
                 refreshToken
             })
