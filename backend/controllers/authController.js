@@ -114,33 +114,7 @@ const login = asyncHandler (async (req, res, next) => {
 // @route GET /hin/refresh
 // @access Private
 const refresh = (req, res, next) => {
-    const cookies = req.cookies;
-    if (!cookies?.token) return res.status(401).json({ success: false, message: "Unauthorized" });
-    const refreshToken = cookies.token;
-
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, asyncHandler(async (err, decoded) => {
-        if (err) return res.status(403).json({ success: false, message: "Forbidden" });
-
-        const user = await User.findOne({ username: decoded.username });
-
-        if (!user) {
-            return res.status(401).json({ success: false, message: "Unauthorized" });
-        }
-
-        const accessToken = jwt.sign({
-            id: user._id,
-            username: user.username,
-            role: user.role,
-        }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRE
-        });
-
-        res.json({
-            success: true,
-            message: "Token refreshed successfully",
-            accessToken
-        })
-    }));
+    
 };
 
 // @desc Logout user
