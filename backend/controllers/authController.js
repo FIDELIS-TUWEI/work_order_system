@@ -71,7 +71,7 @@ const login = asyncHandler (async (req, res, next) => {
             username: user.username,
             role: user.role,
         }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: "1m"
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRE
         });
 
         // Generate Token
@@ -91,7 +91,8 @@ const login = asyncHandler (async (req, res, next) => {
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
-                accessToken
+                accessToken, 
+                refreshToken
             })
         } else {
             return next(new ErrorResponse("Invalid Credentials", 401));
