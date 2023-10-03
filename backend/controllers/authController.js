@@ -203,7 +203,6 @@ const resetPassword = asyncHandler (async (req, res, next) => {
 module.exports = {
     signupUser,
     login,
-    refreshToken,
     logout,
     getUserInfo,
     forgotPassword,
