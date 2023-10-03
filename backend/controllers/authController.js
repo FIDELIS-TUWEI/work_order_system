@@ -103,6 +103,8 @@ const logout = (req, res, next) => {
     
     res.status(200).json({ success: true, message: "Logged Out successfully" });
 
+    res.redirect("/login");
+
     next();
 };
 
