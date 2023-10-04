@@ -4,9 +4,7 @@ import { selectUserInfo } from "../utils/redux/slices/authSlice";
 
 
 const PublicRoute = ({ children }) => {
-    const user = useSelector(selectUserInfo);
-    
-    if (!user) {
+    if (localStorage.getItem('userInfo')) {
         return <Navigate to="/login" />;
     } else {
         return children;
