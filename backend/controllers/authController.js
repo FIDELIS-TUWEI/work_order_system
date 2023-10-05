@@ -79,6 +79,15 @@ const login = asyncHandler (async (req, res, next) => {
             signed: false,
             sameSite: 'None',
             expires: cookieExpiry,
+        });
+
+        // Save the cookie expiration in browser's cookies using js-cookie
+        Cookies.set("cookieExpiry", cookieExpiry.toISOString(), {
+            path: "/",
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            expires: cookieExpiry
         })
 
         if (user && passwordIsMatch) {
