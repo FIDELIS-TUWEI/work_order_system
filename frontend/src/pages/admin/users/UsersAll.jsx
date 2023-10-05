@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
-import { useSelector } from "react-redux";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../../../services/usersApi";
 import AllUsers from "../../../components/AllUsers";
+import axios from "../../../api/axiosConfig";
 
 
 const UsersAll = () => {
-  const token = useSelector(selectToken);
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -16,27 +13,39 @@ const UsersAll = () => {
   const navigate = useNavigate();
 
   // Function to get all users from Api
-const getUsers = async () => {
-  setLoading(true);
-  const { data, pages } = await getAllUsers(page, {
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${token}`
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const getUsers = async () => {
+      try {
+        setLoading(true);
+        const res = axios.get("/all-users", {
+          signal: controller.signal
+        });
+        console.log(res.data);
+
+        isMounted && setAllUsers(res.data);
+        isMounted && setPages(Math.ceil(res.data.length / 10));
+        setLoading(false);
+      } catch (error) {
+        console.error("Error while fetching users", error);
+        setLoading(false);
+      }
+    };
+    
+    getUsers();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
     }
-  });
-  setAllUsers(data);
-  setPages(pages);
-  setLoading(false);
-};
+  }, [page]);
 
-useEffect(() => {
-  getUsers();
-}, [page]);
-
-// function to handle page change
-const handlePageChange = (newPage) => {
-  setPage(newPage);
-}
+  // function to handle page change
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  }
 
   return (
     <Layout>
