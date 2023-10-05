@@ -18,7 +18,7 @@ const UsersAll = () => {
   // Function to get all users from Api
 const getUsers = async () => {
   setLoading(true);
-  const { data, pages, count } = await getAllUsers(page, {
+  const { data, pages } = await getAllUsers(page, {
     withCredentials: true,
     headers: {
       Authorization: `Bearer ${token}`
