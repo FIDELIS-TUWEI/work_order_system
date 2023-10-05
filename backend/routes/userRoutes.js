@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { getAllUsers, singleUser, editUser, deleteUser, countAllUsers, countActiveUsers} = require('../controllers/userController');
 const { protect, restrict } = require('../middleware/authMiddleware');
+const {verifyJWT} = require("../middleware/verifyJWT");
 
-router.get("/all-users", protect, restrict(['admin', "superadmin"]), getAllUsers);
+router.get("/all-users", verifyJWT, restrict(['admin', "superadmin"]), getAllUsers);
 router.get("/user/:id", protect, singleUser);
 router.get("/count/total-users", protect, restrict(["admin", "superadmin"]), countAllUsers);
 router.get("/count/active-users", protect, restrict(["admin", "superadmin"]), countActiveUsers);
