@@ -6,6 +6,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const sendEmail = require("../utils/email");
+const Cookies = require("js-cookie");
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
