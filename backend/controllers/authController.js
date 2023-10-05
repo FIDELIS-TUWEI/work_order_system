@@ -10,7 +10,7 @@ const Cookies = require("js-cookie");
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRES,
+        expiresIn: "1m",
     });
 }
 
@@ -71,7 +71,7 @@ const login = asyncHandler (async (req, res, next) => {
 
         // Generate Refresh Token
         const refreshToken = jwt.sign({ id: user._id }, process.env.REFRESH_TOKEN_SECRET, {
-            expiresIn: process.env.REFRESH_TOKEN_EXPIRES,
+            expiresIn: "1d",
         });
 
         // Set cookie expiration to 7 days
