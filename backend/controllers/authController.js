@@ -68,6 +68,9 @@ const login = asyncHandler (async (req, res, next) => {
         // Generate Token
         const token = signToken(user._id);
 
+        // Set cookie expiration to 7 days
+        const cookieExpiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
         // Send Http-Only cookie
         res.cookie("token", token, {
             path: "/",
@@ -75,7 +78,7 @@ const login = asyncHandler (async (req, res, next) => {
             secure: true,
             signed: false,
             sameSite: 'None',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            expires: cookieExpiry,
         })
 
         if (user && passwordIsMatch) {
