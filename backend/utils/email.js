@@ -16,6 +16,7 @@ const sendEmail = (option) => {
     const emailOptions = {
         from: `workorder.holidayinnnairobi@gmail.com`,
         to: option.email,
+        cc:["fideliofidel9@gmail.com", "fidel.tuwei@holidayinnnairobi.com"],
         subject: option.subject,
         text: option.text
     };

@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const nodemailer = require("nodemailer");
 const { PASS, USER } = require("../utils/env");
+const sendEmail = require("../utils/email");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -100,6 +101,13 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         if (!updateWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         };
+
+        // Send Email notification when a work order is updated
+        sendEmail({
+            email: user.email,
+            subject: "Work Order updated",
+            text: "Your work order has been updated"
+        });
 
         // Return a response
         return res.status(200).json({
