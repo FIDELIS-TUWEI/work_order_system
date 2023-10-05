@@ -9,8 +9,8 @@ const sendEmail = require("../utils/email");
 const Cookies = require("js-cookie");
 
 const signToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.LOGIN_EXPIRES,
+    return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRES,
     });
 }
 
@@ -66,14 +66,19 @@ const login = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Invalid Credentials", 401));
         }
 
-        // Generate Token
+        // Generate Access Token
         const token = signToken(user._id);
+
+        // Generate Refresh Token
+        const refreshToken = jwt.sign({ id: user._id }, process.env.REFRESH_TOKEN_SECRET, {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRES,
+        });
 
         // Set cookie expiration to 7 days
         const cookieExpiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
         // Send Http-Only cookie
-        res.cookie("token", token, {
+        res.cookie("token", refreshToken, {
             path: "/",
             httpOnly: true,
             secure: true,
@@ -81,15 +86,6 @@ const login = asyncHandler (async (req, res, next) => {
             sameSite: 'None',
             expires: cookieExpiry,
         });
-
-        // Save the cookie expiration in browser's cookies using js-cookie
-        Cookies.set("cookieExpiry", cookieExpiry.toISOString(), {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            expires: cookieExpiry
-        })
 
         if (user && passwordIsMatch) {
             const { password, ...restParams } = user._doc
@@ -106,6 +102,33 @@ const login = asyncHandler (async (req, res, next) => {
         next(error);
     }
 });
+
+// @desc Refresh token
+// @route GET /hin/auth/refresh
+// @access Public - because access token has expired
+const refresh = asyncHandler (async (req, res, next) => {
+    try {
+        const cookies = req.cookies;
+        if (!cookies?.token) return res.status(401).json({ message: "Unauthorized" });
+
+        const refreshToken = cookies.token;
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, asyncHandler (async (err, decoded) => {
+            if (err) return res.status(403).json({ message: "Forbidden" });
+
+            const user = await User.findById(decoded.id);
+
+            if (!user) {
+                return next(new ErrorResponse("Unauthorized", 401));
+            }
+
+            const token = signToken(user._id);
+
+            res.json({ token });
+        }))
+    } catch (error) {
+        return next(error);
+    }
+})
 
 // @desc Logout user
 // @route POST /hin/logout
@@ -217,6 +240,7 @@ const resetPassword = asyncHandler (async (req, res, next) => {
 module.exports = {
     signupUser,
     login,
+    refresh,
     logout,
     getUserInfo,
     forgotPassword,
