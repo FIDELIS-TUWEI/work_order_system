@@ -32,7 +32,7 @@ const BarGraph = () => {
         <Card title="Work Orders Assigned To Employees" style={{ margin: "15px 25px" }} loading={loading}>
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart width={500} height={300} data={workOrders}>
-                    <CartesianGrid />
+                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="assignedTo" interval={'preserveStartEnd'} />
                     <YAxis />
                     <Tooltip />
