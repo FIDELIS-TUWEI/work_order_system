@@ -18,10 +18,12 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
       { value: 'Reviewed', label: 'Reviewed' },
     ];
 
-    if (workDetails?.status) {
-      return statusOptions.map((option) => ({
+    const currentIndex = statusOptions.findIndex(option => option.value === workDetails?.status);
+
+    if (currentIndex !== -1 && currentIndex < statusOptions.length - 1) {
+      return statusOptions.map((option, index) => ({
         ...option,
-        disabled: option.value === workDetails?.status
+        disabled: index < currentIndex || index === currentIndex || index > currentIndex + 1
       }));
     }
 
