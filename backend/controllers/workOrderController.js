@@ -105,7 +105,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         // Send Email notification when a work order is updated
         const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
         const subject =`A Work Order updated\n`;
-        const text =  `${updateWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}, please login to the Work Order System to view the details.`;
+        const text =  `A Work Order with title ${updateWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. Please login to the Work Order System to view the details.`;
         
         for ( const recepient of recepients ) {
             sendEmail({
