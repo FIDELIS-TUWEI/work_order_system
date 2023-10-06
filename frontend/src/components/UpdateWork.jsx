@@ -8,6 +8,25 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
   const disabledDate = current => {
     return !current.isSame(today, 'day');
   };
+
+  // Function to disable current status with disabled attribute
+  const getStatusOptions = () => {
+    const statusOptions = [
+      { value: 'Pending', label: 'Pending' },
+      { value: 'In_Progress', label: 'In Progress' },
+      { value: 'Completed', label: 'Completed' },
+      { value: 'Reviewed', label: 'Reviewed' },
+    ];
+
+    if (workDetails?.status) {
+      return statusOptions.map((option) => ({
+        ...option,
+        disabled: option.value === workDetails?.status
+      }));
+    }
+
+    return statusOptions;
+  }
   
   return (
     <div>
@@ -40,10 +59,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
                         placeholder='Select Status'
                         allowClear
                         style={{ width: '100%' }}
-                        options={[
-                          { value: 'Pending', label: 'Pending' }, { value: 'In_Progress', label: 'In Progress' }, 
-                          { value: 'Complete', label: 'Complete' }, { value: 'Reviewed', label: 'Reviewed' }
-                        ]}
+                        options={getStatusOptions()}
                       />
                     </Form.Item>
                   </Col>
