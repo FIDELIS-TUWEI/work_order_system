@@ -26,8 +26,8 @@ const NewWork = ({
           <Col xs={24} md={24} lg={8}>
             <Form.Item
                 name="title" 
-                label="Title" 
-                required rules={[{ required: true, message: 'Please Enter Work Title!' }]}>
+                label="Brief Work Title" 
+                required rules={[{ required: true, message: 'Please a Brief Work Title!' }]}>
               <Input type='text' placeholder='Work Title' />
             </Form.Item>
           </Col>
