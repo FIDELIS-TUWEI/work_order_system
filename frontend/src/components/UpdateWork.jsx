@@ -85,10 +85,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
                           placeholder='Select Status'
                           allowClear
                           style={{ width: '100%' }}
-                          options={[
-                            { value: 'Pending', label: 'Pending' }, { value: 'In_Progress', label: 'In Progress' }, 
-                            { value: 'Complete', label: 'Complete' }, { value: 'Reviewed', label: 'Reviewed' }
-                          ]}
+                          options={getStatusOptions()}
                         />
                       </Form.Item>
                     </Col>
