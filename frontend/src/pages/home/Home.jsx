@@ -17,33 +17,34 @@ const Home = () => {
 
   return (
     <>
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div style=
+      {{ display: "flex", 
+        flexDirection: "column", 
+        minHeight: "100vh", alignItems: "center",
+        justifyContent: "center", 
+      }}
+    >
 
       {/* Main Content */}
-      <div style={{ flex: 1, display: "flex" }}>
-        <div style={{ flex: 1 }}>
-          <img 
-            src={Logo}
-            alt="logo"
-            style={{ width: '80%', height: 'auto' }}
-          />
-        </div>
-        
-        { /* Right Side */}
-        <div style={{ flex: 1 }}>
-          <Card style=
-            {{ 
-              padding: '20px', textAlign: 'center', 
-              fontSize: '1.5rem', fontWeight: 'bold',
-              margin: '100px' 
-            }}
-          >
-            <Typography>Home</Typography>
-            <Button onClick={() => navigate("/login")}>Login</Button>
-          </Card>
-      </div>
-      </div>
-      
+      <Card
+        style={{ 
+          width: "400px", 
+          padding: "20px", 
+          textAlign: "center", 
+          borderRadius: "10px",
+          boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        }}
+      >
+        <img 
+          src={Logo}
+          alt="logo"
+          style={{ width: '80%', height: 'auto' }}
+        />
+
+        <Typography.Title level={3}>Work Order Management System</Typography.Title>
+        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate("/login")}>Login</Button>
+      </Card>
+
       <Footer />
     </div>
     </>
