@@ -210,7 +210,7 @@ table tr:hover {
     color: #fff;
     cursor: pointer;
     transition: all .3s ease;
-
+    margin-top: 20px;
 }
 
 .custom-card:hover {
