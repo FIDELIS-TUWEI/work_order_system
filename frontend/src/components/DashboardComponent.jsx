@@ -90,4 +90,4 @@ const DashboardComponent = ({ user, pendingWorkCount,
   )
 }
 
-export default DashboardComponent
+export default DashboardComponent;
