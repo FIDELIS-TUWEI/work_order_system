@@ -100,6 +100,15 @@ const ViewAllCategories = ({
           <GrFormNext />
         </Button>
       </div>
+
+      <div className="add-btn">
+        <Button 
+          onClick={() => navigate(-1)} 
+          style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+        >
+          Go Back
+        </Button>
+      </div>
     </div>
   )
 }
