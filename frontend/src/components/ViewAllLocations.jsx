@@ -53,7 +53,7 @@ const ViewAllLocations = ({ navigate, loading,
             </Button>
         </div>
 
-        <Card loading={loading} title="All Locations" style={{ margin: "auto", width: "500px" }}>
+        <Card loading={loading} title="All Locations">
             <table>
                 <thead>
                     <tr>
