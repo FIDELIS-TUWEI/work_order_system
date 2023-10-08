@@ -54,7 +54,7 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
             </Button>
         </div>
 
-      <Card loading={loading} title="All Departments" style={{ margin: "auto", width: "500px" }}>
+      <Card loading={loading} title="All Departments">
         <table>
           <thead>
             <tr>
