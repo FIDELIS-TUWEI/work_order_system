@@ -11,12 +11,12 @@ const DashboardComponent = ({ user, pendingWorkCount,
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
             System Analytics
         </Typography>
-        <Row gutter={16} style={{ marginTop: '20px' }}>
+        <Row gutter={16}>
             {
                 user && user.role === "admin" || user && user.role === "superadmin" ? (
                 <>
                     <Col span={8}>
-                        <Card title="Total Work Orders" bordered={false} style={{ marginBottom: '16px'}} className="custom-card">
+                        <Card title="Total Work Orders" bordered={false} className="custom-card">
                             {totalWorkCount}
                         </Card>
                     </Col>
@@ -45,7 +45,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
                         </Card>
                     </Col>
 
-                    <Col span={8} style={{ marginBottom: '16px'}}>
+                    <Col span={8}>
                         <Card title="Total Users" bordered={false} className="custom-card">
                             {totalUsersCount}
                         </Card>
@@ -60,7 +60,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
             ) : (
                 <>
                     <Col span={8}>
-                        <Card title="Pending Work Orders" bordered={false} style={{ marginBottom: '16px'}} className="custom-card">
+                        <Card title="Pending Work Orders" bordered={false} className="custom-card">
                             {pendingWorkCount}
                         </Card>
                     </Col>
