@@ -54,7 +54,7 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
       </Button>
       </div>
 
-      <Card loading={loading} title="All Designations" style={{ margin: "auto", width: "500px" }}>
+      <Card loading={loading} title="All Designations">
         <table>
           <thead>
             <tr>
