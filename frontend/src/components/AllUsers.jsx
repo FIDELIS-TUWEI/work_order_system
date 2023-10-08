@@ -8,12 +8,14 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate})
   return (
     <div>
         <div className="add-btn">
-        <Button 
-          style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
-          onClick={() => navigate("/users/register")}
-        >
-          Add User
-        </Button>
+          <Button 
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+            onClick={() => navigate("/users/register")}
+          >
+            Add User
+          </Button>
+
+          
       </div>
 
       <Card
@@ -58,6 +60,15 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate})
         <span> Page {page} of {pages}</span>
         <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
           <GrFormNext />
+        </Button>
+      </div>
+
+      <div className="add-btn">
+        <Button 
+          onClick={() => navigate(-1)} 
+          style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+        >
+          Go Back
         </Button>
       </div>
     </div>
