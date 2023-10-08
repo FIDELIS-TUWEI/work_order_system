@@ -14,35 +14,35 @@ const Panel = () => {
     <div>
         <Row gutter={16}>
             <Col span={8}>
-                <Card className="custom-panel" hoverable title="Users" onClick={() => navigate("/users/all")}>
-                    <Button icon={<FaUsers />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
+                <Card className="custom-card" hoverable title="Users" onClick={() => navigate("/users/all")}>
+                    <Button icon={<FaUsers />} size="large"> 
                         Users
                     </Button>
                 </Card>
                 </Col>
             <Col span={8}>
-                <Card className="custom-panel" hoverable title="Categories" onClick={() => navigate("/all-categories")}>
+                <Card className="custom-card" hoverable title="Categories" onClick={() => navigate("/all-categories")}>
                     <Button icon={<BiSolidCategory />} size="large"> 
                         Categories
                     </Button>
                 </Card>
             </Col>
             <Col span={8}>
-                <Card className="custom-panel" hoverable title="Locations" onClick={() => navigate("/all-locations")}>
+                <Card className="custom-card" hoverable title="Locations" onClick={() => navigate("/all-locations")}>
                     <Button icon={<IoLocation />} size="large">
                         Locations
                     </Button>
                 </Card>
             </Col>
             <Col span={8}>
-                <Card className="custom-panel" hoverable title="All Departments" onClick={() => navigate("/all/departments")}>
+                <Card className="custom-card" hoverable title="All Departments" onClick={() => navigate("/all/departments")}>
                     <Button icon={<HiOfficeBuilding />} size="large">
                         Departments
                     </Button>
                 </Card>
             </Col>
             <Col span={8}>
-                <Card className="custom-panel" hoverable title="All Designations" onClick={() => navigate("/all/designations")}>
+                <Card className="custom-card" hoverable title="All Designations" onClick={() => navigate("/all/designations")}>
                     <Button icon={<MdManageAccounts />} size="large">
                         Designations
                     </Button>
