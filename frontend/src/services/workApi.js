@@ -42,6 +42,15 @@ export const updateWorkOrder = async (id, values) => {
     }
 };
 
+// API service to delete work
+export const deleteWorkOrder = async (id) => {
+    try {
+        return await axios.delete(`${WORK_URL}/delete/work/${id}`);
+    } catch (error) {
+        console.log("Error while deleting work order", error);
+    }
+}
+
 // Get Work Locations
 export const getWorkLocations = async () => {
     try {
