@@ -83,7 +83,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
                 <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => {navigate(`/user/details/${user._id}`)}}>
                   <AiFillEye/>
                 </Button>
-                <Button danger style={{ border: 'none'}} onClick={() => {navigate(`/edit/user/${user._id}`)}}>
+                <Button danger style={{ border: 'none', marginRight: "5px"}} onClick={() => {navigate(`/edit/user/${user._id}`)}}>
                   <BiSolidEditAlt/>
                 </Button>
                 <Button danger style={{ border: 'none'}} onClick={() => showModal(user)}>
