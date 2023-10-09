@@ -87,7 +87,7 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
                 okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
                 cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
         >
-          <p>Are you sure you want to delete this department?</p>
+          <p>Are you sure you want to delete a department titled: {selectedDepartmentToDelete?.departmentName}?</p>
         </Modal>
       </Card>
       <div className="pagination">
