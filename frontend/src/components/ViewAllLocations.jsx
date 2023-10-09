@@ -80,17 +80,13 @@ const ViewAllLocations = ({ navigate, loading,
             <Modal
                 title="Delete Location"
                 open={isModalVisible}
+                onOk={handleDelete} 
                 onCancel={handleCancel}
-                footer={[
-                    <Button key="back" onClick={handleCancel}>
-                        Cancel
-                    </Button>,
-                    <Button key="submit" type="primary" danger onClick={handleDelete}>
-                        Delete
-                    </Button>,
-                ]}
+                okText="Delete"
+                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
             >
-                <p>Are you sure you want to delete this location?</p>
+                <p>Are you sure you want to delete a location titled: {selectedLocationToDelete?.locationTitle}?</p>
             </Modal>
         </Card>
         <div className="pagination">
