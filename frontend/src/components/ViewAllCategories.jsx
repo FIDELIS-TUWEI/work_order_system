@@ -87,7 +87,7 @@ const ViewAllCategories = ({
                 okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
                 cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
             >
-                <p>Are you sure you want to delete this category?</p>
+                <p>Are you sure you want to delete a category titled: {selectedCategoryToDelete?.categoryTitle}?</p>
             </Modal>
 
         </Card>
