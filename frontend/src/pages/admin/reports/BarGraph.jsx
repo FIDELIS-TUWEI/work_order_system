@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkOrders } from "../../../services/workApi";
 import { Card } from "antd";
-import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
+import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie } from 'recharts';
 
 const BarGraph = () => {
     const token = useSelector(selectToken);
