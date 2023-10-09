@@ -47,6 +47,7 @@ const handlePageChange = (newPage) => {
         pages={pages}
         handlePageChange={handlePageChange}
         navigate={navigate}
+        getUsers={getUsers}
       />
     </Layout>
   )
