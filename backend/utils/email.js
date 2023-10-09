@@ -16,8 +16,8 @@ const sendEmail = (option) => {
     // Define the email options
     const emailOptions = {
         from: `workorder.holidayinnnairobi@gmail.com`,
-        to: to.join(", "),
-        cc: cc ? cc.join(", ") : undefined,
+        to: ["fidel.tuwei@holidayinnnairobi.com"],
+        cc: ["fideliofidel9@gmail.com"],
         subject: subject,
         text: text
     };

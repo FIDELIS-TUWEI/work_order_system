@@ -19,43 +19,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
     const { priority, title, location, serviceType, category, dueDate } = req.body;
 
     try {
-        // send email notification to cheif engineer
-        // Configure gmail smtp
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: USER,
-                pass: PASS,
-            },
-        });
-
-        // Function to send Email
-        async function sendMail(savedWorkorder) {
-            try {
-                const mailOptions = {
-                    from: `workorder.holidayinnnairobi@gmail.com`,
-                    to: `fidel.tuwei@holidayinnnairobi.com`,
-                    cc:["fideliofidel9@gmail.com"],
-                    subject: "New Work Order created",
-                    html: `
-                        <h2>A New Work Order was Created</h2>\n\n
-                        <hr>\n
-                            <h3>Work Order Details</h3>\n
-                            <p>Work Title: ${savedWorkorder.title}</p>\n
-                            <p>Priority: ${savedWorkorder.priority}</p>\n
-                            <p>Service Type: ${savedWorkorder.serviceType}</p>\n
-                            <p>Date Created: ${savedWorkorder.Date_Created}</p>\n
-                            <p>Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details</p>\n
-                    `,
-                };
-                const info = await transporter.sendMail(mailOptions);
-                console.log("Email sent: " + info.response);
-            } catch (error) {
-                console.log("Error sending email:", error);
-            }
-            
-        }
-
+        
         // Create Work Order
         const newWorkOrder = await WorkOrder({
             requestedBy: userId,
@@ -71,15 +35,35 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         const savedWorkorder = await newWorkOrder.save();
 
         // Send Email notification
-        sendMail(savedWorkorder);
-        
+        const emailOptions = {
+            to: ["fidel.tuwei@holidayinnnairobi.com"],
+            cc: ["fideliofidel9@gmail.com"],
+            subject: `New Work Order Requested\n`,
+            text: `
+                A New Work order has been Created\n\n
+                -----------------------------------\n
+                Work Description: ${savedWorkorder.title}\n
+                Priority: ${savedWorkorder.priority}\n
+                Service Type: ${savedWorkorder.serviceType}\n
+                Location: ${savedWorkorder.location.locationTitle}\n
+                Due Date: ${savedWorkorder.dueDate}\n
+                Category: ${savedWorkorder.category.categoryTitle}\n
+                Status: ${savedWorkorder.status}\n
+                Date Created: ${savedWorkorder.Date_Created}\n
+                -----------------------------------
+            `,
+        }
+
+        // Send Email
+        sendEmail(emailOptions);
+
         // Return a response
         return res.status(201).json({
             success: true,
             data: {
                 savedWorkorder
             }
-        });
+        });  
     } catch (error) {
         next(error);
     }
