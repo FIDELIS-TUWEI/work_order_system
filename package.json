@@ -36,6 +36,7 @@
     "moment": "^2.29.4",
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.4",
     "pdfkit": "^0.13.0"
   }
