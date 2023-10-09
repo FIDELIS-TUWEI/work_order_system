@@ -98,17 +98,13 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
       <Modal
         title="Delete User"
         open={isModalVisible}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="submit" type="primary" danger onClick={handleDelete}>
-            Delete
-          </Button>,
-        ]}
+        onOk={handleDelete} 
+                onCancel={handleCancel}
+                okText="Delete"
+                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
       >
-        <p>Are you sure you want to delete this user?</p>
+        <p>Are you sure you want to delete {selectedUserToDelete?.username}?</p>
       </Modal>
       </Card>
       <div className="pagination">
