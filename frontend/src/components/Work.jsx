@@ -1,10 +1,47 @@
-import { Button, Card } from "antd"
+import { Button, Card, Modal, message } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
+import {MdDelete} from "react-icons/md";
 import { useNavigate } from "react-router-dom"
+import { selectToken } from "../utils/redux/slices/authSlice"
+import { useSelector } from "react-redux"
+import { deleteWorkOrder } from "../services/workApi"
+import { useState } from "react";
 
-const Work = ({allWork, user, loading}) => {
+const Work = ({allWork, user, loading, getAllWork}) => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
+  const token = useSelector(selectToken);
+
+  // Function to show modal to delete work
+  const showModal = async (work) => {
+      setSelectedWorkToDelete(work);
+      setIsModalVisible(true);
+  };
+
+  // Function to confirm modal delete
+  const handleDelete = async () => {
+      try {
+          await deleteWorkOrder(selectedWorkToDelete._id, {
+              withCredentials: true,
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              },
+          });
+          message.success("Work deleted successfully");
+          setIsModalVisible(false);
+          getAllWork();
+      } catch (error) {
+          console.error(error);
+          message.error("An error occurred while deleting the work order", error);
+      }
+  };
+
+  // Function to handle modal cancel
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  }
 
   return (
     <>
@@ -48,11 +85,16 @@ const Work = ({allWork, user, loading}) => {
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
                     {
                         user.role === "admin" || user.role === "superadmin" || user.role === "hod" || user.role === "supervisor" || user.role === "reviewer" ? 
-                        <Button danger style={{ border: 'none'}} 
+                        <>
+                        <Button danger style={{ border: 'none', marginRight: "5px"}} 
                             onClick={() => navigate(`/edit/work/${work._id}`)}
                         >
                             <BiSolidEditAlt/>
                         </Button> 
+                        <Button danger style={{ border: 'none'}} onClick={() => showModal(work)}>
+                            <MdDelete/>
+                        </Button>
+                        </>
                         : null
                     }
                     </td>
@@ -60,6 +102,18 @@ const Work = ({allWork, user, loading}) => {
                 ))}
             </tbody>
             </table>
+
+            <Modal
+                title="Delete Work"
+                open={isModalVisible}
+                onOk={handleDelete} 
+                onCancel={handleCancel}
+                okText="Delete"
+                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+            >
+                <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.title}?</p>
+            </Modal>
             
         </Card>
         
