@@ -5,6 +5,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const nodemailer = require("nodemailer");
 const { PASS, USER } = require("../utils/env");
 const sendEmail = require("../utils/email");
+const cron = require("node-cron");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -190,6 +191,43 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
         
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
+    }
+});
+
+// Check Due Date of Work Orders that are due and send an email notification
+cron.schedule("0 0 0 * * *", async () => {
+    try {
+        const currentDate = new Date();
+
+        // Find all work orders with due date less than or equal to the current date
+        const overDueWorkOrders = await WorkOrder.find({ 
+            dueDate: { $lte: currentDate },
+            status: { $in: ["Pending", "In_Progress"] },
+        }).populate("requestedBy");
+
+        if (overDueWorkOrders.length > 0) {
+            // Loop through overdue work orders and send an email
+            for (const workOrder of overDueWorkOrders) {
+                const userEmail = workOrder.requestedBy.email;
+                const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
+
+                const emailSubject = `Work Order Due Date Reminder`;
+                const emailText = `Your work order with title ${workOrder.title} has a due date of ${workOrder.dueDate}. Please take action as soon as possible.`;
+
+                // Send the email with cc email addresses
+                sendEmail({
+                    email: userEmail,
+                    cc: ccEmails,
+                    subject: emailSubject,
+                    text: emailText
+                });
+            }
+            console.log("Emails sent for overdue work orders successfully");
+        } else {
+            console.log("No overdue work orders found");
+        }
+    } catch (error) {
+        console.error("Error sending email:", error);
     }
 });
 
