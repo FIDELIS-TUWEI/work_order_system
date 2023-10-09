@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkOrders } from "../../../services/workApi";
 import { Card } from "antd";
-import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
 
 const BarGraph = () => {
     const token = useSelector(selectToken);
@@ -27,20 +27,35 @@ const BarGraph = () => {
         setLoading(false);
     }
 
+    // Count the number of work assigned to each employee
+    const workCounts = workOrders.reduce((counts, workOrder) => {
+        const assignedTo = workOrder.assignedTo;
+        counts[assignedTo] = (counts[assignedTo] || 0) + 1;
+        return counts;
+    }, {});
+
+    // Array of colors
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+    // Create a mapping of employee names to colors
+    const useColors = Object.keys(workCounts).reduce((colors, employee, index) => {
+        colors[employee] = COLORS[index % COLORS.length];
+        return colors;
+    }, {});
+
+
+    // Convert the workCounts object to an array of objects
+    const workCountsArray = Object.entries(workCounts).map(([employee, count]) => ({ employee, count, fill: useColors[employee] }));
+
   return (
     <div>
         <Card title="Work Orders Assigned To Employees" style={{ margin: "15px 25px" }} loading={loading}>
             <ResponsiveContainer width="100%" aspect={3}>
-                <LineChart width={500} height={300} data={workOrders}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="assignedTo" interval={'preserveStartEnd'} />
-                    <YAxis />
+                <PieChart>
+                    <Pie data={workCountsArray} dataKey="count" nameKey="employee" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
                     <Tooltip />
                     <Legend />
-                    <Line dataKey="title" stroke="black" activeDot={{ r: 8 }} />
-                    <Line dataKey="serviceType" stroke="red" activeDot={{ r: 8 }} />
-                    <Line dataKey="status" stroke="green" activeDot={{ r: 8 }} />
-                </LineChart>
+                </PieChart>
             </ResponsiveContainer>
         </Card>
     </div>
