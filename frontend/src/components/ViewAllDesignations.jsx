@@ -88,7 +88,7 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
                 okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
                 cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
       >
-        <p>Are you sure you want to delete this designation?</p>
+        <p>Are you sure you want to delete a designation titled: {selectedDesignationToDelete?.designationName}?</p>
       </Modal>
 
       <div className="pagination">
