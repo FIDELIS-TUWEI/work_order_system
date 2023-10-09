@@ -41,7 +41,7 @@ const AllWorkOrders = () => {
 
   return (
     <Layout>
-      <Work allWork={allWork} user={user} loading={loading} />
+      <Work allWork={allWork} user={user} loading={loading} getAllWork={getAllWork} />
       
       <div className="pagination">
         <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
