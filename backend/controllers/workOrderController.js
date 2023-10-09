@@ -46,7 +46,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                 Due Date: ${savedWorkorder.dueDate}\n
                 Status: ${savedWorkorder.status}\n
                 Date Created: ${savedWorkorder.Date_Created}\n\n
-                Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details.\n
+                Login in to the Work Order System to view the details.\n
                 -----------------------------------
             `,
         }
@@ -89,7 +89,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         const subject =`A Work Order updated\n`;
         const text =  `
             A Work Order with title ${updateWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. 
-            Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details.\n
+            Login in to the Work Order System to view the details.\n
             `;
         
         for ( const recepient of recepients ) {
