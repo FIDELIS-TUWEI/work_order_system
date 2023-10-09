@@ -2,8 +2,6 @@ const WorkOrder = require("../model/workOrder");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
-const nodemailer = require("nodemailer");
-const { PASS, USER } = require("../utils/env");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
 
@@ -48,7 +46,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                 Due Date: ${savedWorkorder.dueDate}\n
                 Status: ${savedWorkorder.status}\n
                 Date Created: ${savedWorkorder.Date_Created}\n\n
-                Login to view more details on the Work Order System\n
+                Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details.\n
                 -----------------------------------
             `,
         }
@@ -89,7 +87,10 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         // Send Email notification when a work order is updated
         const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
         const subject =`A Work Order updated\n`;
-        const text =  `A Work Order with title ${updateWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. Please login to the Work Order System to view the details.`;
+        const text =  `
+            A Work Order with title ${updateWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. 
+            Login in to the Work Order System to <a href="http://localhost:3000">view</a> the details.\n
+            `;
         
         for ( const recepient of recepients ) {
             sendEmail({
