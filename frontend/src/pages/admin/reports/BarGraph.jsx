@@ -34,18 +34,11 @@ const BarGraph = () => {
         return counts;
     }, {});
 
-    // Array of colors
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-    // Create a mapping of employee names to colors
-    const useColors = Object.keys(workCounts).reduce((colors, employee, index) => {
-        colors[employee] = COLORS[index % COLORS.length];
-        return colors;
-    }, {});
-
+    // Generate an Array of unique colors for each employee
+    const uniqueColors = generateUniqueColors(Object.keys(workCounts).length);
 
     // Convert the workCounts object to an array of objects
-    const workCountsArray = Object.entries(workCounts).map(([employee, count]) => ({ employee, count, fill: useColors[employee] }));
+    const workCountsArray = Object.entries(workCounts).map(([employee, count], index) => ({ employee, count, fill: uniqueColors[index] }));
 
   return (
     <div>
@@ -60,6 +53,20 @@ const BarGraph = () => {
         </Card>
     </div>
   )
+};
+
+// Function to generate an array of unique colors
+const generateUniqueColors = (count) => {
+    const colors = [];
+    const hueStep = 360 / count;
+
+    for (let i = 0; i < count; i++) {
+        const hue = i * hueStep;
+        const color = `hsl(${hue}, 70%, 50%)`;
+        colors.push(color);
+    };
+
+    return colors;
 }
 
 export default BarGraph;
