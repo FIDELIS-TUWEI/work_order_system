@@ -2,7 +2,6 @@ const nodeMailer = require("nodemailer");
 const { USER, PASS } = require("./env");
 
 const sendEmail = (option) => {
-    const { to, cc, subject, text } = option;
     // create reusable transporter object using the default SMTP transport
     const transporter = nodeMailer.createTransport({
         // SMTP configuration options here
@@ -16,20 +15,14 @@ const sendEmail = (option) => {
     // Define the email options
     const emailOptions = {
         from: `workorder.holidayinnnairobi@gmail.com`,
-        to: ["fidel.tuwei@holidayinnnairobi.com"],
-        cc: ["fideliofidel9@gmail.com"],
-        subject: subject,
-        text: text
+        to: option.email,
+        cc: option.cc,
+        subject: option.subject,
+        text: option.text
     };
 
     // Send the email
-    transporter.sendMail(emailOptions, (err, info) => {
-        if (err) {
-            console.log("Error sending email", err);
-        } else {
-            console.log("Email sent: " + info.response);
-        }
-    });
+    transporter.sendMail(emailOptions);
 
 };
 

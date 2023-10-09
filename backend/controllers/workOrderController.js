@@ -45,11 +45,10 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
                 Work Description: ${savedWorkorder.title}\n
                 Priority: ${savedWorkorder.priority}\n
                 Service Type: ${savedWorkorder.serviceType}\n
-                Location: ${savedWorkorder.location.locationTitle}\n
                 Due Date: ${savedWorkorder.dueDate}\n
-                Category: ${savedWorkorder.category.categoryTitle}\n
                 Status: ${savedWorkorder.status}\n
-                Date Created: ${savedWorkorder.Date_Created}\n
+                Date Created: ${savedWorkorder.Date_Created}\n\n
+                Login to view more details on the Work Order System\n
                 -----------------------------------
             `,
         }
