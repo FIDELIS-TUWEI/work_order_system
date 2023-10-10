@@ -22,9 +22,13 @@ const EditWorkOrder = () => {
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
-    await updateWorkOrder(id, values);
-    navigate('/work/list');
-    message.success('Work Order Updated Successfully');
+    try {
+      await updateWorkOrder(id, values);
+      navigate('/work/list');
+      message.success('Work Order Updated Successfully');
+    } catch (error) {
+      message.error(error.message);
+    }
   }
 
   // Function to get work order details

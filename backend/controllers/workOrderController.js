@@ -34,7 +34,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Send Email notification
         const emailOptions = {
-            to: ["fidel.tuwei@holidayinnnairobi.com"],
+            to: "fidel.tuwei@holidayinnnairobi.com",
             cc: ["fideliofidel9@gmail.com"],
             subject: `New Work Order Requested\n`,
             text: `
