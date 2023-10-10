@@ -4,15 +4,14 @@ import { useEffect, useState } from 'react'
 import { createWorkOrder } from '../../../services/workApi'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectToken } from '../../../utils/redux/slices/authSlice'
+import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice'
 import { allWorkCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
 import { queryLocations } from '../../../services/locationApi';
-import axios from 'axios';
-const WORK_URL = "/hin";
 
 
 const CreateWorkOrder = () => {
+  const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState([]);
@@ -21,13 +20,23 @@ const CreateWorkOrder = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
 
+  const authorisedAccess = user?.role === "admin" || user?.role === "superadmin" || user?.role === "supervisor" || user?.role === "hod" || user?.role === "reviewer" || user?.role === "engineer";
+
   // function to handle form submit
   const onFinishHandler = async (values) => {
-    setLoading(true);
-    await createWorkOrder(values);
-    navigate('/work/list');
-    message.success('Work Order Created Successfully');
-    setLoading(false);
+    try {
+      setLoading(true);
+      await createWorkOrder(values);
+      if (authorisedAccess) {
+        navigate("/work/list");
+      } else {
+        navigate("/private");
+      }
+      message.success('Work Order Created Successfully');
+      setLoading(false);
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   // Function to handle change in location
