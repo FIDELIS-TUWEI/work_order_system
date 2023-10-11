@@ -33,26 +33,28 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         const savedWorkorder = await newWorkOrder.save();
 
         // Send Email notification
-        const emailOptions = {
-            to: "fidel.tuwei@holidayinnnairobi.com",
-            cc: ["fideliofidel9@gmail.com"],
-            subject: `New Work Order Requested\n`,
-            text: `
-                A New Work order has been Created\n\n
-                -----------------------------------\n
-                Work Description: ${savedWorkorder.title}\n
-                Priority: ${savedWorkorder.priority}\n
-                Service Type: ${savedWorkorder.serviceType}\n
-                Due Date: ${savedWorkorder.dueDate}\n
-                Status: ${savedWorkorder.status}\n
-                Date Created: ${savedWorkorder.Date_Created}\n\n
-                Login in to the Work Order System to view the details.\n
-                -----------------------------------
-            `,
+        const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
+        const subject =`New Work Order Requested\n`;
+        const text =  `
+            A New Work order has been Created\n\n
+            -----------------------------------\n
+            Work Description: ${savedWorkorder.title}\n
+            Priority: ${savedWorkorder.priority}\n
+            Service Type: ${savedWorkorder.serviceType}\n
+            Due Date: ${savedWorkorder.dueDate}\n
+            Status: ${savedWorkorder.status}\n
+            Date Created: ${savedWorkorder.Date_Created}\n\n
+            Login in to the Work Order System to view ${savedWorkorder.title} details.\n
+            -----------------------------------
+        `;
+        
+        for ( const recepient of recepients ) {
+            sendEmail({
+                email: recepient,
+                subject,
+                text
+            })
         }
-
-        // Send Email
-        sendEmail(emailOptions);
 
         // Return a response
         return res.status(201).json({
