@@ -2,6 +2,52 @@ import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } f
 
 
 const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
+  // to render edit columns based on work status and user role
+  const isWorkPending = workDetails?.status === 'Pending';
+  const isWorkInProgress = workDetails?.status === 'In_Progress';
+  const isWorkCompleted = workDetails?.status === 'Completed';
+  const isWorkReviewed = workDetails?.status === 'Reviewed';
+  const isRoleAuthorized = user?.role === 'reviewer' || user?.role === 'admin' || user?.role === 'superadmin';
+
+  // If work is pending
+  const renderPendingFields = () => (
+    <>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Assigned To"
+          name="assignedTo"
+          rules={[{ required: true, message: 'Please Enter Employee Name!' }]}
+        >
+          <Input type='text' placeholder='Enter employee name to assign' />
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Status"
+          name="status"
+          rules={[{ required: true, message: 'Please Select Work Status!' }]}
+        >
+          <Select 
+            placeholder='Select Status'
+            allowClear
+            style={{ width: '100%' }}
+            options={getStatusOptions()}
+          />
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Date Assigned"
+          name="dateAssigned"
+          rules={[{ required: true, message: 'Please Enter Date Assigned!' }]}
+        >
+          <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
+        </Form.Item>
+      </Col>
+    </>
+  );
+
+  
   // Function to disable past dates and future dates. Allow only today
   const today = new Date();
 
@@ -40,42 +86,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
             
             <Row gutter={20}>
             {
-              workDetails && workDetails.status === 'Pending' ? (
-                <>
-                  <Col xs={24} md={24} lg={8}>
-                    <Form.Item
-                      label="Assigned To"
-                      name="assignedTo"
-                      rules={[{ required: true, message: 'Please Enter Employee Name!' }]}
-                    >
-                      <Input type='text' placeholder='Enter employee name to assign' />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={24} md={24} lg={8}>
-                    <Form.Item
-                      label="Status"
-                      name="status"
-                      rules={[{ required: true, message: 'Please Select Work Status!' }]}
-                    >
-                      <Select 
-                        placeholder='Select Status'
-                        allowClear
-                        style={{ width: '100%' }}
-                        options={getStatusOptions()}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={24} md={24} lg={8}>
-                    <Form.Item
-                      label="Date Assigned"
-                      name="dateAssigned"
-                      rules={[{ required: true, message: 'Please Enter Date Assigned!' }]}
-                    >
-                      <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
-                    </Form.Item>
-                  </Col>
-                </>
-              ) : workDetails && workDetails.status === 'In_Progress' ? (
+               workDetails && workDetails.status === 'In_Progress' ? (
                 <>
                   <Col xs={24} md={24} lg={8}>
                       <Form.Item
