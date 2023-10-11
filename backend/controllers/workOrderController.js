@@ -171,14 +171,14 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
         }
 
         // Send Email Notification
-        const userEmail = workOrder.requestedBy.email;
+        const recepients = workOrder.requestedBy.email;
         const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
 
         const emailSubject = `Work Order Deleted`;
         const emailText = `A work order with title ${workOrder.title} has been deleted by ${workOrder.requestedBy.username}.`;
 
         const emailOptions = {
-            email: userEmail,
+            email: recepients,
             cc: ccEmails,
             subject: emailSubject,
             text: emailText
