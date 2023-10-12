@@ -47,6 +47,44 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
     </>
   );
 
+  // if Work is in progress
+  const renderInProgressFields = () => (
+    <>
+      <Col xs={24} md={24} lg={8}>
+          <Form.Item
+            label="Status"
+            name="status"
+            rules={[{ required: true, message: 'Please Select Work Status!' }]}
+          >
+            <Select 
+              placeholder='Select Status'
+              allowClear
+              style={{ width: '100%' }}
+              options={getStatusOptions()}
+            />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={24} lg={8}>
+          <Form.Item
+            label="Comments"
+            name="comments"
+            rules={[{ required: true, message: 'Please Enter Comments!' }]}
+          >
+            <Input type='text' placeholder='Enter comments' />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={24} lg={8}>
+          <Form.Item
+            label="Date Completed"
+            name="dateCompleted"
+            rules={[{ required: true, message: 'Please Enter Date Completed!' }]}
+          >
+            <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
+          </Form.Item>
+        </Col>
+    </>
+  );
+
   
   // Function to disable past dates and future dates. Allow only today
   const today = new Date();
