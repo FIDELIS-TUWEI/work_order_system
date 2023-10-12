@@ -86,6 +86,11 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
+        // If the work is reviewed, clear it from the user's work order list
+        if (updateWorkOrder.reviewed) {
+            await User.findByIdAndUpdate(user, { $pull: { workOrders: id } });
+        };
+
         // Send Email notification when a work order is updated
         const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
         const subject =`A Work Order updated\n`;
