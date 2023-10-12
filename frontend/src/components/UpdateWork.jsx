@@ -5,8 +5,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
   // to render edit columns based on work status and user role
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
-  const isWorkCompleted = workDetails?.status === 'Completed';
-  const isWorkReviewed = workDetails?.status === 'Reviewed';
   const isRoleAuthorized = user?.role === 'reviewer' || user?.role === 'admin' || user?.role === 'superadmin';
 
   // If work is pending
