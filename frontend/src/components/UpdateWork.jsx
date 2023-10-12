@@ -5,6 +5,8 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
   // to render edit columns based on work status and user role
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
+  const isWorkCompleted = workDetails?.status === 'Completed';
+  const isWorkReviewed = workDetails?.reviewed === true;
   const isRoleAuthorized = user?.role === 'reviewer' || user?.role === 'admin' || user?.role === 'superadmin';
 
   // If work is pending
@@ -84,35 +86,44 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
   );
 
   // if Work is complete check if user is authprised
-  const renderReviewFields = () => (
-    <>
-      <Col xs={24} md={24} lg={8}>
-        <Form.Item
-          label="Reviewed"
-          name="reviewed"
-          rules={[{ required: true, message: 'Please Select Work Review Status!' }]}
-        >
-          <Select 
-            placeholder='Select Review Status'
-            allowClear
-            style={{ width: '100%' }}
-            options={[
-              { value: true, label: 'Reviewed' }, { value: false, label: 'Not Reviewed' }
-            ]}
-          />
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={24} lg={8}>
-        <Form.Item
-          label="Review Comments"
-          name="reviewComments"
-          rules={[{ required: true, message: 'Please Enter Review Comments!' }]}
-        >
-          <Input type='text' placeholder='Enter comments' />
-        </Form.Item>
-      </Col>
-    </>
-  );
+  const renderReviewFields = () => {
+    if (isWorkReviewed) {
+      return (
+        <Typography.Text style={{ fontSize: '1rem', fontWeight: '500', marginBottom: '1rem' }}>This work is already reviewed, no need to review it again.</Typography.Text>
+      )
+    } else {
+      return (
+        <>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item
+              label="Reviewed"
+              name="reviewed"
+              rules={[{ required: true, message: 'Please Select Work Review Status!' }]}
+            >
+              <Select 
+                placeholder='Select Review Status'
+                allowClear
+                style={{ width: '100%' }}
+                options={[
+                  { value: true, label: 'Reviewed' }, { value: false, label: 'Not Reviewed' }
+                ]}
+              />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item
+              label="Review Comments"
+              name="reviewComments"
+              rules={[{ required: true, message: 'Please Enter Review Comments!' }]}
+            >
+              <Input type='text' placeholder='Enter comments' />
+            </Form.Item>
+          </Col>
+        </>
+          )
+    }
+    
+  };
 
   
   // Function to disable past dates and future dates. Allow only today
@@ -152,7 +163,12 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
         <Form onFinish={onFinishHandler} layout='vertical'>
             
             <Row gutter={20}>
-                {isWorkPending ? renderPendingFields() : isWorkInProgress ? renderInProgressFields() : isRoleAuthorized ? renderReviewFields() : null}
+                {
+                  isWorkPending ? renderPendingFields() : 
+                  isWorkInProgress ? renderInProgressFields() : 
+                  isWorkCompleted && isRoleAuthorized ? renderReviewFields() :  
+                  "You are not authorised to edit this work"
+                }
             </Row>
             <div>
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
@@ -166,4 +182,4 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
   )
 }
 
-export default UpdateWork
+export default UpdateWork;
