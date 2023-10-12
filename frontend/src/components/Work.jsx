@@ -41,7 +41,28 @@ const Work = ({allWork, user, loading, getAllWork}) => {
   // Function to handle modal cancel
   const handleCancel = () => {
     setIsModalVisible(false);
-  }
+  };
+
+  // Function to check if user is authorised to view, edit or delete work
+  const isAuthorised = 
+    user?.role === "admin" || 
+    user?.role === "superadmin" || 
+    user?.role === "hod" || 
+    user?.role === "supervisor" || 
+    user?.role === "reviewer" || 
+    user?.role === "engineer";
+
+    // Function to determine whether edit or delete button should be displayed
+    const allowEditWork = (work) => {
+        // check if work order status is not completed
+        if (work.status !== "Completed") {
+            // Allow edit button for authorised users
+            return isAuthorised;
+        } else {
+            // Disable delete button for unauthorised users
+            return !["engineer", "hod"].includes(user?.role);
+        }
+    }
 
   return (
     <>
@@ -83,20 +104,20 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                     <td>{work.requestedBy?.username}</td>
                     <td className="actions__btn">
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
-                    {
-                        user.role === "admin" || user.role === "superadmin" || user.role === "hod" || user.role === "supervisor" || user.role === "reviewer" ? 
-                        <>
-                        <Button danger style={{ border: 'none', marginRight: "5px"}} 
-                            onClick={() => navigate(`/edit/work/${work._id}`)}
-                        >
-                            <BiSolidEditAlt/>
-                        </Button> 
-                        <Button danger style={{ border: 'none'}} onClick={() => showModal(work)}>
-                            <MdDelete/>
-                        </Button>
-                        </>
-                        : null
-                    }
+                    
+                        {allowEditWork(work) && ( 
+                            <Button danger style={{ border: 'none', marginRight: "5px"}} 
+                                onClick={() => navigate(`/edit/work/${work._id}`)}
+                            >
+                                <BiSolidEditAlt/>
+                            </Button> 
+                        )}
+                        
+                        { allowEditWork(work) && (
+                            <Button danger style={{ border: 'none'}} onClick={() => showModal(work)}>
+                                <MdDelete/>
+                            </Button>
+                        )}
                     </td>
                 </tr>
                 ))}
@@ -130,4 +151,4 @@ const Work = ({allWork, user, loading, getAllWork}) => {
   )
 }
 
-export default Work
+export default Work;
