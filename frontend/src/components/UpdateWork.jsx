@@ -85,6 +85,37 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
     </>
   );
 
+  // if Work is complete check if user is authprised
+  const renderReviewFields = () => (
+    <>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Reviewed"
+          name="reviewed"
+          rules={[{ required: true, message: 'Please Select Work Review Status!' }]}
+        >
+          <Select 
+            placeholder='Select Review Status'
+            allowClear
+            style={{ width: '100%' }}
+            options={[
+              { value: true, label: 'Reviewed' }, { value: false, label: 'Not Reviewed' }
+            ]}
+          />
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Review Comments"
+          name="reviewComments"
+          rules={[{ required: true, message: 'Please Enter Review Comments!' }]}
+        >
+          <Input type='text' placeholder='Enter comments' />
+        </Form.Item>
+      </Col>
+    </>
+  );
+
   
   // Function to disable past dates and future dates. Allow only today
   const today = new Date();
@@ -123,78 +154,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
         <Form onFinish={onFinishHandler} layout='vertical'>
             
             <Row gutter={20}>
-            {
-               workDetails && workDetails.status === 'In_Progress' ? (
-                <>
-                  <Col xs={24} md={24} lg={8}>
-                      <Form.Item
-                        label="Status"
-                        name="status"
-                        rules={[{ required: true, message: 'Please Select Work Status!' }]}
-                      >
-                        <Select 
-                          placeholder='Select Status'
-                          allowClear
-                          style={{ width: '100%' }}
-                          options={getStatusOptions()}
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={24} lg={8}>
-                      <Form.Item
-                        label="Comments"
-                        name="comments"
-                        rules={[{ required: true, message: 'Please Enter Comments!' }]}
-                      >
-                        <Input type='text' placeholder='Enter comments' />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={24} lg={8}>
-                      <Form.Item
-                        label="Date Completed"
-                        name="dateCompleted"
-                        rules={[{ required: true, message: 'Please Enter Date Completed!' }]}
-                      >
-                        <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
-                      </Form.Item>
-                    </Col>
-                </>
-              ) : (
-                <>
-                {
-                  user && user.role === 'admin' || user && user.role === 'superadmin' || user && user.role === 'reviewer' ? (
-                    <>
-                      <Col xs={24} md={24} lg={8}>
-                        <Form.Item
-                          label="Reviewed"
-                          name="reviewed"
-                          rules={[{ required: true, message: 'Please Select Work Review Status!' }]}
-                        >
-                          <Select 
-                            placeholder='Select Review Status'
-                            allowClear
-                            style={{ width: '100%' }}
-                            options={[
-                              { value: true, label: 'Reviewed' }, { value: false, label: 'Not Reviewed' }
-                            ]}
-                          />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={24} lg={8}>
-                        <Form.Item
-                          label="Review Comments"
-                          name="reviewComments"
-                          rules={[{ required: true, message: 'Please Enter Review Comments!' }]}
-                        >
-                          <Input type='text' placeholder='Enter comments' />
-                        </Form.Item>
-                      </Col>
-                    </>
-                  ) : ''}
-                </>
-              )
-            }
-                     
+                {isWorkPending ? renderPendingFields() : isWorkInProgress ? renderInProgressFields() : isRoleAuthorized ? renderReviewFields() : null}
             </Row>
             <div>
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
