@@ -129,4 +129,4 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
   )
 }
 
-export default AllUsers
+export default AllUsers;
