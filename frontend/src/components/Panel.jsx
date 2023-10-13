@@ -54,4 +54,4 @@ const Panel = () => {
   )
 }
 
-export default Panel
+export default Panel;
