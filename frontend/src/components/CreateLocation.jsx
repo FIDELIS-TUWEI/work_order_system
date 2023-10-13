@@ -41,4 +41,4 @@ const CreateLocation = ({ loading, onFinishHandler, navigate }) => {
   )
 }
 
-export default CreateLocation
+export default CreateLocation;
