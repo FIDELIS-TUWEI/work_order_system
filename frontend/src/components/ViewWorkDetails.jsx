@@ -77,4 +77,4 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
   )
 }
 
-export default ViewWorkDetails
+export default ViewWorkDetails;
