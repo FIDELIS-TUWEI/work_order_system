@@ -124,4 +124,4 @@ const CreateUser = ({ onFinishHandler, loading}) => {
   )
 }
 
-export default CreateUser
+export default CreateUser;
