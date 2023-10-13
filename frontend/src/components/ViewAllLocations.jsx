@@ -126,4 +126,4 @@ const ViewAllLocations = ({ navigate, loading,
   )
 }
 
-export default ViewAllLocations
+export default ViewAllLocations;
