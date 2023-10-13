@@ -128,4 +128,4 @@ const NewWork = ({
   )
 }
 
-export default NewWork
+export default NewWork;
