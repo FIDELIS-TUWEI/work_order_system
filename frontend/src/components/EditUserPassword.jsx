@@ -37,4 +37,4 @@ const EditUserPassword = ({ onFinishHandler, newPassword, setNewPassword }) => {
   )
 }
 
-export default EditUserPassword
+export default EditUserPassword;
