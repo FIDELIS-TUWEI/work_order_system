@@ -87,6 +87,19 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
+        // Assign work to an employee
+        const { employeeId } = req.body;
+        if (employeeId) {
+            const employee = await Employee.findById(employeeId);
+
+            if (!employee) {
+                return next(new ErrorResponse("Employee not found", 404));
+            };
+
+            employee.assignedWork.push(id);
+            await employee.save();
+        }
+
         // If the work is reviewed, clear it from the user's work order list
         if (updateWorkOrder.reviewed) {
             await User.findByIdAndUpdate(user, { $pull: { workOrders: id } });
