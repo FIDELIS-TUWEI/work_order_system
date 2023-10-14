@@ -41,8 +41,8 @@ const workOrderSchema = new mongoose.Schema({
         default: "Pending"
     },
     assignedTo: {
-        type: String,
-        default: ""
+        type: ObjectId,
+        ref: "Employee",
     },
     dateAssigned: {
         type: Object,
