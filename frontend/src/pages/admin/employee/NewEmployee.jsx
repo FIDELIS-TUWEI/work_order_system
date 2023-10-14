@@ -1,9 +1,11 @@
 import Layout from "../../../components/Layout";
-
+import CreateEmployee from "../../../components/CreateEmployee";
 
 const NewEmployee = () => {
   return (
-    <Layout>NewEmployee</Layout>
+    <Layout>
+      <CreateEmployee />
+    </Layout>
   )
 }
 
