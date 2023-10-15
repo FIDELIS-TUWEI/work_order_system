@@ -34,6 +34,29 @@ export const getSingleEmployee = async (id) => {
   }
 };
 
+// Query to get all employees
+export const queryAllEmployees = async () => {
+    try {
+        const res = await axios.get(`${WORK_URL}/query/all/employees`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching all employees query", error);
+    }
+}
+
+// Count work assigned to an employee
+export const employeeTotalWorkCount = async (id) => {
+  try {
+    const res = await axios.get(`${WORK_URL}/employee/work/count?id=${id}`);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error('Error counting work assigned:', error);
+    throw error;
+  }
+};
+
 // Edit employee
 export const editEmployee = async (id, values) => {
   try {
