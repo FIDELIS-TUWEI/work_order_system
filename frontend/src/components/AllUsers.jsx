@@ -34,7 +34,6 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
          setIsModalVisible(false);
          getUsers();
       } catch (error) {
-          console.error(error);
           message.error("An error occurred while deleting the user", error);
       }
   };
@@ -52,9 +51,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
             onClick={() => navigate("/users/register")}
           >
             Add User
-          </Button>
-
-          
+          </Button>  
       </div>
 
       <Card
@@ -99,10 +96,10 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
         title="Delete User"
         open={isModalVisible}
         onOk={handleDelete} 
-                onCancel={handleCancel}
-                okText="Delete"
-                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+        onCancel={handleCancel}
+        okText="Delete"
+        okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+        cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
       >
         <p>Are you sure you want to delete {selectedUserToDelete?.username}?</p>
       </Modal>

@@ -1,8 +1,6 @@
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
 
-const CreateEmployee = () => {
-  const navigate = useNavigate();
+const CreateEmployee = ({ onFinishHandler, loading, navigate }) => {
 
   return (
     <div>
@@ -14,8 +12,8 @@ const CreateEmployee = () => {
       >
         New Employee Form
       </Typography>
-      <Card title="Add Employee" style={{ margin: '15px' }}>
-        <Form layout="vertical">
+      <Card title="Add Employee" style={{ margin: '15px' }} loading={loading}>
+        <Form layout="vertical" onFinish={onFinishHandler}>
           <Row gutter={16}>
             <Col xs={24} md={24} lg={8}>
               <Form.Item
@@ -50,7 +48,7 @@ const CreateEmployee = () => {
                 label="Username"
                 required rules={[{ required: true, message: 'Please Enter Employee Username!' }]}
               >
-                <Input type="email" placeholder="Enter Employee Username" />
+                <Input type="text" placeholder="Enter Employee Username" />
               </Form.Item>
             </Col>
           </Row>

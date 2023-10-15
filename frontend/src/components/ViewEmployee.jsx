@@ -1,7 +1,22 @@
+import { Card } from "antd";
 
-const ViewEmployee = () => {
+const ViewEmployee = ({ employeeDetails, loading, navigate, getEmployeeDetails }) => {
   return (
-    <div>ViewEmployee</div>
+    <div>
+      <Card
+        title="View Employee Details"
+        loading={loading}
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+        </table>
+
+      </Card>
+    </div>
   )
 }
 

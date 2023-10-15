@@ -1,7 +1,8 @@
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd'
 
+const { Option } = Select;
 
-const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
+const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange, getEmployees }) => {
   // to render edit columns based on work status and user role
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
@@ -15,10 +16,22 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate }) => {
       <Col xs={24} md={24} lg={8}>
         <Form.Item
           label="Assigned To"
-          name="assignedTo"
-          rules={[{ required: true, message: 'Please Enter Employee Name!' }]}
+          name="Employee Assigned"
+          rules={[{ required: true, message: 'Please Select Employee to Assign!' }]}
         >
-          <Input type='text' placeholder='Enter employee name to assign' />
+          <Select
+            placeholder='Select Employee to Assign'
+            allowClear
+            style={{ width: '100%' }}
+            value={selectedEmployee}
+            onChange={handleEmployeeChange}
+            onSearch={getEmployees}
+            filterOption={false}
+          >
+            {employees.map((employee) => (
+              <Option key={employee._id} value={employee._id}>{employee.name}</Option>
+            ))}
+          </Select>
         </Form.Item>
       </Col>
       <Col xs={24} md={24} lg={8}>
