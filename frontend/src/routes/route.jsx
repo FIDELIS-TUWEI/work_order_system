@@ -29,9 +29,9 @@ import AllDepartments from "../pages/admin/department/AllDepartments";
 import AllDesignations from "../pages/admin/designation/AllDesignations";
 import NewDesignation from "../pages/admin/designation/NewDesignation";
 import ChangePassword from "../pages/admin/users/ChangePassword";
-import AllEmployees from "../pages/admin/employee/AllEmployees";
+import Employees from "../pages/admin/employee/Employees";
 import EditEmployee from "../pages/admin/employee/EditEmployee";
-import NewEmployee from "../pages/admin/employee/CreateEmployee";
+import NewEmployee from "../pages/admin/employee/NewEmployee";
 import EmployeeAnalytics from "../pages/admin/employee/EmployeeAnalytics";
 
 
@@ -57,7 +57,7 @@ export const router = createBrowserRouter(
         <Route path="/work/analytics" element={ <PrivateRoute> <Analytics /> </PrivateRoute> } />
         <Route path="/all-locations" element={ <PrivateRoute> <AllLocations /> </PrivateRoute> } />
         <Route path="/new/employee" element={ <PrivateRoute> <NewEmployee /> </PrivateRoute> } />
-        <Route path="/all/employees" element={ <PrivateRoute> <AllEmployees /> </PrivateRoute> } />
+        <Route path="/all/employees" element={ <PrivateRoute> <Employees /> </PrivateRoute> } />
         <Route path="/update/employee/:id" element={ <PrivateRoute> <EditEmployee /> </PrivateRoute> } />
         <Route path="/employee/analytics" element={ <PrivateRoute> <EmployeeAnalytics /> </PrivateRoute> } />
         <Route path="/new/location" element={ <PrivateRoute> <NewLocation /> </PrivateRoute> } />
