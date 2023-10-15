@@ -11,7 +11,7 @@ const employeeSchema = new mongoose.Schema({
         required: [true, "Please fill your name"]
     },
     phone: {
-        type: Number,
+        type: String,
         required: [true, "Please Enter employee phone number"]
     },
     username: {
