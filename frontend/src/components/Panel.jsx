@@ -4,7 +4,7 @@ import {FaUsers} from 'react-icons/fa';
 import {BiSolidCategory} from "react-icons/bi";
 import {IoLocation} from "react-icons/io5";
 import {HiOfficeBuilding} from "react-icons/hi";
-import {MdManageAccounts} from "react-icons/md";
+import {MdManageAccounts, MdGroups} from "react-icons/md";
 
 
 
@@ -17,6 +17,13 @@ const Panel = () => {
                 <Card className="custom-card" hoverable title="Users" onClick={() => navigate("/users/all")}>
                     <Button icon={<FaUsers />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}> 
                         Users
+                    </Button>
+                </Card>
+                </Col>
+                <Col span={8}>
+                <Card className="custom-card" hoverable title="Work Orders" onClick={() => navigate("/all/employees")}>
+                    <Button icon={<MdGroups />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}> 
+                        Employees
                     </Button>
                 </Card>
                 </Col>
