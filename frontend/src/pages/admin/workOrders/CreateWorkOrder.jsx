@@ -69,8 +69,9 @@ const CreateWorkOrder = () => {
       }
     });
     setCategory(response.data);
-  }
+  };
 
+  // UseEffect hook
   useEffect(() => {
     workLocation();
     getCategories();

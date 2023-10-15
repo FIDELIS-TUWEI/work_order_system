@@ -12,11 +12,6 @@ const UserDetails = () => {
   const navigate = useNavigate();
   const {id} = useParams();
 
-  useEffect(() => {
-    if (id) {
-      getUserDetails(id);
-    }
-  }, [id]);
 
   // function to get user details
   const getUserDetails = async (id) => {
@@ -27,34 +22,41 @@ const UserDetails = () => {
       },
     });
     setUserDetails({...res.data});
-  }
+  };
+
+  // UseEffect hook
+  useEffect(() => {
+    if (id) {
+      getUserDetails(id);
+    }
+  }, [id]);
 
   return (
     <Layout>
       <Card title="User Details" style={{ margin: 'auto', width: '300px' }}>
         <p>
-          First Name: {userDetails && userDetails.firstName}
+          First Name: {userDetails?.firstName}
         </p>
         <p>
-          Last Name: {userDetails && userDetails.lastName}
+          Last Name: {userDetails?.lastName}
         </p>
         <p>
-          Username: {userDetails && userDetails.username}
+          Username: {userDetails?.username}
         </p>
         <p>
-          Department: {userDetails && userDetails.department}
+          Department: {userDetails?.department}
         </p>
         <p>
-          Designation: {userDetails && userDetails.designation}
+          Designation: {userDetails?.designation}
         </p>
         <p>
-          Role: {userDetails && userDetails.role}
+          Role: {userDetails?.role}
         </p>
         <p>
-          Status: {userDetails && userDetails.active === true ? "Active" : "Not Active"}
+          Status: {userDetails?.active === true ? "Active" : "Not Active"}
         </p>
         <Button onClick={() => {navigate(`/updatePassword/${userDetails?._id}`)}}>Change Password</Button>
-        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => {navigate(-1)}}>Back</Button>
+        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} onClick={() => {navigate(-1)}}>Back</Button>
       </Card>
     </Layout>
   )

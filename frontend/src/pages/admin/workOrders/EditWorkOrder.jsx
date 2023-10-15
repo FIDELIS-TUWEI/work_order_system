@@ -6,19 +6,16 @@ import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSli
 import { useNavigate, useParams } from 'react-router-dom'
 import { getSingleWorkOrder, updateWorkOrder } from '../../../services/workApi'
 import UpdateWork from '../../../components/UpdateWork'
+import { queryAllEmployees } from '../../../services/employeeApi'
 
 const EditWorkOrder = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [workDetails, setWorkDetails] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const navigate = useNavigate();
   const {id} = useParams();
-
-  useEffect(() => {
-    if (id) {
-      getWorkOrderDetails(id);
-    }
-  }, [id]);
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
@@ -41,6 +38,30 @@ const EditWorkOrder = () => {
     });
     setWorkDetails({...res.data});
   }
+
+  // Function to handle change in employee selection
+  const handleEmployeeChange = (value) => {
+    setSelectedEmployee(value);
+  };
+
+  // Function to get all employees
+  const getEmployees = async () => {
+    const { data } = await queryAllEmployees({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setEmployees(data);
+  };
+
+  // UseEffect hook
+  useEffect(() => {
+    if (id) {
+      getWorkOrderDetails(id);
+      getEmployees();
+    }
+  }, [id]);
   
   return (
     <Layout>
@@ -49,6 +70,10 @@ const EditWorkOrder = () => {
           onFinishHandler={onFinishHandler}
           user={user}
           navigate={navigate}
+          employees={employees}
+          selectedEmployee={selectedEmployee}
+          handleEmployeeChange={handleEmployeeChange}
+          getEmployees={getEmployees}
         />
     </Layout>
   )
