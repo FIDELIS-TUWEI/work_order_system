@@ -40,7 +40,7 @@ const AllLocations = () => {
 
     // Function to jump to first page
     const jumpToFirstPage = () => {
-        if (page !== 1); {
+        if (page !== 1) {
             handlePageChange(1);
         }
     }
