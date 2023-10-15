@@ -40,7 +40,6 @@ const newEmployee = asyncHandler ( async (req, res) => {
     }
 });
 
-// All employees
 // Get all employees
 const getAllEmployees = asyncHandler(async (req, res) => {
     // Enable Pagination
@@ -73,6 +72,28 @@ const getAllEmployees = asyncHandler(async (req, res) => {
     }
 });
 
+// Query all employees
+const queryAllEmployees = asyncHandler(async (req, res) => {
+    try {
+        const allEmployees = await Employee.find({});
+
+        if (!allEmployees) {
+            return res.status(400).json({ message: "No employees found" });
+        };
+        
+        res.status(200).json({
+            success: true,
+            data: allEmployees
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+})
+
 // Get single employee and populate workorders
 const singleEmployee = asyncHandler (async (req, res, next) => {
     try {
@@ -88,6 +109,29 @@ const singleEmployee = asyncHandler (async (req, res, next) => {
         next(error);
     }
 });
+
+// Count the total number of workorders assigned to an employee
+const countWorkAssigned = asyncHandler (async (req, res) => {
+    try {
+        const employee = await Employee.findById(req.params.id).populate("assignedWork");
+        
+        if (!employee) {
+            return res.status(404).json({ message: "Employee not found" });
+        };
+
+        const workCount = employee.totalAssignedWorkCount;
+
+        res.status(200).json({
+            success: true,
+            data: workCount
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+})
 
 // Edit Employee
 const editEmployee = asyncHandler(async (req, res) => {
@@ -136,7 +180,9 @@ const deleteEmployee = asyncHandler(async (req, res) => {
 module.exports = {
     newEmployee,
     getAllEmployees,
+    queryAllEmployees,
     singleEmployee,
+    countWorkAssigned,
     editEmployee,
     deleteEmployee
 };
