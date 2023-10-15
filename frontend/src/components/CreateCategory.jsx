@@ -26,7 +26,7 @@ const CreateCategory = ({ loading, onFinishHandler, navigate }) => {
                     </Col>
                 </Row>
                 <div>
-                    <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+                    <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => {navigate(-1)}}>Go Back</Button>
                 </div>
                 <div className="user_submit">
                     <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Submit</Button>
