@@ -31,6 +31,7 @@ import NewDesignation from "../pages/admin/designation/NewDesignation";
 import ChangePassword from "../pages/admin/users/ChangePassword";
 import Employees from "../pages/admin/employee/Employees";
 import EditEmployee from "../pages/admin/employee/EditEmployee";
+import EmployeeDetails from "../pages/admin/employee/EmployeeDetails";
 import NewEmployee from "../pages/admin/employee/NewEmployee";
 import EmployeeAnalytics from "../pages/admin/employee/EmployeeAnalytics";
 
@@ -58,6 +59,7 @@ export const router = createBrowserRouter(
         <Route path="/all-locations" element={ <PrivateRoute> <AllLocations /> </PrivateRoute> } />
         <Route path="/new/employee" element={ <PrivateRoute> <NewEmployee /> </PrivateRoute> } />
         <Route path="/all/employees" element={ <PrivateRoute> <Employees /> </PrivateRoute> } />
+        <Route path="/employee/details/:id" element={ <PrivateRoute> <EmployeeDetails /> </PrivateRoute> } />
         <Route path="/update/employee/:id" element={ <PrivateRoute> <EditEmployee /> </PrivateRoute> } />
         <Route path="/employee/analytics" element={ <PrivateRoute> <EmployeeAnalytics /> </PrivateRoute> } />
         <Route path="/new/location" element={ <PrivateRoute> <NewLocation /> </PrivateRoute> } />
