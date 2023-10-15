@@ -1,7 +1,7 @@
 import Layout from "../../../components/Layout";
 import AllEmployees from "../../../components/AllEmployees";
 
-const AllEmployees = () => {
+const Employees = () => {
   return (
     <Layout>
       <AllEmployees />
@@ -9,4 +9,4 @@ const AllEmployees = () => {
   )
 }
 
-export default AllEmployees;
+export default Employees;
