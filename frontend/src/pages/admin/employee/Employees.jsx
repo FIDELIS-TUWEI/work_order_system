@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getAllEmployees } from "../../../services/employeeApi";
 
 const Employees = () => {
   const token = useSelector(selectToken);
