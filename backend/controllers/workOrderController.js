@@ -166,6 +166,7 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
             .populate("requestedBy", "username")
             .populate("location", "locationTitle")
             .populate("category", "categoryTitle")
+            .populate("assignedTo", "username")
             .exec();
         if (!work) {
             return next(new ErrorResponse("Work Order not found", 404));
