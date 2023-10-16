@@ -16,7 +16,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
       <Col xs={24} md={24} lg={8}>
         <Form.Item
           label="Assigned To"
-          name="Employee Assigned"
+          name="assignedTo"
           rules={[{ required: true, message: 'Please Select Employee to Assign!' }]}
         >
           <Select

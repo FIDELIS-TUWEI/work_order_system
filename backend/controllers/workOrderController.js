@@ -92,14 +92,29 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
-        // Update the assignedWork field in the employee model
-        if (assignedTo) {
-            const employee = await Employee.findByIdAndUpdate(assignedTo, { $push: { assignedWork: updatedWorkOrder._id } });
-
-            if (!employee) {
-                return next(new ErrorResponse("Employee Not Found", 404));
-            }
+        if (req.body.reviewed) {
+            updatedWorkOrder.reviewed = true;
+            updatedWorkOrder.reviewedBy = req.body.reviewedBy;
         }
+
+        // clear the user who requested the work when the work is reviewed
+        if (updatedWorkOrder.reviewed) {
+            await User.findByIdAndUpdate(user, { $pull: { workOrders: id } });
+        };
+
+        // check if an employee is assigned to the work order
+        if (req.body.assignedTo) {
+            // update the assignedTo field
+            updatedWorkOrder.assignedTo = req.body.assignedTo;
+            await updatedWorkOrder.save();
+
+            // Find the employee and add the work order to their assignedwork array
+            const employee = await Employee.findById(req.body.assignedTo);
+            if (employee) {
+                employee.assignedWork.push(id);
+                await employee.save();
+            }
+        };
 
         // Send Email notification when a work order is updated
         const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
@@ -162,7 +177,8 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
             .populate("requestedBy", "username")
             .populate("location", "locationTitle")
             .populate("category", "categoryTitle")
-            .populate("assignedTo", "username")
+            .populate("assignedTo", "firstName")
+            .populate("reviewedBy", "username")
             .exec();
         if (!work) {
             return next(new ErrorResponse("Work Order not found", 404));
