@@ -90,6 +90,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                 <th>Category</th>
                 <th>Status</th>
                 <th>Requested By</th>
+                <th>Assigned To</th>
                 <th>Actions</th>
                 </tr>
             </thead>
@@ -102,6 +103,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                     <td>{work.category?.categoryTitle}</td>
                     <td>{work.status}</td>
                     <td>{work.requestedBy?.username}</td>
+                    <td>{work.assignedTo?.firstName} {work.assignedTo?.lastName}</td>
                     <td className="actions__btn">
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
                     
