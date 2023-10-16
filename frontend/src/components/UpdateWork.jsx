@@ -2,7 +2,7 @@ import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } f
 
 const { Option } = Select;
 
-const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange, getEmployees }) => {
+const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange, }) => {
   // to render edit columns based on work status and user role
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
@@ -13,6 +13,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   // If work is pending
   const renderPendingFields = () => (
     <>
+
       <Col xs={24} md={24} lg={8}>
         <Form.Item
           label="Assigned To"
