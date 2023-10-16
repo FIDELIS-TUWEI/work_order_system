@@ -14,6 +14,20 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
     const [startDate, endDate] = workDetails.dueDate.map((dateString) => 
     moment(dateString).format("YYYY-MM-DD"));
 
+    // Display the assignedTo field as firstName of the assigned employee
+    const assignedToName = workDetails.assignedTo
+        ? `${workDetails.assignedTo.firstName}`
+        : 'Not Assigned';
+
+        // Display the requestedBy field as username of the user who requested the work
+        const requestedByUsername = workDetails.requestedBy
+            ? `${workDetails.requestedBy.username}`
+            : 'Not Requested';
+
+            // Display the reviewedBy field as username of the user who reviewed the work 
+            const reviewedByUsername = workDetails.reviewedBy
+                ? (workDetails.reviewed ? `${workDetails.reviewedBy.username}` : 'Not Reviewed')
+                : 'Not Reviewed';
 
   return (
     <>
@@ -34,7 +48,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Requested Date: {moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}
                 </p>
                 <p>
-                    Requested By: {workDetails?.requestedBy.username}
+                    Requested By: {requestedByUsername}
                 </p>
                 <p>
                     {workDetails?.dateCompleted ? (
@@ -47,7 +61,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Due Date: {startDate} - {endDate}
                 </p>
                 <p>
-                    Assigned To: {workDetails?.assignedTo}
+                    Assigned To: {assignedToName}
                 </p>
                 <p>
                     {workDetails?.dateAssigned ? (
@@ -60,7 +74,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     Reviewed: {workDetails?.reviewed === true ? "Yes" : "No"}
                 </p>
                 <p>
-                    Reviewed By: {workDetails.reviewedBy ? workDetails.reviewedBy : "Not Reviewed"} 
+                    Reviewed By: {reviewedByUsername} 
                 </p>
                 <p>
                     Reviewed Date: {workDetails?.dateReviewed ? moment(workDetails?.dateReviewed).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}    
