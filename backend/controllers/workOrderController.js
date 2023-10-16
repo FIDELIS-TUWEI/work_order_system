@@ -80,36 +80,45 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     };
 
     try {
-        const { assignedTo, ...updatedFields } = req.body;
+        const { assignedTo, status, reviewed, ...updatedFields } = req.body;
+        const isWorkComplete = status === "Complete";
+
+        // Update the work order
+        const updateOptions = {
+            new: true,
+            runValidators: true
+        };
+
+        if (isWorkComplete) {
+            updateOptions.populate = [{ path: "reviewedBy", select: "firstName" }];
+        }
 
         // Update the work order and populate the assignedTo field
-        const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, { new: true })
-            .populate("reviewedBy", "username")
-            .populate("assignedTo", "firstName lastName");
+        const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
 
         // check if work order exists
         if (!updatedWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
-        if (req.body.reviewed) {
+        if (reviewed && isWorkComplete) {
             updatedWorkOrder.reviewed = true;
             updatedWorkOrder.reviewedBy = req.body.reviewedBy;
         }
 
         // clear the user who requested the work when the work is reviewed
-        if (updatedWorkOrder.reviewed) {
+        if (isWorkComplete && updatedWorkOrder.reviewed) {
             await User.findByIdAndUpdate(user, { $pull: { workOrders: id } });
         };
 
         // check if an employee is assigned to the work order
-        if (req.body.assignedTo) {
+        if (assignedTo) {
             // update the assignedTo field
-            updatedWorkOrder.assignedTo = req.body.assignedTo;
+            updatedWorkOrder.assignedTo = assignedTo;
             await updatedWorkOrder.save();
 
             // Find the employee and add the work order to their assignedwork array
-            const employee = await Employee.findById(req.body.assignedTo);
+            const employee = await Employee.findById(assignedTo);
             if (employee) {
                 employee.assignedWork.push(id);
                 await employee.save();
@@ -153,6 +162,7 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
         const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
             .populate("requestedBy", "username")
             .populate("category", "categoryTitle")
+            .populate("assignedTo", "firstName lastName")
             .populate("reviewedBy", "username")
             .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
@@ -177,7 +187,7 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
             .populate("requestedBy", "username")
             .populate("location", "locationTitle")
             .populate("category", "categoryTitle")
-            .populate("assignedTo", "firstName")
+            .populate("assignedTo", "firstName lastName")
             .populate("reviewedBy", "username")
             .exec();
         if (!work) {
