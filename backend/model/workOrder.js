@@ -72,6 +72,10 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    dateReviewed: {
+        type: Object,
+        default: ""
+    }
 },
 
 { 

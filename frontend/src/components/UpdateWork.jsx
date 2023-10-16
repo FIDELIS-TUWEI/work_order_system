@@ -7,7 +7,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
   const isWorkCompleted = workDetails?.status === 'Completed';
-  const isWorkReviewed = workDetails?.reviewed === true;
+  const isWorkReviewed = workDetails?.reviewed === false;
   const isRoleAuthorized = user?.role === 'reviewer' || user?.role === 'admin' || user?.role === 'superadmin';
 
   // If work is pending
@@ -129,6 +129,15 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
               rules={[{ required: true, message: 'Please Enter Review Comments!' }]}
             >
               <Input type='text' placeholder='Enter comments' />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item
+              label="Review Date"
+              name="dateReviewed"
+              rules={[{ required: true, message: 'Please Select Review Date!' }]}
+            >
+              <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
             </Form.Item>
           </Col>
         </>
