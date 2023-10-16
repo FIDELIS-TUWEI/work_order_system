@@ -18,8 +18,6 @@ const CreateWorkOrder = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [employees, setEmployees] = useState([]);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const navigate = useNavigate();
 
   const authorisedAccess = user?.role === "admin" || user?.role === "superadmin" || user?.role === "supervisor" || user?.role === "hod" || user?.role === "reviewer" || user?.role === "engineer";
@@ -72,8 +70,6 @@ const CreateWorkOrder = () => {
     });
     setCategory(response.data);
   };
-
-  // Funtion to handle change in employee
 
   // UseEffect hook
   useEffect(() => {
