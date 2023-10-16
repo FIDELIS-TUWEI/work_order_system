@@ -73,7 +73,6 @@ const EditWorkOrder = () => {
           employees={employees}
           selectedEmployee={selectedEmployee}
           handleEmployeeChange={handleEmployeeChange}
-          getEmployees={getEmployees}
         />
     </Layout>
   )
