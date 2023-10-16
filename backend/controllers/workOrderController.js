@@ -80,38 +80,34 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     };
 
     try {
-        const updateWorkOrder = await WorkOrder.findByIdAndUpdate(id, req.body, { new: true }).populate("reviewedBy", "username");
+        const { assignedTo, ...updatedFields } = req.body;
+
+        // Update the work order and populate the assignedTo field
+        const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, { new: true })
+            .populate("reviewedBy", "username")
+            .populate("assignedTo", "firstName lastName");
 
         // check if work order exists
-        if (!updateWorkOrder) {
+        if (!updatedWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
-        // Assign work to an employee
-        const { employeeId } = req.body;
-        if (employeeId) {
-            const employee = await Employee.findById(employeeId);
+        // Update the assignedWork field in the employee model
+        if (assignedTo) {
+            const employee = await Employee.findByIdAndUpdate(assignedTo, { $push: { assignedWork: updatedWorkOrder._id } });
 
             if (!employee) {
-                return next(new ErrorResponse("Employee not found", 404));
-            };
-
-            employee.assignedWork.push(id);
-            await employee.save();
+                return next(new ErrorResponse("Employee Not Found", 404));
+            }
         }
-
-        // If the work is reviewed, clear it from the user's work order list
-        if (updateWorkOrder.reviewed) {
-            await User.findByIdAndUpdate(user, { $pull: { workOrders: id } });
-        };
 
         // Send Email notification when a work order is updated
         const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
-        const subject =`A Work Order updated\n`;
+        const subject =`A Work Order has been updated`;
         const text =  `
-            A Work Order with title ${updateWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. 
+            A Work Order with title ${updatedWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. 
             Login in to the Work Order System to view the details.\n
-            `;
+        `;
         
         for ( const recepient of recepients ) {
             sendEmail({
@@ -124,7 +120,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         // Return a response
         return res.status(200).json({
             success: true,
-            data: updateWorkOrder
+            data: updatedWorkOrder
         });
 
     } catch (error) {
