@@ -25,11 +25,10 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             style={{ width: '100%' }}
             value={selectedEmployee}
             onChange={handleEmployeeChange}
-            onSearch={getEmployees}
             filterOption={false}
           >
             {employees.map((employee) => (
-              <Option key={employee._id} value={employee._id}>{employee.name}</Option>
+              <Option key={employee._id} value={employee._id}>{employee.firstName} {employee.lastName}</Option>
             ))}
           </Select>
         </Form.Item>
