@@ -19,15 +19,15 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
         ? `${workDetails.assignedTo.firstName}`
         : 'Not Assigned';
 
-        // Display the requestedBy field as username of the user who requested the work
-        const requestedByUsername = workDetails.requestedBy
-            ? `${workDetails.requestedBy.username}`
-            : 'Not Requested';
+    // Display the requestedBy field as username of the user who requested the work
+    const requestedByUsername = workDetails.requestedBy
+        ? `${workDetails.requestedBy.username}`
+        : 'Not Requested';
 
-            // Display the reviewedBy field as username of the user who reviewed the work 
-            const reviewedByUsername = workDetails.reviewedBy
-                ? (workDetails.reviewed ? `${workDetails.reviewedBy.username}` : 'Not Reviewed')
-                : 'Not Reviewed';
+    // Display the reviewedBy field as username of the user who reviewed the work 
+    const reviewedByUsername = workDetails.reviewedBy
+        ? (workDetails.reviewed ? `${workDetails.reviewedBy.username}` : 'Not Reviewed')
+        : 'Not Reviewed';
 
   return (
     <>
