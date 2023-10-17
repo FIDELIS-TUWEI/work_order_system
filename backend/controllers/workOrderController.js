@@ -80,18 +80,13 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     };
 
     try {
-        const { assignedTo, status, reviewed, ...updatedFields } = req.body;
-        const isWorkComplete = status === "Complete";
+        const { assignedTo, reviewed, ...updatedFields } = req.body;
 
         // Update the work order
         const updateOptions = {
             new: true,
             runValidators: true
         };
-
-        if (isWorkComplete) {
-            updateOptions.populate = [{ path: "reviewedBy", select: "firstName" }];
-        }
 
         // Update the work order and populate the assignedTo field
         const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
@@ -101,14 +96,17 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
-        if (reviewed && isWorkComplete) {
+        if (reviewed && reviewed === true) {
             updatedWorkOrder.reviewed = true;
             updatedWorkOrder.reviewedBy = req.body.reviewedBy;
-        }
+            updatedWorkOrder.dateReviewed = req.body.dateReviewed;
+            updatedWorkOrder.reviewComments = req.body.reviewComments;
+            await updatedWorkOrder.save();
+        } 
 
         // clear the user who requested the work when the work is reviewed
-        if (isWorkComplete && updatedWorkOrder.reviewed) {
-            await User.findByIdAndUpdate(user, { $pull: { workOrders: id } });
+        if ( reviewed) {
+            await User.findByIdAndUpdate(userId, { $pull: { workOrders: id } });
         };
 
         // check if an employee is assigned to the work order
