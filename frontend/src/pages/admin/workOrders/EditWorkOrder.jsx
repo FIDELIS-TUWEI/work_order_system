@@ -20,9 +20,6 @@ const EditWorkOrder = () => {
   // Function to handle form submit
   const onFinishHandler = async (values) => {
     try {
-      if (values.assignedTo) {
-        values.status = 'In_Progress';
-      }
       await updateWorkOrder(id, values);
       navigate('/work/list');
       message.success('Work Order Updated Successfully');
@@ -65,15 +62,6 @@ const EditWorkOrder = () => {
       getEmployees();
     }
   }, [id]);
-
-  // Hook to check if work is already assigned to an employee
-  useEffect(() => {
-    if (workDetails.assignedTo) {
-      setSelectedEmployee(workDetails.assignedTo);
-    } else {
-      setSelectedEmployee(null);
-    }
-  }, [workDetails.assignedTo]);
   
   return (
     <Layout>
