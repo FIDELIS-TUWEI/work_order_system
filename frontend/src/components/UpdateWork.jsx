@@ -2,18 +2,16 @@ import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } f
 
 const { Option } = Select;
 
-const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange, }) => {
+const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange }) => {
   // to render edit columns based on work status and user role
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
-  const isWorkCompleted = workDetails?.status === 'Completed';
-  const isWorkReviewed = workDetails?.reviewed === false;
-  const isRoleAuthorized = user?.role === 'reviewer' || user?.role === 'admin' || user?.role === 'superadmin';
+  const isWorkCompleted = workDetails?.status === 'Complete';
+  const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor"].includes(user?.role);
 
   // If work is pending
   const renderPendingFields = () => (
     <>
-
       <Col xs={24} md={24} lg={8}>
         <Form.Item
           label="Assigned To"
@@ -100,11 +98,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 
   // if Work is complete check if user is authprised
   const renderReviewFields = () => {
-    if (isWorkReviewed) {
-      return (
-        <Typography.Text style={{ fontSize: '1rem', fontWeight: '500', marginBottom: '1rem' }}>This work is already reviewed, no need to review it again.</Typography.Text>
-      )
-    } else {
+    if (isWorkCompleted && !workDetails?.reviewed) {
       return (
         <>
           <Col xs={24} md={24} lg={8}>
@@ -142,7 +136,13 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             </Form.Item>
           </Col>
         </>
-          )
+      );
+    } else {
+      return (
+        <Typography.Text style={{ fontSize: '1.5rem', fontWeight: '500', marginBottom: '1rem' }}>
+          This work is already reviewed, no need to review again.
+        </Typography.Text>
+      )
     }
     
   };
@@ -151,16 +151,14 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   // Function to disable past dates and future dates. Allow only today
   const today = new Date();
 
-  const disabledDate = current => {
-    return !current.isSame(today, 'day');
-  };
+  const disabledDate = current => !current.isSame(today, 'day');
 
   // Function to disable current status with disabled attribute
   const getStatusOptions = () => {
     const statusOptions = [
       { value: 'Pending', label: 'Pending' },
       { value: 'In_Progress', label: 'In Progress' },
-      { value: 'Completed', label: 'Completed' },
+      { value: 'Complete', label: 'Complete' },
       { value: 'Reviewed', label: 'Reviewed' },
     ];
 
