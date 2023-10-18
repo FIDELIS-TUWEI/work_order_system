@@ -57,7 +57,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
             </tbody>
           </table>
           <p>Total Work Orders: {workOrders.length}</p>
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <div className="button__container">
             <Button style={{ 
               color: 'white', 
               backgroundColor: 'darkgreen', 
