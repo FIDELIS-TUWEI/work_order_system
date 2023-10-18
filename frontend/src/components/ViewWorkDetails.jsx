@@ -31,25 +31,39 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
   return (
     <>
-        <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '500px' }}>
+        <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '800px' }}>
             <div ref={componentPDF}>
-                <p>
-                    Title: {workDetails?.title}
-                </p>
+                <div>
+                    <p>
+                        Title: {workDetails?.title}
+                    </p>
+                </div>
                 
-                <p>
-                    Work Service Type: {workDetails?.serviceType}
-                </p>
-                
+                <div>
+                    <p>
+                        Work Service Type: {workDetails?.serviceType}
+                    </p>
+                </div>
+
+                <div>
                 <p>
                     Work Status: {workDetails?.status}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     Requested Date: {moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     Requested By: {requestedByUsername}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     {workDetails?.dateCompleted ? (
                         <span>Completed Date: {moment(workDetails?.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</span>
@@ -57,12 +71,21 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                         <span>Work order has not been completed yet!</span>
                     )}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     Due Date: {startDate} - {endDate}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     Assigned To: {assignedToName}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     {workDetails?.dateAssigned ? (
                         <span>Assigned Date: {moment(workDetails?.dateAssigned).format("DD/MM/YYYY, hh:mm a")}</span>
@@ -70,15 +93,25 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                         <span>Work order has not been assigned!</span>
                     )}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     Reviewed: {workDetails?.reviewed === true ? "Yes" : "No"}
                 </p>
+                </div>
+
+                <div>
                 <p>
                     Reviewed By: {reviewedByUsername} 
                 </p>
-                <p>
-                    Reviewed Date: {workDetails?.dateReviewed ? moment(workDetails?.dateReviewed).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}    
-                </p>
+                </div>
+
+                <div>
+                    <p>
+                        Reviewed Date: {workDetails?.dateReviewed ? moment(workDetails?.dateReviewed).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}    
+                    </p>
+                </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none'}} onClick={() => navigate(-1)}>Back</Button>
