@@ -11,7 +11,13 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
             query.status = status;
         }
 
-        const workOrders = await WorkOrder.find(query);
+        const workOrders = await WorkOrder.find(query)
+            .populate("assignedTo", "firstName lastName")
+            .populate("requestedBy", "username")
+            .populate("location", "locationTitle")
+            .populate("category", "categoryTitle")
+            .populate("reviewedBy", "firstName lastName")
+            .exec();
         res.json(workOrders);
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
