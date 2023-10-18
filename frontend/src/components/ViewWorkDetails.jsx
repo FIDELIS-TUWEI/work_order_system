@@ -1,6 +1,7 @@
 import { Button } from "antd"
 import moment from "moment"
 import LoadingBox from "./LoadingBox";
+import Logo from "../assets/logo.png";
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate }) => {
     // Conditional statement to check if dueDate is empty
@@ -32,9 +33,13 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
   return (
     <>
         <div className="work--details--card" ref={componentPDF}>
+            <div className="company--logo">
+                <img src={Logo} alt="Logo" />
+            </div>
             <div className="work--details--header">
                 <h2>Work Description: {workDetails?.title}</h2>
                 <p>Service Type: {workDetails?.serviceType}</p>
+                <p>Priority Level: {workDetails?.priority}</p>
             </div>
             <hr />
             <div className="work--details--grid">
@@ -51,14 +56,6 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 <div className="work--detail">
                     <span>Requested By:</span>
                     <span>{requestedByUsername}</span>
-                </div>
-
-                <div className="work--detail">
-                    <span>Date Completed:</span>
-                    <span>{workDetails.dateCompleted 
-                        ? moment(workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")
-                        : "Work order has not been completed yet!"}
-                    </span>
                 </div>
 
                 <div className="work--detail">
@@ -81,6 +78,19 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 </div>
 
                 <div className="work--detail">
+                    <span>Date Completed:</span>
+                    <span>{workDetails.dateCompleted 
+                        ? moment(workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")
+                        : "Work order has not been completed yet!"}
+                    </span>
+                </div>
+
+                <div className="work--detail">
+                    <span>Comments:</span>
+                    <span>{workDetails.comments}</span>
+                </div>
+
+                <div className="work--detail">
                     <span>Reviewed:</span>
                     <span>{workDetails.reviewed === true ? "Yes" : "No"}</span>
                 </div>
@@ -88,6 +98,11 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 <div className="work--detail">
                     <span>Reviewed By:</span>
                     <span>{reviewedByUsername}</span>
+                </div>
+
+                <div className="work--detail">
+                    <span>Review Comments</span>
+                    <span>{workDetails.reviewComments}</span>
                 </div>
 
                 <div className="work--detail">
