@@ -1,4 +1,4 @@
-import { Button, Card } from "antd"
+import { Button } from "antd"
 import moment from "moment"
 import LoadingBox from "./LoadingBox";
 
@@ -31,94 +31,75 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
   return (
     <>
-        <Card loading={loading} title="Work Details" style={{ margin: 'auto', width: '800px' }}>
-            <div ref={componentPDF}>
-                <div>
-                    <p>
-                        Title: {workDetails?.title}
-                    </p>
-                </div>
-                
-                <div>
-                    <p>
-                        Work Service Type: {workDetails?.serviceType}
-                    </p>
+        <div className="work--details--card" ref={componentPDF}>
+            <div className="work--details--header">
+                <h2>Work Description: {workDetails?.title}</h2>
+                <p>Service Type: {workDetails?.serviceType}</p>
+            </div>
+            <hr />
+            <div className="work--details--grid">
+                <div className="work--detail">
+                    <span>Work Status:</span>
+                    <span>{workDetails?.status}</span>
                 </div>
 
-                <div>
-                <p>
-                    Work Status: {workDetails?.status}
-                </p>
+                <div className="work--detail">
+                    <span>Date Requested:</span>
+                    <span>{moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}</span>
                 </div>
 
-                <div>
-                <p>
-                    Requested Date: {moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}
-                </p>
+                <div className="work--detail">
+                    <span>Requested By:</span>
+                    <span>{requestedByUsername}</span>
                 </div>
 
-                <div>
-                <p>
-                    Requested By: {requestedByUsername}
-                </p>
+                <div className="work--detail">
+                    <span>Date Completed:</span>
+                    <span>{workDetails.dateCompleted 
+                        ? moment(workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")
+                        : "Work order has not been completed yet!"}
+                    </span>
                 </div>
 
-                <div>
-                <p>
-                    {workDetails?.dateCompleted ? (
-                        <span>Completed Date: {moment(workDetails?.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</span>
-                    ) : (
-                        <span>Work order has not been completed yet!</span>
-                    )}
-                </p>
+                <div className="work--detail">
+                    <span>Due Date:</span>
+                    <span>From: {startDate} To: {endDate}</span>
                 </div>
 
-                <div>
-                <p>
-                    Due Date: {startDate} - {endDate}
-                </p>
+                <div className="work--detail">
+                    <span>Employee Assigned:</span>
+                    <span>{assignedToName}</span>
                 </div>
 
-                <div>
-                <p>
-                    Assigned To: {assignedToName}
-                </p>
+                <div className="work--detail">
+                    <span>Date Assigned:</span>
+                    <span>
+                        {workDetails.dateAssigned
+                            ? moment(workDetails.dateAssigned).format("DD/MM/YYYY, hh:mm a")
+                            : "Work order has not been assigned!"}
+                    </span>
                 </div>
 
-                <div>
-                <p>
-                    {workDetails?.dateAssigned ? (
-                        <span>Assigned Date: {moment(workDetails?.dateAssigned).format("DD/MM/YYYY, hh:mm a")}</span>
-                    ) : (
-                        <span>Work order has not been assigned!</span>
-                    )}
-                </p>
+                <div className="work--detail">
+                    <span>Reviewed:</span>
+                    <span>{workDetails.reviewed === true ? "Yes" : "No"}</span>
                 </div>
 
-                <div>
-                <p>
-                    Reviewed: {workDetails?.reviewed === true ? "Yes" : "No"}
-                </p>
+                <div className="work--detail">
+                    <span>Reviewed By:</span>
+                    <span>{reviewedByUsername}</span>
                 </div>
 
-                <div>
-                <p>
-                    Reviewed By: {reviewedByUsername} 
-                </p>
-                </div>
-
-                <div>
-                    <p>
-                        Reviewed Date: {workDetails?.dateReviewed ? moment(workDetails?.dateReviewed).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}    
-                    </p>
+                <div className="work--detail">
+                    <span>Date Reviewed:</span>
+                    <span>{workDetails?.dateReviewed ? moment(workDetails.dateReviewed).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}</span>
                 </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none'}} onClick={() => navigate(-1)}>Back</Button>
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={handlePrint}>Print</Button>
-            </div>
-            
-        </Card>
+        </div>
     </>
   )
 }
