@@ -217,3 +217,43 @@ table tr:hover {
     cursor: pointer;
     background-color: rgb(1, 148, 1);
 }
+
+
+.work--details--card {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 4px;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 800px;
+}
+
+.work--details--header h2 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+.work--details--header p {
+    font-size: 16px;
+    color: #777;
+    margin: 10px 0;
+}
+
+.work--details--grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.work--detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
