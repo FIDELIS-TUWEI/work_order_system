@@ -37,15 +37,22 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 <img src={Logo} alt="Logo" />
             </div>
             <div className="work--details--header">
-                <h2>Work Description: {workDetails?.title}</h2>
-                <p>Service Type: {workDetails?.serviceType}</p>
-                <p>Priority Level: {workDetails?.priority}</p>
+                <div className="work--details--header1">
+                    <h2>Work Description: {workDetails?.title}</h2>
+                    <p>Service Type: {workDetails?.serviceType}</p>
+                </div>
+
+                <div className="work--details--header2">
+                    <h2>Category: {workDetails?.category.categoryTitle}</h2>
+                    <p>Location: {workDetails?.location.locationTitle}</p>
+                    <p>Work Status: {workDetails?.status}</p>
+                </div>
             </div>
             <hr />
             <div className="work--details--grid">
                 <div className="work--detail">
-                    <span>Work Status:</span>
-                    <span>{workDetails?.status}</span>
+                    <span>Priority Level:</span>
+                    <span>{workDetails?.priority}</span>
                 </div>
 
                 <div className="work--detail">
