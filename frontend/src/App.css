@@ -229,8 +229,13 @@ table tr:hover {
     max-width: 800px;
 }
 
+.work--details--header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .work--details--header h2 {
-    font-size: 24px;
+    font-size: 20px;
     margin: 0;
     color: #333;
 }
