@@ -221,7 +221,7 @@ table tr:hover {
 
 .work--details--card {
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     border-radius: 4px;
     margin: 0 auto;
@@ -256,4 +256,19 @@ table tr:hover {
     color: #333;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
+}
+
+.work--detail span {
+    font-weight: bold;
+}
+
+.company--logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.company--logo img {
+    max-width: 100px;
+    max-height: 100px;
 }
