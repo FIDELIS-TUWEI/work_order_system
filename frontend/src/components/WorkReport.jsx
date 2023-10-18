@@ -33,9 +33,12 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
               <tr>
                 <th>Title</th>
                 <th>Service Type</th>
-                <th>Status</th>
+                <th>Category</th>
+                <th>Priority</th>
                 <th>Assigned To</th>
                 <th>Date Requested</th>
+                <th>Requested By</th>
+                <th>Date Completed</th>
               </tr>
             </thead>
             <tbody>
@@ -43,9 +46,12 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
                 <tr key={workOrder._id}>
                   <td>{workOrder.title}</td>
                   <td>{workOrder.serviceType}</td>
-                  <td>{workOrder.status}</td>
-                  <td>{workOrder.assignedTo}</td>
+                  <td>{workOrder.category ? workOrder.category.categoryTitle : ''}</td>
+                  <td>{workOrder.priority}</td>
+                  <td>{workOrder.assignedTo ? workOrder.assignedTo.firstName : 'Not Assigned'}</td>
                   <td>{moment(workOrder.Date_Created).format("DD/MM/YYYY, hh:mm a")}</td>
+                  <td>{workOrder.requestedBy ? workOrder.requestedBy.username : 'Not Requested'}</td>
+                  <td>{moment(workOrder.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</td>
                 </tr>
               ))}
             </tbody>
