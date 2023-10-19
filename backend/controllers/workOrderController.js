@@ -45,7 +45,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             Due Date: ${savedWorkorder.dueDate}\n
             Status: ${savedWorkorder.status}\n
             Date Created: ${savedWorkorder.Date_Created}\n\n
-            Login in to the Work Order System to view ${savedWorkorder.title} details.\n
+            Login in to the Work Order System to view the details.\n
             -----------------------------------
         `;
         
