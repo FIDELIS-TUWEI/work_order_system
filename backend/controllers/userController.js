@@ -1,4 +1,6 @@
 const User = require("../model/user");
+const Work = require("../model/workOrder");
+const sendEmail = require("../utils/email");
 const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 
@@ -66,11 +68,32 @@ const editUser = asyncHandler (async (req, res, next) => {
 // Controller function to Delete User
 const deleteUser = asyncHandler (async (req, res, next) => {
     try {
-        const user = await User.findByIdAndRemove(req.params.id);
+        const userId = req.params.id;
+        const user = await User.findByIdAndRemove(userId);
 
         if (!user) {
             return res.status(500).json({ message: "User not found" });
         }
+
+        // Remove associated work orders
+        await Work.deleteMany({ requestedBy: userId });
+
+        // Send email notification
+        const recepients = ["fideliofidel9@gmail.com"]
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+
+        const emailSubject = `User deleted successfully`;
+        const emailText = `A user with username ${user.username} has been deleted.`;
+
+        const emailOptions = {
+            to: recepients,
+            cc: ccEmails,
+            subject: emailSubject,
+            text: emailText
+        };
+
+        // Send Email
+        sendEmail(emailOptions);
 
         res.status(200).json({
             success: true,
