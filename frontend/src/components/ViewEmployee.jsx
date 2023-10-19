@@ -11,6 +11,10 @@ const ViewEmployee = ({ employeeDetails, loading, navigate, getEmployeeDetails }
           <thead>
             <tr>
               <th>Name</th>
+              <th>Total Work Pending</th>
+              <th>Total Work In Progress</th>
+              <th>Total Work Complete</th>
+              <th>Total Work Assigned</th>
             </tr>
           </thead>
         </table>
