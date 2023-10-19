@@ -75,8 +75,13 @@ const deleteUser = asyncHandler (async (req, res, next) => {
             return res.status(500).json({ message: "User not found" });
         }
 
-        // Remove associated work orders
-        await Work.deleteMany({ requestedBy: userId });
+        // Check for work requested
+        const workRequested = await Work.find({ requestedBy: userId });
+
+        if (workRequested.length > 0) {
+            // Remove associated work orders
+            await Work.deleteMany({ requestedBy: userId });
+        }
 
         // Send email notification
         const recepients = ["fideliofidel9@gmail.com"]
@@ -86,7 +91,7 @@ const deleteUser = asyncHandler (async (req, res, next) => {
         const emailText = `A user with username ${user.username} has been deleted.`;
 
         const emailOptions = {
-            to: recepients,
+            email: recepients,
             cc: ccEmails,
             subject: emailSubject,
             text: emailText
