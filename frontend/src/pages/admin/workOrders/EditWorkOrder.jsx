@@ -21,8 +21,11 @@ const EditWorkOrder = () => {
   const onFinishHandler = async (values) => {
     try {
       await updateWorkOrder(id, values);
+      if (workDetails.reviewed !== true) {
+        message.success('Work Order Updated Successfully');
+      }
       navigate('/work/list');
-      message.success('Work Order Updated Successfully');
+
     } catch (error) {
       message.error(error.message);
     }
