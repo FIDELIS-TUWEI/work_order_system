@@ -30,6 +30,23 @@ const newEmployee = asyncHandler ( async (req, res) => {
         // Save the created employee
         await newEmployee.save();
 
+        // Send email notification
+        const recepients = ["fideliofidel9@gmail.com"];
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+
+        const emailSubject = `New employee created`;
+        const emailText = `An employee with name ${newEmployee.firstName} ${newEmployee.lastName} has been created.`;
+
+        const emailOptions = {
+            email: recepients,
+            cc: ccEmails,
+            subject: emailSubject,
+            text: emailText
+        };
+
+        // Send Email
+        sendEmail(emailOptions);
+
         res.status(201).json({
             success: true,
             data: newEmployee
