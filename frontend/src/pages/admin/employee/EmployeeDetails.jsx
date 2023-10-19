@@ -3,7 +3,7 @@ import Layout from "../../../components/Layout";
 import ViewEmployee from "../../../components/ViewEmployee";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getSingleEmployee } from "../../../services/employeeApi";
 import { message } from "antd";
 
