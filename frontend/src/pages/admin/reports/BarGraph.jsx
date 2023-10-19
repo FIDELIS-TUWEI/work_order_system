@@ -29,7 +29,7 @@ const BarGraph = () => {
 
     // Count the number of work assigned to each employee
     const workCounts = workOrders.reduce((counts, workOrder) => {
-        const assignedTo = workOrder.assignedTo;
+        const assignedTo = workOrder.assignedTo ? workOrder.assignedTo.firstName : "Unassigned";
         counts[assignedTo] = (counts[assignedTo] || 0) + 1;
         return counts;
     }, {});
