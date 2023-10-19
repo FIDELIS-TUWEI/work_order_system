@@ -6,7 +6,6 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const sendEmail = require("../utils/email");
-const Cookies = require("js-cookie");
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -25,6 +24,23 @@ const signupUser = asyncHandler (async (req, res) => {
                 message: "User already exists",
             });
         }
+
+        // Send email notification
+        const recepients = ["fideliofidel9@gmail.com"]
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+
+        const emailSubject = `New User successfully`;
+        const emailText = `A user with username ${user.firstName} ${user.lastName} has been created.`;
+
+        const emailOptions = {
+            email: recepients,
+            cc: ccEmails,
+            subject: emailSubject,
+            text: emailText
+        };
+
+        // Send Email
+        sendEmail(emailOptions);
         // create new user
         const user = await User.create(req.body);
         res.status(201).json({
@@ -81,15 +97,6 @@ const login = asyncHandler (async (req, res, next) => {
             sameSite: 'None',
             expires: cookieExpiry,
         });
-
-        // Save the cookie expiration in browser's cookies using js-cookie
-        Cookies.set("cookieExpiry", cookieExpiry.toISOString(), {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            expires: cookieExpiry
-        })
 
         if (user && passwordIsMatch) {
             const { password, ...restParams } = user._doc
