@@ -7,7 +7,7 @@ import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, 
 
 const BarGraph = () => {
     const token = useSelector(selectToken);
-    const [pieData, setPieData] = useState([]);
+    const [workData, setWorkData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -23,12 +23,12 @@ const BarGraph = () => {
                 Authorization: `Bearer ${token}`
             }
         });
-        setPieData(data);
+        setWorkData(data);
         setLoading(false);
     }
 
     // Count the number of work assigned to each employee
-    const workCounts = pieData.reduce((counts, workOrder) => {
+    const workCounts = workData.reduce((counts, workOrder) => {
         const assignedTo = workOrder.assignedTo ? workOrder.assignedTo.firstName : "Unassigned";
         counts[assignedTo] = (counts[assignedTo] || 0) + 1;
         return counts;
@@ -41,7 +41,7 @@ const BarGraph = () => {
     const workCountsArray = Object.entries(workCounts).map(([employee, count], index) => ({ employee, count, fill: uniqueColors[index] }));
 
     // Count the number of requested by each user
-    const userCounts = pieData.reduce((counts, workOrder) => {
+    const userCounts = workData.reduce((counts, workOrder) => {
         const requestedBy = workOrder.requestedBy.username;
         counts[requestedBy] = (counts[requestedBy] || 0) + 1;
         return counts;
