@@ -55,7 +55,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
     // Function to determine whether edit or delete button should be displayed
     const allowEditWork = (work) => {
         // check if work order status is not completed
-        if (work.status !== "Completed") {
+        if (work.status !== "Complete") {
             // Allow edit button for authorised users
             return isAuthorised;
         } else {
