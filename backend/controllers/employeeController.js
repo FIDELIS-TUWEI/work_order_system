@@ -1,6 +1,8 @@
 const Employee = require("../model/employee");
+const Work = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
+const sendEmail = require("../utils/email");
 
 // Create New Employee
 const newEmployee = asyncHandler ( async (req, res) => {
@@ -159,11 +161,36 @@ const editEmployee = asyncHandler(async (req, res) => {
 const deleteEmployee = asyncHandler(async (req, res) => {
     try {
         const employeeId = req.params.id;
-        const deletedEmployee = await Employee.findByIdAndDelete(employeeId);
+        const deletedEmployee = await Employee.findByIdAndDelete(employeeId).populate("firstName lastName");
 
         if (!deletedEmployee) {
             return res.status(404).json({ message: "Employee not found" });
         }
+
+        // Check if there was work assigned to the employee
+        const workAssigned = await Work.find({ assignedTo: employeeId });
+
+        if (workAssigned.length > 0) {
+            // Remove associated work orders assigned
+            await Work.deleteMany({ assignedTo: employeeId });
+        }
+
+        // Send email notification
+        const recepients = ["fideliofidel9@gmail.com"]
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+
+        const emailSubject = `Employee deleted successfully`;
+        const emailText = `An employee with name ${deletedEmployee.firstName} ${deletedEmployee.lastName} has been deleted.`;
+
+        const emailOptions = {
+            email: recepients,
+            cc: ccEmails,
+            subject: emailSubject,
+            text: emailText
+        }
+
+        // Send Email
+        sendEmail(emailOptions);
 
         return res.status(200).json({
             success: true,
