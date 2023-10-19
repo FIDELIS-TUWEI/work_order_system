@@ -53,11 +53,25 @@ const BarGraph = () => {
     // Convert the userCounts object to an array of objects
     const userCountsArray = Object.entries(userCounts).map(([user, count], index) => ({ user, count, fill: uniqueUserColors[index] }));
 
+    // Count the number of work by status
+    const workStatusCounts = workData.reduce((counts, workOrder) => {
+      const status = workOrder.status;
+      counts[status] = (counts[status] || 0) + 1;
+      return counts;
+    }, {});
+
+    // generate unique colors for each status
+    const uniqueStatusColors = generateUniqueColors(Object.keys(workStatusCounts).length);
+
+    // Convert the workStatusCounts object to an array of objects
+    const workStatusCountsArray = Object.entries(workStatusCounts).map(([status, count], index) => ({ status, count, fill: uniqueStatusColors[index] }));
+
+    // Rest of the code...
 
   return (
-    <div>
-        <Card title="Work Orders Assigned To Employees" style={{ margin: "15px 25px" }} loading={loading}>
-            <ResponsiveContainer width="70%" aspect={3}>
+    <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap", margin: "15px 2px" }}>
+        <Card title="Work Orders Assigned To Employees" style={{ flex: 1, margin: "6px" }} loading={loading}>
+            <ResponsiveContainer width="100%" aspect={2}>
                 <PieChart>
                     <Pie data={workCountsArray} dataKey="count" nameKey="employee" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
                     <Tooltip />
@@ -66,8 +80,18 @@ const BarGraph = () => {
             </ResponsiveContainer>
         </Card>
 
-        <Card title="WorkOrders Requested By Users" style={{ margin: "15px 25px" }} loading={loading}>
-            <ResponsiveContainer width="70%" aspect={3}>
+        <Card title="Work Orders By Status" style={{ flex: 1, margin: "6px" }} loading={loading}>
+            <ResponsiveContainer width="100%" aspect={2}>
+                <PieChart>
+                    <Pie data={workStatusCountsArray} dataKey="count" nameKey="status" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
+                    <Tooltip />
+                    <Legend />
+                </PieChart>
+            </ResponsiveContainer>
+        </Card>
+
+        <Card title="WorkOrders Requested By Users" style={{ flex: 1, margin: "10px" }} loading={loading}>
+            <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart>
                     <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
                     <XAxis dataKey="user" />
