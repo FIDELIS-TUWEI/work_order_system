@@ -6,7 +6,7 @@ import LoadingBox from "../components/LoadingBox";
 
 
 const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
- 
+
   return (
     <Card title="Work Orders" style={{ margin: "15px" }}>
       <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
@@ -51,7 +51,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
                   <td>{workOrder.assignedTo ? workOrder.assignedTo.firstName : 'Not Assigned'}</td>
                   <td>{moment(workOrder.Date_Created).format("DD/MM/YYYY, hh:mm a")}</td>
                   <td>{workOrder.requestedBy ? workOrder.requestedBy.username : 'Not Requested'}</td>
-                  <td>{moment(workOrder.dateCompleted).format("DD/MM/YYYY, hh:mm a")}</td>
+                  <td>{workOrder.dateCompleted ? moment(workOrder.dateCompleted).format("DD/MM/YYYY, hh:mm a") : 'Not yet complete'}</td>
                 </tr>
               ))}
             </tbody>
