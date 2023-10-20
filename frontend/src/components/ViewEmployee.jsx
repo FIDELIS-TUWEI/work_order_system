@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Button, Card } from "antd";
 
 const ViewEmployee = ({ employeeDetails, loading, navigate, getEmployeeDetails }) => {
   return (
@@ -20,6 +20,10 @@ const ViewEmployee = ({ employeeDetails, loading, navigate, getEmployeeDetails }
         </table>
 
       </Card>
+
+      <div className="add-btn">
+        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none'}} onClick={() => navigate(-1)}>Back</Button>
+      </div>
     </div>
   )
 }
