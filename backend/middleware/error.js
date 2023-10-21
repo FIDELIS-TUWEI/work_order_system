@@ -23,6 +23,15 @@ const errorHandler = (err, req, res, next) => {
         success: false,
         error: error.message || "Server Error"
     });
+
+    if (err.code === 429) {
+        res.status(429).json({
+            success: false,
+            error: "Too many requests"
+        });
+    };
+
+    next();
 }
 
 module.exports = errorHandler;
