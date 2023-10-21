@@ -8,8 +8,5 @@ router.post("/login",  login);
 router.post("/logout", logout);
 router.get("/userInfo", protect, getUserInfo);
 router.put("/update/password/:id", protect, restrict(["admin", "superadmin"]), changePassword);
-router.post("/forgot/password", protect, forgotPassword);
-router.patch("/reset/password/:token", protect, resetPassword);
-
 
 module.exports = router;
