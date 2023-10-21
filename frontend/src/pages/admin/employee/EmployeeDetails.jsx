@@ -24,7 +24,7 @@ const EmployeeDetails = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setEmployeeDetails({...res.data});
+      setEmployeeDetails(res.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -45,7 +45,6 @@ const EmployeeDetails = () => {
         employeeDetails={employeeDetails}
         loading={loading}
         navigate={navigate}
-        getEmployeeDetails={getEmployeeDetails}
       />
     </Layout>
   )
