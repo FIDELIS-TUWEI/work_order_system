@@ -91,7 +91,7 @@ const getAllEmployees = asyncHandler(async (req, res) => {
     }
 });
 
-// Query all employees
+// Query all employees for selection in frontend
 const queryAllEmployees = asyncHandler(async (req, res) => {
     try {
         const allEmployees = await Employee.find({});
@@ -149,6 +149,28 @@ const countWorkAssigned = asyncHandler (async (req, res) => {
             success: false,
             message: error.message
         })
+    }
+});
+
+// Count the total number of employees
+const countEmployees = asyncHandler (async (req, res) => {
+    try {
+        const employeeCount = await Employee.countDocuments();
+
+        if (!employeeCount) {
+            return res.status(404).json({ message: "No employees found" });
+        };
+
+        res.status(200).json({
+            success: true,
+            employeeCount
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+        
     }
 })
 
@@ -227,6 +249,7 @@ module.exports = {
     queryAllEmployees,
     singleEmployee,
     countWorkAssigned,
+    countEmployees,
     editEmployee,
     deleteEmployee
 };
