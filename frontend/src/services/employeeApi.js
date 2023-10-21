@@ -34,6 +34,18 @@ export const getSingleEmployee = async (id) => {
   }
 };
 
+// Get employee data
+export const getEmployeeData = async (id) => {
+  try {
+    const res = await axios.get(`${WORK_URL}/employee/data/${id}`);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error('Error getting employee data from API:', error);
+    throw error;
+  }
+};
+
 // Query to get all employees
 export const queryAllEmployees = async () => {
     try {
