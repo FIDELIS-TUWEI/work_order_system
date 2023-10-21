@@ -159,6 +159,23 @@ const changePassword = asyncHandler(async (req, res, next) => {
 
         const updateUser = await User.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true });
 
+        // Send email notification
+        const recepients = ["fideliofidel9@gmail.com"]
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+
+        const emailSubject = `Password Changed`;
+        const emailText = `Password changed successfully for ${updateUser.username}`;
+
+        const emailOptions = {
+            email: recepients,
+            cc: ccEmails,
+            subject: emailSubject,
+            text: emailText
+        };
+        
+        // Send Email
+        sendEmail(emailOptions);
+
         res.status(200).json({
             success: true,
             message: "Password changed successfully",
