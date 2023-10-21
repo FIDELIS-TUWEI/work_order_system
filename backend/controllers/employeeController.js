@@ -204,6 +204,28 @@ const countEmployees = asyncHandler (async (req, res) => {
     }
 })
 
+// Get employee info
+const getEmployeeInfo = asyncHandler(async (req, res) => {
+    try {
+        const employeeId = req.params.id;
+        const employee = await Employee.findById(employeeId).populate("assignedWork");
+
+        if (!employee) {
+            return res.status(404).json({ message: "Employee not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            employee
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
 // Edit Employee
 const editEmployee = asyncHandler(async (req, res) => {
     try {
@@ -280,6 +302,7 @@ module.exports = {
     singleEmployee,
     countWorkAssigned,
     countEmployees,
+    getEmployeeInfo,
     editEmployee,
     deleteEmployee
 };
