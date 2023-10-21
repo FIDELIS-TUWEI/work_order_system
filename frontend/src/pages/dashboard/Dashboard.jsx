@@ -5,6 +5,7 @@ import DashboardComponent from "../../components/DashboardComponent";
 import { countCompletedWork, countInProgressWork, countPendingWork, countReviewedWork, countTotalWork } from "../../services/reportApi";
 import { useEffect, useState } from "react";
 import { countActiveUsers, countAllUsers } from "../../services/usersApi";
+import { countAllEmployees } from "../../services/employeeApi";
 
 const Dashboard = () => {
   const user = useSelector(selectUserInfo);
@@ -16,6 +17,7 @@ const Dashboard = () => {
   const [totalWorkCount, setTotalWorkCount] = useState(0);
   const [totalUsersCount, setTotalUsersCount] = useState(0);
   const [activeUsersCount, setActiveUsersCount] = useState(0);
+  const [employees, setEmployees] = useState(0);
 
   // Function to get work orders with pending status from API Service
   const getPendingWorkCount = async () => {
@@ -92,6 +94,17 @@ const Dashboard = () => {
       },
     });
     setActiveUsersCount(res.activeUsersCount);
+  };
+
+  // Function to count all employees
+  const getAllEmployees = async () => {
+    const res = await countAllEmployees({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setEmployees(res.employeeCount);
   }
 
   // UseEffect hook
@@ -103,6 +116,7 @@ const Dashboard = () => {
     getTotalWorkCount();
     getTotalUsersCount();
     getTotalActiveUsers();
+    getAllEmployees();
   }, []);
 
   return (
@@ -116,6 +130,7 @@ const Dashboard = () => {
         totalWorkCount={totalWorkCount}
         totalUsersCount={totalUsersCount}
         activeUsersCount={activeUsersCount}
+        employees={employees}
       />
     </Layout>
   )
