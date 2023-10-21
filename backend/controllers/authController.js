@@ -223,25 +223,22 @@ const resetPassword = asyncHandler (async (req, res, next) => {
 // @route POST /hin/changePassword
 // @access Private
 const changePassword = asyncHandler(async (req, res, next) => {
-  // 1. Get the user from the database
-  const user = await User.findById(req.user.id).select("+password");
+    try {
+        if (req.body.password) {
+            const salt = await bcrypt.genSalt(10);
+            req.body.password = await bcrypt.hash(req.body.password, salt);
+        }
 
-  // 2. Check if the entered current password is correct
-  const isMatch = await user.comparePassword(req.body.currentPassword);
-  if (!isMatch) {
-    return next(new ErrorResponse("Invalid current password", 401));
-  }
+        const updateUser = await User.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true });
 
-  // 3. Update the user's password
-  user.password = req.body.newPassword;
-  user.passwordChangedAt = Date.now();
-  await user.save();
-
-  // 4. Log the user in, send JWT
-  res.status(200).json({
-    success: true,
-    message: "Password changed successfully",
-  });
+        res.status(200).json({
+            success: true,
+            message: "Password changed successfully",
+            updateUser
+        })
+    } catch (error) {
+        next(error);
+    }
 });
 
 
