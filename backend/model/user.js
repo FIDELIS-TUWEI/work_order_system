@@ -56,9 +56,6 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     ],
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
 }, 
 { 
     timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" }, 
@@ -79,24 +76,17 @@ userSchema.methods.comparePassword = async function(enteredPassword) {
     return isMatch;
 };
 
-// Password changedAt method
-userSchema.methods.isPasswordChanged = async function(JWTTimestamp) {
-    if (this.passwordChangedAt) {
-        const passwdChangedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
-        return JWTTimestamp < passwdChangedTimestamp;
-    }
-    return false;
-}
+// Generate Reset password hash
+userSchema.methods.passordResetHash = function() {
+    // create hash object, then create a sha512 hash of the user's current password and return hash
+    const resetHash = crypto.createHash("sha512").update(this.password).digest("hex");
+    return resetHash;
+};
 
-// Create reset password token
-userSchema.methods.createResetPasswordToken = function() {
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    this.PasswordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-    this.PasswordResetExpires = Date.now() + 10 * 60 * 1000;
-
-    console.log(resetToken, this.PasswordResetToken);
-    return resetToken;
-    
+// Verify Reset password hash
+userSchema.methods.verifyPasswordResetHash = function(resetHash = undefined) {
+    // regenerate hash and check if they match
+    return this.passordResetHash() === resetHash;
 }
 
 module.exports = mongoose.model('User', userSchema);
