@@ -120,9 +120,26 @@ const singleEmployee = asyncHandler (async (req, res, next) => {
         if (!employee) {
             return res.status(404).json({ message: "Employee not found" });
         }
+
+        // Get the total number of workorders assigned to the employee
+        const totalWorkCount = employee.assignedWork.length;
+
+        // count the total number of workorders assigned to the employee by status
+        const pendingWorkCount = employee.assignedWork.filter(work => work.status === "Pending").length;
+        const inProgressWorkCount = employee.assignedWork.filter(work => work.status === "In_Progress").length;
+        const completedWorkCount = employee.assignedWork.filter(work => work.status === "Complete").length;
+        const reviewedWorkCount = employee.assignedWork.filter(work => work.reviewed).length;
+
         res.status(200).json({
             success: true,
-            data: employee
+            data: {
+                employee,
+                totalWorkCount,
+                pendingWorkCount,
+                inProgressWorkCount,
+                completedWorkCount,
+                reviewedWorkCount
+            }
         });
     } catch (error) {
         next(error);
@@ -138,11 +155,24 @@ const countWorkAssigned = asyncHandler (async (req, res) => {
             return res.status(404).json({ message: "Employee not found" });
         };
 
-        const workCount = employee.totalAssignedWorkCount;
+        // Get the total number of workorders assigned to the employee
+        const totalWorkCount = employee.assignedWork.length;
+
+        // count the total number of workorders assigned to the employee by status
+        const pendingWorkCount = employee.assignedWork.filter(work => work.status === "Pending").length;
+        const inProgressWorkCount = employee.assignedWork.filter(work => work.status === "In_Progress").length;
+        const completedWorkCount = employee.assignedWork.filter(work => work.status === "Complete").length;
+        const reviewedWorkCount = employee.assignedWork.filter(work => work.reviewed).length;
 
         res.status(200).json({
             success: true,
-            data: workCount
+            data: {
+                totalWorkCount,
+                pendingWorkCount,
+                inProgressWorkCount,
+                completedWorkCount,
+                reviewedWorkCount
+            }
         });
     } catch (error) {
         res.status(500).json({
