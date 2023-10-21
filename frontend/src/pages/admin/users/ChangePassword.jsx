@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import EditUserPassword from "../../../components/EditUserPassword"
 import Layout from "../../../components/Layout"
 import { updateUserPassword } from "../../../services/usersApi";
@@ -9,8 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const ChangePassword = () => {
   const token = useSelector(selectToken);
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const {id} = useParams();
 
@@ -34,10 +33,8 @@ const ChangePassword = () => {
     <Layout>
       <EditUserPassword 
         onFinishHandler={onFinishHandler}
-        oldPassword={oldPassword}
-        newPassword={newPassword}
-        setOldPassword={setOldPassword}
-        setNewPassword={setNewPassword}
+        password={password}
+        setPassword={setPassword}
       />
     </Layout>
   )
