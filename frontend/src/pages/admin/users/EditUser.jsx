@@ -15,13 +15,6 @@ const EditUser = () => {
   const {id} = useParams();
 
 
-  useEffect(() => {
-    if (id) {
-      getUserDetails(id);
-    }
-  }, [id]);
-
-
   // function to handle form submit
   const onFinishHandler = async (values) => {
     const res = await editUser(id, values, {
@@ -34,7 +27,7 @@ const EditUser = () => {
       message.success("User Updated Successfully");
       navigate("/users/all");
     } else {
-      message.error("User Update Failed");
+      message.error("User Update Failed", error);
     }
   };
 
@@ -47,7 +40,14 @@ const EditUser = () => {
       }
     });
     setUserDetails({...res.data});
-  }
+  };
+
+  // UseEffect hook
+  useEffect(() => {
+    if (id) {
+      getUserDetails(id);
+    }
+  }, [id]);
 
   return (
     <Layout>
