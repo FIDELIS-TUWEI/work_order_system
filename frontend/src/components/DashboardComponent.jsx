@@ -3,7 +3,7 @@ import { Card, Col, Row, Typography } from "antd";
 
 const DashboardComponent = ({ user, pendingWorkCount, 
     inProgressCount, completedCount, reviewedCount, 
-    totalWorkCount, totalUsersCount, activeUsersCount 
+    totalWorkCount, totalUsersCount, activeUsersCount, employees 
 }) => {
 
     // Conditional render for admin or superadmin
@@ -52,6 +52,12 @@ const DashboardComponent = ({ user, pendingWorkCount,
             <Col span={8}>
                 <Card title="Active Users" bordered={false} className="custom-card">
                     {activeUsersCount}
+                </Card>
+            </Col>
+
+            <Col span={8}>
+                <Card title="Total Employees" bordered={false} className="custom-card">
+                    {employees}
                 </Card>
             </Col>
         </>
