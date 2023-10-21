@@ -34,7 +34,7 @@ const LogIn = () => {
             message.success("Login Succesful");
             navigate('/private');
         } catch (error) {
-            message.error(error.data.error);
+            message.error("Too Many Attempts, Please Try Again Later", error);
         }
     }
 
