@@ -57,6 +57,17 @@ export const employeeTotalWorkCount = async (id) => {
   }
 };
 
+// Count all employees
+export const countAllEmployees = async () => {
+  try {
+    const res = await axios.get(`${WORK_URL}/count/employees`);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.log("Error while counting all employees", error);
+  }
+};
+
 // Edit employee
 export const editEmployee = async (id, values) => {
   try {
