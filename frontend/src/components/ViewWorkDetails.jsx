@@ -30,6 +30,10 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
         ? (workDetails.reviewed ? `${workDetails.reviewedBy.username}` : 'Not Reviewed')
         : 'Not Reviewed';
 
+    // Displaay review commments
+    const reviewComments = workDetails.reviewComments
+        ? workDetails.reviewComments : 'No review comments';
+
   return (
     <>
         <div className="work--details--card" ref={componentPDF}>
@@ -109,7 +113,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
                 <div className="work--detail">
                     <span>Review Comments</span>
-                    <span>{workDetails.reviewComments}</span>
+                    <span>{reviewComments}</span>
                 </div>
 
                 <div className="work--detail">
