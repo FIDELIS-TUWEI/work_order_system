@@ -12,24 +12,33 @@ const WORK_URL = "/hin";
 const Reports = () => {
   const [workOrders, setWorkOrders] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function getWorkOrders() {
-      try {
-        setLoading(true);
-        const res = await axios.get(`${WORK_URL}/work?status=${filterStatus}`);
-        const data = res.data;
-        setWorkOrders(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        console.log("Error while fetching all work orders by status query", error);
-      }
-    }
+// Function to fetch all work orders from API
+const getWorkOrders = async () => {
+  try {
+    setLoading(true);
+    const res = await axios.get(`${WORK_URL}/work`, {
+      params: {
+        pageNumber: page,
+        status: filterStatus,
+      },
+    });
+    setWorkOrders(res.data.data);
+    setPages(res.data.pages);
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+    message.error(error.message);
+  }
+}
 
+  // useEffect hook
+  useEffect(() => {
     getWorkOrders();
-  }, [filterStatus]);
+  }, [filterStatus, page]);
 
   // Function to generate and export pending work orders
   const exportPDF = async () => {
@@ -64,11 +73,19 @@ const Reports = () => {
     message.success("Report Generated Successfully"); 
   }
 
+  // function to handle page change
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  }
+
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Reports</Typography>
       <WorkReport 
         workOrders={workOrders}
+        handlePageChange={handlePageChange}
+        pages={pages}
+        page={page}
         loading={loading}
         setFilterStatus={setFilterStatus}
         exportPDF={exportPDF}
