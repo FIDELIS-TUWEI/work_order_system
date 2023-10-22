@@ -15,17 +15,22 @@ const EditEmployee = () => {
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
-    const res = await editEmployee(id, values, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (res) {
-      message.success("Employee Updated Successfully");
-      navigate("/employees/all");
-    } else {
-      message.error("Employee Update Failed", error);
+    try {
+      await editEmployee(id, values, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      if (employeeDetails) {
+        message.success('Employee Updated Successfully');
+      } else {
+        navigate('/all/employees');
+      }
+
+    } catch (error) {
+      message.error(error.message, "Employee Update Failed");
     }
   };
 
