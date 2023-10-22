@@ -31,9 +31,4 @@ const employeeSchema = new mongoose.Schema({
 }
 );
 
-// Virtual field to calculate the total number of assigned workorders to an employee
-employeeSchema.virtual("totalAssignedWorkCount").get(function () {
-    return this.assignedWork.length
-});
-
 module.exports = mongoose.model("Employee", employeeSchema);
