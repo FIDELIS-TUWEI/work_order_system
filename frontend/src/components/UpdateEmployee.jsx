@@ -36,7 +36,7 @@ const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails }) => {
                 name="phone"
                 label="Phone Number"
               >
-                <Input type="text" placeholder="Enter Employee Phone Number" />
+                <Input type="text" placeholder={employeeDetails?.phone} />
               </Form.Item>
             </Col>
           </Row>
