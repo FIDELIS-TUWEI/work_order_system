@@ -216,7 +216,7 @@ const getEmployeeInfo = asyncHandler(async (req, res) => {
 
         res.status(200).json({
             success: true,
-            employee
+            data: employee
         });
     } catch (error) {
         res.status(500).json({
