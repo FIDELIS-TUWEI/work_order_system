@@ -17,17 +17,21 @@ const EditUser = () => {
 
   // function to handle form submit
   const onFinishHandler = async (values) => {
-    const res = await editUser(id, values, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
+    try {
+      await editUser(id, values, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      if (userDetails) {
+        message.success('User Updated Successfully');
+      } else {
+        navigate('/users/all');
       }
-    });
-    if (res) {
-      message.success("User Updated Successfully");
-      navigate("/users/all");
-    } else {
-      message.error("User Update Failed", error);
+    } catch (error) {
+      message.error(error.message, "User Update Failed");
     }
   };
 

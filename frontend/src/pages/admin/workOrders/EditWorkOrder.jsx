@@ -27,7 +27,7 @@ const EditWorkOrder = () => {
       navigate('/work/list');
 
     } catch (error) {
-      message.error(error.message);
+      message.error(error.message, "Work Order Update Failed");
     }
   }
 
