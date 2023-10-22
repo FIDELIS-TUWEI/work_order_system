@@ -3,6 +3,11 @@ const asyncHandler = require("express-async-handler");
 
 // Filter Work Orders
 const filterWorkStatus = asyncHandler (async (req, res, next) => {
+    // Enable Pagination
+    const pageSize = 5;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await WorkOrder.find({}).estimatedDocumentCount();
+
     try {
         const { status } = req.query;
         let query = {};
@@ -17,8 +22,16 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
             .populate("location", "locationTitle")
             .populate("category", "categoryTitle")
             .populate("reviewedBy", "firstName lastName")
+            .skip(pageSize * (page -1))
+            .limit(pageSize)
             .exec();
-        res.json(workOrders);
+        res.status(200).json({
+            success: true, 
+            data: workOrders, 
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
