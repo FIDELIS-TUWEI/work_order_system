@@ -1,17 +1,6 @@
 import axios from 'axios';
 const WORK_URL = "/hin";
 
-// API Service to filter work orders by status for report generation
-export const filterWorkStatus = async (status, page) => {
-    try {
-        const res = await axios.get(`${WORK_URL}/work?status=${status}&pageNumber=${page}`);
-        const data = res.data;
-        return data;
-    } catch (error) {
-        console.log("Error while fetching all work orders by status query", error);
-    }
-}
-
 // API Service to count pending work orders by status
 export const countPendingWork = async () => {
     try {
