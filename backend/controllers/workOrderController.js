@@ -230,7 +230,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
         const deletedByUser = req.user;
 
         // Remove the deleted work order from the user's workOrders array
-        await User.findByIdAndUpdate(deletedByUser._id, { $pull: { workOrders: workOrderId._id }});
+        await User.findByIdAndUpdate(deletedByUser._id, { $pull: { workOrders: workOrderId }});
 
         // Send Email Notification
         const recepients = ["fideliofidel9@gmail.com"];
