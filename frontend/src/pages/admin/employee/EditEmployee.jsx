@@ -21,14 +21,9 @@ const EditEmployee = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      
-      if (employeeDetails) {
-        message.success('Employee Updated Successfully');
-      } else {
-        navigate('/all/employees');
-      }
-
+      }); 
+      message.success('Employee Updated Successfully');
+      navigate('/all/employees');
     } catch (error) {
       message.error(error.message, "Employee Update Failed");
     }
