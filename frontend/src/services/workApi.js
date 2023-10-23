@@ -21,6 +21,17 @@ export const getAllWorkOrders = async (page) => {
     }
 };
 
+// Get all work Query without pagination for line chart frontend
+export const getAllWorkQuery = async () => {
+    try {
+        const res = await axios.get(`${WORK_URL}/query/all/work`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching all work query", error);
+    }
+};
+
 // Get single work order
 export const getSingleWorkOrder = async (id) => {
     try {
