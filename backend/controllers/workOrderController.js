@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
+const sendSMS = require("../utils/sms");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -120,6 +121,16 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             if (employee) {
                 employee.assignedWork.push(id);
                 await employee.save();
+
+                // Send SMS notification to the employee
+                const employeePhoneNumber = employee.phone;
+                const smsMessage = `
+                    A Work Order with Title: ${updatedWorkOrder.title} has been assigned to you by ${user.firstName} ${user.lastName}.
+                    Visit the workshop for further details.
+                `;
+
+                // Send SMS
+                await sendSMS(employeePhoneNumber, smsMessage);
             }
         };
 
