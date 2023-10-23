@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
-import { getAllWorkOrders } from "../../../services/workApi";
+import { getAllWorkQuery } from "../../../services/workApi";
 import { Card } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 
@@ -17,7 +17,7 @@ const BarGraph = () => {
     // Function to get All work orders from API Service
     const allWork = async () => {
         setLoading(true);
-        const { data } = await getAllWorkOrders({
+        const { data } = await getAllWorkQuery({
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${token}`
