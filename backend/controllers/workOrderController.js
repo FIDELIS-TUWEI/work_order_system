@@ -223,12 +223,15 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Work Order not found", 404));
         }
 
+        // user who deleted the work
+        const deletedByUser = req.user;
+
         // Send Email Notification
-        const recepients = workOrder.requestedBy.email;
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
+        const recepients = ["fideliofidel9@gmail.com"];
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
 
         const emailSubject = `Work Order Deleted`;
-        const emailText = `A work order with title ${workOrder.title} has been deleted by ${workOrder.requestedBy.username}.`;
+        const emailText = `A work order with title ${workOrder.title} has been deleted by ${deletedByUser.username}.`;
 
         const emailOptions = {
             email: recepients,
