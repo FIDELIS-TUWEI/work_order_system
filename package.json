@@ -38,6 +38,7 @@
     "morgan": "^1.10.0",
     "node-cron": "^3.0.2",
     "nodemailer": "^6.9.4",
-    "pdfkit": "^0.13.0"
+    "pdfkit": "^0.13.0",
+    "twilio": "^4.19.0"
   }
 }
