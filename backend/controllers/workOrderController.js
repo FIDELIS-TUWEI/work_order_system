@@ -34,6 +34,9 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         // Save Work Order
         const savedWorkorder = await newWorkOrder.save();
 
+        // Update the user's workOrders array
+        await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
+
         // Send Email notification
         const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
         const subject =`New Work Order Requested\n`;
