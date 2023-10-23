@@ -193,6 +193,29 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Query All work orders for line graph frontend
+const queryAllWork = asyncHandler (async (req, res, next) => {
+    try {
+        const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
+            .populate("requestedBy", "username")
+            .populate("category", "categoryTitle")
+            .populate("assignedTo", "firstName lastName")
+            .populate("reviewedBy", "username")
+            .sort({ Date_Created: -1 });
+
+        if (!workOrders) {
+            return next(new ErrorResponse("Work Orders not found", 404));
+        };
+
+        return res.status(200).json({
+            success: true,
+            data: workOrders
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
+})
+
 // Get single Work Order
 const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     try {
@@ -300,6 +323,7 @@ module.exports = {
     createWorkOrder,
     updateWorkOrder,
     getAllWorkOrders,
+    queryAllWork,
     getSingleWorkOrder,
     deleteWorkOrder,
 }
