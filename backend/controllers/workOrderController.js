@@ -124,15 +124,6 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
                 employee.assignedWork.push(id);
                 await employee.save();
 
-                // Send SMS notification to the employee
-                const employeePhoneNumber = employee.phone;
-                const smsMessage = `
-                    A Work Order with Title: ${updatedWorkOrder.title} has been assigned to you by ${user.firstName} ${user.lastName}.
-                    Visit the workshop for further details.
-                `;
-
-                // Send SMS
-                await sendSMS(employeePhoneNumber, smsMessage);
             }
         };
 
