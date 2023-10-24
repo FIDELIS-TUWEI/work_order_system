@@ -1,23 +1,21 @@
-const twilio = require("twilio");
+const { Vonage } = require('@vonage/server-sdk')
+
+const vonage = new Vonage({
+  apiKey: "4dbf9139",
+  apiSecret: "RVuTInYymk16VVzX"
+});
 
 const sendSMS = async (phoneNumber, message) => {
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
-    const twilioPhoneNumber = process.env.TWILIO_PHONE;
-
-    const client = twilio(accountSid, authToken);
-
     try {
-        await client.messages.create({
-            body: message,
-            from: twilioPhoneNumber,
-            to: phoneNumber
+        const response = await vonage.message.sendSms({
+            to: phoneNumber,
+            from: "Work Order System",
+            text: message
         });
-
-        console.log(`SMS notification sent to ${phoneNumber}`);
+        console.log(response);
     } catch (error) {
-    console.log(`Error sending SMS notification to ${phoneNumber}. Error: ${error.message}`);
+        console.log(error);
     }
 };
 
-module.exports = sendSMS;
+module.exports = {sendSMS}
