@@ -5,7 +5,6 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
-const sendSMS = require("../utils/sms");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
