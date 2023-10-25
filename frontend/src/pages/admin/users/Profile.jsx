@@ -15,7 +15,7 @@ const Profile = () => {
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Manage Profile</Typography>
-      <Card title="Profile" style={{ margin: '15px', width: '300px' }}>
+      <Card title="Profile" style={{ margin: ' auto 15px', width: '300px' }}>
         <RxAvatar style={{ fontSize: '3rem' }} />
         <p>
           First Name: {user?.firstName}
@@ -51,4 +51,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Profile;
