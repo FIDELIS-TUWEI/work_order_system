@@ -36,50 +36,50 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
   return (
     <>
-        <div className="work--details--card" ref={componentPDF}>
+        <div className="details--card" ref={componentPDF}>
             <div className="company--logo">
                 <img src={Logo} alt="Logo" />
             </div>
-            <div className="work--details--header">
-                <div className="work--details--header1">
+            <div className="details--header">
+                <div className="details--header1">
                     <h2>Work Description: {workDetails?.title}</h2>
                     <p>Service Type: {workDetails?.serviceType}</p>
                 </div>
 
-                <div className="work--details--header2">
+                <div className="details--header2">
                     <h2>Category: {workDetails?.category.categoryTitle}</h2>
                     <p>Location: {workDetails?.location.locationTitle}</p>
                     <p>Work Status: {workDetails?.status}</p>
                 </div>
             </div>
             <hr />
-            <div className="work--details--grid">
-                <div className="work--detail">
+            <div className="details--grid">
+                <div className="details">
                     <span>Priority Level:</span>
                     <span>{workDetails?.priority}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Date Requested:</span>
                     <span>{moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Requested By:</span>
                     <span>{requestedByUsername}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Due Date:</span>
                     <span>From: {startDate} To: {endDate}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Employee Assigned:</span>
                     <span>{assignedToName}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Date Assigned:</span>
                     <span>
                         {workDetails.dateAssigned
@@ -88,7 +88,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     </span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Date Completed:</span>
                     <span>{workDetails.dateCompleted 
                         ? moment(workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")
@@ -96,27 +96,27 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                     </span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Comments:</span>
                     <span>{workDetails.comments}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Reviewed:</span>
                     <span>{workDetails.reviewed === true ? "Yes" : "No"}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Reviewed By:</span>
                     <span>{reviewedByUsername}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Review Comments</span>
                     <span>{reviewComments}</span>
                 </div>
 
-                <div className="work--detail">
+                <div className="details">
                     <span>Date Reviewed:</span>
                     <span>{workDetails?.dateReviewed ? moment(workDetails.dateReviewed).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}</span>
                 </div>
