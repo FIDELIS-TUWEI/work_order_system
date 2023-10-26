@@ -64,7 +64,7 @@ const Layout = ({ children }) => {
             })}
               <div className={`menu-item`} onClick={handleLogout}>
                 <i><RiLogoutCircleFill/></i>
-                <Link to="/login">Logout</Link>
+                <Link to="/">Logout</Link>
               </div>
           </div>
         </div>
