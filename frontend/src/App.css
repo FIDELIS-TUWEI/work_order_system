@@ -236,7 +236,7 @@ table tr:hover {
 }
 
 
-.work--details--card {
+.details--card {
     background-color: #fff;
     box-shadow: 2px 2px 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -246,31 +246,31 @@ table tr:hover {
     max-width: 800px;
 }
 
-.work--details--header {
+.details--header {
     display: flex;
     justify-content: space-between;
 }
 
-.work--details--header h2 {
+.details--header h2 {
     font-size: 20px;
     margin: 0;
     color: #333;
 }
 
-.work--details--header p {
+.details--header p {
     font-size: 16px;
     color: #777;
     margin: 10px 0;
 }
 
-.work--details--grid {
+.details--grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 20px;
 }
 
-.work--detail {
+.details {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -280,7 +280,7 @@ table tr:hover {
     padding: 10px 0;
 }
 
-.work--detail span {
+.details span {
     font-weight: bold;
 }
 
