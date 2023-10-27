@@ -14,6 +14,8 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
   const [selectedUserToDelete, setSelectedUserToDelete] = useState(null);
   const token = useSelector(selectToken);
 
+  // determine whether edit or delete button should be displayed for the superadmin
+  const currentUserRole = token.role;
 
   // Fucntion to show modal to delete user
   const showModal = async (user) => {
@@ -42,6 +44,8 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
   const handleCancel = () => {
     setIsModalVisible(false);
   }
+
+  
 
   return (
     <div>
@@ -80,10 +84,22 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
                 <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => {navigate(`/user/details/${user._id}`)}}>
                   <AiFillEye/>
                 </Button>
-                <Button danger style={{ border: 'none', marginRight: "5px"}} onClick={() => {navigate(`/edit/user/${user._id}`)}}>
+                <Button 
+                  danger 
+                  style={{
+                     border: 'none', marginRight: "5px"
+                    }} 
+                  onClick={() => {navigate(`/edit/user/${user._id}`)}}
+                  disabled={currentUserRole === "admin"}
+                >
                   <BiSolidEditAlt/>
                 </Button>
-                <Button danger style={{ border: 'none'}} onClick={() => showModal(user)}>
+                <Button 
+                  danger 
+                  style={{ border: 'none'}} 
+                  onClick={() => showModal(user)}
+                  disabled={currentUserRole === "admin"}
+                >
                   <MdDelete/>
                 </Button>
               </td>
