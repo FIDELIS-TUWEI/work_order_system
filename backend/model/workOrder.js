@@ -16,6 +16,11 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true,
+        min: [10, "Description must be at least 10 characters"]
+    },
     location: {
         // Rooms, Open place, Back office, Admin office
         type: ObjectId,
@@ -54,6 +59,10 @@ const workOrderSchema = new mongoose.Schema({
     },
     dateCompleted: {
         type: Object,
+        default: ""
+    },
+    supervisedBy: {
+        type: "string",
         default: ""
     },
     comments: {
