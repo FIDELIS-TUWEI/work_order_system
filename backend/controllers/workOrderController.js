@@ -15,7 +15,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     }
 
-    const { priority, title, location, serviceType, category, dueDate } = req.body;
+    const { priority, title, description, location, serviceType, category, dueDate } = req.body;
 
     try {
         
@@ -24,6 +24,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             requestedBy: userId,
             priority,
             title,
+            description,
             location,
             serviceType,
             category,
@@ -42,7 +43,8 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         const text =  `
             A New Work order has been Created\n\n
             -----------------------------------\n
-            Work Description: ${savedWorkorder.title}\n
+            Work Title: ${savedWorkorder.title}\n
+            Description: ${savedWorkorder.description}\n
             Priority: ${savedWorkorder.priority}\n
             Service Type: ${savedWorkorder.serviceType}\n
             Due Date: ${savedWorkorder.dueDate}\n
