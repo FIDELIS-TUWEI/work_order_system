@@ -1,8 +1,9 @@
 import { Button, Card, Col, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
 
+const { Option } = Select;
 
-const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading }) => {
+const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepartments, selectedDepartment, handleDepartmentChange }) => {
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
@@ -42,24 +43,15 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading }) => {
             >
               <Select
                 placeholder="Select User Department"
+                onChange={handleDepartmentChange}
+                value={selectedDepartment}
                 allowClear
                 style={{ width: '100%' }}
-                options={[
-                  { value: 'Front-Desk', label: 'Front Desk' },
-                  { value: 'House-Keeper', label: 'House Keeper' },
-                  { value: 'F&B', label: 'Food & Beverages' },
-                  { value: 'FP', label: 'Food Production' },
-                  { value: 'IT', label: 'IT' },
-                  { value: 'HR', label: 'Human Resource' },
-                  { value: 'Security', label: 'Security' },
-                  { value: 'Engineering', label: 'Engineering' },
-                  { value: 'Management', label: 'Management' },
-                  { value: 'Sales', label: 'Sales' },
-                  { value: 'Finance', label: 'Finance' },
-                  { value: 'Marketing', label: 'Marketing' },
-                  { value: 'Laundry', label: 'Laundry' },
-                ]}
-              ></Select>
+              >
+                {allDepartments.map((department) => (
+                  <Option key={department._id} value={department._id}>{department.departmentName}</Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
