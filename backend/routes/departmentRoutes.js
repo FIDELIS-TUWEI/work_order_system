@@ -6,6 +6,7 @@ const { createDepartment, getAllDepartments, deleteDepartment } = require("../co
 
 router.post("/new/department", protect, restrict(["admin", "superadmin", "supervisor"]), createDepartment);
 router.get("/all-departments", protect, restrict(["admin", "superadmin", "supervisor"]), getAllDepartments);
+router.get("/query/all/departments", protect, restrict(["admin", "superadmin", "supervisor"]), getAllDepartments);
 router.delete("/delete/department/:id", protect, restrict(["admin", "superadmin", "supervisor"]), deleteDepartment);
 
 module.exports = router;
