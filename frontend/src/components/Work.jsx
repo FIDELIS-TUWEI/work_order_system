@@ -1,4 +1,4 @@
-import { Button, Card, Modal, message } from "antd"
+import { Button, Card, Modal, message, Tooltip } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
@@ -60,7 +60,14 @@ const Work = ({allWork, user, loading, getAllWork}) => {
             return isAuthorised;
         } else {
             // Disable delete button for unauthorised users
-            return !["engineer", "hod"].includes(user?.role);
+            if (["engineer", "hod", "reviewer"].includes(user?.role)) {
+                return false;
+            }
+
+            // Enable delete button for authorised users
+            if (["admin", "superadmin"].includes(user?.role)) {
+                return true;
+            }
         }
     }
 
@@ -116,9 +123,11 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                         )}
                         
                         { allowEditWork(work) && (
-                            <Button danger style={{ border: 'none'}} onClick={() => showModal(work)}>
-                                <MdDelete/>
-                            </Button>
+                            <Tooltip title={["admin", "superadmin"].includes(user?.role) ? "Delete Work" : "You are not authorised to delete this work order"}>
+                                <Button danger style={{ border: 'none'}} onClick={() => showModal(work)} disabled={!["admin", "superadmin"].includes(user?.role)}>
+                                    <MdDelete/>
+                                </Button>
+                            </Tooltip>
                         )}
                     </td>
                 </tr>
