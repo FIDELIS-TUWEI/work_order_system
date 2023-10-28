@@ -33,6 +33,19 @@ const NewWork = ({
           </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item 
+                name="description" 
+                label="Work Description" 
+                required 
+                rules={[
+                  { required: true, message: 'Please a Work Description!' },
+                  { min: 10, message: 'Work Description must be at least 10 characters' }
+                ]}
+            >
+              <Input type='text' placeholder='Work Description' />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item 
                 name="location" 
                 label="Work Location" 
                 required rules={[{ required: true, message: 'Please Select Work Location!' }]}>
