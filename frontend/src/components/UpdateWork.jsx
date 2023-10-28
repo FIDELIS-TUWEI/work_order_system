@@ -93,6 +93,15 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
           </Form.Item>
         </Col>
+        <Col xs={24} md={24} lg={8}>
+          <Form.Item
+            label="Supervised By"
+            name="supervisedBy"
+            rules={[{ required: true, message: `Please Enter Supervisor's Name!` }]}
+          >
+            <Input type='text' placeholder='Enter Supervisor Name' />
+          </Form.Item>
+        </Col>
     </>
   );
 
