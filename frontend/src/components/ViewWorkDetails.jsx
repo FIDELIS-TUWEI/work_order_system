@@ -60,6 +60,11 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 </div>
 
                 <div className="details">
+                    <span>Description:</span>
+                    <span>{workDetails?.description}</span>
+                </div>
+
+                <div className="details">
                     <span>Date Requested:</span>
                     <span>{moment(workDetails?.Date_Created).format("DD/MM/YYYY, hh:mm a")}</span>
                 </div>
@@ -94,6 +99,11 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                         ? moment(workDetails.dateCompleted).format("DD/MM/YYYY, hh:mm a")
                         : "Work order has not been completed yet!"}
                     </span>
+                </div>
+
+                <div className="details">
+                    <span>Supervised By:</span>
+                    <span>{workDetails?.supervisedBy}</span>
                 </div>
 
                 <div className="details">
