@@ -70,6 +70,27 @@ const getAllDepartments = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc Query all departments
+const queryAllDepartments = asyncHandler(async (req, res) => {
+  try {
+    const departments = await Department.find({});
+
+    if (!departments) {
+      return res.status(400).json({ message: "No departments found" });
+    };
+    
+    res.status(200).json({
+      success: true,
+      data: departments
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+});
+
 // @desc Delete department
 // @route DELETE /delete/department/:id
 // @access Private
@@ -96,5 +117,6 @@ const deleteDepartment = asyncHandler(async (req, res) => {
 module.exports = {
     createDepartment,
     getAllDepartments,
+    queryAllDepartments,
     deleteDepartment
 }
