@@ -3,7 +3,7 @@ import LoadingBox from "./LoadingBox";
 
 const { Option } = Select;
 
-const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepartments, selectedDepartment, handleDepartmentChange }) => {
+const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepartments, selectedDepartment, handleDepartmentChange, allDesignations, selectedDesignation, handleDesignationChange }) => {
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
@@ -61,21 +61,15 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepart
                 required rules={[{ required: true, message: 'Please select a designation!' }]}>
               <Select
                 placeholder="Select User Designation"
+                onChange={handleDesignationChange}
+                value={selectedDesignation}
                 allowClear
                 style={{ width: '100%' }}
-                options={[
-                  { value: 'GM', label: 'General Manager' }, { value: 'Asst. GM', label: 'Asst General Manager' },  
-                  { value: 'Hod', label: 'HoD' }, { value: 'Room Attendant', label: 'Room Attendant' },
-                  { value: 'Supervisor', label: 'Supervisor' }, { value: 'Security', label: 'Security' },
-                  { value: 'Receptionist', label: 'Receptionist' }, { value: 'Chef', label: 'Chef' },
-                  { value: 'Waiter', label: 'Waiter' }, { value: 'Laundry', label: 'Laundry' },
-                  { value: 'Engineer', label: 'Engineer' }, { value: 'IT Manager', label: 'IT Manager' },
-                  { value: 'Hr', label: 'HR' }, { value: 'Finance', label: 'Finance' },
-                  { value: 'Marketing', label: 'Marketing' }, { value: 'Sales', label: 'Sales' },
-                  { value: 'Executive Chef', label: 'Executive Chef' }, { value: 'IT Support', label: 'IT Support' },
-                  { value: 'Operations Technician', label: 'Operations Technician' },
-                ]}
-              />
+              >
+                {allDesignations.map((designation) => (
+                  <Option key={designation._id} value={designation._id}>{designation.designationName}</Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
             <Col xs={24} md={24} lg={8}>
