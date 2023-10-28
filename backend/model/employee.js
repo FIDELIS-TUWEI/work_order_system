@@ -17,7 +17,8 @@ const employeeSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, "Please enter a Username"],
-        uppercase: true
+        uppercase: true,
+        unique: [true, "Username already exists"],
     },
     assignedWork: [
         {
