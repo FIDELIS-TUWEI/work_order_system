@@ -11,6 +11,7 @@ import UpdateUser from "../../../components/UpdateUser";
 const EditUser = () => {
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {id} = useParams();
 
@@ -18,6 +19,7 @@ const EditUser = () => {
   // function to handle form submit
   const onFinishHandler = async (values) => {
     try {
+      setLoading(true);
       await editUser(id, values, {
         withCredentials: true,
         headers: {
@@ -25,13 +27,12 @@ const EditUser = () => {
         }
       });
       
-      if (userDetails) {
-        message.success('User Updated Successfully');
-      } else {
-        navigate('/users/all');
-      }
+      message.success('User Updated Successfully');
+      navigate('/users/all');
+      setLoading(false);
     } catch (error) {
       message.error(error.message, "User Update Failed");
+      setLoading(false);
     }
   };
 
@@ -59,6 +60,7 @@ const EditUser = () => {
         userDetails={userDetails}
         onFinishHandler={onFinishHandler}
         navigate={navigate}
+        loading={loading}
       />
     </Layout>
   )
