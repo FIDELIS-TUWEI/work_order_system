@@ -24,6 +24,13 @@ const signupUser = asyncHandler (async (req, res) => {
             });
         }
 
+        // create new user
+        const user = await User.create(req.body);
+        res.status(201).json({
+            success: true,
+            message: "User created successfully"
+        });
+
         // Send email notification
         const recepients = ["fideliofidel9@gmail.com"]
         const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
@@ -40,20 +47,6 @@ const signupUser = asyncHandler (async (req, res) => {
 
         // Send Email
         sendEmail(emailOptions);
-        // create new user
-        const user = await User.create(req.body);
-        res.status(201).json({
-            success: true,
-            message: "User created successfully",
-            firstName: user.firstName,
-            lastName: user.lastName,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            active: user.active,
-            department: user.department,
-            designation: user.designation,
-        })
 
     } catch (error) {
         res.status(500).json({
