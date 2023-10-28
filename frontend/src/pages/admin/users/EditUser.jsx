@@ -6,11 +6,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { editUser, getUserInfo } from "../../../services/usersApi";
 import { useEffect, useState } from "react";
 import UpdateUser from "../../../components/UpdateUser";
+import { queryAllDepartments } from "../../../services/departmentApi";
 
 
 const EditUser = () => {
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
+  const [allDepartments, setAllDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {id} = useParams();
@@ -34,7 +37,7 @@ const EditUser = () => {
       message.error(error.message, "User Update Failed");
       setLoading(false);
     }
-  };
+  }
 
   // Function to get single user details
   const getUserDetails = async (id) => {
@@ -47,11 +50,28 @@ const EditUser = () => {
     setUserDetails({...res.data});
   };
 
+  // Function to handle change in department
+  const handleDepartmentChange = (value) => {
+    setSelectedDepartment(value);
+  };
+
+  // Function to get Departments
+  const getAllDepartments = async () => {
+    const res = await queryAllDepartments({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setAllDepartments(res.data);
+  }
+
   // UseEffect hook
   useEffect(() => {
     if (id) {
       getUserDetails(id);
     }
+    getAllDepartments();
   }, [id]);
 
   return (
@@ -61,6 +81,10 @@ const EditUser = () => {
         onFinishHandler={onFinishHandler}
         navigate={navigate}
         loading={loading}
+        allDepartments={allDepartments}
+        selectedDepartment={selectedDepartment}
+        handleDepartmentChange={handleDepartmentChange}
+        getAllDepartments={getAllDepartments}
       />
     </Layout>
   )
