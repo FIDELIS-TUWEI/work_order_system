@@ -21,6 +21,17 @@ export const allDepartments = async (page) => {
     }
 };
 
+// Query All departments
+export const queryAllDepartments = async () => {
+    try {
+        const res = await axios.get(`${WORK_URL}/query/all/departments`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while querying all departments", error);
+    }
+};
+
 // Delete Department
 export const deleteDepartment = async (id) => {
     try {
