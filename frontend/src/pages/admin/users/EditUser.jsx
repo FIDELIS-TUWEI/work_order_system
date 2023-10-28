@@ -7,6 +7,7 @@ import { editUser, getUserInfo } from "../../../services/usersApi";
 import { useEffect, useState } from "react";
 import UpdateUser from "../../../components/UpdateUser";
 import { queryAllDepartments } from "../../../services/departmentApi";
+import { queryAllDesignations } from "../../../services/designation";
 
 
 const EditUser = () => {
@@ -14,6 +15,8 @@ const EditUser = () => {
   const [userDetails, setUserDetails] = useState([]);
   const [allDepartments, setAllDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [allDesignations, setAllDesignations] = useState([]);
+  const [selectedDesignation, setSelectedDesignation] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {id} = useParams();
@@ -66,12 +69,29 @@ const EditUser = () => {
     setAllDepartments(res.data);
   }
 
+  // Function to handle change in designation
+  const handleDesignationChange = (value) => {
+    setSelectedDesignation(value);
+  };
+
+  // Function to get Designations
+  const getAllDesignations = async () => {
+    const res = await queryAllDesignations({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setAllDesignations(res.data);
+  }
+
   // UseEffect hook
   useEffect(() => {
     if (id) {
       getUserDetails(id);
     }
     getAllDepartments();
+    getAllDesignations();
   }, [id]);
 
   return (
@@ -85,6 +105,9 @@ const EditUser = () => {
         selectedDepartment={selectedDepartment}
         handleDepartmentChange={handleDepartmentChange}
         getAllDepartments={getAllDepartments}
+        allDesignations={allDesignations}
+        selectedDesignation={selectedDesignation}
+        handleDesignationChange={handleDesignationChange}
       />
     </Layout>
   )
