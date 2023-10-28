@@ -70,6 +70,24 @@ const getAllDesignations = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc query all designations
+// @route GET /query/all-designations
+// @access Private
+const queryAllDesignations = asyncHandler(async (req, res) => {
+    try {
+        const designations = await Designation.find({});
+        res.status(200).json({
+            success: true,
+            data: designations
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
 // @desc Delete designation
 // @route DELETE /delete/designation/:id
 // @access Private
@@ -99,5 +117,6 @@ const deleteDesignation = asyncHandler(async (req, res) => {
 module.exports = {
     createDesignation,
     getAllDesignations,
+    queryAllDesignations,
     deleteDesignation
 }
