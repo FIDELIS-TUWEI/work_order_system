@@ -1,7 +1,8 @@
 import { Button, Card, Col, Form, Input, Row, Select, Typography } from "antd";
+import LoadingBox from "./LoadingBox";
 
 
-const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
+const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading }) => {
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
@@ -125,6 +126,10 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate }) => {
             </div>
             <div className="user_submit">
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
+            </div>
+            <Col xs={24} md={24} lg={8}></Col>
+            <div className="loader">
+              { loading && <LoadingBox /> }
             </div>
         </Form>
         </Card>
