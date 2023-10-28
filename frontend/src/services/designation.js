@@ -21,6 +21,17 @@ export const allDesignations = async (page) => {
     }
 };
 
+// Query all designations
+export const queryAllDesignations = async () => {
+  try {
+    const res = await axios.get(`${WORK_URL}/query/all-designations`);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.log("Error while querying all designations", error);
+  }
+};
+
 // Delete Designation
 export const deleteDesignation = async (id) => {
     try {
