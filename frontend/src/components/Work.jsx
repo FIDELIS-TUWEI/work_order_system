@@ -44,13 +44,9 @@ const Work = ({allWork, user, loading, getAllWork}) => {
   };
 
   // Function to check if user is authorised to view, edit or delete work
-  const isAuthorised = 
-    user?.role === "admin" || 
-    user?.role === "superadmin" || 
-    user?.role === "hod" || 
-    user?.role === "supervisor" || 
-    user?.role === "reviewer" || 
-    user?.role === "engineer";
+  const isAuthorised = [
+    "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
+  ].includes(user?.role);
 
     // Function to determine whether edit or delete button should be displayed
     const allowEditWork = (work) => {
@@ -116,7 +112,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
                     
                         {allowEditWork(work) && ( 
-                            <Tooltip title={["admin", "superadmin", "engineer"].includes(user?.role) ? "Edit Work" : "You are not Authorised to edit this work"}>
+                            <Tooltip title={["admin", "superadmin", "engineer", "reviewer"].includes(user?.role) ? "Edit Work" : "You are not Authorised to edit this work"}>
                                 <Button danger style={{ border: 'none', marginRight: "5px"}} 
                                     onClick={() => navigate(`/edit/work/${work._id}`)}
                                     disabled={work?.status === "Complete" && user?.role === "engineer"}
