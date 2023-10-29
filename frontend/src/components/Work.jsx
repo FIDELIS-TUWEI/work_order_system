@@ -52,8 +52,9 @@ const Work = ({allWork, user, loading, getAllWork}) => {
   const isEditAllowed = (work) => {
     const isCompleted = work.status === "Complete"
     const isReviewer = user?.role === "reviewer"
+    const isReviewed = work?.status === true
 
-    if (isCompleted && (user?.role === "engineer" || (isReviewer && work.status === "Reviewed"))) {
+    if (isCompleted && (user?.role === "engineer" || (isReviewer && isReviewed))) {
         return false;
     }
 
@@ -103,8 +104,10 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                     <td className="actions__btn">
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
                     
-                        {allowEditWork(work) && ( 
-                            <Tooltip title={["admin", "superadmin", "engineer", "reviewer"].includes(user?.role) ? "Edit Work" : "You are not Authorised to edit this work"}>
+                    {isReviewed ? (
+                        
+                    )}
+                            <Tooltip title={isAuthorised ? "Edit Work" : "You are not Authorised to edit this work"}>
                                 <Button danger style={{ border: 'none', marginRight: "5px"}} 
                                     onClick={() => navigate(`/edit/work/${work._id}`)}
                                     disabled={work?.status === "Complete" && user?.role === "engineer"}
@@ -112,10 +115,9 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                                     <BiSolidEditAlt/>
                                 </Button> 
                             </Tooltip>
-                        )}
                         
-                        { allowEditWork(work) && (
-                            <Tooltip title={["admin", "superadmin"].includes(user?.role) ? "Delete Work" : "You are not authorised to delete this work order"}>
+                        { isEditAllowed(work) && (
+                            <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work order"}>
                                 <Button danger style={{ border: 'none'}} onClick={() => showModal(work)} disabled={!["admin", "superadmin"].includes(user?.role)}>
                                     <MdDelete/>
                                 </Button>
