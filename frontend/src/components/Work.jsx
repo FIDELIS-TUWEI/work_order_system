@@ -48,25 +48,17 @@ const Work = ({allWork, user, loading, getAllWork}) => {
     "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
   ].includes(user?.role);
 
-    // Function to determine whether edit or delete button should be displayed
-    const allowEditWork = (work) => {
-        // check if work order status is not completed
-        if (work.status !== "Reviewed") {
-            // Allow edit button for authorised users
-            return isAuthorised;
-        } else {
-            // Disable delete button for unauthorised users
-            if (["engineer", "hod", "reviewer"].includes(user?.role)) {
-                return false;
-            }
+  // Function to determine whether edit or delete button should be displayed
+  const isEditAllowed = (work) => {
+    const isCompleted = work.status === "Complete"
+    const isReviewer = user?.role === "reviewer"
 
-            // Enable delete button for authorised users
-            if (["admin", "superadmin"].includes(user?.role)) {
-                return true;
-            }
-        }
-
+    if (isCompleted && (user?.role === "engineer" || (isReviewer && work.status === "Reviewed"))) {
+        return false;
     }
+
+    return isAuthorised;
+  }  
 
   return (
     <>
