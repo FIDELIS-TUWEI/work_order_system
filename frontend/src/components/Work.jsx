@@ -104,10 +104,12 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                     <td className="actions__btn">
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
                     
-                    {isReviewed ? (
-                        
-                    )}
-                            <Tooltip title={isAuthorised ? "Edit Work" : "You are not Authorised to edit this work"}>
+                    {work?.status === "Reviewed" ? (
+                        <Typography.Text style={{ fontSize: '1.5rem', fontWeight: '500', marginBottom: '1rem' }}>
+                            This work is already reviewed, no need to review again.
+                        </Typography.Text>
+                    ) : (
+                            <Tooltip title="Edit Work">
                                 <Button danger style={{ border: 'none', marginRight: "5px"}} 
                                     onClick={() => navigate(`/edit/work/${work._id}`)}
                                     disabled={work?.status === "Complete" && user?.role === "engineer"}
@@ -115,7 +117,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                                     <BiSolidEditAlt/>
                                 </Button> 
                             </Tooltip>
-                        
+                    )}
                         { isEditAllowed(work) && (
                             <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work order"}>
                                 <Button danger style={{ border: 'none'}} onClick={() => showModal(work)} disabled={!["admin", "superadmin"].includes(user?.role)}>
