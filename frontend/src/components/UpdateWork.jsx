@@ -1,4 +1,5 @@
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd'
+import LoadingBox from "../components/LoadingBox";
 
 const { Option } = Select;
 
@@ -156,6 +157,13 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
     
   };
 
+  // Render loader when fetching form to update work
+  const renderLoader = () => (
+    <div className='loader'>
+      <LoadingBox />
+    </div>
+  )
+
   
   // Function to disable past dates and future dates. Allow only today
   const today = new Date();
@@ -195,8 +203,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
                 {
                   isWorkPending ? renderPendingFields() : 
                   isWorkInProgress ? renderInProgressFields() : 
-                  isWorkCompleted && isRoleAuthorized ? renderReviewFields() :  
-                  "You are not authorised to edit this work"
+                  isWorkCompleted && isRoleAuthorized ? renderReviewFields() : renderLoader()
                 }
             </Row>
             <div>
