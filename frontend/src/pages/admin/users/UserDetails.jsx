@@ -31,6 +31,11 @@ const UserDetails = () => {
     }
   }, [id]);
 
+  // display department name
+  const departmentTitle = userDetails.department
+      ? `${userDetails.department.departmentName}`
+      : null
+
   return (
     <Layout>
       <Card title="User Details" style={{ margin: 'auto', width: '300px' }}>
@@ -44,10 +49,10 @@ const UserDetails = () => {
           Username: {userDetails?.username}
         </p>
         <p>
-          Department: {userDetails?.department}
+          Department: {departmentTitle}
         </p>
         <p>
-          Designation: {userDetails?.designation}
+          Designation: {userDetails?.designationName}
         </p>
         <p>
           Role: {userDetails?.role}
