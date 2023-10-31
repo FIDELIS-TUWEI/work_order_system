@@ -1,4 +1,4 @@
-import {MdDashboard, MdOutlineWork, MdAdminPanelSettings} from 'react-icons/md';
+import {MdDashboard, MdOutlineWork, MdAdminPanelSettings, MdGroups} from 'react-icons/md';
 import { FaUserPlus} from 'react-icons/fa';
 import {SiGoogleanalytics} from 'react-icons/si';
 import {PiUserCircleGearFill} from 'react-icons/pi';
@@ -25,6 +25,39 @@ export const AdminMenu = [
         name: "Work Order",
         path: "/work/list",
         icon: <MdOutlineWork/>
+    },
+    {
+        name: "Analytics",
+        path: "/work/analytics",
+        icon: <SiGoogleanalytics/>
+    },
+    {
+        name: "Reports",
+        path: "/work/reports",
+        icon: <TbReport />
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+        icon: <PiUserCircleGearFill/>
+    },
+]
+
+export const EngineerMenu = [
+    {
+        name: "Dashboard",
+        path: "/private",
+        icon: <MdDashboard/>
+    },
+    {
+        name: "Work Order",
+        path: "/work/list",
+        icon: <MdOutlineWork/>
+    },
+    {
+        name: "Employees",
+        path: "/all/employees",
+        icon: <MdGroups/>
     },
     {
         name: "Analytics",
