@@ -5,13 +5,14 @@ import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectToken } from "../utils/redux/slices/authSlice";
+import { selectToken, selectUserInfo } from "../utils/redux/slices/authSlice";
 import { deleteEmployee } from "../services/employeeApi";
 
 
 const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pages, getEmployees }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedEmployeeToDelete, setSelectedEmployeeToDelete] = useState(null);
+  const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
 
   // Function to show modal to delete employee
@@ -42,10 +43,18 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
     setIsModalVisible(false);
   }
 
+  // Function to determine authorised user roles
+  const isAuthorised = [
+    "admin", "superadmin", "supervisor"
+  ].includes(user?.role);
+
+
   // Function to check if user is authorised to view, edit or delete employee
-  const isAuthorized = (user) => {
-    const authorizedRoles = ["admin", "superadmin", "supervisor"];
-    return authorizedRoles.includes(user?.role);
+  const isEditAllowed = () => {
+    if (isAuthorised) {
+        return true;
+    }
+
   };
 
   return (
@@ -86,7 +95,7 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
                     <AiFillEye />
                   </Button>
 
-                  {isAuthorized(employee) && (
+                  {isEditAllowed() && (
                     <>
                       <Button danger style={{ border: 'none', marginRight: "5px" }} onClick={() => navigate(`/update/employee/${employee._id}`)}>
                         <BiSolidEditAlt />
