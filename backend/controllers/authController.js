@@ -125,7 +125,10 @@ const logout = (req, res, next) => {
 const getUserInfo = asyncHandler (async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const user = await User.findById(userId).select("-password").populate("workOrders");
+        const user = await User.findById(userId).select("-password")
+            .populate("workOrders")
+            .populate("department", "departmentName")
+            .populate("designation", "designationName")
 
         if (!user) {
             return next(new ErrorResponse("User not found", 404));
