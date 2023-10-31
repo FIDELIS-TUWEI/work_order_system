@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { AdminMenu, HodMenu, UserMenu } from "../Data/data"
+import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "../Data/data"
 import { useDispatch, useSelector } from "react-redux";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
@@ -35,8 +35,10 @@ const Layout = ({ children }) => {
   const renderMenu = () => {
     if (userInfo?.role === "admin" || userInfo?.role === "superadmin") {
       return AdminMenu;
-    } else if (userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer" || userInfo?.role === "engineer") {
+    } else if (userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer") {
       return HodMenu;
+    } else if (userInfo?.role === "engineer") {
+      return EngineerMenu;
     } else {
       return UserMenu;
     }
