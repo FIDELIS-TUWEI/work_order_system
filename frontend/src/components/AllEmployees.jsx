@@ -42,6 +42,12 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
     setIsModalVisible(false);
   }
 
+  // Function to check if user is authorised to view, edit or delete employee
+  const isAuthorized = (user) => {
+    const authorizedRoles = ["admin", "superadmin", "supervisor"];
+    return authorizedRoles.includes(user?.role);
+  };
+
   return (
     <div>
       <div className="add-btn">
@@ -79,12 +85,18 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
                   <Button style={{ color: 'green', border: 'none', margin: '0 5px' }} onClick={() => navigate(`/employee/details/${employee._id}`)}>
                     <AiFillEye />
                   </Button>
-                  <Button danger style={{ border: 'none', marginRight: "5px" }} onClick={() => navigate(`/update/employee/${employee._id}`)}>
-                    <BiSolidEditAlt />
-                  </Button>
-                  <Button danger style={{ border: 'none' }} onClick={() => showModal(employee)}>
-                    <MdDelete />
-                  </Button>
+
+                  {isAuthorized(employee) && (
+                    <>
+                      <Button danger style={{ border: 'none', marginRight: "5px" }} onClick={() => navigate(`/update/employee/${employee._id}`)}>
+                        <BiSolidEditAlt />
+                      </Button>
+
+                      <Button danger style={{ border: 'none' }} onClick={() => showModal(employee)}>
+                        <MdDelete />
+                      </Button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
