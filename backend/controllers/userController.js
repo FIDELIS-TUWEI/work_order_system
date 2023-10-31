@@ -32,7 +32,11 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
 const singleUser = asyncHandler (async (req, res, next) => {
     try {
         // find user by ID
-        const user = await User.findById(req.params.id).select("-password").populate("workOrders").lean();
+        const user = await User.findById(req.params.id).select("-password")
+            .populate("workOrders")
+            .populate("department", "departmentName")
+            .populate("designation", "designationName")
+            .lean();
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
