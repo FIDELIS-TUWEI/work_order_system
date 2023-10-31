@@ -45,10 +45,12 @@ const userSchema = new mongoose.Schema({
         default: true,
     },
     department: {
-        type: String,
+        type: ObjectId,
+        ref: "Deoartment"
     },
     designation: {
-        type: String,
+        type: ObjectId,
+        ref: "Designation"
     },
     workOrders: [
         {
