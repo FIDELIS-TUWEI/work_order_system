@@ -54,12 +54,18 @@ const Work = ({allWork, user, loading, getAllWork}) => {
     const isReviewer = user?.role === "reviewer"
     const isReviewed = work?.status === true
 
+    // Disable edit button for role engineer when work status is complete
     if (isCompleted && (user?.role === "engineer" || (isReviewer && isReviewed))) {
         return false;
     }
 
+    // Hide edit button for user role hod
+    if (user?.role === "hod") {
+        return false;
+    }
+
     // disable edit btn for hod and allow for the rest
-    return isAuthorised && user?.role !== "hod";
+    return isAuthorised;
   }  
 
   return (
@@ -113,7 +119,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                             <Tooltip title="Edit Work">
                                 <Button danger style={{ border: 'none', marginRight: "5px"}} 
                                     onClick={() => navigate(`/edit/work/${work._id}`)}
-                                    disabled={work?.status === "Complete" && user?.role === "engineer"}
+                                    disabled={work?.status === "Complete" && user?.role === "engineer" || user?.role ==="hod"}
                                 >
                                     <BiSolidEditAlt/>
                                 </Button> 
