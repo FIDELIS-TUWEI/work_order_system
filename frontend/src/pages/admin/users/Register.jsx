@@ -6,23 +6,21 @@ import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSli
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CreateUser from '../../../components/CreateUser';
+import { queryAllDepartments } from '../../../services/departmentApi';
+import { queryAllDesignations } from '../../../services/designation';
 const USERS_URL = "/hin";
 
 
 const Register = () => {
+  const [allDepartments, setAllDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [allDesignations, setAllDesignations] = useState([]);
+  const [selectedDesignation, setSelectedDesignation] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const userInfo = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
-
-
-  // useEffect to check if user is logged in
-  useEffect(() => {
-    if (!userInfo && !token) {
-      navigate('/login');
-    }
-  }, [userInfo, navigate, token]);
 
 // function to create user
 const onFinishHandler = async (values) => {
@@ -38,15 +36,67 @@ const onFinishHandler = async (values) => {
     }
   } catch (error) {
     setLoading(false);
-    message.error("User Registration Failed:", error);
+    message.error("User Registration Failed", error);
   }
 }
+
+// Function to get all departments from API service
+const getDepartments = async () => {
+  const res = await queryAllDepartments({
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  setAllDepartments(res.data);
+};
+
+// Function to handle Department Change
+const handleDepartmentChange = (value) => {
+  setSelectedDepartment(value);
+};
+
+// Function to fetch all designations form API service
+const getDesignations = async () => {
+  const res = await queryAllDesignations({
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  setAllDesignations(res.data);
+};
+
+// Function to handle designation change
+const handleDesignationChange = (value) => {
+  setSelectedDesignation(value);
+}
+
+// useEffect to check if user is logged in
+useEffect(() => {
+  if (!userInfo && !token) {
+    navigate('/login');
+  }
+}, [userInfo, navigate, token]);
+
+// useEffect hook
+useEffect(() => {
+  getDepartments();
+  getDesignations();
+}, []);
 
   return (
     <Layout>
       <CreateUser 
         onFinishHandler={onFinishHandler}
         loading={loading}
+        allDepartments={allDepartments}
+        allDesignations={allDesignations}
+        selectedDepartment={selectedDepartment}
+        selectedDesignation={selectedDesignation}
+        handleDepartmentChange={handleDepartmentChange}
+        handleDesignationChange={handleDesignationChange}
       />
     </Layout>
   )
