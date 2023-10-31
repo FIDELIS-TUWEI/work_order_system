@@ -116,10 +116,10 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                             This work is already reviewed, no need to review again.
                         </Typography.Text>
                     ) : (
-                            <Tooltip title="Edit Work">
+                            <Tooltip title={isEditAllowed(work) ? "Edit Work" : "You are not authorised to edit this work order"}>
                                 <Button danger style={{ border: 'none', marginRight: "5px"}} 
                                     onClick={() => navigate(`/edit/work/${work._id}`)}
-                                    disabled={work?.status === "Complete" && user?.role === "engineer" || user?.role ==="hod"}
+                                    disabled={!isEditAllowed(work)}
                                 >
                                     <BiSolidEditAlt/>
                                 </Button> 
