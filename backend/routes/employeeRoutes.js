@@ -4,11 +4,11 @@ const { newEmployee, getAllEmployees, singleEmployee, deleteEmployee, editEmploy
 const { protect, restrict } = require("../middleware/authMiddleware");
 
 router.post("/new/employee", protect, restrict(["admin", "superadmin"]), newEmployee);
-router.get("/all/employees", protect, restrict(["admin", "superadmin"]), getAllEmployees);
+router.get("/all/employees", protect, restrict(["admin", "superadmin", "engineer"]), getAllEmployees);
 router.get("/query/all/employees", protect, restrict(["admin", "superadmin", "hod", "reviewer", "engineer", "supervisor"]), queryAllEmployees);
 router.get("/single/employee/:id", protect, singleEmployee);
 router.get("/employee/data/:id", protect, getEmployeeInfo);
-router.get("/employee/work/count", protect, restrict(["admin", "superadmin"]), countWorkAssigned);
+router.get("/employee/work/count", protect, restrict(["admin", "superadmin", "engineer"]), countWorkAssigned);
 router.get("/count/employees", protect, countEmployees);
 router.put("/edit/employee/:id", protect, restrict(["admin", "superadmin"]), editEmployee);
 router.delete("/delete/employee/:id", protect, restrict(["admin", "superadmin"]), deleteEmployee);
