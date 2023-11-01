@@ -1,4 +1,4 @@
-import { Button, Card, Modal, message, Tooltip } from "antd"
+import { Button, Card, Modal, message, Tooltip, DatePicker, Select } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
@@ -8,7 +8,9 @@ import { useSelector } from "react-redux"
 import { deleteWorkOrder } from "../services/workApi"
 import { useState } from "react";
 
-const Work = ({allWork, user, loading, getAllWork}) => {
+const { Option } = Select;
+
+const Work = ({allWork, user, loading, getAllWork, handleFilterChange, dateFilter}) => {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
@@ -70,14 +72,23 @@ const Work = ({allWork, user, loading, getAllWork}) => {
 
   return (
     <>
-        <div className="add-btn">
-            <Button 
-            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
-            onClick={() => navigate("/new/work")}
-            >
-            New Work
-            </Button>
-
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+                <DatePicker onChange={(date, dateString) => handleFilterChange("day")} />
+                <Select defaultValue="day" style={{ width: 120 }} onChange={(value) => handleFilterChange(value)}>
+                    <Option value="day">Day</Option>
+                    <Option value="month">Month</Option>
+                    <Option value="year">Year</Option>
+                </Select>
+            </div>
+            <div className="add-btn">
+                <Button 
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+                onClick={() => navigate("/new/work")}
+                >
+                New Work
+                </Button>
+            </div>
         </div>
 
         <Card 
