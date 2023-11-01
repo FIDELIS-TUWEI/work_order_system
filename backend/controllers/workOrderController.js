@@ -208,60 +208,6 @@ const queryAllWork = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Get all work orders created in a day
-const filterWorkByCalendar = asyncHandler (async (req, res) => {
-    try {
-        const { dateFilter } = req.params;
-        let filterStartDate, filterEndDate;
-
-        // conditions to be met inorder to filter work
-        if (dateFilter === 'day') {
-            // Filter work by specific day
-            filterStartDate = new Date(); // set desired date here
-            filterEndDate = new Date(filterStartDate);
-            filterEndDate.setHours(23, 59, 59, 999); // End of the selected day
-        } else if (dateFilter === 'month') {
-            // Filter by specific month
-            filterStartDate = new Date(); // set desired month here
-            filterStartDate.setDate(1); // start of the selected month
-            filterEndDate = new Date(filterStartDate);
-            filterEndDate.setMonth(filterStartDate.getMonth() + 1);
-            filterEndDate.setDate(0); // End of the selected month
-        } else if (dateFilter === 'year') {
-            // Filter by specific year
-            filterStartDate = new Date(); // set desired year here
-            filterStartDate.setMonth(0); // Start of the selected year
-            filterStartDate.setDate(1);
-            filterEndDate = new Date(filterStartDate);
-            filterEndDate.setFullYear(filterStartDate.getFullYear() + 1);
-            filterEndDate.setMonth(0); // End of the selected year
-        }
-
-        // Aggregate work orders if conditions are met
-        const workFiltered = await WorkOrder.aggregate([
-            {
-                $match: {
-                    Date_Created: {
-                        $gte: filterStartDate,
-                        $lt: filterEndDate,
-                    },
-                },
-            },
-        ]);
-
-        // return a response
-        res.status(200).json({
-            success: true,
-            data: workFiltered
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-})
-
 // Get single Work Order
 const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     try {
@@ -371,6 +317,5 @@ module.exports = {
     getAllWorkOrders,
     queryAllWork,
     getSingleWorkOrder,
-    filterWorkByCalendar,
     deleteWorkOrder,
 }
