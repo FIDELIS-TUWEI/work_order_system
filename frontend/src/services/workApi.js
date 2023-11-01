@@ -21,6 +21,17 @@ export const getAllWorkOrders = async (page) => {
     }
 };
 
+// Get work filtered by calendar
+export const getWorkCalendar = async (dateFilter) => {
+    try {
+        const res = await axios.get(`${WORK_URL}/work/filter?${dateFilter}`);
+        const data = res.data
+        return data;
+    } catch (error) {
+        console.log("Error While fetching work filtered by date", error);
+    }
+}
+
 // Get all work Query without pagination for line chart frontend
 export const getAllWorkQuery = async () => {
     try {
