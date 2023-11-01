@@ -214,6 +214,7 @@ const filterWorkByCalendar = asyncHandler (async (req, res) => {
         const { dateFilter } = req.params;
         let filterStartDate, filterEndDate;
 
+        // conditions to be met inorder to filter work
         if (dateFilter === 'day') {
             // Filter work by specific day
             filterStartDate = new Date(); // set desired date here
@@ -235,6 +236,24 @@ const filterWorkByCalendar = asyncHandler (async (req, res) => {
             filterEndDate.setFullYear(filterStartDate.getFullYear() + 1);
             filterEndDate.setMonth(0); // End of the selected year
         }
+
+        // Aggregate work orders if conditions are met
+        const workFiltered = await WorkOrder.aggregate([
+            {
+                $match: {
+                    Date_Created: {
+                        $gte: filterStartDate,
+                        $lt: filterEndDate,
+                    },
+                },
+            },
+        ]);
+
+        // return a response
+        res.status(200).json({
+            success: true,
+            data: workFiltered
+        })
     } catch (error) {
         res.status(500).json({
             success: false,
