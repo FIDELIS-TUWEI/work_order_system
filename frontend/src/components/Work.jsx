@@ -10,7 +10,7 @@ import { useState } from "react";
 
 const { Option } = Select;
 
-const Work = ({allWork, user, loading, getAllWork, handleFilterChange, dateFilter}) => {
+const Work = ({allWork, user, loading, getAllWork}) => {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
@@ -72,23 +72,13 @@ const Work = ({allWork, user, loading, getAllWork, handleFilterChange, dateFilte
 
   return (
     <>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
-                <DatePicker onChange={(date, dateString) => handleFilterChange("day")} />
-                <Select defaultValue="day" style={{ width: 120 }} onChange={(value) => handleFilterChange(value)}>
-                    <Option value="day">Day</Option>
-                    <Option value="month">Month</Option>
-                    <Option value="year">Year</Option>
-                </Select>
-            </div>
-            <div className="add-btn">
-                <Button 
-                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
-                onClick={() => navigate("/new/work")}
-                >
-                New Work
-                </Button>
-            </div>
+        <div className="add-btn">
+            <Button 
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+            onClick={() => navigate("/new/work")}
+            >
+            New Work
+            </Button>
         </div>
 
         <Card 
