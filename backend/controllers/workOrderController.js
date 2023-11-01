@@ -206,6 +206,41 @@ const queryAllWork = asyncHandler (async (req, res, next) => {
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
+});
+
+// Get all work orders created in a day
+const filterWorkByCalendar = asyncHandler (async (req, res) => {
+    try {
+        const { dateFilter } = req.params;
+        let filterStartDate, filterEndDate;
+
+        if (dateFilter === 'day') {
+            // Filter work by specific day
+            filterStartDate = new Date(); // set desired date here
+            filterEndDate = new Date(filterStartDate);
+            filterEndDate.setHours(23, 59, 59, 999); // End of the selected day
+        } else if (dateFilter === 'month') {
+            // Filter by specific month
+            filterStartDate = new Date(); // set desired month here
+            filterStartDate.setDate(1); // start of the selected month
+            filterEndDate = new Date(filterStartDate);
+            filterEndDate.setMonth(filterStartDate.getMonth() + 1);
+            filterEndDate.setDate(0); // End of the selected month
+        } else if (dateFilter === 'year') {
+            // Filter by specific year
+            filterStartDate = new Date(); // set desired year here
+            filterStartDate.setMonth(0); // Start of the selected year
+            filterStartDate.setDate(1);
+            filterEndDate = new Date(filterStartDate);
+            filterEndDate.setFullYear(filterStartDate.getFullYear() + 1);
+            filterEndDate.setMonth(0); // End of the selected year
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
 })
 
 // Get single Work Order
