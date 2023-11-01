@@ -371,5 +371,6 @@ module.exports = {
     getAllWorkOrders,
     queryAllWork,
     getSingleWorkOrder,
+    filterWorkByCalendar,
     deleteWorkOrder,
 }
