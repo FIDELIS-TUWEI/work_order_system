@@ -6,6 +6,7 @@ import {RiLogoutCircleFill} from "react-icons/ri";
 import { useLogoutMutation } from "../utils/redux/slices/authApiSlice";
 import {logout, selectUserInfo} from "../utils/redux/slices/authSlice";
 import { message } from "antd";
+import Logo from "../assets/logo.png"
 
 const Layout = ({ children }) => {
   const userInfo = useSelector(selectUserInfo);
@@ -49,9 +50,11 @@ const Layout = ({ children }) => {
       <div className="layout">
         <div className="sidebar">
           <div className="logo">
+            <img src={Logo} alt="Company Logo" className="sidebar--logo"/>
             <h6>Holiday Inn</h6>
-            <hr />
           </div>
+          <hr />
+
           <div className="menu">
             {renderMenu().map((menu) => {
               const isActive = location.pathname === menu.path;
