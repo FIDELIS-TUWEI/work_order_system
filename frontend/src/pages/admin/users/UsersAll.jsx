@@ -53,4 +53,4 @@ const handlePageChange = (newPage) => {
   )
 }
 
-export default UsersAll
+export default UsersAll;
