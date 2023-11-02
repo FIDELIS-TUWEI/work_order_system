@@ -65,4 +65,4 @@ const AllWorkOrders = () => {
   )
 }
 
-export default AllWorkOrders
+export default AllWorkOrders;
