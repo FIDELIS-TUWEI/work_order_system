@@ -69,4 +69,4 @@ const AllLocations = () => {
   )
 }
 
-export default AllLocations
+export default AllLocations;
