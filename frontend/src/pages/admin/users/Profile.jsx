@@ -24,11 +24,11 @@ const Profile = () => {
           <div className="details--header">
             <div className="details--header1">
               <h2>First Name: {user?.firstName}</h2>
-              <p>Department: {user?.department}</p>
+              <p>Department: {user?.department?.departmentName}</p>
             </div>
             <div className="details--header2">
               <h2>Last Name: {user?.lastName}</h2>
-              <p>Designation: {user?.designation}</p>
+              <p>Designation: {user?.designation?.designationName}</p>
             </div>
           </div>
 
