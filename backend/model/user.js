@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
     },
     department: {
         type: ObjectId,
-        ref: "Deoartment"
+        ref: "Department"
     },
     designation: {
         type: ObjectId,
