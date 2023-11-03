@@ -36,7 +36,7 @@ const signupUser = asyncHandler (async (req, res) => {
         const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
 
         const emailSubject = `New User successfully`;
-        const emailText = `A user with username ${user.firstName} ${user.lastName} has been created.`;
+        const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
 
         const emailOptions = {
             email: recepients,
