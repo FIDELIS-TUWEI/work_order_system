@@ -1,7 +1,6 @@
 import {MdDashboard, MdOutlineWork, MdAdminPanelSettings, MdGroups} from 'react-icons/md';
 import { FaUserPlus} from 'react-icons/fa';
 import {SiGoogleanalytics} from 'react-icons/si';
-import {PiUserCircleGearFill} from 'react-icons/pi';
 import {TbReport} from 'react-icons/tb';
 
 export const AdminMenu = [
@@ -35,12 +34,7 @@ export const AdminMenu = [
         name: "Reports",
         path: "/work/reports",
         icon: <TbReport />
-    },
-    {
-        name: "Profile",
-        path: "/profile",
-        icon: <PiUserCircleGearFill/>
-    },
+    }
 ]
 
 export const EngineerMenu = [
@@ -68,12 +62,7 @@ export const EngineerMenu = [
         name: "Reports",
         path: "/work/reports",
         icon: <TbReport />
-    },
-    {
-        name: "Profile",
-        path: "/profile",
-        icon: <PiUserCircleGearFill/>
-    },
+    }
 ]
 
 export const UserMenu = [
@@ -87,12 +76,7 @@ export const UserMenu = [
         name: "Work Order",
         path: "/new/work",
         icon: <MdOutlineWork/>
-    },
-    {
-        name: "Profile",
-        path: "/profile",
-        icon: <PiUserCircleGearFill/>
-    },
+    }
 ]
 
 export const HodMenu = [
@@ -116,10 +100,5 @@ export const HodMenu = [
         name: "Reports",
         path: "/work/reports",
         icon: <TbReport />
-    },
-    {
-        name: "Profile",
-        path: "/profile",
-        icon: <PiUserCircleGearFill/>
-    },
+    }
 ]
