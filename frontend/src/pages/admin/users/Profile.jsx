@@ -1,15 +1,38 @@
 import { Button, Typography } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
-import { selectUserInfo } from '../../../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Logo from "../../../assets/logo.png"
+import { useEffect, useState } from 'react';
+import { getUserInfo } from '../../../services/usersApi';
 
 
 const Profile = () => {
   const user = useSelector(selectUserInfo);
+  const token = useSelector(selectToken);
+  const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
+  const {id} = useParams();
+
+  // Function to get user data
+  const getUserData = async (id) => {
+    const res = await getUserInfo(id, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setUserData({...res.data});
+  };
+
+  // useEffect hook
+  useEffect(() => {
+    if (id) {
+      getUserData(id);
+    }
+  }, [id]);
 
 
   return (
@@ -23,12 +46,12 @@ const Profile = () => {
 
           <div className="details--header">
             <div className="details--header1">
-              <h2>First Name: {user?.firstName}</h2>
-              <p>Department: {user?.department?.departmentName}</p>
+              <h2>First Name: {userData?.firstName}</h2>
+              <p>Department: {userData?.department?.departmentName}</p>
             </div>
             <div className="details--header2">
-              <h2>Last Name: {user?.lastName}</h2>
-              <p>Designation: {user?.designation?.designationName}</p>
+              <h2>Last Name: {userData?.lastName}</h2>
+              <p>Designation: {userData?.designation?.designationName}</p>
             </div>
           </div>
 
@@ -36,19 +59,19 @@ const Profile = () => {
         <div className="details--grid">
           <div className="details">
             <span>Username:</span>
-            <span>{user?.username}</span>
+            <span>{userData?.username}</span>
           </div>
           <div className="details">
             <span>Email:</span>
-            <span>{user?.email}</span>
+            <span>{userData?.email}</span>
           </div>
           <div className="details">
             <span>Role:</span>
-            <span>{user?.role}</span>
+            <span>{userData?.role}</span>
           </div>
           <div className="details">
             <span>Active</span>
-            <span>{user?.active === true ? "Active" : "Not Active"}</span>
+            <span>{userData?.active === true ? "Active" : "Not Active"}</span>
           </div>
         </div>
         {
