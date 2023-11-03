@@ -76,7 +76,8 @@ export const UserMenu = [
         name: "Work Order",
         path: "/new/work",
         icon: <MdOutlineWork/>
-    }
+    },
+
 ]
 
 export const HodMenu = [
