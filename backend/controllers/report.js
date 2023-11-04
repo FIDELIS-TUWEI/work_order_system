@@ -9,11 +9,33 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
     const count = await WorkOrder.find({}).estimatedDocumentCount();
 
     try {
-        const { status } = req.query;
+        const { status, selectedDate, dateFilter } = req.query;
         let query = {};
 
         if (status) {
             query.status = status;
+        };
+
+        if (selectedDate && dateFilter) {
+            const date = new Date(selectedDate);
+
+            // Depending on the filter("day,", "month", "year"), create the appropriatedate range query
+            if (dateFilter === "day") {
+                query.Date_Created = {
+                    $gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+                    $lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
+                }
+            } else if (dateFilter === "month") {
+                query.Date_Created = {
+                    $gte: new Date(date.getFullYear(), date.getMonth()),
+                    $lt: new Date(date.getFullYear(), date.getMonth() + 1)
+                }
+            } else if (dateFilter === "year") {
+                query.Date_Created = {
+                    $gte: new Date(date.getFullYear()),
+                    $lt: new Date(date.getFullYear() + 1)
+                }
+            }
         }
 
         const workOrders = await WorkOrder.find(query)
