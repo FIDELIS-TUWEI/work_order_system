@@ -4,6 +4,9 @@ import LoadingBox from "./LoadingBox";
 const { Option } = Select;
 
 const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepartments, selectedDepartment, handleDepartmentChange, allDesignations, selectedDesignation, handleDesignationChange }) => {
+
+  // Conditionally exclude  the "superadmin" role value if the user logged in is not an "superadmin"
+
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
