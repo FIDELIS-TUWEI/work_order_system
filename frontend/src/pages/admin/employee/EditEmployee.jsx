@@ -4,7 +4,7 @@ import UpdateEmployee from "../../../components/UpdateEmployee";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { editEmployee, getEmployeeData } from "../../../services/employeeApi";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { message } from "antd";
 
 const EditEmployee = () => {
@@ -30,23 +30,23 @@ const EditEmployee = () => {
   };
 
   // Function to get single employee details
-  const getEmployeeDetails = async (id) => {
+  const getEmployeeDetails = useCallback (async (id) => {
     const res = await getEmployeeData(id, {
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    });
+    }, [token]);
     
     setEmployeeDetails(res.data);
-  };
+  }, [token]);
 
   // UseEffect hook
   useEffect(() => {
     if (id) {
       getEmployeeDetails(id);
     }
-  }, [id]);
+  }, [id, getEmployeeDetails]);
 
   return (
     <Layout>

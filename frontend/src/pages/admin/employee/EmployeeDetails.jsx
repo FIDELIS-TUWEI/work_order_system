@@ -3,7 +3,7 @@ import Layout from "../../../components/Layout";
 import ViewEmployee from "../../../components/ViewEmployee";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getSingleEmployee } from "../../../services/employeeApi";
 import { message } from "antd";
 
@@ -15,7 +15,7 @@ const EmployeeDetails = () => {
   const { id } = useParams();
 
   // Function to get employee details
-  const getEmployeeDetails = async (id) => {
+  const getEmployeeDetails = useCallback (async (id) => {
     try {
       setLoading(true);
       const res = await getSingleEmployee(id, {
@@ -30,14 +30,14 @@ const EmployeeDetails = () => {
       setLoading(false);
       message.error(error.message);
     }
-  };
+  }, [token]);
 
   // UseEffect hook
   useEffect(() => {
     if (id) {
       getEmployeeDetails(id);
     }
-  }, [id]);
+  }, [id, getEmployeeDetails]);
 
   return (
     <Layout>

@@ -3,7 +3,7 @@ import AllEmployees from "../../../components/AllEmployees";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAllEmployees } from "../../../services/employeeApi";
 
 const Employees = () => {
@@ -15,7 +15,7 @@ const Employees = () => {
   const navigate = useNavigate();
 
   // Function to get all employees
-  const getEmployees = async () => {
+  const getEmployees = useCallback (async () => {
     setLoading(true);
     const { data, pages } = await getAllEmployees(page, {
       withCredentials: true,
@@ -26,13 +26,13 @@ const Employees = () => {
     setEmployees(data);
     setPages(pages);
     setLoading(false);
-  };
+  }, [token, page]);
   
 
   // UseEffect hook
   useEffect(() => {
     getEmployees();
-  }, [page]);
+  }, [page, getEmployees]);
 
   // Function to handle page change
   const handlePageChange = (newPage) => {

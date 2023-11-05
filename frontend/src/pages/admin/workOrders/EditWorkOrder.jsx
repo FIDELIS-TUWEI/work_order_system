@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Layout from '../../../components/Layout'
 import { message } from 'antd'
 import { useSelector } from 'react-redux'
@@ -32,7 +32,7 @@ const EditWorkOrder = () => {
   }
 
   // Function to get work order details
-  const getWorkOrderDetails = async (id) => {
+  const getWorkOrderDetails = useCallback (async (id) => {
     const res = await getSingleWorkOrder(id, {
       withCredentials: true,
       headers: {
@@ -40,7 +40,7 @@ const EditWorkOrder = () => {
       }
     });
     setWorkDetails({...res.data});
-  }
+  }, [token]);
 
   // Function to handle change in employee selection
   const handleEmployeeChange = (value) => {
@@ -48,7 +48,7 @@ const EditWorkOrder = () => {
   };
 
   // Function to get all employees
-  const getEmployees = async () => {
+  const getEmployees = useCallback (async () => {
     const { data } = await queryAllEmployees({
       withCredentials: true,
       headers: {
@@ -56,7 +56,7 @@ const EditWorkOrder = () => {
       },
     });
     setEmployees(data);
-  };
+  }, [token]);
 
   // UseEffect hook
   useEffect(() => {
@@ -64,7 +64,7 @@ const EditWorkOrder = () => {
       getWorkOrderDetails(id);
       getEmployees();
     }
-  }, [id]);
+  }, [id, getWorkOrderDetails, getEmployees]);
   
   return (
     <Layout>
@@ -81,4 +81,4 @@ const EditWorkOrder = () => {
   )
 }
 
-export default EditWorkOrder
+export default EditWorkOrder;
