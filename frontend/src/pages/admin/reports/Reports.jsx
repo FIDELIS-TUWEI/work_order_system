@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import Logo from "../../../assets/logo.png";
 import Layout from "../../../components/Layout";
@@ -17,13 +17,13 @@ const Reports = () => {
   const [loading, setLoading] = useState(false);
 
 // Function to fetch all work orders from API
-const getWorkOrders = async () => {
+const getWorkOrders = useCallback(async () => {
   try {
     setLoading(true);
     const res = await axios.get(`${WORK_URL}/work`, {
       params: {
         pageNumber: page,
-        status: filterStatus,
+        status: filterStatus
       },
     });
     setWorkOrders(res.data.data);
@@ -33,12 +33,12 @@ const getWorkOrders = async () => {
     console.log(error);
     message.error(error.message);
   }
-}
+}, [filterStatus, page]);
 
   // useEffect hook
   useEffect(() => {
     getWorkOrders();
-  }, [filterStatus, page]);
+  }, [filterStatus, page, getWorkOrders]);
 
   // Function to generate and export pending work orders
   const exportPDF = async () => {
@@ -87,6 +87,7 @@ const getWorkOrders = async () => {
         pages={pages}
         page={page}
         loading={loading}
+        getWorkOrders={getWorkOrders}
         setFilterStatus={setFilterStatus}
         exportPDF={exportPDF}
       />
