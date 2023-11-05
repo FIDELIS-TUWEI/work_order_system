@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { editUser, getUserInfo } from "../../../services/usersApi";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UpdateUser from "../../../components/UpdateUser";
 import { queryAllDepartments } from "../../../services/departmentApi";
 import { queryAllDesignations } from "../../../services/designation";
@@ -43,7 +43,7 @@ const EditUser = () => {
   }
 
   // Function to get single user details
-  const getUserDetails = async (id) => {
+  const getUserDetails = useCallback (async (id) => {
     const res = await getUserInfo(id, {
       withCredentials: true,
       headers: {
@@ -51,7 +51,7 @@ const EditUser = () => {
       }
     });
     setUserDetails({...res.data});
-  };
+  }, [token]);
 
   // Function to handle change in department
   const handleDepartmentChange = (value) => {
@@ -59,7 +59,7 @@ const EditUser = () => {
   };
 
   // Function to get Departments
-  const getAllDepartments = async () => {
+  const getAllDepartments = useCallback (async () => {
     const res = await queryAllDepartments({
       withCredentials: true,
       headers: {
@@ -67,7 +67,7 @@ const EditUser = () => {
       }
     });
     setAllDepartments(res.data);
-  }
+  }, [token]);
 
   // Function to handle change in designation
   const handleDesignationChange = (value) => {
@@ -75,7 +75,7 @@ const EditUser = () => {
   };
 
   // Function to get Designations
-  const getAllDesignations = async () => {
+  const getAllDesignations = useCallback (async () => {
     const res = await queryAllDesignations({
       withCredentials: true,
       headers: {
@@ -83,7 +83,7 @@ const EditUser = () => {
       }
     });
     setAllDesignations(res.data);
-  }
+  }, [token]);
 
   // UseEffect hook
   useEffect(() => {
@@ -92,7 +92,7 @@ const EditUser = () => {
     }
     getAllDepartments();
     getAllDesignations();
-  }, [id]);
+  }, [id, getAllDepartments, getAllDesignations, getUserDetails]);
 
   return (
     <Layout>
