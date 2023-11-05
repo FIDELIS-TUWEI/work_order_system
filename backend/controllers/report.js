@@ -1,5 +1,6 @@
 const WorkOrder = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
+const ErrorResponse = require("../utils/errorResponse");
 
 // Filter Work Orders
 const filterWorkStatus = asyncHandler (async (req, res, next) => {
@@ -55,7 +56,7 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
             count
         });
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        next(error.message, 500);
     }
 });
 
