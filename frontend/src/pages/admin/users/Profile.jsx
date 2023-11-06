@@ -5,7 +5,7 @@ import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSli
 
 import { useNavigate, useParams } from 'react-router-dom';
 import Logo from "../../../assets/logo.png"
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../services/usersApi';
 
 
@@ -17,7 +17,7 @@ const Profile = () => {
   const {id} = useParams();
 
   // Function to get user data
-  const getUserData = async (id) => {
+  const getUserData = useCallback (async (id) => {
     const res = await getUserInfo(id, {
       withCredentials: true,
       headers: {
@@ -25,14 +25,14 @@ const Profile = () => {
       },
     });
     setUserData({...res.data});
-  };
+  }, [token]);
 
   // useEffect hook
   useEffect(() => {
     if (id) {
       getUserData(id);
     }
-  }, [id]);
+  }, [id, getUserData]);
 
 
   return (
