@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import Layout from '../../../components/Layout';
 import ViewAllDepartments from '../../../components/ViewAllDepartments';
 import { selectToken } from '../../../utils/redux/slices/authSlice';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { allDepartments } from '../../../services/departmentApi';
 
 const AllDepartments = () => {
@@ -13,7 +13,7 @@ const AllDepartments = () => {
   const [loading, setLoading] = useState(false);
   
   // Function to get all departments
-  const getDepartments = async () => {
+  const getDepartments = useCallback (async () => {
     setLoading(true);
     const { data, pages } = await allDepartments(page, {
       withCredentials: true,
@@ -24,12 +24,12 @@ const AllDepartments = () => {
     setDepartments(data);
     setPages(pages);
     setLoading(false);
-  };
+  }, [token, page]);
 
   // UseEffect hook
   useEffect(() => {
     getDepartments();
-  }, [page]);
+  }, [page, getDepartments]);
 
   // Function to handle page change
   const handlePageChange = (newPage) => {
