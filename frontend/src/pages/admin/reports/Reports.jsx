@@ -17,7 +17,7 @@ const Reports = () => {
   const [loading, setLoading] = useState(false);
 
 // Function to fetch all work orders from API
-const getWorkOrders = useCallback(async () => {
+const getWorkOrders = useCallback (async () => {
   try {
     setLoading(true);
     const res = await axios.get(`${WORK_URL}/work`, {
