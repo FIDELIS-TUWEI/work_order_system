@@ -1,7 +1,7 @@
 import { Button, Card } from 'antd';
 import Layout from '../../../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../services/usersApi';
 import { useSelector } from 'react-redux';
 import { selectToken } from '../../../utils/redux/slices/authSlice';
@@ -14,7 +14,7 @@ const UserDetails = () => {
 
 
   // function to get user details
-  const getUserDetails = async (id) => {
+  const getUserDetails = useCallback (async (id) => {
     const res = await getUserInfo(id, {
       withCredentials: true,
       headers: {
@@ -22,14 +22,14 @@ const UserDetails = () => {
       },
     });
     setUserDetails({...res.data});
-  };
+  }, [token]);
 
   // UseEffect hook
   useEffect(() => {
     if (id) {
       getUserDetails(id);
     }
-  }, [id]);
+  }, [id, getUserDetails]);
 
   return (
     <Layout>
