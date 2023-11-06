@@ -31,16 +31,22 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
 // Controller function to get single user
 const singleUser = asyncHandler (async (req, res, next) => {
     try {
+        // Check if user id exists
+        const userExists = await User.exists({ _id: id });
+
+        if (!userExists) {
+            return next(new ErrorResponse("User not found", 404));
+        };
+
+        // Clear cache
+        await User.clearCache();
+        
         // find user by ID
         const user = await User.findById(req.params.id).select("-password")
             .populate("workOrders")
             .populate("department", "departmentName")
             .populate("designation", "designationName")
             .lean();
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
 
         res.status(200).json({
             success: true,
