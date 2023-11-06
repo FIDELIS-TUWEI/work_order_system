@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import Layout from "../../../components/Layout"
 import ViewAllLocations from "../../../components/ViewAllLocations"
 import { selectToken } from "../../../utils/redux/slices/authSlice"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { allLocations } from "../../../services/locationApi"
 
@@ -15,7 +15,7 @@ const AllLocations = () => {
     const navigate = useNavigate();
 
     // Function to get all Work Locations
-    const getLocations = async () => {
+    const getLocations = useCallback (async () => {
         setLoading(true);
         const { data, pages } = await allLocations(page, {
             withCredentials: true,
@@ -26,12 +26,12 @@ const AllLocations = () => {
         setLocations(data);
         setPages(pages);
         setLoading(false);
-    }
+    }, [token, page]);
 
     // UseEffect hook
     useEffect(() => {
         getLocations();
-    }, [page]);
+    }, [page, getLocations]);
 
     // Function to handle page change
     const handlePageChange = (newPage) => {
