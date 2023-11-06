@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkQuery } from "../../../services/workApi";
@@ -10,12 +10,8 @@ const BarGraph = () => {
     const [workData, setWorkData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        allWork();
-    }, []);
-
     // Function to get All work orders from API Service
-    const allWork = async () => {
+    const allWork = useCallback (async () => {
         setLoading(true);
         const { data } = await getAllWorkQuery({
             withCredentials: true,
@@ -25,7 +21,12 @@ const BarGraph = () => {
         });
         setWorkData(data);
         setLoading(false);
-    }
+    }, [token]);
+
+    // useEffect hook
+    useEffect(() => {
+        allWork();
+    }, [allWork]);
 
     // Count the number of work assigned to each employee
     const workCounts = workData.reduce((counts, workOrder) => {
@@ -115,7 +116,7 @@ const generateUniqueColors = (count) => {
         const hue = i * hueStep;
         const color = `hsl(${hue}, 70%, 50%)`;
         colors.push(color);
-    };
+    }
 
     return colors;
 }
