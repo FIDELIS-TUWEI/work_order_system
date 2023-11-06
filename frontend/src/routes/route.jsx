@@ -33,7 +33,6 @@ import Employees from "../pages/admin/employee/Employees";
 import EditEmployee from "../pages/admin/employee/EditEmployee";
 import EmployeeDetails from "../pages/admin/employee/EmployeeDetails";
 import NewEmployee from "../pages/admin/employee/NewEmployee";
-import EmployeeAnalytics from "../pages/admin/employee/EmployeeAnalytics";
 
 
 export const router = createBrowserRouter(
@@ -61,7 +60,6 @@ export const router = createBrowserRouter(
         <Route path="/all/employees" element={ <PrivateRoute> <Employees /> </PrivateRoute> } />
         <Route path="/employee/details/:id" element={ <PrivateRoute> <EmployeeDetails /> </PrivateRoute> } />
         <Route path="/update/employee/:id" element={ <PrivateRoute> <EditEmployee /> </PrivateRoute> } />
-        <Route path="/employee/analytics" element={ <PrivateRoute> <EmployeeAnalytics /> </PrivateRoute> } />
         <Route path="/new/location" element={ <PrivateRoute> <NewLocation /> </PrivateRoute> } />
         <Route path="/work/reports" element={ <PrivateRoute> <Reports /> </PrivateRoute> } />
         <Route path="/reports" element={ <PrivateRoute> <WorkReport /> </PrivateRoute> } />
