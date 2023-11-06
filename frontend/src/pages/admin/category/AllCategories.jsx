@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import Layout from "../../../components/Layout"
 import ViewAllCategories from "../../../components/ViewAllCategories"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { allWorkCategories } from "../../../services/categoryApi"
 import { useSelector } from "react-redux"
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice"
@@ -16,7 +16,7 @@ const AllCategories = () => {
     const navigate = useNavigate();
 
     // Function to get all Work Categories
-    const getCategories = async () => {
+    const getCategories = useCallback (async () => {
         setLoading(true)
         const { data, pages } = await allWorkCategories(page, {
             withCredentials: true,
@@ -27,12 +27,12 @@ const AllCategories = () => {
         setCategories(data);
         setPages(pages);
         setLoading(false);
-    }
+    }, [token, page]);
 
     // UseEffect hook
     useEffect(() => {
         getCategories();
-    }, [page]);
+    }, [page, getCategories]);
 
     // Function to handle page change
     const handlePageChange = (newPage) => {
