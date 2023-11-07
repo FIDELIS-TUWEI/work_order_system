@@ -1,4 +1,4 @@
-import { Button } from "antd"
+import { Button, message } from "antd"
 import Layout from "../../../components/Layout"
 import { getAllWorkOrders } from "../../../services/workApi";
 import { useEffect, useState } from "react";
@@ -20,16 +20,21 @@ const AllWorkOrders = () => {
 
   // Function to get all work orders from Api
   const getAllWork = async () => {
-      setLoading(true);
-      const { data, pages } = await getAllWorkOrders(page, {
+      try {
+        setLoading(true);
+        const { data, pages } = await getAllWorkOrders(page, {
           withCredentials: true,
           headers: {
-              Authorization: `Bearer ${token}`
-          }
-      });
-      setAllWork(data);
-      setPages(pages);
-      setLoading(false);
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAllWork(data);
+        setPages(pages);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        message.error("Failed to fetch work orders", error.message);
+      }
   };
 
 
