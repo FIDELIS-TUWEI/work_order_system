@@ -9,17 +9,18 @@ export const getAllUsers = async (page) => {
         return data;
     } catch (error) {
         console.error("Error while fetching users", error);
+        throw new Error("Failed to fetch users");
     }
 };
 
 // Get user profile by id
 export const getUserInfo = async (id) => {
     try {
-        const res = await axios.get(`${USERS_URL}/user/${id}`);
-        const data = res.data;
-        return data;
+        const res = await axios.get(`${USERS_URL}/single/user/${id}`);
+        return res.data;
     } catch (error) {
-        console.error("Error while fetching single user", error);
+        console.error("Error while fetching single user:", error);
+        throw new Error("Failed to fetch user details");
     }
 };
 
@@ -29,7 +30,8 @@ export const editUser = async (id, values) => {
         const res = await axios.put(`${USERS_URL}/edit/${id}`, values);
         return res.data;
     } catch (error) {
-        console.error("Error while Updating user", error);
+        console.error("Error while Updating user:", error);
+        throw new Error("Failed to update user");
     }
 };
 
@@ -39,6 +41,7 @@ export const deleteUser = async (id) => {
         return axios.delete(`${USERS_URL}/admin/user/delete/${id}`);
     } catch (error) {
         console.error("Error while deleting user", error);
+        throw new Error("Failed to delete user");
     }
 }
 
@@ -49,6 +52,7 @@ export const updateUserPassword = async (id, values) => {
         return res.data;
     } catch (error) {
         console.error("Error while updating user password", error);
+        throw new Error("Failed to update user password");
     }
 }
 
@@ -60,6 +64,7 @@ export const countAllUsers = async () => {
         return data;
     } catch (error) {
         console.log("Error While fetching total number of users", error);
+        throw new Error("Failed to fetch total number of users");
     }
 };
 
@@ -71,6 +76,7 @@ export const countActiveUsers = async () => {
         return data;
     } catch (error) {
         console.log("Error While fetching total number of active users", error);
+        throw new Error("Failed to fetch total number of active users");
     }
 };
 
