@@ -5,6 +5,7 @@ import { selectToken } from "../../../utils/redux/slices/authSlice"
 import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { allLocations } from "../../../services/locationApi"
+import { message } from "antd"
 
 const AllLocations = () => {
     const token = useSelector(selectToken);
@@ -16,16 +17,21 @@ const AllLocations = () => {
 
     // Function to get all Work Locations
     const getLocations = useCallback (async () => {
-        setLoading(true);
-        const { data, pages } = await allLocations(page, {
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        setLocations(data);
-        setPages(pages);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const { data, pages } = await allLocations(page, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setLocations(data);
+            setPages(pages);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            message.error("Failed to fetch locations", error.message);
+        }
     }, [token, page]);
 
     // UseEffect hook
