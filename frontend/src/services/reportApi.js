@@ -9,6 +9,7 @@ export const countPendingWork = async () => {
         return data;
     } catch (error) {
         console.log("Error while fetching all work orders by pending status", error);
+        throw new Error("Failed to fetch all pending work count");
     }
 };
 
@@ -20,6 +21,7 @@ export const countInProgressWork = async () => {
         return data;
     } catch (error) {
         console.log("Error while fetching all work orders by in progress status", error);
+        throw new Error("Failed to fetch all in progress work count");
     }
 };
 
@@ -31,6 +33,7 @@ export const countCompletedWork = async () => {
         return data;
     } catch (error) {
         console.log("Error While fetching all work orders by completed status", error);
+        throw new Error("Failed to fetch all completed work count");
     }
 };
 
@@ -42,6 +45,7 @@ export const countReviewedWork = async () => {
         return data;
     } catch (error) {
         console.log("Error While fetching all work orders by reviewed status", error);
+        throw new Error("Failed to fetch all reviewed work count");
     }
 };
 
@@ -53,5 +57,6 @@ export const countTotalWork = async () => {
         return data;
     } catch (error) {
         console.log("Error While fetching total work count", error);
+        throw new Error("Failed to fetch total work count");
     }
 };
