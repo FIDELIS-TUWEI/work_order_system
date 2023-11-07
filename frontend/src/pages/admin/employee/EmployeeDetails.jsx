@@ -28,7 +28,7 @@ const EmployeeDetails = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      message.error(error.message);
+      message.error("Failed to fetch employee details", error.message);
     }
   }, [token]);
 
