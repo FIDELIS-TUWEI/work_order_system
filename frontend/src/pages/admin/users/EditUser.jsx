@@ -37,20 +37,24 @@ const EditUser = () => {
       navigate('/users/all');
       setLoading(false);
     } catch (error) {
-      message.error(error.message, "User Update Failed");
+      message.error("User Update Failed", error.message);
       setLoading(false);
     }
   }
 
   // Function to get single user details
   const getUserDetails = useCallback (async (id) => {
-    const res = await getUserInfo(id, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setUserDetails({...res.data});
+    try {
+      const res = await getUserInfo(id, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUserDetails(res.data);
+    } catch (error) {
+      message.error("Error while fetching user details", error.message);
+    }
   }, [token]);
 
   // Function to handle change in department
