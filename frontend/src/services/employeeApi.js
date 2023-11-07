@@ -7,6 +7,7 @@ export const createNewEmployee = async (values) => {
         return axios.post(`${WORK_URL}/new/employee`, values);
     } catch (error) {
         console.log("Error while creating new employee", error);
+        throw new Error("Error while creating new employee");
     }
 }
 
@@ -18,7 +19,7 @@ export const getAllEmployees = async (page) => {
     return data;
   } catch (error) {
     console.error('Error getting all employees from API:', error);
-    throw error;
+    throw new Error("Error while fetching all employees");
   }
 };
 
@@ -30,7 +31,7 @@ export const getSingleEmployee = async (id) => {
     return data;
   } catch (error) {
     console.error('Error getting single employee from API:', error);
-    throw error;
+    throw new Error("Error while fetching single employee");
   }
 };
 
@@ -42,7 +43,7 @@ export const getEmployeeData = async (id) => {
     return data;
   } catch (error) {
     console.error('Error getting employee data from API:', error);
-    throw error;
+    throw new Error("Error while fetching employee data");
   }
 };
 
@@ -54,6 +55,7 @@ export const queryAllEmployees = async () => {
         return data;
     } catch (error) {
         console.log("Error while fetching all employees query", error);
+        throw new Error("Error while fetching all employees query");
     }
 }
 
@@ -65,7 +67,7 @@ export const employeeTotalWorkCount = async (id) => {
     return data;
   } catch (error) {
     console.error('Error counting work assigned:', error);
-    throw error;
+    throw new Error("Error while counting work assigned");
   }
 };
 
@@ -77,6 +79,7 @@ export const countAllEmployees = async () => {
     return data;
   } catch (error) {
     console.log("Error while counting all employees", error);
+    throw new Error("Error while counting all employees");
   }
 };
 
@@ -87,6 +90,7 @@ export const editEmployee = async (id, values) => {
     return res.data;
   } catch (error) {
     console.log("Error while editing employee", error);
+    throw new Error("Error while editing employee");
   }
 }
 
@@ -96,5 +100,6 @@ export const deleteEmployee = async (id) => {
     return await axios.delete(`${WORK_URL}/delete/employee/${id}`);
   } catch (error) {
     console.log("Error while deleting employee", error);
+    throw new Error("Error while deleting employee");
   }
 }
