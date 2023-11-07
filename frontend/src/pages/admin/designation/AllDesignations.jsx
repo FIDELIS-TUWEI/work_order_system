@@ -4,6 +4,7 @@ import ViewAllDesignations from '../../../components/ViewAllDesignations';
 import { selectToken } from '../../../utils/redux/slices/authSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { allDesignations } from '../../../services/designation';
+import { message } from 'antd';
 
 const AllDesignations = () => {
   const token = useSelector(selectToken);
@@ -14,16 +15,21 @@ const AllDesignations = () => {
 
   // Function to get all designations
   const getDesignations = useCallback (async () => {
-    setLoading(true);
-    const { data, pages } = await allDesignations(page, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setDesignations(data);
-    setPages(pages);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const { data, pages } = await allDesignations(page, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setDesignations(data);
+      setPages(pages);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      message.error('Error while fetching all designations', error.message);
+    }
   }, [token, page]);
 
   // UseEffect hook
