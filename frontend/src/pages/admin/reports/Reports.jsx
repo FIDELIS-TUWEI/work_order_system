@@ -30,8 +30,7 @@ const getWorkOrders = useCallback (async () => {
     setPages(res.data.pages);
     setLoading(false);
   } catch (error) {
-    console.log(error);
-    message.error(error.message);
+    message.error("Failed to fetch work orders", error.message);
   }
 }, [filterStatus, page]);
 
