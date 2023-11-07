@@ -7,6 +7,7 @@ export const createNewDepartment = async (values) => {
         return axios.post(`${WORK_URL}/new/department`, values);
     } catch (error) {
         console.log("Error while creating new department", error);
+        throw new Error("Error while creating new department");
     }
 };
 
@@ -18,6 +19,7 @@ export const allDepartments = async (page) => {
         return data;
     } catch (error) {
         console.log("Error while fetching all departments", error);
+        throw new Error("Error while fetching all departments");
     }
 };
 
@@ -29,6 +31,7 @@ export const queryAllDepartments = async () => {
         return data;
     } catch (error) {
         console.log("Error while querying all departments", error);
+        throw new Error("Error while querying all departments");
     }
 };
 
