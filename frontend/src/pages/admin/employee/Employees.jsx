@@ -5,6 +5,7 @@ import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { getAllEmployees } from "../../../services/employeeApi";
+import { message } from "antd";
 
 const Employees = () => {
   const token = useSelector(selectToken);
@@ -16,16 +17,21 @@ const Employees = () => {
 
   // Function to get all employees
   const getEmployees = useCallback (async () => {
-    setLoading(true);
-    const { data, pages } = await getAllEmployees(page, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setEmployees(data);
-    setPages(pages);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const { data, pages } = await getAllEmployees(page, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setEmployees(data);
+      setPages(pages);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      message.error('Error while fetching all employees', error.message);
+    }
   }, [token, page]);
   
 
