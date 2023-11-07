@@ -42,13 +42,17 @@ const onFinishHandler = async (values) => {
 
 // Function to get all departments from API service
 const getDepartments = async () => {
-  const res = await queryAllDepartments({
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  setAllDepartments(res.data);
+  try {
+    const res = await queryAllDepartments({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setAllDepartments(res.data);
+  } catch (error) {
+    message.error("Error while fetching all departments", error.message);
+  }
 };
 
 // Function to handle Department Change
@@ -58,14 +62,17 @@ const handleDepartmentChange = (value) => {
 
 // Function to fetch all designations form API service
 const getDesignations = async () => {
-  const res = await queryAllDesignations({
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-
-  setAllDesignations(res.data);
+  try {
+    const res = await queryAllDesignations({
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setAllDesignations(res.data);
+  } catch (error) {
+    message.error("Error while fetching all designations", error.message);
+  }
 };
 
 // Function to handle designation change
