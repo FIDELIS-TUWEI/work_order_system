@@ -7,6 +7,7 @@ export const createNewDesignation = async (values) => {
         return axios.post(`${WORK_URL}/new/designation`, values);
     } catch (error) {
         console.log("Error while creating new designation", error);
+        throw new Error("Error while creating new designation");
     }
 };
 
@@ -18,6 +19,7 @@ export const allDesignations = async (page) => {
         return data;
     } catch (error) {
         console.log("Error while fetching all designations", error);
+        throw new Error("Error while fetching all designations");
     }
 };
 
@@ -29,6 +31,7 @@ export const queryAllDesignations = async () => {
     return data;
   } catch (error) {
     console.log("Error while querying all designations", error);
+    throw new Error("Error while querying all designations");
   }
 };
 
