@@ -1,4 +1,4 @@
-import { Button, Card } from 'antd';
+import { Button, Card, message } from 'antd';
 import Layout from '../../../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
@@ -15,13 +15,17 @@ const UserDetails = () => {
 
   // function to get user details
   const getUserDetails = useCallback (async (id) => {
-    const res = await getUserInfo(id, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setUserDetails({...res.data});
+    try {
+      const res = await getUserInfo(id, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUserDetails(res.data);
+    } catch (error) {
+      message.error("Failed to fetch user details", error.message);
+    }
   }, [token]);
 
   // UseEffect hook
