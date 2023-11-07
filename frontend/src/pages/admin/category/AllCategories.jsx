@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import { allWorkCategories } from "../../../services/categoryApi"
 import { useSelector } from "react-redux"
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice"
+import { message } from "antd"
 
 const AllCategories = () => {
     const user = useSelector(selectUserInfo);
@@ -17,16 +18,22 @@ const AllCategories = () => {
 
     // Function to get all Work Categories
     const getCategories = useCallback (async () => {
-        setLoading(true)
-        const { data, pages } = await allWorkCategories(page, {
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        setCategories(data);
-        setPages(pages);
-        setLoading(false);
+        try {
+            setLoading(true)
+            const { data, pages } = await allWorkCategories(page, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setCategories(data);
+            setPages(pages);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            message.error("Failed to fetch categories", error.message);
+            
+        }
     }, [token, page]);
 
     // UseEffect hook
