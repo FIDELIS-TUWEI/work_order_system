@@ -7,6 +7,7 @@ export const createWorkOrder = async (values) => {
         return await axios.post(`${WORK_URL}/create/work`, values);
     } catch (error) {
         console.log("Error while creating work", error);
+        throw new Error("Error while creating work");
     }
 }
 
@@ -18,6 +19,7 @@ export const getAllWorkOrders = async (page) => {
         return data;
     } catch (error) {
         console.log("Error while fetching all work orders", error);
+        throw new Error("Error while fetching all work orders");
     }
 };
 
@@ -29,6 +31,7 @@ export const getAllWorkQuery = async () => {
         return data;
     } catch (error) {
         console.log("Error while fetching all work query", error);
+        throw new Error("Error while fetching all work query");
     }
 };
 
@@ -40,6 +43,7 @@ export const getSingleWorkOrder = async (id) => {
         return data;
     } catch (error) {
         console.log("Error while fetching single work order", error);
+        throw new Error("Error while fetching single work order");
     }
 }
 
@@ -50,6 +54,7 @@ export const updateWorkOrder = async (id, values) => {
         return res.data;
     } catch (error) {
         console.log("Error while updating work order", error);
+        throw new Error("Error while updating work order");
     }
 };
 
@@ -59,6 +64,7 @@ export const deleteWorkOrder = async (id) => {
         return await axios.delete(`${WORK_URL}/delete/work/${id}`);
     } catch (error) {
         console.log("Error while deleting work order", error);
+        throw new Error("Error while deleting work order");
     }
 }
 
@@ -70,5 +76,6 @@ export const getWorkLocations = async () => {
         return data;
     } catch (error) {
         console.log("Error while fetching work locations", error);
+        throw new Error("Error while fetching work locations");
     }
 }
