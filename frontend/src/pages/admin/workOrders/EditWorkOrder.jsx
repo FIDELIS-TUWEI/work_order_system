@@ -33,13 +33,17 @@ const EditWorkOrder = () => {
 
   // Function to get work order details
   const getWorkOrderDetails = useCallback (async (id) => {
-    const res = await getSingleWorkOrder(id, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setWorkDetails({...res.data});
+    try {
+      const res = await getSingleWorkOrder(id, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setWorkDetails(res.data);
+    } catch (error) {
+      message.error("Failed to fetch work order details", error.message);
+    }
   }, [token]);
 
   // Function to handle change in employee selection
@@ -49,13 +53,17 @@ const EditWorkOrder = () => {
 
   // Function to get all employees
   const getEmployees = useCallback (async () => {
-    const { data } = await queryAllEmployees({
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setEmployees(data);
+    try {
+      const res = await queryAllEmployees({
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setEmployees(res.data);
+    } catch (error) {
+      message.error("Failed to fetch employees", error.message);
+    }
   }, [token]);
 
   // UseEffect hook
