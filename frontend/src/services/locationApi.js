@@ -9,6 +9,7 @@ export const allLocations = async (page) => {
         return data;
     } catch (error) {
         console.log("Error while fetching all locations", error);
+        throw new Error("Error while fetching all locations");
     }
 };
 
@@ -20,6 +21,7 @@ export const queryLocations = async () => {
         return data;
     } catch (error) {
         console.log("Error while fetching all locations", error);
+        throw new Error("Error while fetching all locations");
     }
 }
 
@@ -29,6 +31,7 @@ export const createNewLocation = async (values) => {
         return axios.post(`${WORK_URL}/create/location`, values);
     } catch (error) {
         console.log("Error while creating new location", error);
+        throw new Error("Error while creating new location");
     }
 }
 
@@ -38,5 +41,6 @@ export const deleteLocation = async (id) => {
         return axios.delete(`${WORK_URL}/delete/location/${id}`);
     } catch (error) {
         console.log("Error while deleting location", error);
+        throw new Error("Error while deleting location");
     }
 }
