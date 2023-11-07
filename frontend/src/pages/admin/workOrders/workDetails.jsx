@@ -1,7 +1,7 @@
 import { message } from "antd"
 import Layout from "../../../components/Layout"
 import { useSelector } from "react-redux"
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleWorkOrder } from "../../../services/workApi";
@@ -16,24 +16,30 @@ const WorkDetails = () => {
     const {id} = useParams();
     const componentPDF = useRef();
 
+    // get work details
+    const getSingleWork = useCallback (async (id) => {
+        try {
+            setLoading(true);
+            const res = await getSingleWorkOrder(id, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setWorkDetails(res.data);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            message.error("Failed to fetch work details", error.message);
+        }
+    }, [token]);
+
+    // useEffect hook
     useEffect(() => {
         if (id) {
             getSingleWork(id);
         }
-    }, [id]);
-
-    // get work details
-    const getSingleWork = async (id) => {
-        setLoading(true);
-        const res = await getSingleWorkOrder(id, {
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        setWorkDetails({...res.data});
-        setLoading(false);
-    }
+    }, [id, getSingleWork]);
 
     // Function to print work details
     const handlePrint = useReactToPrint({
