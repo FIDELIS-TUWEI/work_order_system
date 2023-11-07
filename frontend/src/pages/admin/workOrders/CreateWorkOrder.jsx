@@ -46,13 +46,17 @@ const CreateWorkOrder = () => {
 
   // Function to get all work Locations from Services Api
   const workLocation = async () => {
-    const { data } = await queryLocations({
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setLocation(data);
+    try {
+      const response = await queryLocations({
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setLocation(response.data);
+    } catch (error) {
+      message.error("Error while fetching all locations query", error.message);
+    }
   };
 
   // Function to handle change in category
@@ -62,13 +66,17 @@ const CreateWorkOrder = () => {
 
   // Function to get all categories from Services Api
   const getCategories = async () => {
-    const response = await allWorkCategories({
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setCategory(response.data);
+    try {
+      const response = await allWorkCategories({
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setCategory(response.data);
+    } catch (error) {
+      message.error("Error while fetching all categories", error.message);
+    }
   };
 
   // UseEffect hook
