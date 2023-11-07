@@ -4,6 +4,7 @@ import ViewAllDepartments from '../../../components/ViewAllDepartments';
 import { selectToken } from '../../../utils/redux/slices/authSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { allDepartments } from '../../../services/departmentApi';
+import { message } from 'antd';
 
 const AllDepartments = () => {
   const token = useSelector(selectToken);
@@ -14,16 +15,21 @@ const AllDepartments = () => {
   
   // Function to get all departments
   const getDepartments = useCallback (async () => {
-    setLoading(true);
-    const { data, pages } = await allDepartments(page, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setDepartments(data);
-    setPages(pages);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const { data, pages } = await allDepartments(page, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setDepartments(data);
+      setPages(pages);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      message.error('Error while fetching all departments', error.message);
+    }
   }, [token, page]);
 
   // UseEffect hook
