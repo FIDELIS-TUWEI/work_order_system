@@ -2,7 +2,7 @@ import {useState, useEffect, useCallback} from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkQuery } from "../../../services/workApi";
-import { Card } from "antd";
+import { Card, message } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 const BarGraph = () => {
@@ -12,15 +12,20 @@ const BarGraph = () => {
 
     // Function to get All work orders from API Service
     const allWork = useCallback (async () => {
-        setLoading(true);
-        const { data } = await getAllWorkQuery({
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        setWorkData(data);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const { data } = await getAllWorkQuery({
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setWorkData(data);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            message.error("Failed to fetch work orders", error.message);
+        }
     }, [token]);
 
     // useEffect hook
