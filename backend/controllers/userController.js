@@ -32,14 +32,11 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
 const singleUser = asyncHandler (async (req, res, next) => {
     try {
         // Check if user id exists
-        const userExists = await User.exists({ _id: id });
+        const userExists = await User.exists({ _id: req.params.id });
 
         if (!userExists) {
             return next(new ErrorResponse("User not found", 404));
         };
-
-        // Clear cache
-        await User.clearCache();
         
         // find user by ID
         const user = await User.findById(req.params.id).select("-password")
@@ -53,7 +50,7 @@ const singleUser = asyncHandler (async (req, res, next) => {
             data: user
         })
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
@@ -71,7 +68,7 @@ const editUser = asyncHandler (async (req, res, next) => {
             message: `User updated succesfully` 
         });
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
