@@ -5,6 +5,7 @@ import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../../../services/usersApi";
 import AllUsers from "../../../components/AllUsers";
+import { message } from "antd";
 
 
 const UsersAll = () => {
@@ -17,16 +18,21 @@ const UsersAll = () => {
 
   // Function to get all users from Api
 const getUsers = async () => {
-  setLoading(true);
-  const { data, pages } = await getAllUsers(page, {
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  setAllUsers(data);
-  setPages(pages);
-  setLoading(false);
+  try {
+    setLoading(true);
+    const { data, pages } = await getAllUsers(page, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setAllUsers(data);
+    setPages(pages);
+    setLoading(false);
+  } catch (error) {
+    setLoading(false);
+    message.error("Failed to fetch users", error.message);
+  }
 };
 
 useEffect(() => {
