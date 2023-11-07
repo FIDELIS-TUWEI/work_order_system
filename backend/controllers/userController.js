@@ -24,7 +24,7 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
         });
         next();
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
@@ -113,7 +113,7 @@ const deleteUser = asyncHandler (async (req, res, next) => {
         });
         next();
     } catch (error) {
-        return next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
     
 });
