@@ -31,14 +31,17 @@ const EditEmployee = () => {
 
   // Function to get single employee details
   const getEmployeeDetails = useCallback (async (id) => {
-    const res = await getEmployeeData(id, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }, [token]);
-    
-    setEmployeeDetails(res.data);
+    try {
+      const res = await getEmployeeData(id, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setEmployeeDetails(res.data);
+    } catch (error) {
+      message.error("Failed to fetch employee data", error.message);
+    }
   }, [token]);
 
   // UseEffect hook
