@@ -9,6 +9,7 @@ export const allWorkCategories = async (page) => {
         return data;
     } catch (error) {
         console.log("Error while fetching all work categories", error);
+        throw new Error("Error while fetching all work categories");
     }
 };
 
@@ -18,6 +19,7 @@ export const createNewCategory = async (values) => {
         return axios.post(`${WORK_URL}/new/category`, values);
     } catch (error) {
         console.log("Error while creating new category", error);
+        throw new Error("Error while creating new category");
     }
 };
 
@@ -28,6 +30,7 @@ export const editCategory = async (id, values) => {
         return res.data;
     } catch (error) {
         console.log("Error while updating work category", error);
+        throw new Error("Error while updating work category");
     }
 };
 
@@ -38,6 +41,7 @@ export const deleteCategory = async (id) => {
         return res.data;
     } catch (error) {
         console.log("Error while deleting work category", error);
+        throw new Error("Error while deleting work category");
         throw new Error("Error while deleting work category");
     }
 };
