@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card, Modal, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
@@ -111,6 +112,15 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
       </div>
     </>
   )
+};
+
+ViewAllDesignations.propTypes = {
+  designations: PropTypes.array,
+  loading: PropTypes.bool,
+  handlePageChange: PropTypes.func,
+  page: PropTypes.number,
+  pages: PropTypes.number,
+  getDesignations: PropTypes.func
 }
 
 export default ViewAllDesignations;
