@@ -42,7 +42,10 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
 const countPendingWorkOrders = asyncHandler (async (req, res, next) => {
     try {
         const countPending = await WorkOrder.countDocuments({ status: "Pending" });
-        res.json({ countPending });
+        res.status(200).json({ 
+            success: true, 
+            data: countPending 
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
@@ -52,7 +55,10 @@ const countPendingWorkOrders = asyncHandler (async (req, res, next) => {
 const countInProgressWorkOrders = asyncHandler (async (req, res, next) => {
     try {
         const countInProgress = await WorkOrder.countDocuments({ status: "In_Progress" });
-        res.json({ countInProgress });
+        res.status(200).json({ 
+            success: true,
+            data: countInProgress 
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
@@ -62,7 +68,10 @@ const countInProgressWorkOrders = asyncHandler (async (req, res, next) => {
 const countCompletedWorkOrders = asyncHandler (async (req, res, next) => {
     try {
         const countCompleted = await WorkOrder.countDocuments({ status: "Complete" });
-        res.json({ countCompleted });
+        res.status(200).json({ 
+            success: true, 
+            data: countCompleted 
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
@@ -72,7 +81,10 @@ const countCompletedWorkOrders = asyncHandler (async (req, res, next) => {
 const countReviewedWorkOrders = asyncHandler (async (req, res, next) => {
     try {
         const countReviewed = await WorkOrder.countDocuments({ reviewed: true });
-        res.json({ countReviewed });
+        res.status(200).json({ 
+            success: true, 
+            data: countReviewed 
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
@@ -82,7 +94,10 @@ const countReviewedWorkOrders = asyncHandler (async (req, res, next) => {
 const countAllWorkOrders = asyncHandler (async (req, res, next) => {
     try {
         const totalWorkCount = await WorkOrder.countDocuments();
-        res.json({ totalWorkCount });
+        res.status(200).json({ 
+            success: true,
+            data: totalWorkCount 
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
