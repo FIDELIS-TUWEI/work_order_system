@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card, Modal, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
@@ -141,6 +142,16 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
       </div>
     </div>
   )
-}
+};
+
+AllEmployees.propTypes = {
+  navigate: PropTypes.func,
+  loading: PropTypes.bool,
+  employees: PropTypes.array,
+  handlePageChange: PropTypes.func,
+  page: PropTypes.number,
+  pages: PropTypes.number,
+  getEmployees: PropTypes.func,
+};
 
 export default AllEmployees;
