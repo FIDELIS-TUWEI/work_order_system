@@ -1,5 +1,5 @@
+import PropTypes from "prop-types";
 import { Card, Col, Row, Typography } from "antd";
-
 
 const DashboardComponent = ({ user, pendingWorkCount, 
     inProgressCount, completedCount, reviewedCount, 
@@ -94,13 +94,11 @@ const DashboardComponent = ({ user, pendingWorkCount,
 
     // Render Users card
     const renderUsersCard = () => (
-        <>
         <div>
             <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: '400', margin: '2rem' }}>
                 The Ultimate Work Order Management System for the Holiday Inn.
             </Typography>
-        </div>
-        </>
+        </div>  
     )
 
     
@@ -114,6 +112,18 @@ const DashboardComponent = ({ user, pendingWorkCount,
         </Row>
     </>
   )
+};
+
+DashboardComponent.propTypes = {
+    user: PropTypes.object,
+    pendingWorkCount: PropTypes.number,
+    inProgressCount: PropTypes.number,
+    completedCount: PropTypes.number,
+    reviewedCount: PropTypes.number,
+    totalWorkCount: PropTypes.number,
+    totalUsersCount: PropTypes.number,
+    activeUsersCount: PropTypes.number,
+    employees: PropTypes.number
 }
 
 export default DashboardComponent;
