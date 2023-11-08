@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "../Data/data"
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +29,13 @@ const Layout = ({ children }) => {
       console.log(error);
     }
   }
+
+  // function to handle keydown
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLogout();
+    }
+  };
 
   // Rendering menu list
   //const adminMenu = userInfo?.role === "admin" || userInfo?.role === "superadmin" ? AdminMenu : userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer" || userInfo?.role === "engineer" ? HodMenu : UserMenu;
@@ -67,7 +75,7 @@ const Layout = ({ children }) => {
                 </div>
               );
             })}
-              <div className={`menu-item`} onClick={handleLogout}>
+              <div className={`menu-item`} onClick={handleLogout} tabIndex={0} onKeyDown={handleKeyDown}>
                 <i><RiLogoutCircleFill/></i>
                 <Link to="/">Logout</Link>
               </div>
@@ -88,6 +96,10 @@ const Layout = ({ children }) => {
       </div>
     </div>
   );
+};
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export default Layout;
