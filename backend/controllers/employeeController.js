@@ -193,7 +193,7 @@ const countEmployees = asyncHandler (async (req, res) => {
 
         res.status(200).json({
             success: true,
-            employeeCount
+            data: employeeCount
         })
     } catch (error) {
         res.status(500).json({
