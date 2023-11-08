@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import moment from "moment";
 import { Button, Card } from "antd";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -6,21 +7,21 @@ import "jspdf-autotable";
 import LoadingBox from "../components/LoadingBox";
 
 
-
 const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pages, handlePageChange }) => {
 
   return (
     <>
       <Card title="Work Orders" style={{ margin: "15px" }}>
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
-          <label style={{ fontWeight: "bold" }}>Filter By Status:
-            <select onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px" }}>
-              <option value="">All</option>
-              <option value="Pending">Pending</option>
-              <option value="In_Progress">In Progress</option>
-              <option value="Complete">Completed</option>
-            </select>
+          <label style={{ fontWeight: "bold" }}>
+            Filter By Status:
           </label>
+          <select onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px" }}>
+            <option value="">All</option>
+            <option value="Pending">Pending</option>
+            <option value="In_Progress">In Progress</option>
+            <option value="Complete">Completed</option>
+          </select>
         </div>
         
 
@@ -86,5 +87,15 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
     </>
   )
 };
+
+WorkReport.propTypes = {
+  workOrders: PropTypes.array,
+  loading: PropTypes.bool,
+  setFilterStatus: PropTypes.func,
+  exportPDF: PropTypes.func,
+  page: PropTypes.number,
+  pages: PropTypes.number,
+  handlePageChange: PropTypes.func
+}
 
 export default WorkReport;
