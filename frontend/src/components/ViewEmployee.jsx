@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card } from "antd";
 
 const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
@@ -61,6 +62,12 @@ const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
       </div>
     </div>
   )
+};
+
+ViewEmployee.propTypes = {
+  employeeDetails: PropTypes.object,
+  loading: PropTypes.bool,
+  navigate: PropTypes.func
 }
 
 export default ViewEmployee;
