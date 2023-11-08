@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { selectUserInfo } from '../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo } from '../utils/redux/slices/authSlice';
 
 const PrivateRoute = ({ children }) => {
     const userInfo = useSelector(selectUserInfo);
+    const token = useSelector(selectToken);
     if (userInfo && token) {
         return children;
     } else {
