@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { Button, Card, Col, Form, Input, Row, Select, Typography } from 'antd'
 import LoadingBox from "./LoadingBox"
 
@@ -113,6 +114,17 @@ const CreateUser = ({
       </Card>
     </div>
   )
+};
+
+CreateUser.propTypes = {
+  loading: PropTypes.bool,
+  onFinishHandler: PropTypes.func,
+  allDepartments: PropTypes.array,
+  allDesignations: PropTypes.array,
+  selectedDepartment: PropTypes.string,
+  selectedDesignation: PropTypes.string,
+  handleDepartmentChange: PropTypes.func,
+  handleDesignationChange: PropTypes.func
 }
 
 export default CreateUser;
