@@ -3,7 +3,7 @@ import Layout from "../../components/Layout"
 import { selectToken, selectUserInfo } from "../../utils/redux/slices/authSlice";
 import DashboardComponent from "../../components/DashboardComponent";
 import { countCompletedWork, countInProgressWork, countPendingWork, countReviewedWork, countTotalWork } from "../../services/reportApi";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { countActiveUsers, countAllUsers } from "../../services/usersApi";
 import { countAllEmployees } from "../../services/employeeApi";
 import { message } from "antd";
@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [employees, setEmployees] = useState(0);
 
   // Function to get work orders with pending status from API Service
-  const getPendingWorkCount = async () => {
+  const getPendingWorkCount = useCallback (async () => {
     try {
       const res = await countPendingWork({
         withCredentials: true,
@@ -29,14 +29,14 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setPendingWorkCount(res.countPending);
+      setPendingWorkCount(res.data);
     } catch (error) {
       message.error("Error while fetching pending work count", error.message);
     }
-  };
+  });
 
   // Function to get work orders with In_Progress status from API Service
-  const getInProgressWorkCount = async () => {
+  const getInProgressWorkCount = useCallback (async () => {
     try {
       const res = await countInProgressWork({
         withCredentials: true,
@@ -44,14 +44,14 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setInProgressCount(res.countInProgress);
+      setInProgressCount(res.data);
     } catch (error) {
       message.error("Error while fetching in progress work count", error.message);
     }
-  };
+  });
 
   // Function to get work orders with completed status from API Service
-  const getCompletedWorkCount = async () => {
+  const getCompletedWorkCount = useCallback (async () => {
     try {
       const res = await countCompletedWork({
         withCredentials: true,
@@ -59,14 +59,14 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setCompletedCount(res.countCompleted);
+      setCompletedCount(res.data);
     } catch (error) {
       message.error("Error while fetching completed work count", error.message);
     }
-  };
+  });
 
   // Function to get work orders with reviewed status from API Service
-  const getReviewedWorkCount = async () => {
+  const getReviewedWorkCount = useCallback (async () => {
     try {
       const res = await countReviewedWork({
         withCredentials: true,
@@ -74,14 +74,14 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setReviewedCount(res.countReviewed);
+      setReviewedCount(res.data);
     } catch (error) {
       message.error("Error while fetching reviewed work count", error.message);
     }
-  };
+  });
 
   // Function to get total work count
-  const getTotalWorkCount = async () => {
+  const getTotalWorkCount = useCallback (async () => {
     try {
       const res = await countTotalWork({
         withCredentials: true,
@@ -89,14 +89,14 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setTotalWorkCount(res.countTotal);
+      setTotalWorkCount(res.data);
     } catch (error) {
       message.error("Error while fetching total work count", error.message);
     }
-  };
+  });
 
   // Function to get Total users count
-  const getTotalUsersCount = async () => {
+  const getTotalUsersCount = useCallback (async () => {
     try {
       const res = await countAllUsers({
         withCredentials: true,
@@ -104,14 +104,14 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setTotalUsersCount(res.totalUsersCount);
+      setTotalUsersCount(res.data);
     } catch (error) {
       message.error("Error while fetching total users count", error.message);
     }
-  };
+  });
 
   // Function to get total active users
-  const getTotalActiveUsers = async () => {
+  const getTotalActiveUsers = useCallback (async () => {
     try {
       const res = await countActiveUsers({
         withCredentials: true,
@@ -119,14 +119,14 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setActiveUsersCount(res.activeUsersCount);
+      setActiveUsersCount(res.data);
     } catch (error) {
       message.error("Error while fetching total active users count", error.message);
     }
-  };
+  })
 
   // Function to count all employees
-  const getAllEmployees = async () => {
+  const getAllEmployees = useCallback (async () => {
     try {
       const res = await countAllEmployees({
         withCredentials: true,
@@ -134,11 +134,11 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setEmployees(res.employeesCount);
+      setEmployees(res.data);
     } catch (error) {
       message.error("Error while fetching total employees count", error.message);
     }
-  }
+  });
 
   // UseEffect hook
   useEffect(() => {
@@ -150,7 +150,7 @@ const Dashboard = () => {
     getTotalUsersCount();
     getTotalActiveUsers();
     getAllEmployees();
-  }, []);
+  }, [getTotalWorkCount, getTotalUsersCount, getTotalActiveUsers, getAllEmployees, getPendingWorkCount, getInProgressWorkCount, getCompletedWorkCount, getReviewedWorkCount]);
 
   return (
     <Layout>
