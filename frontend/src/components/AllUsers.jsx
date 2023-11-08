@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card, Modal, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
@@ -166,6 +167,16 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
       </div>
     </div>
   )
+};
+
+AllUsers.propTypes = {
+  navigate: PropTypes.func,
+  loading: PropTypes.bool,
+  allUsers: PropTypes.array,
+  handlePageChange: PropTypes.func,
+  page: PropTypes.number,
+  pages: PropTypes.number,
+  getUsers: PropTypes.func
 }
 
 export default AllUsers;
