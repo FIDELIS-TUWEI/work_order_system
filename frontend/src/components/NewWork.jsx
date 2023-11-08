@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
 import moment from "moment";
@@ -139,6 +140,19 @@ const NewWork = ({
       </Card>
       </>
   )
-}
+};
+
+NewWork.propTypes = {
+  location: PropTypes.object,
+  category: PropTypes.array,
+  workLocation: PropTypes.func,
+  handleLocationChange: PropTypes.func,
+  handleCategoryChange: PropTypes.func,
+  onFinishHandler: PropTypes.func,
+  selectedLocation: PropTypes.string,
+  selectedCategory: PropTypes.string,
+  loading: PropTypes.bool,
+  navigate: PropTypes.func
+};
 
 export default NewWork;
