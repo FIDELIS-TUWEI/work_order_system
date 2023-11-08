@@ -1,12 +1,13 @@
-import { Button, Card, message } from 'antd';
+import { Button, Card, Tooltip, message } from 'antd';
 import Layout from '../../../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../services/usersApi';
 import { useSelector } from 'react-redux';
-import { selectToken } from '../../../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
 
 const UserDetails = () => {
+  const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
   const navigate = useNavigate();
@@ -59,8 +60,23 @@ const UserDetails = () => {
         <p>
           Status: {userDetails?.active === true ? "Active" : "Not Active"}
         </p>
-        <Button onClick={() => {navigate(`/updatePassword/${userDetails?._id}`)}}>Change Password</Button>
-        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} onClick={() => {navigate(-1)}}>Back</Button>
+        <Tooltip title={user?.role !== "superadmin" ? "Only System admin can change password" : "Edit Password"}>
+          <Button 
+            onClick={() => {navigate(`/updatePassword/${userDetails?._id}`)}} 
+            disabled={user?.role !== "superadmin"}
+            style={{ color: 'black', backgroundColor: 'white', border: '1px solid black', marginLeft: '10px' }}
+          >
+            Change Password
+          </Button>
+        </Tooltip>
+        <Tooltip title="Back">
+          <Button 
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} 
+            onClick={() => {navigate(-1)}}
+          >
+            Back
+          </Button>
+        </Tooltip>
       </Card>
     </Layout>
   )
