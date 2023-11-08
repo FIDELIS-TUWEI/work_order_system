@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 import LoadingBox from "../components/LoadingBox"
 
@@ -39,6 +40,12 @@ const CreateDesignation = ({ loading, onFinishHandler, navigate }) => {
       </Card>
     </>
   )
+};
+
+CreateDesignation.propTypes = {
+  loading: PropTypes.bool,
+  onFinishHandler: PropTypes.func,
+  navigate: PropTypes.func
 }
 
 export default CreateDesignation;
