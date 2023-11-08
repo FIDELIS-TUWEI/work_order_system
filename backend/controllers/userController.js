@@ -122,7 +122,10 @@ const deleteUser = asyncHandler (async (req, res, next) => {
 const countAllUsers = asyncHandler (async (req, res, next) => {
     try {
         const totalUsers = await User.countDocuments();
-        res.json({ totalUsers });
+        res.status(200).json({ 
+            success: true,
+            data: totalUsers 
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
@@ -132,7 +135,10 @@ const countAllUsers = asyncHandler (async (req, res, next) => {
 const countActiveUsers = asyncHandler (async (req, res, next) => {
     try {
         const activeUsersCount = await User.countDocuments({ active: true });
-        res.json({ activeUsersCount });
+        res.status(200).json({ 
+            success: true,
+            data: activeUsersCount 
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
