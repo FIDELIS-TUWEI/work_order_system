@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { Button } from "antd"
 import moment from "moment"
 import LoadingBox from "./LoadingBox";
@@ -138,6 +139,14 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
         </div>
     </>
   )
+};
+
+ViewWorkDetails.propTypes = {
+    workDetails: PropTypes.object,
+    loading: PropTypes.bool,
+    handlePrint: PropTypes.func,
+    componentPDF: PropTypes.object,
+    navigate: PropTypes.func
 }
 
 export default ViewWorkDetails;
