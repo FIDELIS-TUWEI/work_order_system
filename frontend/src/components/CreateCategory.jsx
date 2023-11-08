@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 import LoadingBox from "./LoadingBox"
 
@@ -39,6 +40,12 @@ const CreateCategory = ({ loading, onFinishHandler, navigate }) => {
         </Card>
     </div>
   )
+};
+
+CreateCategory.propTypes = {
+    loading: PropTypes.bool,
+    onFinishHandler: PropTypes.func,
+    navigate: PropTypes.func
 }
 
 export default CreateCategory;
