@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd'
 import LoadingBox from "../components/LoadingBox";
 
@@ -216,6 +217,16 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
         </Card>
     </div>
   )
+};
+
+UpdateWork.propTypes = {
+  onFinishHandler: PropTypes.func,
+  navigate: PropTypes.func,
+  workDetails: PropTypes.object,
+  user: PropTypes.object,
+  employees: PropTypes.array,
+  selectedEmployee: PropTypes.string,
+  handleEmployeeChange: PropTypes.func
 }
 
 export default UpdateWork;
