@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 import LoadingBox from "./LoadingBox"
 
@@ -39,6 +40,12 @@ const CreateLocation = ({ loading, onFinishHandler, navigate }) => {
         </Card>
     </>
   )
+};
+
+CreateLocation.propTypes = {
+    loading: PropTypes.bool,
+    onFinishHandler: PropTypes.func,
+    navigate: PropTypes.func
 }
 
 export default CreateLocation;
