@@ -139,7 +139,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepart
 // Props validation
 UpdateUser.propTypes = {
   onFinishHandler: PropTypes.func,
-  userDetails: PropTypes.object,
+  userDetails: PropTypes.array,
   navigate: PropTypes.func,
   loading: PropTypes.bool,
   allDepartments: PropTypes.array,
