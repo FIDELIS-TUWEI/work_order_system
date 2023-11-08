@@ -1,28 +1,19 @@
-import Cookies from 'js-cookie';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { selectToken, selectUserInfo } from '../utils/redux/slices/authSlice';
-import { useEffect } from 'react';
+import { selectUserInfo } from '../utils/redux/slices/authSlice';
 
 const PrivateRoute = ({ children }) => {
     const userInfo = useSelector(selectUserInfo);
-    const token = useSelector(selectToken);
-
-    useEffect(() => {
-        // check if cookie has expired
-        const cookieValue = Cookies.get("cookieExpiry");
-
-        if (cookieValue && new Date(cookieValue) < new Date()) {
-            Cookies.remove("cookieExpiry");
-            window.location.reload();
-        }
-    }, [token]);
-
     if (userInfo && token) {
         return children;
     } else {
         return <Navigate to="/login" />
     }
+};
+
+PrivateRoute.propTypes = {
+    children: PropTypes.node.isRequired,
 }
 
 export default PrivateRoute;
