@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 
 const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails }) => {
@@ -51,6 +52,12 @@ const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails }) => {
       </Card>
     </div>
   )
+};
+
+UpdateEmployee.propTypes = {
+  onFinishHandler: PropTypes.func,
+  navigate: PropTypes.func,
+  employeeDetails: PropTypes.object,
 }
 
 export default UpdateEmployee;
