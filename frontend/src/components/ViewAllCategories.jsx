@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { Button, Card, Modal, message } from "antd";
 import {MdDelete} from "react-icons/md";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -111,6 +112,16 @@ const ViewAllCategories = ({
       </div>
     </div>
   )
+};
+
+ViewAllCategories.propTypes = {
+    navigate: PropTypes.func,
+    loading: PropTypes.bool,
+    categories: PropTypes.array,
+    page: PropTypes.number,
+    pages: PropTypes.number,
+    handlePageChange: PropTypes.func,
+    getCategories: PropTypes.func
 }
 
 export default ViewAllCategories;
