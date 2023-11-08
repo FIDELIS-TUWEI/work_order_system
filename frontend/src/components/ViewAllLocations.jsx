@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card, Modal, message } from "antd";
 import { useState } from "react";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -124,6 +125,18 @@ const ViewAllLocations = ({ navigate, loading,
       </div>
     </>
   )
+};
+
+ViewAllLocations.propTypes = {
+    navigate: PropTypes.func,
+    loading: PropTypes.bool,
+    locations: PropTypes.array,
+    page: PropTypes.number,
+    pages: PropTypes.number,
+    handlePageChange: PropTypes.func,
+    getLocations: PropTypes.func,
+    jumpToLastPage: PropTypes.func,
+    jumpToFirstPage: PropTypes.func
 }
 
 export default ViewAllLocations;
