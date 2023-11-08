@@ -1,14 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Card, Col, Form, Input, Row, Select, Typography } from "antd";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../utils/redux/slices/authSlice";
+import { Button, Card, Col, Form, Input, Row, Select, Typography, message } from "antd";
 import LoadingBox from "./LoadingBox";
 
 const { Option } = Select;
 
 const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepartments, selectedDepartment, handleDepartmentChange, allDesignations, selectedDesignation, handleDesignationChange }) => {
 
+  const user = useSelector(selectUserInfo);
 
   // Conditionally exclude  the "superadmin" role value if the user logged in is not an "superadmin"
+  const isSuperAdmin = user?.role === "superadmin";
 
   return (
     <div>
@@ -83,7 +87,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepart
                 name="role"
                 label="Role"
                 required
-                rules={[{ required: true, message: 'Please Enter a role !' }]}
+                rules={[{ required: true, message: isSuperAdmin ? 'Please Enter a role !' : 'You don\'t have permission to select this role' }]}
               >
                 <Select 
                   placeholder="Select Role"
@@ -91,9 +95,13 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepart
                   style={{ width: '100%' }}
                   options={[
                     { value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }, { value: 'engineer', label: 'Engineer' }, 
-                    { value: 'hod', label: 'HoD' }, { value: 'superadmin', label: 'Super Admin' },
+                    { value: 'hod', label: 'HoD' }, { value: isSuperAdmin ? 'superadmin' : null, label: 'Super Admin' },
                     { value: 'supervisor', label: 'Supervisor' }, { value: 'reviewer', label: 'Reviewer' }
                   ]}
+                  onChange={(value) => {
+                    if (value === "superadmin" && !isSuperAdmin) {
+                      message.error("You don't have permission to select this role")                    }
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -131,16 +139,16 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepart
 
 // Props validation
 UpdateUser.propTypes = {
-  onFinishHandler: PropTypes.func.isRequired,
-  userDetails: PropTypes.object.isRequired,
-  navigate: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  allDepartments: PropTypes.array.isRequired,
-  selectedDepartment: PropTypes.string.isRequired,
-  handleDepartmentChange: PropTypes.func.isRequired,
-  allDesignations: PropTypes.array.isRequired,
-  selectedDesignation: PropTypes.string.isRequired,
-  handleDesignationChange: PropTypes.func.isRequired
+  onFinishHandler: PropTypes.func,
+  userDetails: PropTypes.object,
+  navigate: PropTypes.func,
+  loading: PropTypes.bool,
+  allDepartments: PropTypes.array,
+  selectedDepartment: PropTypes.string,
+  handleDepartmentChange: PropTypes.func,
+  allDesignations: PropTypes.array,
+  selectedDesignation: PropTypes.string,
+  handleDesignationChange: PropTypes.func
 }
 
 export default UpdateUser;
