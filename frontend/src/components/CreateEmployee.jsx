@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 
 const CreateEmployee = ({ onFinishHandler, loading, navigate }) => {
@@ -62,6 +63,12 @@ const CreateEmployee = ({ onFinishHandler, loading, navigate }) => {
       </Card>
     </div>
   )
+};
+
+CreateEmployee.propTypes = {
+  loading: PropTypes.bool,
+  onFinishHandler: PropTypes.func,
+  navigate: PropTypes.func
 }
 
 export default CreateEmployee;
