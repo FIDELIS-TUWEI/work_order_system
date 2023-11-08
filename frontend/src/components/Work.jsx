@@ -1,4 +1,5 @@
-import { Button, Card, Modal, message, Tooltip, DatePicker, Select } from "antd"
+import PropTypes from "prop-types";
+import { Button, Card, Modal, message, Tooltip } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
@@ -8,7 +9,6 @@ import { useSelector } from "react-redux"
 import { deleteWorkOrder } from "../services/workApi"
 import { useState } from "react";
 
-const { Option } = Select;
 
 const Work = ({allWork, user, loading, getAllWork}) => {
   const navigate = useNavigate();
@@ -164,6 +164,13 @@ const Work = ({allWork, user, loading, getAllWork}) => {
         </div>
       </>
   )
+};
+
+Work.propTypes = {
+  allWork: PropTypes.array,
+  user: PropTypes.object,
+  loading: PropTypes.bool,
+  getAllWork: PropTypes.func
 }
 
 export default Work;
