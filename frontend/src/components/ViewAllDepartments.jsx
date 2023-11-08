@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button, Card, Modal, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
@@ -110,6 +111,15 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
       </div>
     </>
   )
+};
+
+ViewAllDepartments.propTypes = {
+  departments: PropTypes.array,
+  loading: PropTypes.bool,
+  handlePageChange: PropTypes.func,
+  page: PropTypes.number,
+  pages: PropTypes.number,
+  getDepartments: PropTypes.func
 }
 
 export default ViewAllDepartments;
