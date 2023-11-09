@@ -48,7 +48,7 @@ const BarGraph = () => {
 
     // Count the number of requested by each user
     const userCounts = workData.reduce((counts, workOrder) => {
-        const requestedBy = workOrder.requestedBy.username;
+        const requestedBy = workOrder.requestedBy.firstName;
         counts[requestedBy] = (counts[requestedBy] || 0) + 1;
         return counts;
     }, {});
