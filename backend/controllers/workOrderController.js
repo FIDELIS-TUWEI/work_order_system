@@ -189,7 +189,7 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
 const queryAllWork = asyncHandler (async (req, res, next) => {
     try {
         const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
-            .populate("requestedBy", "username")
+            .populate("requestedBy", "firstName")
             .populate("category", "categoryTitle")
             .populate("assignedTo", "firstName lastName")
             .populate("reviewedBy", "username")
