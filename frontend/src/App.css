@@ -61,7 +61,6 @@
 }
 
 .header {
-    height: 10vh;
     margin-bottom: 20px;
     box-shadow: 0 0  2px gray;
     display: flex;
@@ -78,11 +77,15 @@
     justify-content: flex-start;
 }
 
+.header-title h4 {
+    margin-top: 5px;
+}
+
 .header-content {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 50px;
+    height: 60px;
     margin: 0 15px;
 }
 
