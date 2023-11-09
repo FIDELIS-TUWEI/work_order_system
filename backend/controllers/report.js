@@ -38,6 +38,11 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Filter work by Date_Created
+const filterWorkDateCreated = asyncHandler (async (req, res, next) => {
+
+})
+
 // Count Work Orders with Pending status
 const countPendingWorkOrders = asyncHandler (async (req, res, next) => {
     try {
