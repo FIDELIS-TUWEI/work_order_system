@@ -143,7 +143,7 @@ const NewWork = ({
 };
 
 NewWork.propTypes = {
-  location: PropTypes.object,
+  location: PropTypes.array,
   category: PropTypes.array,
   workLocation: PropTypes.func,
   handleLocationChange: PropTypes.func,
