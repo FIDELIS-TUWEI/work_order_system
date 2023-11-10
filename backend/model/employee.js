@@ -12,7 +12,8 @@ const employeeSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: [true, "Please Enter employee phone number"]
+        required: [true, "Please Enter employee phone number"],
+        minlength: [10, "Phone number must have at least (10) numbers"],
     },
     username: {
         type: String,
