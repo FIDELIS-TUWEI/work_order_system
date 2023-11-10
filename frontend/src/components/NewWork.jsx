@@ -28,7 +28,12 @@ const NewWork = ({
             <Form.Item
                 name="title" 
                 label="Brief Work Title" 
-                required rules={[{ required: true, message: 'Please a Brief Work Title!' }]}>
+                required 
+                rules={[
+                  { required: true, message: 'Please a Brief Work Title!' },
+                  { min: 10, message: 'Brief Work Title must be at least 10 characters' }
+                ]}
+            >
               <Input type='text' placeholder='Work Title' />
             </Form.Item>
           </Col>
