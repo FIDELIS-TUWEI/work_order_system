@@ -14,7 +14,8 @@ const workOrderSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        required: true
+        required: true,
+        min: [10, "Title must be at least 10 characters"]
     },
     description: {
         type: String,
