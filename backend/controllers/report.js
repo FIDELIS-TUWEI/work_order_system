@@ -40,7 +40,32 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
 
 // Filter work by Date_Created
 const filterWorkDateCreated = asyncHandler (async (req, res, next) => {
+    try {
+        // Date selected by user in frontend
+        const { date } = req.query;
 
+        // Construct a date range based on the user's selection (day, month, year)
+        const startDate = new Date(date);
+        startDate.setHours(0, 0, 0, 0);
+
+        const endDate = new Date(date);
+        endDate.setHours(23, 59, 59, 999);
+
+        // Find work orders created within the date range
+        const filteredWorkOrders = await WorkOrder.find({
+            Date_Created: {
+                $gte: startDate,
+                $lte: endDate
+            }
+        });
+
+        res.status(200).json({
+            success: true,
+            data: filteredWorkOrders
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
 })
 
 // Count Work Orders with Pending status
@@ -111,6 +136,7 @@ const countAllWorkOrders = asyncHandler (async (req, res, next) => {
 
 module.exports = {
     filterWorkStatus,
+    filterWorkDateCreated,
     countPendingWorkOrders,
     countInProgressWorkOrders,
     countCompletedWorkOrders,
