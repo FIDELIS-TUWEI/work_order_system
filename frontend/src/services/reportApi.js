@@ -1,6 +1,18 @@
 import axios from 'axios';
 const WORK_URL = "/hin";
 
+// Filter work orders by date created
+export const filterWorkByDate = async () => {
+    try {
+        const res = await axios.get(`${WORK_URL}/work/date-created`);
+        const data = res.data;
+        return data;
+    } catch (error) {
+        console.log("Error while fetching all work orders by date created", error);
+        throw new Error("Failed to fetch all work orders by date created");
+    }
+}
+
 // API Service to count pending work orders by status
 export const countPendingWork = async () => {
     try {
