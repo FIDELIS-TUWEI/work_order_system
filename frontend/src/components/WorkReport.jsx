@@ -7,12 +7,23 @@ import "jspdf-autotable";
 import LoadingBox from "../components/LoadingBox";
 
 
-const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pages, handlePageChange }) => {
+const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pages, handlePageChange, navigate }) => {
 
   return (
     <>
       <Card title="Work Orders" style={{ margin: "15px" }}>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
+        <Button 
+          onClick={() => navigate("/filter/work-date")}
+          style={{
+            backgroundColor: "darkgreen",
+            color: "white",
+            border: "none",
+            marginRight: "10px",
+          }}
+        >
+          Filter By Date
+        </Button>
           <label style={{ fontWeight: "bold" }}>
             Filter By Status:
           </label>
@@ -95,7 +106,8 @@ WorkReport.propTypes = {
   exportPDF: PropTypes.func,
   page: PropTypes.number,
   pages: PropTypes.number,
-  handlePageChange: PropTypes.func
+  handlePageChange: PropTypes.func,
+  navigate: PropTypes.func
 }
 
 export default WorkReport;
