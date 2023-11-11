@@ -6,6 +6,8 @@ import Logo from "../../../assets/logo.png";
 import Layout from "../../../components/Layout";
 import WorkReport from "../../../components/WorkReport";
 import { Typography, message } from "antd";
+import { useNavigate } from "react-router-dom";
+
 
 const WORK_URL = "/hin";
 
@@ -15,6 +17,8 @@ const Reports = () => {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
 
 // Function to fetch all work orders from API
 const getWorkOrders = useCallback (async () => {
@@ -89,6 +93,7 @@ const getWorkOrders = useCallback (async () => {
         getWorkOrders={getWorkOrders}
         setFilterStatus={setFilterStatus}
         exportPDF={exportPDF}
+        navigate={navigate}
       />
       
     </Layout>
