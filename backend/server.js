@@ -46,7 +46,7 @@ app.use(cors({
 app.use(mongoSanitize());
 // Rate Limit
 const limiter = rateLimit({
-    windowMs: 5 * 60 * 1000, // 1 minute
+    windowMs: 15 * 60 * 1000, // 1 minute
     max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
     message: {
         message: "Too many login attempts from this IP, please try again after  a 1 minute interval"
