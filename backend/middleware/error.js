@@ -21,7 +21,7 @@ const errorHandler = (err, req, res, next) => {
         const field = Object.values(err.keyValue)[0];
         const message = `Duplicate ${field} value entered`;
         error = new ErrorResponse(message, 400);
-    }
+    };
 
     // Handle validation error
     if (err.name === "ValidationError") {
@@ -32,7 +32,7 @@ const errorHandler = (err, req, res, next) => {
             };
         });
         error = new ErrorResponse(errors, 400);
-    }
+    };
 
     // Handle rate limit error (Too many requests)
     if (err.name === "RateLimitError") {
@@ -45,7 +45,7 @@ const errorHandler = (err, req, res, next) => {
     if (!error.statusCode) {
         error.statusCode = 500;
         error.message = "Server Error, Please try again later";
-    }
+    };
 
     res.status(error.statusCode).json({
         success: false,
@@ -55,6 +55,6 @@ const errorHandler = (err, req, res, next) => {
 
 
     next();
-}
+};
 
 module.exports = errorHandler;
