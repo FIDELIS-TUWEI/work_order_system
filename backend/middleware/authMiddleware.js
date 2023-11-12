@@ -55,7 +55,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
 const setReviewedBy = asyncHandler(async (req, res, next) => {
     req.body.reviewedBy = req.user._id;
     next();
-})
+});
 
 module.exports = {
     protect,
