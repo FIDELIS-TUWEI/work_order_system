@@ -49,7 +49,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
         return next(new ErrorResponse("You are not authorized to access this route", 401));
     }
     next();
-})
+});
 
 // Middleware to set the reviewedBy field
 const setReviewedBy = asyncHandler(async (req, res, next) => {
