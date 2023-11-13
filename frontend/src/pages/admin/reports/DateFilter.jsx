@@ -21,12 +21,12 @@ const DateFilter = () => {
   // function to fetch work orders filtered by date
   const filterWorkOrders = useCallback (async () => {
     try {
-      const formattedDate = selectedDate ? moment(selectedDate).format("YYYY-MM-DD") : null;
+      const { date } = selectedDate || {};
       // Make an API call to fetch work orders based on selected date
       setLoading(true);
       const res = await axios.get(`${WORK_URL}/work/date-created`, {
         params: {
-          date: formattedDate,
+          date,
         },
       });
 
