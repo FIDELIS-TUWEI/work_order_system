@@ -5,7 +5,6 @@ import moment from "moment";
 
 const FilterWorkDate = ({ workFilterDate, filterWorkOrders, handleDateChange, loading }) => {
   return (
-    <>
     <Card title="Filter Work Orders By Date Created" style={{ margin: "15px" }}>
       <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
         <DatePicker onChange={handleDateChange} />
@@ -27,7 +26,6 @@ const FilterWorkDate = ({ workFilterDate, filterWorkOrders, handleDateChange, lo
             <LoadingBox />
           </div>
         ) : (
-          <>
             <table id="table">
               <thead>
                 <tr>
@@ -54,10 +52,8 @@ const FilterWorkDate = ({ workFilterDate, filterWorkOrders, handleDateChange, lo
                 ))}
               </tbody>
             </table>
-          </>
         )}
     </Card>
-    </>
   )
 };
 
