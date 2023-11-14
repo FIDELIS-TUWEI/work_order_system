@@ -142,7 +142,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 };
 
 ViewWorkDetails.propTypes = {
-    workDetails: PropTypes.object,
+    workDetails: PropTypes.array,
     loading: PropTypes.bool,
     handlePrint: PropTypes.func,
     componentPDF: PropTypes.object,
