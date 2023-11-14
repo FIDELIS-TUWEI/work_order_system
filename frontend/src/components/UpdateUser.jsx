@@ -94,7 +94,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, allDepart
                   style={{ width: '100%' }}
                   options={[
                     { value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }, { value: 'engineer', label: 'Engineer' }, 
-                    { value: 'hod', label: 'HoD' }, { value: isSuperAdmin ? 'superadmin' : null, label: 'Super Admin' },
+                    { value: 'hod', label: 'HoD' }, { value: isSuperAdmin ? 'superadmin' : "", label: 'Super Admin' },
                     { value: 'supervisor', label: 'Supervisor' }, { value: 'reviewer', label: 'Reviewer' }
                   ]}
                   onChange={(value) => {
