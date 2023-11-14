@@ -1,15 +1,12 @@
-import PropTypes from "prop-types";
 import { Button, Card, DatePicker } from "antd";
 import LoadingBox from "./LoadingBox";
-import moment from "moment";
 
-const FilterWorkDate = ({ filteredWorkOrders, fetchFilteredWorkOrders, handleDateChange, loading }) => {
+const FilterWorkDate = () => {
   return (
     <Card title="Filter Work Orders By Date Created" style={{ margin: "15px" }}>
       <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
-        <DatePicker.RangePicker onChange={handleDateChange} />
+        <DatePicker.RangePicker />
         <Button
-          onClick={fetchFilteredWorkOrders}
           style={{
             backgroundColor: "darkgreen",
             color: "white",
@@ -39,29 +36,12 @@ const FilterWorkDate = ({ filteredWorkOrders, fetchFilteredWorkOrders, handleDat
                 </tr>
               </thead>
               <tbody>
-                {filteredWorkOrders.map((workOrder) => (
-                  <tr key={workOrder._id}>
-                    <td>{workOrder.title}</td>
-                    <td>{workOrder.serviceType}</td>
-                    <td>{workOrder.category ? workOrder.category.categoryTitle : ''}</td>
-                    <td>{workOrder.priority}</td>
-                    <td>{workOrder.assignedTo}</td>
-                    <td>{workOrder.requestedBy}</td>
-                    <td>{workOrder.dateCompleted ? moment(workOrder.dateCompleted).format("DD/MM/YYYY, hh:mm a") : 'Not yet complete'}</td>
-                  </tr>
-                ))}
+                
               </tbody>
             </table>
         )}
     </Card>
   )
-};
-
-FilterWorkDate.propTypes = {
-  filteredWorkOrders: PropTypes.array,
-  fetchFilteredWorkOrders: PropTypes.func,
-  handleDateChange: PropTypes.func,
-  loading: PropTypes.bool,
 };
 
 export default FilterWorkDate;
