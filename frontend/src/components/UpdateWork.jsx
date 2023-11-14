@@ -222,7 +222,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 UpdateWork.propTypes = {
   onFinishHandler: PropTypes.func,
   navigate: PropTypes.func,
-  workDetails: PropTypes.object,
+  workDetails: PropTypes.array,
   user: PropTypes.object,
   employees: PropTypes.array,
   selectedEmployee: PropTypes.string,
