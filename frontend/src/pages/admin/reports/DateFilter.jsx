@@ -9,29 +9,30 @@ const WORK_URL = "/hin";
 
 
 const DateFilter = () => {
-  const [workFilterDate, setWorkFilterDate] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [filteredWorkOrders, setFilteredWorkOrders] = useState([]);
+  const [selectedDateRange, setSelectedDateRange] = useState(null);
   const [loading, setLoading] = useState(false);
 
   // function to handle date change
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateChange = (dates) => {
+    setSelectedDateRange(dates);
   };
 
   // function to fetch work orders filtered by date
-  const filterWorkOrders = useCallback (async () => {
+  const fetchFilteredWorkOrders = useCallback (async () => {
     try {
-      const { date } = selectedDate || {};
+      const [startDate, endDate] = selectedDateRange.map(date => moment(date).format('YYYY-MM-DD'));
       // Make an API call to fetch work orders based on selected date
       setLoading(true);
       const res = await axios.get(`${WORK_URL}/work/date-created`, {
         params: {
-          date,
+          startDate,
+          endDate
         },
       });
 
-      // Update the workFilterDate state with the fetched work orders
-      setWorkFilterDate(res.data);
+      // Update the filteredWorkOrders state with the fetched work orders
+      setFilteredWorkOrders(res.data);
       setLoading(false);
 
     } catch (error) {
@@ -40,18 +41,18 @@ const DateFilter = () => {
       console.error("Failed to fetch work orders", error.message);
       message.error("Failed to fetch work orders", error.message);
     }
-  }, [selectedDate]);
+  }, [selectedDateRange]);
 
   // useEffect hook
   useEffect(() => {
-    filterWorkOrders();
-  }, [filterWorkOrders, selectedDate]);
+    fetchFilteredWorkOrders();
+  }, [fetchFilteredWorkOrders, selectedDateRange]);
 
   return (
     <Layout>
       <FilterWorkDate 
-        workFilterDate={workFilterDate}
-        filterWorkOrders={filterWorkOrders}
+        filteredWorkOrders={filteredWorkOrders}
+        fetchFilteredWorkOrders={fetchFilteredWorkOrders}
         handleDateChange={handleDateChange}
         loading={loading}
       />
