@@ -3,13 +3,13 @@ import { Button, Card, DatePicker } from "antd";
 import LoadingBox from "./LoadingBox";
 import moment from "moment";
 
-const FilterWorkDate = ({ workFilterDate, filterWorkOrders, handleDateChange, loading }) => {
+const FilterWorkDate = ({ filteredWorkOrders, fetchFilteredWorkOrders, handleDateChange, loading }) => {
   return (
     <Card title="Filter Work Orders By Date Created" style={{ margin: "15px" }}>
       <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
-        <DatePicker onChange={handleDateChange} />
+        <DatePicker.RangePicker onChange={handleDateChange} />
         <Button
-          onClick={filterWorkOrders}
+          onClick={fetchFilteredWorkOrders}
           style={{
             backgroundColor: "darkgreen",
             color: "white",
@@ -39,7 +39,7 @@ const FilterWorkDate = ({ workFilterDate, filterWorkOrders, handleDateChange, lo
                 </tr>
               </thead>
               <tbody>
-                {workFilterDate.map((workOrder) => (
+                {filteredWorkOrders.map((workOrder) => (
                   <tr key={workOrder._id}>
                     <td>{workOrder.title}</td>
                     <td>{workOrder.serviceType}</td>
@@ -58,8 +58,8 @@ const FilterWorkDate = ({ workFilterDate, filterWorkOrders, handleDateChange, lo
 };
 
 FilterWorkDate.propTypes = {
-  workFilterDate: PropTypes.array,
-  filterWorkOrders: PropTypes.func,
+  filteredWorkOrders: PropTypes.array,
+  fetchFilteredWorkOrders: PropTypes.func,
   handleDateChange: PropTypes.func,
   loading: PropTypes.bool,
 };
