@@ -13,7 +13,63 @@ const mongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 
+// Connect to MongoDB Database
 connectDB();
+
+// Middleware
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
+app.use(morgan('dev'));
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.urlencoded({ 
+    limit: "5mb",
+    extended: true 
+}));
+app.use(cors({
+    credentials: true,
+    origin: "http://localhost:3000"
+}));
+app.use(cookieParser());
+app.use(express.json()); // To parse JSON data in the request body
+app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
+// Prevent HTTP Parameter pollution
+app.use(hpp());
+
+// Prevent XSS
+app.use(helmet.contentSecurityPolicy());
+
+// Prevent SQL Injection
+app.use(mongoSanitize());
+
+// Error Middleware
+app.use(errorHandler);
+
+// Rate Limit
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 60 * 1000, // 1 hour
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 1 hour)
+    slidingWindow: true,
+    message: {
+        message: "Too many login attempts from this IP, please try again after  a 1 minute interval"
+    },
+    handler: (req, res, next, options) => {
+        if (options.message) {
+            return res.redirect("/login");
+        };
+
+        res.status(429).json({
+            success: false,
+            message: options.message
+        });
+
+        next();
+    },
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` 
+    
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+app.use(limiter);
+
 
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
@@ -26,44 +82,6 @@ const departmentRoutes = require("./routes/departmentRoutes");
 const designationRoutes = require("./routes/designationRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 
-// Middleware
-app.use(express.json()); // To parse JSON data in the request body
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
-app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-app.use(morgan('dev'));
-app.use(bodyParser.json({ limit: "5mb" }));
-app.use(bodyParser.urlencoded({ 
-    limit: "5mb",
-    extended: true 
-}));
-app.use(cors({
-    credentials: true,
-    origin: "http://localhost:3000"
-}));
-// Prevent SQL Injection
-app.use(mongoSanitize());
-// Rate Limit
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 1 minute
-    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-    message: {
-        message: "Too many login attempts from this IP, please try again after  a 1 minute interval"
-    },
-    handler: (req, res, next, options) => {
-        res.status(429).json({
-            success: false,
-            message: options.message
-        });
-    },
-    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-app.use(limiter);
-// Prevent HTTP Parameter pollution
-app.use(hpp());
-
 
 // Routes Middleware
 app.use("/hin", authRoutes);
@@ -75,10 +93,6 @@ app.use("/hin", categoryRoutes);
 app.use("/hin", departmentRoutes);
 app.use("/hin", designationRoutes);
 app.use("/hin", employeeRoutes);
-
-
-// Error Middleware
-app.use(errorHandler);
 
 
 const PORT = process.env.PORT || 5000
