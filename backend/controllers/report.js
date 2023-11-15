@@ -41,11 +41,11 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
 // Filter work by Date_Created
 const filterWorkDateCreated = asyncHandler (async (req, res, next) => {
     try {
-        const { dateAdded } = req.query;
+        const { Date_Created } = req.query;
         let query = {};
 
-        if (dateAdded) {
-            query.dateAdded = dateAdded;
+        if (Date_Created) {
+            query.Date_Created = Date_Created;
         }
         const work = await WorkOrder.find(query)
             .populate("assignedTo", "firstName lastName")
