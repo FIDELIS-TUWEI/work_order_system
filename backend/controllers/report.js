@@ -41,15 +41,19 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
 // Filter work by Date_Created
 const filterWorkDateCreated = asyncHandler (async (req, res, next) => {
     try {
-        // Date selected by user in frontend
-        const selectedDate = new Date(req.query.date);
+        const { dateAdded } = req.query;
+        let query = {};
 
-        const work = await WorkOrder.find({ 
-            dateAdded: {
-                $gte: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()),
-                $lt: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1)
-            }
-         }).exec();
+        if (dateAdded) {
+            query.dateAdded = dateAdded;
+        }
+        const work = await WorkOrder.find(query)
+            .populate("assignedTo", "firstName lastName")
+            .populate("requestedBy", "username")
+            .populate("location", "locationTitle")
+            .populate("category", "categoryTitle")
+            .populate("reviewedBy", "firstName lastName")
+            .exec();
 
         res.status(200).json({
             success: true,
