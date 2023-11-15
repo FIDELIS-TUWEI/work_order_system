@@ -10,7 +10,6 @@ const connectDB = require("./config/connectDB");
 const mongoose = require("mongoose");
 const errorHandler = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
-const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 
 // Connect to MongoDB Database
@@ -43,33 +42,6 @@ app.use(mongoSanitize());
 
 // Error Middleware
 app.use(errorHandler);
-
-// Rate Limit
-const limiter = rateLimit({
-    windowMs: 1 * 60 * 60 * 1000, // 1 hour
-    max: 100, // Limit each IP to 100 requests per `window` (here, per 1 hour)
-    slidingWindow: true,
-    message: {
-        message: "Too many login attempts from this IP, please try again after  a 1 minute interval"
-    },
-    handler: (req, res, next, options) => {
-        if (options.message) {
-            return res.redirect("/login");
-        };
-
-        res.status(429).json({
-            success: false,
-            message: options.message
-        });
-
-        next();
-    },
-    standardHeaders: true, // Return rate limit info in the `RateLimit-*` 
-    
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-app.use(limiter);
-
 
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
