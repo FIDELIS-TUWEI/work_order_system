@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("../config/connectDB");
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -6,14 +7,15 @@ const cors = require('cors');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const connectDB = require("./config/connectDB");
-const mongoose = require("mongoose");
 const errorHandler = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 
-// Connect to MongoDB Database
-connectDB();
+const PORT = process.env.PORT || 5000
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
 
 // Middleware
 app.use(helmet());
@@ -66,19 +68,6 @@ app.use("/hin", departmentRoutes);
 app.use("/hin", designationRoutes);
 app.use("/hin", employeeRoutes);
 
-
-const PORT = process.env.PORT || 5000
-// start server
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-});
-
-mongoose.connection.on('error', err => {
-    console.log(err)
-});
 
 
 
