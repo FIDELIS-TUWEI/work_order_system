@@ -42,15 +42,12 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
 const filterWorkDateCreated = asyncHandler (async (req, res, next) => {
     try {
         // Date selected by user in frontend
-        const { startDate, endDate } = req.query;
-
-        const startDateTime = new Date(startDate);
-        const endDateTime = new Date(endDate);
+        const selectedDate = new Date(req.query.date);
 
         const work = await WorkOrder.find({ 
-            Date_Created: {
-                $gte: startDateTime,
-                $lte: endDateTime
+            dateAdded: {
+                $gte: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()),
+                $lt: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1)
             }
          }).exec();
 
