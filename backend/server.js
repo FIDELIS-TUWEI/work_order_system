@@ -11,12 +11,6 @@ const errorHandler = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
-
 // Middleware
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
@@ -68,7 +62,12 @@ app.use("/hin", departmentRoutes);
 app.use("/hin", designationRoutes);
 app.use("/hin", employeeRoutes);
 
+// Server Setup
+const PORT = process.env.PORT || 5000
 
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
 
 
 
