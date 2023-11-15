@@ -1,10 +1,16 @@
 import PropTypes from "prop-types"
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd'
 import LoadingBox from "../components/LoadingBox";
+import moment from "moment";
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange }) => {
+  // Function to disable past dates and future dates in DatePicker
+  const disabledDate = current => {
+    return current && current < moment().startOf('day');
+  }
   // to render edit columns based on work status and user role
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
@@ -49,12 +55,11 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
         </Form.Item>
       </Col>
       <Col xs={24} md={24} lg={8}>
-        <Form.Item
-          label="Date Assigned"
-          name="dateAssigned"
-          rules={[{ required: true, message: 'Please Enter Date Assigned!' }]}
-        >
-          <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
+        <Form.Item 
+          name="dueDate" 
+          label="Due Date" 
+          required rules={[{ required: true, message: 'Please Select a Due Date!' }]}>
+          <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} disabledDate={disabledDate} />
         </Form.Item>
       </Col>
     </>
@@ -84,15 +89,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             rules={[{ required: true, message: 'Please Enter Comments!' }]}
           >
             <Input type='text' placeholder='Enter comments' />
-          </Form.Item>
-        </Col>
-        <Col xs={24} md={24} lg={8}>
-          <Form.Item
-            label="Date Completed"
-            name="dateCompleted"
-            rules={[{ required: true, message: 'Please Enter Date Completed!' }]}
-          >
-            <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
           </Form.Item>
         </Col>
         <Col xs={24} md={24} lg={8}>
@@ -136,16 +132,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             >
               <Input type='text' placeholder='Enter comments' />
             </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Review Date"
-              name="dateReviewed"
-              rules={[{ required: true, message: 'Please Select Review Date!' }]}
-            >
-              <DatePicker format='YYYY-MM-DD' disabledDate={disabledDate} />
-            </Form.Item>
-          </Col>
+          </Col>      
         </>
       );
     } else {
@@ -164,12 +151,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
       <LoadingBox />
     </div>
   )
-
-  
-  // Function to disable past dates and future dates. Allow only today
-  const today = new Date();
-
-  const disabledDate = current => !current.isSame(today, 'day');
 
   // Function to disable current status with disabled attribute
   const getStatusOptions = () => {
