@@ -15,7 +15,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     }
 
-    const { priority, title, description, location, serviceType, category, dueDate } = req.body;
+    const { priority, title, description, location, serviceType, category } = req.body;
 
     try {
         
@@ -28,7 +28,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             location,
             serviceType,
             category,
-            dueDate
         });
 
         // Save Work Order
@@ -47,7 +46,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             Description: ${savedWorkorder.description}\n
             Priority: ${savedWorkorder.priority}\n
             Service Type: ${savedWorkorder.serviceType}\n
-            Due Date: ${savedWorkorder.dueDate}\n
             Status: ${savedWorkorder.status}\n
             Date Created: ${savedWorkorder.Date_Created}\n\n
             Login in to the Work Order System to view the details.\n
