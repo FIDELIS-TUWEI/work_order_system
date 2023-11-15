@@ -1,21 +1,13 @@
+import PropTypes from "prop-types";
 import { Button, Card, DatePicker } from "antd";
 import LoadingBox from "./LoadingBox";
 
-const FilterWorkDate = () => {
+const FilterWorkDate = ({ loading, workOrders, handleDateChange, selectedDate }) => {
   return (
     <Card title="Filter Work Orders By Date Created" style={{ margin: "15px" }}>
       <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
-        <DatePicker.RangePicker />
-        <Button
-          style={{
-            backgroundColor: "darkgreen",
-            color: "white",
-            border: "none",
-            marginLeft: "10px",
-          }}
-        >
-          Filter
-        </Button>
+        <DatePicker onChange={handleDateChange} />
+        
       </div>
         
         {loading ? (
@@ -36,12 +28,28 @@ const FilterWorkDate = () => {
                 </tr>
               </thead>
               <tbody>
-                
+                {workOrders.map((workOrder) => (
+                  <tr key={workOrder._id}>
+                    <td>{workOrder.title}</td>
+                    <td>{workOrder.serviceType}</td>
+                    <td>{workOrder.category}</td>
+                    <td>{workOrder.priority}</td>
+                    <td>{workOrder.assignedTo}</td>
+                    <td>{workOrder.requestedBy}</td>
+                    <td>{workOrder.dateCompleted}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
         )}
     </Card>
   )
 };
+
+FilterWorkDate.propTypes = {
+  loading: PropTypes.bool,
+  workOrders: PropTypes.array,
+  handleDateChange: PropTypes.func,
+}
 
 export default FilterWorkDate;
