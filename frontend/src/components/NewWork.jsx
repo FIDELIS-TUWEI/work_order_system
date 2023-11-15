@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
-import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
+import { Button, Card, Col, Form, Input, Row, Select, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
-import moment from "moment";
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const NewWork = ({ 
   loading, location, category, 
@@ -12,10 +10,6 @@ const NewWork = ({
   selectedCategory, handleLocationChange, 
   handleCategoryChange, navigate, workLocation
 }) => {
-  // Function to disable past dates and future dates. Allow only today
-  const disabledDate = current => {
-    return current && current < moment().startOf('day');
-  }
 
   return (
     <>
@@ -82,7 +76,8 @@ const NewWork = ({
                 style={{ width: '100%' }}
                 options={[
                   { value: 'Fix', label: 'Fix' }, { value: 'Repair', label: 'Repair' }, 
-                  { value: 'Replace', label: 'Replace' }, { value: 'Install', label: 'Install' }
+                  { value: 'Replace', label: 'Replace' }, { value: 'Install', label: 'Install' },
+                  { value: 'Upgrade', label: 'Upgrade' }, { value: 'Remove', label: 'Remove' }
                 ]}
               />
             </Form.Item>
@@ -120,14 +115,6 @@ const NewWork = ({
                     { value: 'Normal', label: 'Normal' }, { value: 'Urgent', label: 'Urgent' }
                   ]}
                 />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item 
-              name="dueDate" 
-              label="Due Date" 
-              required rules={[{ required: true, message: 'Please Select a Due Date!' }]}>
-              <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} disabledDate={disabledDate} />
             </Form.Item>
           </Col>
         </Row>
