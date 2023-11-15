@@ -29,7 +29,7 @@ const workOrderSchema = new mongoose.Schema({
         required: true
     },
     serviceType: {
-        // Fix, Repair, Replace, Install
+        // Fix, Repair, Replace, Install, Upgrade, Remove
         type: String,
         required: true
     },
@@ -51,16 +51,16 @@ const workOrderSchema = new mongoose.Schema({
         ref: "Employee",
     },
     dateAssigned: {
-        type: Object,
-        default: ""
+        type: Date,
+        index: true
     },
     dueDate: {
         type: Object,
-        required: [true, "Due Date is required"]
+        default: ""
     },
     dateCompleted: {
-        type: Object,
-        default: ""
+        type: Date,
+        index: true
     },
     supervisedBy: {
         type: "string",
@@ -83,8 +83,8 @@ const workOrderSchema = new mongoose.Schema({
         default: ""
     },
     dateReviewed: {
-        type: Object,
-        default: ""
+        type: Date,
+        index: true
     },
     dateAdded: {
         type: Date,
@@ -97,5 +97,27 @@ const workOrderSchema = new mongoose.Schema({
     timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" }, 
 }
 );
+
+// Pre save hook to set date assigned before save
+workOrderSchema.pre("save", async function (next) {
+    const workOrder = this;
+
+    // set date assigned if the status is In_Progress and date assigned is not set
+    if (workOrder.status === "In_Progress" && !workOrder.dateAssigned) {
+        workOrder.dateAssigned = new Date();
+    }
+
+    // set date completed if the status is Complete and date completed is not set
+    if (workOrder.status === "Complete" && !workOrder.dateCompleted) {
+        workOrder.dateCompleted = new Date();
+    };
+
+    // set date reviewed if the status is Reviewed and date reviewed is not set
+    if (workOrder.reviewed === true && !workOrder.dateReviewed) {
+        workOrder.dateReviewed = new Date();
+    };
+
+    next();
+})
 
 module.exports = mongoose.model("Workorder", workOrderSchema);
