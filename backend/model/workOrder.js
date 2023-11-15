@@ -85,6 +85,11 @@ const workOrderSchema = new mongoose.Schema({
     dateReviewed: {
         type: Object,
         default: ""
+    },
+    dateAdded: {
+        type: Date,
+        default: Date.now(),
+        index: true
     }
 },
 
