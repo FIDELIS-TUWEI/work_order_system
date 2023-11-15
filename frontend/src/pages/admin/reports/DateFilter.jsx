@@ -1,45 +1,50 @@
 import Layout from '../../../components/Layout';
 import FilterWorkDate from '../../../components/FilterWorkDate';
 import { useCallback, useEffect, useState } from 'react';
-
 import axios from 'axios';
 import { message } from 'antd';
-const WORK_URL = '/hin';
+
+const WORK_URL = "/hin";
 
 
 const DateFilter = () => {
-  const [loading, setLoading] = useState(false);
   const [workOrders, setWorkOrders] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [filterDate, setFilterDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Function to handle Date change
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  // Function to fetch work orders
+  const getWorkOrders = useCallback (async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`${WORK_URL}/work/date-created`, {
+        params: {
+          dateAdded: filterDate
+        },
+      });
+      setWorkOrders(res.data.data)
+      setLoading(false);
+    } catch (error) {
+      message.error("Failed to fetch work orders")
+    }
+  }, [filterDate]);
 
-  // Function to handle Filter
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${WORK_URL}/work/date-created?date=${selectedDate}`);
-        setWorkOrders(response.data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        message.error('Error while fetching work orders', error.message);
-      }
-    };
-    fetchData();
-  }, [selectedDate]);
+    getWorkOrders();
+  }, [getWorkOrders, filterDate]);
+
+  // Function to handle date change
+  const handleDateChange = (date) => {
+    setFilterDate(date.toISOString());
+    getWorkOrders();
+  }
 
   return (
     <Layout>
       <FilterWorkDate 
         handleDateChange={handleDateChange}
-        loading={loading}
         workOrders={workOrders}
-        selectedDate={selectedDate}
+        loading={loading}
+        getWorkOrders={getWorkOrders}
       />
     </Layout>
   )
