@@ -34,19 +34,6 @@ const errorHandler = (err, req, res, next) => {
         error = new ErrorResponse(errors, 400);
     };
 
-    // Handle rate limit error (Too many requests)
-    if (err.name === "RateLimitError") {
-        const message = "Too many requests, Please wait a moment and try again";
-        error = new ErrorResponse(message, 429);
-        res.set("X-RateLimit-Retry-After", err.retryAfter);
-    };
-
-    // Handle other errors
-    if (!error.statusCode) {
-        error.statusCode = 500;
-        error.message = "Server Error, Please try again later";
-    };
-
     res.status(error.statusCode).json({
         success: false,
         error: error.message
