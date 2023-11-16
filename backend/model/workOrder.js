@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const workOrderSchema = new mongoose.Schema({
+    serial: {
+        type: String,
+        required: true
+
+    },
     requestedBy: {
         type: ObjectId,
         ref: "User",
@@ -45,6 +50,15 @@ const workOrderSchema = new mongoose.Schema({
         required: true,
         enum: ["Pending", "In_Progress" ,"Complete", "Reviewed"],
         default: "Pending"
+    },
+    tracker: {
+        type: String,
+        enum: ["Attended", "In_Complete", "Not_Attended"],
+        default: ""
+    },
+    trackerMessage: {
+        type: String,
+        default: ""
     },
     assignedTo: {
         type: ObjectId,
