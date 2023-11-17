@@ -53,7 +53,7 @@ const workOrderSchema = new mongoose.Schema({
     },
     tracker: {
         type: String,
-        enum: ["Attended", "In_Complete", "Not_Attended"],
+        enum: ["In_Attendance", "Attended", "In_Complete"],
         default: ""
     },
     trackerMessage: {
