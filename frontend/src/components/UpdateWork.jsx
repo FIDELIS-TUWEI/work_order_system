@@ -17,6 +17,32 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   const isWorkCompleted = workDetails?.status === 'Complete';
   const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor"].includes(user?.role);
 
+  // Check tracker selection
+  const isWorkAttended = workDetails?.tracker === 'Attended';
+  const isWorkInComplete = workDetails?.tracker === 'In_Complete';
+
+   // Function to disable current status with disabled attribute
+  const getStatusOptions = () => {
+    const statusOptions = [
+      { value: 'Pending', label: 'Pending' },
+      { value: 'In_Progress', label: 'In Progress' },
+      { value: 'Complete', label: 'Complete' },
+      { value: 'Reviewed', label: 'Reviewed' },
+    ];
+
+    const currentIndex = statusOptions.findIndex(option => option.value === workDetails?.status);
+
+    if (currentIndex !== -1 && currentIndex < statusOptions.length - 1) {
+      return statusOptions.map((option, index) => ({
+        ...option,
+        disabled: index < currentIndex || index === currentIndex || index > currentIndex + 1
+      }));
+    }
+
+    return statusOptions;
+  };
+
+
   // If work is pending
   const renderPendingFields = () => (
     <>
@@ -56,10 +82,68 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
       </Col>
       <Col xs={24} md={24} lg={8}>
         <Form.Item 
+          name="tracker" 
+          label="Tracker" 
+          required rules={[{ required: true, message: 'Please Select a Tracking Option!' }]}>
+          <Select 
+            placeholder='Select Tracker'
+            allowClear
+            style={{ width: '100%' }}
+            options={[
+              { value: 'In_Attendance', label: 'In Attendance' },
+              { value: 'Attended', label: 'Attended' },
+              { value: 'In_Complete', label: 'In Complete' },
+            ]}
+          />
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Tracking Comments"
+          name="trackerMessage"
+          rules={[{ required: true, message: 'Please Enter Tracking Comments!' }]}
+        >
+          <Input type='text' placeholder='Enter Tracking comments' />
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item 
           name="dueDate" 
           label="Due Date" 
           required rules={[{ required: true, message: 'Please Select a Due Date!' }]}>
           <RangePicker style={{ width: '100%' }} format={"YYYY-MM-DD"} disabledDate={disabledDate} />
+        </Form.Item>
+      </Col>
+    </>
+  );
+
+  // Check work tracker before rendering fields
+  const renderTrackerFields = () => (
+    <>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Tracker"
+          name="tracker"
+          rules={[{ required: true, message: 'Please Select Work Tracker!' }]}
+        >
+          <Select 
+            placeholder='Select Tracker'
+            allowClear
+            style={{ width: '100%' }}
+            options={[
+              { value: 'Attended', label: 'Attended' },
+              { value: 'In_Complete', label: 'In Complete' },
+            ]}
+          />
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={24} lg={8}>
+        <Form.Item
+          label="Comments"
+          name="trackerMessage"
+          rules={[{ required: true, message: 'Please Enter Comments!' }]}
+        >
+          <Input type='text' placeholder='Enter comments' />
         </Form.Item>
       </Col>
     </>
@@ -151,27 +235,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
       <LoadingBox />
     </div>
   )
-
-  // Function to disable current status with disabled attribute
-  const getStatusOptions = () => {
-    const statusOptions = [
-      { value: 'Pending', label: 'Pending' },
-      { value: 'In_Progress', label: 'In Progress' },
-      { value: 'Complete', label: 'Complete' },
-      { value: 'Reviewed', label: 'Reviewed' },
-    ];
-
-    const currentIndex = statusOptions.findIndex(option => option.value === workDetails?.status);
-
-    if (currentIndex !== -1 && currentIndex < statusOptions.length - 1) {
-      return statusOptions.map((option, index) => ({
-        ...option,
-        disabled: index < currentIndex || index === currentIndex || index > currentIndex + 1
-      }));
-    }
-
-    return statusOptions;
-  }
   
   return (
     <div>
@@ -184,7 +247,8 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             <Row gutter={20}>
                 {
                   isWorkPending ? renderPendingFields() : 
-                  isWorkInProgress ? renderInProgressFields() : 
+                  isWorkInComplete ? renderTrackerFields() :
+                  isWorkAttended && isWorkInProgress ? renderInProgressFields() : 
                   isWorkCompleted && isRoleAuthorized ? renderReviewFields() : renderLoader()
                 }
             </Row>
