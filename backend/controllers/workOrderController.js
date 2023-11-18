@@ -130,7 +130,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             const employee = await Employee.findById(assignedTo);
             if (employee) {
                 employee.assignedWork.push(id);
-                await employee.save()
+                await employee.save();
 
             }
         }
