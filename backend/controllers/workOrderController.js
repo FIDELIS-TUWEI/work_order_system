@@ -76,8 +76,9 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 const updateWorkOrder = asyncHandler (async (req, res, next) => {
     const { id } = req.params;
     const  userId = req.user._id;
-    const user = await User.findById(userId).select("-password");
 
+    // Check if user exists
+    const user = await User.findById(userId).select("-password");
     if (!user) {
         return next(new ErrorResponse("User not found", 404));
     };
