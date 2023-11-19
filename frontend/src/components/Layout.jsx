@@ -59,7 +59,7 @@ const Layout = ({ children }) => {
         <div className="sidebar">
           <div className="logo">
             <img src={Logo} alt="Company Logo" className="sidebar--logo"/>
-            <h6>Holiday Inn</h6>
+            {/*<h6>Holiday Inn</h6>*/}
           </div>
           <hr />
 
@@ -69,15 +69,15 @@ const Layout = ({ children }) => {
               return (
                 <div key={menu.name}>
                   <div className={`menu-item ${isActive && "active"}`}>
-                    <i>{menu.icon}</i>
-                    <Link to={menu.path}>{menu.name}</Link>
+                    <Link to={menu.path}><i>{menu.icon}</i></Link>
+                    {/*<Link to={menu.path}>{menu.name}</Link>*/}
                   </div>
                 </div>
               );
             })}
               <div className={`menu-item`} onClick={handleLogout} tabIndex={0} onKeyDown={handleKeyDown}>
-                <i><RiLogoutCircleFill/></i>
-                <Link to="/">Logout</Link>
+                <Link to="/"><i><RiLogoutCircleFill/></i></Link>
+                {/*<Link to="/">Logout</Link>*/}
               </div>
           </div>
         </div>
