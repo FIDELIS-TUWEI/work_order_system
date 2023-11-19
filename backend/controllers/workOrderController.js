@@ -83,7 +83,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     };
 
     try {
-        const { assignedTo, reviewed, ...updatedFields } = req.body;
+        const { assignedTo, reviewed, tracker, ...updatedFields } = req.body;
 
         // Update the work order
         const updateOptions = {
@@ -98,6 +98,21 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         if (!updatedWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         };
+
+        // Handle Tracker in complete status
+        if (tracker === "In_Complete") {
+            updatedWorkOrder.status = "Pending";
+            updatedWorkOrder.trackerMessage = req.body.trackerMessage;
+
+            // Clear the assignedTo, dueDate, dateAssigned fields
+            updatedWorkOrder.assignedTo = null;
+            updatedWorkOrder.dueDate = null;
+            updatedWorkOrder.dateAssigned = null;
+
+            await updatedWorkOrder.save();
+
+
+        }
 
         if (reviewed && reviewed === true) {
             updatedWorkOrder.reviewed = true;
