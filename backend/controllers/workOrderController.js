@@ -76,47 +76,43 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 const updateWorkOrder = asyncHandler (async (req, res, next) => {
     const { id } = req.params;
     const  userId = req.user._id;
-
-    // Check if user exists
     const user = await User.findById(userId).select("-password");
+
     if (!user) {
         return next(new ErrorResponse("User not found", 404));
     };
 
-    // Extract the fields to be updated from the request body
-    const { assignedTo, reviewed, ...updatedFields } = req.body;
+    try {
+        const { assignedTo, reviewed, ...updatedFields } = req.body;
 
-    // Update the work order
-    const updateWork = async () => {
+        // Update the work order
         const updateOptions = {
             new: true,
             runValidators: true
         };
-    
+
+        // Update the work order and populate the assignedTo field
         const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
-    
+
         // check if work order exists
         if (!updatedWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
-        // return the updated work order
-        return updatedWorkOrder;
-    };
-
-    // Handle reviewed work
-    const handleReview = async (updatedWorkOrder) => {
-        if (reviewed) {
+        if (reviewed && reviewed === true) {
             updatedWorkOrder.reviewed = true;
             updatedWorkOrder.reviewedBy = req.body.reviewedBy;
             updatedWorkOrder.dateReviewed = req.body.dateReviewed;
             updatedWorkOrder.reviewComments = req.body.reviewComments;
             await updatedWorkOrder.save();
         } 
-    };
 
-    // Handle updating the assigned employee
-    const handleAssignedEmployee = async (updatedWorkOrder) => {
+        // clear the user who requested the work when the work is reviewed
+        if ( reviewed) {
+            await User.findByIdAndUpdate(userId, { $pull: { workOrders: id } });
+        };
+
+        // check if an employee is assigned to the work order
         if (assignedTo) {
             // update the assignedTo field
             updatedWorkOrder.assignedTo = assignedTo;
@@ -129,41 +125,25 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
                 await employee.save();
 
             }
-        }
-    };
+        };
 
-    // Send Email notification
-    const sendEmailNotification = async (updatedWorkOrder) => {
+        // Send Email notification when a work order is updated
         if (!updatedWorkOrder.reviewed) {
             const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
             const subject =`A Work Order has been updated`;
-            const text =  `A Work Order with title ${updatedWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. Login in to the Work Order System to view the details.\n `;
+            const text =  `
+                A Work Order with title ${updatedWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. 
+                Login in to the Work Order System to view the details.\n
+            `;
             
             for ( const recepient of recepients ) {
                 sendEmail({
                     email: recepient,
                     subject,
                     text
-                });
+                })
             }
         }
-    };
-
-    // clear the user who requested the work when the work is reviewed
-    const clearRequestedBy = async (userId) => {
-        if ( reviewed) {
-            await User.findByIdAndUpdate(userId, { $pull: { workOrders: id } });
-        };
-    };
-    
-    
-    // Main Process
-    try {
-        const updatedWorkOrder = await updateWork();
-        await handleReview(updatedWorkOrder);
-        await handleAssignedEmployee(updatedWorkOrder);
-        await sendEmailNotification(updatedWorkOrder);
-        await clearRequestedBy(userId, updatedWorkOrder);
 
         // Return a response
         return res.status(200).json({
