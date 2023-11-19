@@ -45,6 +45,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 <div className="details--header1">
                     <h2>Work Description: {workDetails?.title}</h2>
                     <p>Service Type: {workDetails?.serviceType}</p>
+                    <p>Tracker: {workDetails?.tracker}</p>
                 </div>
 
                 <div className="details--header2">
@@ -92,6 +93,11 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                             ? moment(workDetails.dateAssigned).format("DD/MM/YYYY, hh:mm a")
                             : "Work order has not been assigned!"}
                     </span>
+                </div>
+
+                <div className="details">
+                    <span>Tracking Comments</span>
+                    <span>{workDetails?.trackingMessage}</span>
                 </div>
 
                 <div className="details">
