@@ -88,24 +88,20 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
     // Update the work order
     const updateWork = async () => {
-        try {
-            const updateOptions = {
-                new: true,
-                runValidators: true
-            };
-        
-            const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
-        
-            // check if work order exists
-            if (!updatedWorkOrder) {
-                return next(new ErrorResponse("Work Order not found", 404));
-            };
+        const updateOptions = {
+            new: true,
+            runValidators: true
+        };
+    
+        const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
+    
+        // check if work order exists
+        if (!updatedWorkOrder) {
+            return next(new ErrorResponse("Work Order not found", 404));
+        };
 
-            // return the updated work order
-            return updatedWorkOrder;
-        } catch (error) {
-            throw error;
-        }
+        // return the updated work order
+        return updatedWorkOrder;
     };
 
     // Handle reviewed work
