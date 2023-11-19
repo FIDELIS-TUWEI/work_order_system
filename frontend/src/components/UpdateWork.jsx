@@ -17,9 +17,10 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   const isWorkCompleted = workDetails?.status === 'Complete';
   const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor"].includes(user?.role);
 
-  // Check tracker selection
-  const isWorkAttended = workDetails?.tracker === 'Attended';
-  const isWorkInComplete = workDetails?.tracker === 'In_Complete';
+  // Check work tracker status
+  const isInAttendance = workDetails?.tracker === 'In_Attendance';
+  const isAttended = workDetails?.tracker === 'Attended';
+
 
    // Function to disable current status with disabled attribute
   const getStatusOptions = () => {
@@ -44,7 +45,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 
 
   // If work is pending
-  const renderPendingFields = () => (
+  const renderAssignFields = () => (
     <>
       <Col xs={24} md={24} lg={8}>
         <Form.Item
@@ -118,39 +119,48 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   );
 
   // Check work tracker before rendering fields
-  const renderTrackerFields = () => (
-    <>
-      <Col xs={24} md={24} lg={8}>
-        <Form.Item
-          label="Tracker"
-          name="tracker"
-          rules={[{ required: true, message: 'Please Select Work Tracker!' }]}
-        >
-          <Select 
-            placeholder='Select Tracker'
-            allowClear
-            style={{ width: '100%' }}
-            options={[
-              { value: 'Attended', label: 'Attended' },
-              { value: 'In_Complete', label: 'In Complete' },
-            ]}
-          />
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={24} lg={8}>
-        <Form.Item
-          label="Comments"
-          name="trackerMessage"
-          rules={[{ required: true, message: 'Please Enter Comments!' }]}
-        >
-          <Input type='text' placeholder='Enter comments' />
-        </Form.Item>
-      </Col>
-    </>
-  );
+  const renderUpdateTrackerFields = () => {
+    const handleTrackerChange = (value) => {
+      if (value === "In_Complete") {
+        navigate("/work/list")
+      }
+    }
+    return (
+      <>
+        <Col xs={24} md={24} lg={8}>
+          <Form.Item
+            label="Tracker"
+            name="tracker"
+            rules={[{ required: true, message: 'Please Select Work Tracker!' }]}
+          >
+            <Select 
+              placeholder='Select Tracker'
+              allowClear
+              style={{ width: '100%' }}
+              options={[
+                { value: 'Attended', label: 'Attended' },
+                { value: 'In_Complete', label: 'In Complete' },
+              ]}
+              onChange={handleTrackerChange}
+            />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={24} lg={8}>
+          <Form.Item
+            label="Comments"
+            name="trackerMessage"
+            rules={[{ required: true, message: 'Please Enter Comments!' }]}
+          >
+            <Input type='text' placeholder='Enter comments' />
+          </Form.Item>
+        </Col>
+      </>
+    )
+  };
+
 
   // if Work is in progress
-  const renderInProgressFields = () => (
+  const renderCompleteFormFields = () => (
     <>
       <Col xs={24} md={24} lg={8}>
           <Form.Item
@@ -188,7 +198,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   );
 
   // if Work is complete check if user is authprised
-  const renderReviewFields = () => {
+  const renderReviewFormFields = () => {
     if (isWorkCompleted && !workDetails?.reviewed) {
       return (
         <>
@@ -246,10 +256,10 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             
             <Row gutter={20}>
                 {
-                  isWorkPending ? renderPendingFields() : 
-                  isWorkInComplete ? renderTrackerFields() :
-                  isWorkAttended && isWorkInProgress ? renderInProgressFields() : 
-                  isWorkCompleted && isRoleAuthorized ? renderReviewFields() : renderLoader()
+                  isWorkPending ? renderAssignFields() : 
+                  isInAttendance && isWorkInProgress ? renderUpdateTrackerFields() :
+                  isAttended && isWorkInProgress ? renderCompleteFormFields() :
+                  isWorkCompleted && isRoleAuthorized ? renderReviewFormFields() : renderLoader()
                 }
             </Row>
             <div>
