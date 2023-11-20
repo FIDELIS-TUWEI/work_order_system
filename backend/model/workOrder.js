@@ -49,9 +49,9 @@ const workOrderSchema = new mongoose.Schema({
     },
     tracker: {
         type: String,
+        required: true,
         enum: ["Not_Attended", "In_Attendance", "Attended", "In_Complete"],
         default: "Not_Attended",
-        required: true
     },
     trackerMessage: {
         type: String,
