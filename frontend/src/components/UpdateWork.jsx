@@ -243,7 +243,25 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
     <div className='loader'>
       <LoadingBox />
     </div>
-  )
+  );
+
+  // Rendering form fields using switch case condition to check work status and work tracker
+  const renderFormFields = () => {
+    switch (true) {
+      case isNotAttended && isWorkPending:
+        return renderAssignFields();
+      case isInAttendance && isWorkInProgress:
+        return renderTrackerFields();
+      case isAttended && isWorkInProgress:
+        return renderCompleteFormFields();
+      case isInComplete && isWorkInProgress:
+        return redirectToWorkList();
+      case isWorkCompleted && isRoleAuthorized: 
+        return renderReviewFormFields();
+      default:
+        return renderLoader();
+    }
+  }
   
   return (
     <div>
@@ -254,13 +272,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
         <Form onFinish={onFinishHandler} layout='vertical'>
             
             <Row gutter={20}>
-                {
-                  isNotAttended && isWorkPending ? renderAssignFields() : 
-                  isInAttendance && isWorkInProgress ? renderTrackerFields() :
-                  isAttended && isWorkInProgress ? renderCompleteFormFields() :
-                  isInComplete && isWorkInProgress ? redirectToWorkList() :
-                  isWorkCompleted && isRoleAuthorized ? renderReviewFormFields() : renderLoader()
-                }
+                {renderFormFields()}
             </Row>
             <div>
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
@@ -282,6 +294,6 @@ UpdateWork.propTypes = {
   employees: PropTypes.array,
   selectedEmployee: PropTypes.string,
   handleEmployeeChange: PropTypes.func
-}
+};
 
 export default UpdateWork;
