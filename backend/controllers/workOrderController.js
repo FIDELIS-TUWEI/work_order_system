@@ -101,7 +101,24 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Handle Tracker in complete status
         if (tracker === "In_Complete") {
-            updatedWorkOrder.status = "Pending";
+            // Send an email notification
+            const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
+            const subject = `A WORK ORDER REQUIRES IMMEDIATE ACTION!`;
+            const text = `
+                A Work Order with title ${updatedWorkOrder.title} requires immediate attention. Login in to the Work Order System to view the details.\n
+            `;
+
+            for ( const recepient of recepients ) {
+                sendEmail({
+                    email: recepient,
+                    subject,
+                    text
+                })
+            };
+
+            // Revert the work order status to pending after 10 minutes
+            setTimeout(async () => {
+                updatedWorkOrder.status = "Pending";
             updatedWorkOrder.trackerMessage = req.body.trackerMessage;
 
             // Clear the assignedTo, dueDate, dateAssigned fields
@@ -110,7 +127,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             updatedWorkOrder.dateAssigned = null;
 
             await updatedWorkOrder.save();
-
+            }, 10 * 60 * 1000); // 10 minutes in milliseconds
 
         }
 
