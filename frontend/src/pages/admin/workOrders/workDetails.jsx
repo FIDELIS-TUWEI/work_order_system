@@ -55,7 +55,9 @@ const WorkDetails = () => {
 
   return (
     <Layout>
-        <ViewWorkDetails workDetails={workDetails} loading={loading} 
+        <ViewWorkDetails 
+        workDetails={workDetails} 
+        loading={loading} 
         componentPDF={componentPDF} 
         handlePrint={handlePrint}
         navigate={navigate}
