@@ -247,18 +247,28 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 
   // Rendering form fields using switch case condition to check work status and work tracker
   const renderFormFields = () => {
+    console.log("Tracker:", workDetails?.tracker);
+    console.log("Status:", workDetails?.status);
+
     switch (true) {
       case isNotAttended && isWorkPending:
+        console.log("Rendering Assign Fields");
         return renderAssignFields();
       case isInAttendance && isWorkInProgress:
+        console.log("Rendering Tracking Fields");
         return renderTrackerFields();
       case isAttended && isWorkInProgress:
+        console.log("Rendering Complete Form Fields");
         return renderCompleteFormFields();
       case isInComplete && isWorkInProgress:
-        return redirectToWorkList();
+        console.log("Redirecting to Work List");
+        redirectToWorkList();
+        break;
       case isWorkCompleted && isRoleAuthorized: 
+      console.log("Rendering Review Fields");
         return renderReviewFormFields();
       default:
+        console.log("Rendering Loader");
         return renderLoader();
     }
   }
