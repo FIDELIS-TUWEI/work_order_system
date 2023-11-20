@@ -134,6 +134,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
               allowClear
               style={{ width: '100%' }}
               options={[
+                { value: 'In_Attendance', label: 'In Attendance' },
                 { value: 'Attended', label: 'Attended' },
                 { value: 'In_Complete', label: 'In Complete' },
               ]}
@@ -152,6 +153,10 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
       </>
   );
 
+  // Navigate to work list if work tracker is in complete
+  const redirectToWorkList = () => {
+    return navigate("/work-list");
+  };
 
   // if Work is in progress
   const renderCompleteFormFields = () => (
@@ -250,9 +255,10 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             
             <Row gutter={20}>
                 {
-                  isWorkPending ? renderAssignFields() : 
+                  isNotAttended && isWorkPending ? renderAssignFields() : 
                   isInAttendance && isWorkInProgress ? renderTrackerFields() :
                   isAttended && isWorkInProgress ? renderCompleteFormFields() :
+                  isInComplete && isWorkInProgress ? redirectToWorkList() :
                   isWorkCompleted && isRoleAuthorized ? renderReviewFormFields() : renderLoader()
                 }
             </Row>
