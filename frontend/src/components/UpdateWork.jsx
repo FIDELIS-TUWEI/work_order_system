@@ -18,8 +18,10 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor"].includes(user?.role);
 
   // Check work tracker status
+  const isNotAttended = workDetails?.tracker === 'Not_Attended';
   const isInAttendance = workDetails?.tracker === 'In_Attendance';
   const isAttended = workDetails?.tracker === 'Attended';
+  const isInComplete = workDetails?.tracker === 'In_Complete';
 
 
    // Function to disable current status with disabled attribute
@@ -119,13 +121,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   );
 
   // Check work tracker before rendering fields
-  const renderUpdateTrackerFields = () => {
-    const handleTrackerChange = (value) => {
-      if (value === "In_Complete") {
-        navigate("/work/list")
-      }
-    }
-    return (
+  const renderTrackerFields = () => (
       <>
         <Col xs={24} md={24} lg={8}>
           <Form.Item
@@ -141,7 +137,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
                 { value: 'Attended', label: 'Attended' },
                 { value: 'In_Complete', label: 'In Complete' },
               ]}
-              onChange={handleTrackerChange}
             />
           </Form.Item>
         </Col>
@@ -155,8 +150,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
           </Form.Item>
         </Col>
       </>
-    )
-  };
+  );
 
 
   // if Work is in progress
@@ -257,7 +251,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             <Row gutter={20}>
                 {
                   isWorkPending ? renderAssignFields() : 
-                  isInAttendance && isWorkInProgress ? renderUpdateTrackerFields() :
+                  isInAttendance && isWorkInProgress ? renderTrackerFields() :
                   isAttended && isWorkInProgress ? renderCompleteFormFields() :
                   isWorkCompleted && isRoleAuthorized ? renderReviewFormFields() : renderLoader()
                 }
