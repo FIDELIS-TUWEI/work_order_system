@@ -5,6 +5,20 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
+const workOrder = require("../model/workOrder");
+
+// Sending email function
+const sendEmailNotification = async (workOrder, subject, text) => {
+    const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
+    
+    for (const recepient of recepients) {
+        sendEmail({
+            email: recepient,
+            subject: subject,
+            text: text
+        });
+    }
+};
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res, next) => {
@@ -101,34 +115,24 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Handle Tracker in complete status
         if (tracker === "In_Complete") {
-            // Send an email notification
-            const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
-            const subject = `A WORK ORDER REQUIRES IMMEDIATE ACTION!`;
-            const text = `
-                A Work Order with title ${updatedWorkOrder.title} requires immediate attention. Login in to the Work Order System to view the details.\n
-            `;
-
-            for ( const recepient of recepients ) {
-                sendEmail({
-                    email: recepient,
-                    subject,
-                    text
-                })
-            };
-
             // Revert the work order status to pending after 10 minutes
             setTimeout(async () => {
                 updatedWorkOrder.status = "Pending";
-            updatedWorkOrder.trackerMessage = req.body.trackerMessage;
+                updatedWorkOrder.trackerMessage = req.body.trackerMessage;
 
-            // Clear the assignedTo, dueDate, dateAssigned fields
-            updatedWorkOrder.assignedTo = null;
-            updatedWorkOrder.dueDate = null;
-            updatedWorkOrder.dateAssigned = null;
+                // Clear the assignedTo, dueDate, dateAssigned fields
+                updatedWorkOrder.assignedTo = null;
+                updatedWorkOrder.dueDate = null;
+                updatedWorkOrder.dateAssigned = null;
 
-            await updatedWorkOrder.save();
+                await updatedWorkOrder.save();
             }, 10 * 60 * 1000); // 10 minutes in milliseconds
 
+            // Send an email notification
+            const subject = `A WORK ORDER REQUIRES IMMEDIATE ACTION`;
+            const text = `A work order with title ${updatedWorkOrder.title} requires immediate action.`;
+
+            await sendEmailNotification(updatedWorkOrder, subject, text);
         }
 
         if (reviewed && reviewed === true) {
@@ -137,6 +141,12 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             updatedWorkOrder.dateReviewed = req.body.dateReviewed;
             updatedWorkOrder.reviewComments = req.body.reviewComments;
             await updatedWorkOrder.save();
+
+            // Send an email notification
+            const subject = `A WORK ORDER HAS BEEN UPDATED`;
+            const text = `A work order with title ${updatedWorkOrder.title} has been updated.`;
+
+            await sendEmailNotification(updatedWorkOrder, subject, text);
         } 
 
         // clear the user who requested the work when the work is reviewed
@@ -158,24 +168,6 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
             }
         };
-
-        // Send Email notification when a work order is updated
-        if (!updatedWorkOrder.reviewed) {
-            const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
-            const subject =`A Work Order has been updated`;
-            const text =  `
-                A Work Order with title ${updatedWorkOrder.title} has been updated by ${user.firstName} ${user.lastName}. 
-                Login in to the Work Order System to view the details.\n
-            `;
-            
-            for ( const recepient of recepients ) {
-                sendEmail({
-                    email: recepient,
-                    subject,
-                    text
-                })
-            }
-        }
 
         // Return a response
         return res.status(200).json({
@@ -278,21 +270,10 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
         await User.findByIdAndUpdate(deletedByUser._id, { $pull: { workOrders: workOrderId }});
 
         // Send Email Notification
-        const recepients = ["fideliofidel9@gmail.com"];
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+        const subject = `WORK ORDER DELETED`;
+        const text = `The work order titled ${workOrder.title} has been deleted by ${deletedByUser.username}`;
 
-        const emailSubject = `Work Order Deleted`;
-        const emailText = `A work order with title ${workOrder.title} has been deleted by ${deletedByUser.username}.`;
-
-        const emailOptions = {
-            email: recepients,
-            cc: ccEmails,
-            subject: emailSubject,
-            text: emailText
-        }
-
-        // Send Email
-        sendEmail(emailOptions);
+        await sendEmailNotification(workOrder, subject, text);
 
         return res.status(200).json({
             success: true,
