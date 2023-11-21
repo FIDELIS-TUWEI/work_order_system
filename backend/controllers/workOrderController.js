@@ -57,8 +57,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         Description: ${description} \n
         Service Type: ${serviceType} \n
         Date Created: ${savedWorkorder.dateAdded} \n
-
-        Thank you for your using Holiday Inn Work Order System.
+        Thank you for using Holiday Inn Work Order System.
         `;
 
         await sendEmailNotification(savedWorkorder, subject, text);
@@ -101,6 +100,34 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         if (!updatedWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
         };
+
+        // Check work order tracker
+        if (updatedFields.tracker === "In_Complete") {
+            const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
+            const text = `The following work order needs your attention: \n 
+            Title: ${updatedWorkOrder.title} \n
+            Priority: ${updatedWorkOrder.priority} \n
+            Description: ${updatedWorkOrder.description} \n
+            Service Type: ${updatedWorkOrder.serviceType} \n
+            Date Created: ${updatedWorkOrder.dateAdded} \n
+            Thank you for using Holiday Inn Work Order System.
+            `;
+
+            await sendEmailNotification(updatedWorkOrder, subject, text);
+
+            // Schedule the reversion of the work order status after 10 minutes
+            setTimeout(async () => {
+                updatedWorkOrder.status = "Pending";
+                updatedWorkOrder.assignedTo = "";
+                updatedWorkOrder.tracker = "Not_Attended";
+                updatedWorkOrder.trackerMessage = "";
+                updatedWorkOrder.dateAssigned = "";
+
+                // Save the updated work order
+                await updatedWorkOrder.save();
+            }, 10 * 60 * 1000); // 10 minutes in milliseconds
+
+        }
 
         // check if work order is reviewed
         if (reviewed) {
