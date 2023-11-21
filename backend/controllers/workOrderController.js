@@ -131,12 +131,6 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             updatedWorkOrder.dateReviewed = req.body.dateReviewed;
             updatedWorkOrder.reviewComments = req.body.reviewComments;
             await updatedWorkOrder.save();
-
-            // Send an email notification
-            const subject = `A WORK ORDER HAS BEEN UPDATED`;
-            const text = `A work order with title ${updatedWorkOrder.title} has been updated.`;
-
-            await sendEmailNotification(updatedWorkOrder, subject, text);
         } 
 
         // clear the user who requested the work when the work is reviewed
@@ -157,6 +151,14 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
                 await employee.save();
 
             }
+        };
+
+        // Send an email notification
+        if (!updatedWorkOrder.reviewed) {
+            const subject = `A WORK ORDER HAS BEEN UPDATED`;
+            const text = `A work order with title ${updatedWorkOrder.title} has been updated.`;
+
+            await sendEmailNotification(updatedWorkOrder, subject, text);
         };
 
         // Return a response
