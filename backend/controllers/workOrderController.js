@@ -5,10 +5,9 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
-const workOrder = require("../model/workOrder");
 
 // Sending email function
-const sendEmailNotification = async (workOrder, subject, text) => {
+const sendEmailNotification = async (WorkOrder, subject, text) => {
     const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
     
     for (const recepient of recepients) {
@@ -51,28 +50,10 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
 
         // Send Email notification
-        const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
-        const subject =`New Work Order Requested\n`;
-        const text =  `
-            A New Work order has been Created\n\n
-            -----------------------------------\n
-            Work Title: ${savedWorkorder.title}\n
-            Description: ${savedWorkorder.description}\n
-            Priority: ${savedWorkorder.priority}\n
-            Service Type: ${savedWorkorder.serviceType}\n
-            Status: ${savedWorkorder.status}\n
-            Date Created: ${savedWorkorder.Date_Created}\n\n
-            Login in to the Work Order System to view the details.\n
-            -----------------------------------
-        `;
-        
-        for ( const recepient of recepients ) {
-            sendEmail({
-                email: recepient,
-                subject,
-                text
-            })
-        }
+        const subject = "NEW WORK ORDER CREATED";
+        const text = `New Work Order has been created by ${user.firstName} ${user.lastName}`;
+
+        await sendEmailNotification(savedWorkorder, subject, text);
 
         // Return a response
         return res.status(201).json({
