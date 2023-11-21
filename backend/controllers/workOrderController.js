@@ -87,7 +87,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     };
 
     try {
-        const { assignedTo, reviewed, tracker, ...updatedFields } = req.body;
+        const { assignedTo, reviewed, ...updatedFields } = req.body;
 
         // Update the work order
         const updateOptions = {
@@ -103,28 +103,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Work Order not found", 404));
         };
 
-        // Handle Tracker in complete status
-        if (tracker === "In_Complete") {
-            // Revert the work order status to pending after 10 minutes
-            setTimeout(async () => {
-                updatedWorkOrder.status = "Pending";
-                updatedWorkOrder.trackerMessage = req.body.trackerMessage;
-
-                // Clear the assignedTo, dueDate, dateAssigned fields
-                updatedWorkOrder.assignedTo = null;
-                updatedWorkOrder.dueDate = null;
-                updatedWorkOrder.dateAssigned = null;
-
-                await updatedWorkOrder.save();
-            }, 10 * 60 * 1000); // 10 minutes in milliseconds
-
-            // Send an email notification
-            const subject = `A WORK ORDER REQUIRES IMMEDIATE ACTION`;
-            const text = `A work order with title ${updatedWorkOrder.title} requires immediate action.`;
-
-            await sendEmailNotification(updatedWorkOrder, subject, text);
-        }
-
+        // check if work order is reviewed
         if (reviewed) {
             updatedWorkOrder.reviewed = true;
             updatedWorkOrder.reviewedBy = req.body.reviewedBy;
