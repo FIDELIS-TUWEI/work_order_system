@@ -135,7 +135,8 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         // Send an email notification
         if (!updatedWorkOrder.reviewed) {
             const subject = `A WORK ORDER HAS BEEN UPDATED`;
-            const text = `A work order with title ${updatedWorkOrder.title} has been updated.`;
+            const text = `A work order with title ${updatedWorkOrder.title} has been updated by ${user.username}. \n
+            Thank you for your using Holiday Inn Work Order System.`;
 
             await sendEmailNotification(updatedWorkOrder, subject, text);
         };
