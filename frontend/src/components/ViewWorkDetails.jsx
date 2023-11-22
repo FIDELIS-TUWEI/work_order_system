@@ -97,7 +97,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
                 <div className="details">
                     <span>Tracking Comments</span>
-                    <span>{workDetails?.trackingMessage}</span>
+                    <span>{workDetails?.trackerMessage}</span>
                 </div>
 
                 <div className="details">
