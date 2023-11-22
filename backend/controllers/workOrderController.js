@@ -116,7 +116,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             await sendEmailNotification(updatedWorkOrder, subject, text);
 
             // Schedule the reversion of the work order status after 10 minutes
-            const timeoutId = setTimeout(function () {
+            const timeoutId = setTimeout(async () => {
                 updatedWorkOrder.status = "Pending";
                 updatedWorkOrder.assignedTo = null;
                 updatedWorkOrder.tracker = "Not_Attended";
@@ -125,7 +125,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
                 updatedWorkOrder.dueDate = null;
 
                 // Save the updated work order
-                updatedWorkOrder.save();
+                await updatedWorkOrder.save();
 
                 clearTimeout(timeoutId);
             }, 1 * 60 * 1000); // 10 minutes in milliseconds
