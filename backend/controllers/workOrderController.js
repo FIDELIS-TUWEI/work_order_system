@@ -116,17 +116,26 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             await sendEmailNotification(updatedWorkOrder, subject, text);
 
             // Schedule the reversion of the work order status after 10 minutes
-            setTimeout(async () => {
-                updatedWorkOrder.status = "Pending";
-                updatedWorkOrder.assignedTo = null;
-                updatedWorkOrder.tracker = "Not_Attended";
-                updatedWorkOrder.trackerMessage = req.body.trackerMessage;
-                updatedWorkOrder.dateAssigned = null;
-                updatedWorkOrder.dueDate = null;
+            const timeoutPromise = new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, 1 * 60 * 1000); // 10 minutes in milliseconds
+            });
 
-                // Save the updated work order
-                await updatedWorkOrder.save();
-            }, 10 * 60 * 1000); // 10 minutes in milliseconds
+            await Promise.all([
+                timeoutPromise,
+                updatedWorkOrder.save(),
+            ]);
+
+            updatedWorkOrder.status = "Pending";
+            updatedWorkOrder.assignedTo = null;
+            updatedWorkOrder.tracker = "Not_Attended";
+            updatedWorkOrder.trackerMessage = req.body.trackerMessage;
+            updatedWorkOrder.dateAssigned = null;
+            updatedWorkOrder.dueDate = null;
+
+            // Save the updated work order
+            await updatedWorkOrder.save();
 
         }
 
@@ -160,13 +169,11 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         };
 
         // Send an email notification
-        if (!updatedWorkOrder.reviewed) {
-            const subject = `A WORK ORDER HAS BEEN UPDATED`;
-            const text = `A work order with title ${updatedWorkOrder.title} has been updated by ${user.username}. \n
-            Thank you for your using Holiday Inn Work Order System.`;
+        const subject = `A WORK ORDER HAS BEEN UPDATED`;
+        const text = `A work order with title ${updatedWorkOrder.title} has been updated by ${user.username}. \n
+        Thank you for your using Holiday Inn Work Order System.`;
 
-            await sendEmailNotification(updatedWorkOrder, subject, text);
-        };
+        await sendEmailNotification(updatedWorkOrder, subject, text);
 
         // Return a response
         return res.status(200).json({
