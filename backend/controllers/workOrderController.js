@@ -118,10 +118,11 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             // Schedule the reversion of the work order status after 10 minutes
             setTimeout(async () => {
                 updatedWorkOrder.status = "Pending";
-                updatedWorkOrder.assignedTo = "";
+                updatedWorkOrder.assignedTo = null;
                 updatedWorkOrder.tracker = "Not_Attended";
-                updatedWorkOrder.trackerMessage = "";
-                updatedWorkOrder.dateAssigned = "";
+                updatedWorkOrder.trackerMessage = req.body.trackerMessage;
+                updatedWorkOrder.dateAssigned = null;
+                updatedWorkOrder.dueDate = null;
 
                 // Save the updated work order
                 await updatedWorkOrder.save();
