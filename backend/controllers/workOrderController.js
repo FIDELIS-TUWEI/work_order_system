@@ -116,27 +116,23 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             await sendEmailNotification(updatedWorkOrder, subject, text);
 
             // Schedule the reversion of the work order status after 10 minutes
-            const timeoutPromise = new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve();
-                }, 1 * 60 * 1000); // 1 minutes in milliseconds
-            });
+            const timeoutId = setTimeout(async () => {
+                updatedWorkOrder.status = "Pending";
+                updatedWorkOrder.assignedTo = null;
+                updatedWorkOrder.tracker = "Not_Attended";
+                updatedWorkOrder.trackerMessage = req.body.trackerMessage;
+                updatedWorkOrder.dateAssigned = null;
+                updatedWorkOrder.dueDate = null;
 
-            await Promise.all([
-                timeoutPromise,
-                updatedWorkOrder.save(),
-            ]);
+                // Save the updated work order
+                await updatedWorkOrder.save();
 
-            updatedWorkOrder.status = "Pending";
-            updatedWorkOrder.assignedTo = null;
-            updatedWorkOrder.tracker = "Not_Attended";
-            updatedWorkOrder.trackerMessage = req.body.trackerMessage;
-            updatedWorkOrder.dateAssigned = null;
-            updatedWorkOrder.dueDate = null;
+                clearTimeout(timeoutId);
+            }, 1 * 60 * 1000); // 10 minutes in milliseconds
 
             // Save the updated work order
+            updatedWorkOrder.timeoutId = timeoutId;
             await updatedWorkOrder.save();
-
         }
 
         // check if work order is reviewed
