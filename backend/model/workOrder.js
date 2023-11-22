@@ -75,7 +75,7 @@ const workOrderSchema = new mongoose.Schema({
         index: true
     },
     supervisedBy: {
-        type: "string",
+        type: string,
         default: ""
     },
     comments: {
