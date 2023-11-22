@@ -119,7 +119,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
             const timeoutPromise = new Promise((resolve) => {
                 setTimeout(() => {
                     resolve();
-                }, 1 * 60 * 1000); // 10 minutes in milliseconds
+                }, 1 * 60 * 1000); // 1 minutes in milliseconds
             });
 
             await Promise.all([
