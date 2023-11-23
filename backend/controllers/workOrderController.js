@@ -120,7 +120,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
                 updatedWorkOrder.status = "Pending";
                 updatedWorkOrder.assignedTo = null;
                 updatedWorkOrder.tracker = "Not_Attended";
-                updatedWorkOrder.trackerMessage = req.body.trackerMessage;
+                updatedWorkOrder.trackerMessage = "";
                 updatedWorkOrder.dateAssigned = null;
                 updatedWorkOrder.dueDate = null;
 
