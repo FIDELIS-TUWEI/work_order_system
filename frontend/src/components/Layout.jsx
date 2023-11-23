@@ -69,14 +69,22 @@ const Layout = ({ children }) => {
               return (
                 <div key={menu.name}>
                   <div className={`menu-item ${isActive && "active"}`}>
-                    <Link to={menu.path}><Tooltip title={menu.name}><i>{menu.icon}</i></Tooltip></Link>
+                    <Link to={menu.path}>
+                      <Tooltip title={menu.name}>
+                        <i>{menu.icon}</i>
+                      </Tooltip>
+                    </Link>
                     {/*<Link to={menu.path}>{menu.name}</Link>*/}
                   </div>
                 </div>
               );
             })}
               <div className={`menu-item`} onClick={handleLogout} tabIndex={0} onKeyDown={handleKeyDown}>
-                <Link to="/"><i><RiLogoutCircleFill/></i></Link>
+                <Link to="/">
+                  <Tooltip title="Logout">
+                    <i><RiLogoutCircleFill/></i>
+                  </Tooltip>
+                </Link>
                 {/*<Link to="/">Logout</Link>*/}
               </div>
           </div>
@@ -88,7 +96,9 @@ const Layout = ({ children }) => {
             </div>
             <div className="header-content">
               <i><CgProfile/></i>
-              <Link to={`/profile/${userInfo?._id}`}>{userInfo?.firstName}, {userInfo?.lastName}</Link>
+              <Link to={`/profile/${userInfo?._id}`}>
+                {userInfo?.firstName}, {userInfo?.lastName}
+              </Link>
             </div>
           </div>
           <div className="body">{children}</div>
