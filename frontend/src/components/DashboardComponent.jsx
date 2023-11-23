@@ -67,6 +67,12 @@ const DashboardComponent = ({ user, pendingWorkCount,
     const renderManagersCard = () => (
         <>
             <Col span={8}>
+                <Card title="Total Work Orders" bordered={false} className="custom-card">
+                    {totalWorkCount}
+                </Card>
+            </Col>
+            
+            <Col span={8}>
                 <Card title="Pending Work Orders" bordered={false} className="custom-card">
                     {pendingWorkCount}
                 </Card>
