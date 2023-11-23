@@ -38,40 +38,6 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Filter work by Date_Created
-const filterWorkDateCreated = asyncHandler (async (req, res, next) => {
-    try {
-        const selectedDate = req.query.selectedDate;
-
-        let allWork;
-
-        if (selectedDate) {
-            allWork = await WorkOrder.find({ dateAdded: selectedDate })
-                .populate("assignedTo", "firstName lastName")
-                .populate("requestedBy", "username")
-                .populate("location", "locationTitle")
-                .populate("category", "categoryTitle")
-                .populate("reviewedBy", "firstName lastName")
-                .exec();
-        } else {
-            allWork = await WorkOrder.find({})
-                .populate("assignedTo", "firstName lastName")
-                .populate("requestedBy", "username")
-                .populate("location", "locationTitle")
-                .populate("category", "categoryTitle")
-                .populate("reviewedBy", "firstName lastName")
-                .exec();
-        }
-
-        res.status(200).json({
-            success: true,
-            data: work
-        })
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-})
-
 // Count Work Orders with Pending status
 const countPendingWorkOrders = asyncHandler (async (req, res, next) => {
     try {
@@ -140,7 +106,6 @@ const countAllWorkOrders = asyncHandler (async (req, res, next) => {
 
 module.exports = {
     filterWorkStatus,
-    filterWorkDateCreated,
     countPendingWorkOrders,
     countInProgressWorkOrders,
     countCompletedWorkOrders,
