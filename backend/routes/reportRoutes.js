@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { filterWorkStatus, countPendingWorkOrders, countInProgressWorkOrders, countCompletedWorkOrders, countReviewedWorkOrders, countAllWorkOrders, filterWorkDateCreated } = require('../controllers/report');
+const { filterWorkStatus, countPendingWorkOrders, countInProgressWorkOrders, countCompletedWorkOrders, countReviewedWorkOrders, countAllWorkOrders } = require('../controllers/report');
 const { protect, restrict } = require('../middleware/authMiddleware');
 
 router.get("/work", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer"]), filterWorkStatus);
-router.get("/work/date", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer"]), filterWorkDateCreated);
 router.get("/count/pending-status", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer", "user"]), countPendingWorkOrders);
 router.get("/count/in-progress-status", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer", "user"]), countInProgressWorkOrders);
 router.get("/count/completed-status", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer", "user"]), countCompletedWorkOrders);
