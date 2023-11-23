@@ -4,7 +4,7 @@ const { filterWorkStatus, countPendingWorkOrders, countInProgressWorkOrders, cou
 const { protect, restrict } = require('../middleware/authMiddleware');
 
 router.get("/work", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer"]), filterWorkStatus);
-router.get("/work/date-created", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer"]), filterWorkDateCreated);
+router.get("/work/date", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer"]), filterWorkDateCreated);
 router.get("/count/pending-status", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer", "user"]), countPendingWorkOrders);
 router.get("/count/in-progress-status", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer", "user"]), countInProgressWorkOrders);
 router.get("/count/completed-status", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer", "user"]), countCompletedWorkOrders);
