@@ -6,7 +6,7 @@ import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
 import { useLogoutMutation } from "../utils/redux/slices/authApiSlice";
 import {logout, selectUserInfo} from "../utils/redux/slices/authSlice";
-import { message } from "antd";
+import { Tooltip, message } from "antd";
 import Logo from "../assets/logo.png"
 
 const Layout = ({ children }) => {
@@ -69,7 +69,7 @@ const Layout = ({ children }) => {
               return (
                 <div key={menu.name}>
                   <div className={`menu-item ${isActive && "active"}`}>
-                    <Link to={menu.path}><i>{menu.icon}</i></Link>
+                    <Link to={menu.path}><Tooltip title={menu.name}><i>{menu.icon}</i></Tooltip></Link>
                     {/*<Link to={menu.path}>{menu.name}</Link>*/}
                   </div>
                 </div>
