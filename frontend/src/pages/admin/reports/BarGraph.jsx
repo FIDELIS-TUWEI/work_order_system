@@ -96,7 +96,7 @@ const BarGraph = () => {
             </ResponsiveContainer>
         </Card>
 
-        <Card title="WorkOrders Requested By Users" style={{ flex: 1, margin: "10px" }} loading={loading}>
+        <Card title="WorkOrders Requested By Users" style={{ flex: 1, margin: "6px" }} loading={loading}>
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart>
                     <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
