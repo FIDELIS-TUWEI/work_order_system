@@ -6,15 +6,15 @@ import Logo from "../assets/logo.png";
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate }) => {
     // Conditional statement to check if dueDate is empty
-    if (!workDetails.dueDate || !workDetails.dueDate.length === 0) {
+    if (loading && !workDetails) {
         return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '150px' }}>
             <LoadingBox />
         </div>
     }
 
     // Function to convert dueDate values from Object to date string format to YYYY-MM-DD
-    const [startDate, endDate] = workDetails.dueDate.map((dateString) => 
-    moment(dateString).format("YYYY-MM-DD"));
+    const [startDate, endDate] = workDetails.dueDate?.map((dateString) => 
+    moment(dateString).format("YYYY-MM-DD")) ?? [];
 
     // Display the assignedTo field as firstName of the assigned employee
     const assignedToName = workDetails.assignedTo
@@ -49,8 +49,8 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 </div>
 
                 <div className="details--header2">
-                    <h2>Category: {workDetails?.category.categoryTitle}</h2>
-                    <p>Location: {workDetails?.location.locationTitle}</p>
+                    <h2>Category: {workDetails.category?.categoryTitle}</h2>
+                    <p>Location: {workDetails.location?.locationTitle}</p>
                     <p>Work Status: {workDetails?.status}</p>
                 </div>
             </div>
