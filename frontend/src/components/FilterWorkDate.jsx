@@ -1,12 +1,13 @@
+
 import { Card, DatePicker } from "antd";
 import LoadingBox from "./LoadingBox";
 
 
-const FilterWorkDate = () => {
+const FilterWorkDate = ({ selectedDate, handleDateChange, workOrders, loading }) => {
   return (
     <Card title="Filter Work Orders By Date Created" style={{ margin: "15px" }} loading={loading}>
       <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
-        <DatePicker />
+        <DatePicker onChange={handleDateChange} />
         
       </div>
         
@@ -27,7 +28,18 @@ const FilterWorkDate = () => {
                 </tr>
               </thead>
               <tbody>
-                
+                {
+                  workOrders.map((workOrder) => (
+                    <tr key={workOrder._id}>
+                      <td>{workOrder.title}</td>
+                      <td>{workOrder.serviceType}</td>
+                      <td>{workOrder?.category.categoryTitle}</td>
+                      <td>{workOrder.priority}</td>
+                      <td>{workOrder?.assignedTo.firstName} {workOrder.assignedTo.lastName}</td>
+                      <td>{workOrder?.requestedBy.username}</td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
         )}
