@@ -50,7 +50,12 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
                 <div className="details--header2">
                     <h2>Category: {workDetails.category?.categoryTitle}</h2>
-                    <p>Location: {workDetails.location?.locationTitle}</p>
+                    <p>Location: {Array.isArray(workDetails.location) && workDetails.location.map((location, index) => 
+                        <span key={location._id}>
+                            {location.locationTitle}
+                            {index < workDetails.location.length - 1 ? ", " : ""}
+                        </span>)}
+                    </p>
                     <p>Work Status: {workDetails?.status}</p>
                 </div>
             </div>
