@@ -13,8 +13,8 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
     }
 
     // Function to convert dueDate values from Object to date string format to YYYY-MM-DD
-    const [startDate, endDate] = workDetails.dueDate?.map((dateString) => 
-    moment(dateString).format("YYYY-MM-DD")) ?? [];
+    const dueDateArray = Array.isArray(workDetails.dueDate) ? workDetails.dueDate : [] 
+    const [startDate, endDate] = dueDateArray.map(dateString => moment(dateString).format('YYYY-MM-DD'));
 
     // Display the assignedTo field as firstName of the assigned employee
     const assignedToName = workDetails.assignedTo
