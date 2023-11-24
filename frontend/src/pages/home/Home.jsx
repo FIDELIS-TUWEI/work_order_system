@@ -39,6 +39,7 @@ const Home = () => {
           src={Logo}
           alt="logo"
           style={{ width: '80%', height: 'auto' }}
+          lazyLoad
         />
 
         <Typography.Title level={3}>Work Order Management System</Typography.Title>
