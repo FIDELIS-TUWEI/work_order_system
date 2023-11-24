@@ -74,7 +74,7 @@ const Profile = () => {
             <span>{userData?.role}</span>
           </div>
           <div className="details">
-            <span>Active</span>
+            <span>Active:</span>
             <span>{userData?.active === true ? "Active" : "Not Active"}</span>
           </div>
         </div>
@@ -91,6 +91,16 @@ const Profile = () => {
             </Button>
           ) : null
         }
+      </div>
+      <div className="add-btn">
+        <Button 
+          style={{ 
+            color: 'white', backgroundColor: 'darkgreen', border: 'none'
+            }} 
+            onClick={() => navigate(-1)}
+          >
+            Back
+        </Button>
       </div>
     </Layout>
   )

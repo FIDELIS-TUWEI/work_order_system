@@ -259,8 +259,8 @@ table tr:hover {
     padding: 20px;
     border-radius: 4px;
     margin: 0 auto;
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 900px;
 }
 
 .details--header {
@@ -269,13 +269,13 @@ table tr:hover {
 }
 
 .details--header h2 {
-    font-size: 20px;
+    font-size: 1rem;
     margin: 0;
     color: #333;
 }
 
 .details--header p {
-    font-size: 16px;
+    font-size: 0.8rem;
     color: #777;
     margin: 10px 0;
 }
@@ -284,14 +284,14 @@ table tr:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 12px;
 }
 
 .details {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    font-size: 16px;
+    font-size: 0.8rem;
     color: #333;
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
@@ -299,6 +299,7 @@ table tr:hover {
 
 .details span {
     font-weight: bold;
+    margin-right: 10px;
 }
 
 .company--logo {

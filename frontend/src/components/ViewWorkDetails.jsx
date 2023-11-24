@@ -96,7 +96,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 </div>
 
                 <div className="details">
-                    <span>Tracking Comments</span>
+                    <span>Tracking Comments:</span>
                     <span>{workDetails?.trackerMessage}</span>
                 </div>
 
@@ -129,7 +129,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 </div>
 
                 <div className="details">
-                    <span>Review Comments</span>
+                    <span>Review Comments:</span>
                     <span>{reviewComments}</span>
                 </div>
 
