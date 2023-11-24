@@ -23,12 +23,12 @@ const workOrderSchema = new mongoose.Schema({
         required: true,
         min: [10, "Description must be at least 10 characters"]
     },
-    location: {
+    location: [{
         // Rooms, Open place, Back office, Admin office
         type: ObjectId,
         ref: "Location",
         required: true
-    },
+    }],
     serviceType: {
         // Fix, Repair, Replace, Install, Upgrade, Remove
         type: String,
