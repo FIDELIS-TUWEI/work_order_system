@@ -58,7 +58,7 @@ const Layout = ({ children }) => {
       <div className="layout">
         <div className="sidebar">
           <div className="logo">
-            <img src={Logo} alt="Company Logo" className="sidebar--logo"/>
+            <img src={Logo} alt="Company Logo" className="sidebar--logo" lazyLoad/>
             {/*<h6>Holiday Inn</h6>*/}
           </div>
           <hr />
