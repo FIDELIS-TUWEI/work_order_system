@@ -10,7 +10,7 @@ import { deleteWorkOrder } from "../services/workApi"
 import { useState } from "react";
 
 
-const Work = ({allWork, user, loading, getAllWork}) => {
+const Work = ({workOrders, user, isLoading }) => {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
@@ -33,7 +33,6 @@ const Work = ({allWork, user, loading, getAllWork}) => {
           });
           message.success("Work deleted successfully");
           setIsModalVisible(false);
-          getAllWork();
       } catch (error) {
           console.error(error);
           message.error("An error occurred while deleting the work order", error);
@@ -82,7 +81,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
         </div>
 
         <Card 
-            loading={loading} 
+            isLoading={isLoading} 
             title="All Work Orders"
         >
             
@@ -100,7 +99,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                 </tr>
             </thead>
             <tbody>
-                {allWork.map((work) => (
+                {workOrders?.map((work) => (
                 <tr key={work._id}>
                     <td>{work.title}</td>
                     <td>{work.location?.locationTitle}</td>
@@ -167,10 +166,9 @@ const Work = ({allWork, user, loading, getAllWork}) => {
 };
 
 Work.propTypes = {
-  allWork: PropTypes.array,
+  workOrders: PropTypes.array,
   user: PropTypes.object,
-  loading: PropTypes.bool,
-  getAllWork: PropTypes.func
+  isLoading: PropTypes.bool,
 }
 
 export default Work;
