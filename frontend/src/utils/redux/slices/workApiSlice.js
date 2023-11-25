@@ -9,26 +9,6 @@ export const workApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
-    }),
-    createWorkData: builder.mutation({
-        query: (data) => ({
-            url: `${WORK_URL}/create/work`,
-            method: "POST",
-            body: data,
-        }),
-    }),
-    updateWorkData: builder.mutation({
-        query: ({id, data}) => ({
-            url:  `${WORK_URL}/update/work/${id}`,
-            method: "PUT",
-            body: data,
-        }),
-    }),
-    deleteWorkData: builder.mutation({
-        query: (id) => ({
-            url:  `${WORK_URL}/delete/work/${id}`,
-            method: "DELETE",
-        }),
     })
 });
 
