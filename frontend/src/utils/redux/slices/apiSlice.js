@@ -16,4 +16,4 @@ export const apiSlice = createApi({
     baseQuery,
     tagTypes: ["Users", "WorkOrder"],
     endpoints: (builder) => ({}),
-})
+});
