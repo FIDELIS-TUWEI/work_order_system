@@ -1,60 +1,60 @@
 import { Button, message } from "antd"
 import Layout from "../../../components/Layout"
-import { getAllWorkOrders } from "../../../services/workApi";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 import Work from "../../../components/Work";
+import { setWorkOrder } from "../../../utils/redux/slices/workSlice";
+import { useGetWorkDataQuery } from "../../../utils/redux/slices/workApiSlice";
 
 
 const AllWorkOrders = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
-  const [allWork, setAllWork] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
 
+  const { data: workOrders = [], isLoading, isFetching, isError } = useGetWorkDataQuery({
+    page,
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-  // Function to get all work orders from Api
-  const getAllWork = async () => {
-      try {
-        setLoading(true);
-        const { data, pages } = await getAllWorkOrders(page, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setAllWork(data);
-        setPages(pages);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        message.error("Failed to fetch work orders", error.message);
-      }
-  };
-
+  console.log(workOrders);
 
   useEffect(() => {
-    getAllWork();
-  }, [page]);
+    if (isLoading || isFetching) {
+      if (Array.isArray(workOrders.data)) {
+        dispatch(setWorkOrder(workOrders));
+        setPages(workOrders.pages);
+      } else {
+        message.error("Failed to fetch work orders", workOrders.message);
+      }
+    }
+  }, [workOrders, isLoading, isFetching]);
+
+  useEffect(() => {
+    if (isError) {
+      message.error("Failed to fetch work orders", error.message);
+    }
+  }, [isError]);
 
   // function to handle page change
   const handlePageChange = (newPage) => {
     setPage(newPage);
   }
 
-
   return (
     <Layout>
       <Work 
-        allWork={allWork} 
+        workOrders={workOrders} 
         user={user} 
-        loading={loading} 
-        getAllWork={getAllWork} 
+        isLoading={isLoading} 
       />
       
       <div className="pagination">
