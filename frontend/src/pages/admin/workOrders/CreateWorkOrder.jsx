@@ -103,4 +103,4 @@ const CreateWorkOrder = () => {
   )
 }
 
-export default CreateWorkOrder
+export default CreateWorkOrder;
