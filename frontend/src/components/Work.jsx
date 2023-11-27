@@ -94,7 +94,6 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                 <th>Service Type</th>
                 <th>Category</th>
                 <th>Status</th>
-                <th>Requested By</th>
                 <th>Assigned To</th>
                 <th>Actions</th>
                 </tr>
@@ -103,11 +102,13 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                 {allWork?.map((work) => (
                 <tr key={work._id}>
                     <td>{work.title}</td>
-                    <td>{work.location?.locationTitle}</td>
+                    <td>{work.location.map((loc) => (
+                        <span key={loc._id}>{loc.locationTitle}</span>
+                    ))}
+                    </td>
                     <td>{work.serviceType}</td>
                     <td>{work.category?.categoryTitle}</td>
                     <td>{work.status}</td>
-                    <td>{work.requestedBy?.username}</td>
                     <td>{work.assignedTo?.firstName} {work.assignedTo?.lastName}</td>
                     <td className="actions__btn">
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
