@@ -1,48 +1,45 @@
 import { Button, message } from "antd"
 import Layout from "../../../components/Layout"
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 import Work from "../../../components/Work";
-import { setWorkOrder } from "../../../utils/redux/slices/workSlice";
-import { useGetWorkDataQuery } from "../../../utils/redux/slices/workApiSlice";
+import { getAllWorkOrders } from "../../../services/workApi";
 
 
 const AllWorkOrders = () => {
-  const dispatch = useDispatch();
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
+  const [allWork, setAllWork] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  const { data: workOrders = [], isLoading, isFetching, isError } = useGetWorkDataQuery({
-    page,
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  console.log(workOrders);
-
-  useEffect(() => {
-    if (isLoading || isFetching) {
-      if (Array.isArray(workOrders.data)) {
-        dispatch(setWorkOrder(workOrders));
-        setPages(workOrders.pages);
-      } else {
-        message.error("Failed to fetch work orders", workOrders.message);
-      }
-    }
-  }, [workOrders, isLoading, isFetching]);
-
-  useEffect(() => {
-    if (isError) {
+  // Function to get all work orders from API
+  const getAllWork = async () => {
+    try {
+      setLoading(true);
+      const { data, pages } = await getAllWorkOrders(page, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAllWork(data);
+      setPages(pages);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
       message.error("Failed to fetch work orders", error.message);
     }
-  }, [isError]);
+  };
+
+  // UseEffect hook
+  useEffect(() => {
+    getAllWork();
+  }, [page]);
 
   // function to handle page change
   const handlePageChange = (newPage) => {
@@ -52,9 +49,10 @@ const AllWorkOrders = () => {
   return (
     <Layout>
       <Work 
-        workOrders={workOrders} 
+        allWork={allWork} 
         user={user} 
-        isLoading={isLoading} 
+        loading={loading}
+        getAllWork={getAllWork} 
       />
       
       <div className="pagination">
