@@ -50,6 +50,7 @@ const NewWork = ({
                 label="Work Location" 
                 required rules={[{ required: true, message: 'Please Select Work Location!' }]}>
               <Select 
+                mode="multiple"
                 placeholder='Select Work Location'
                 onChange={handleLocationChange}
                 value={selectedLocation}

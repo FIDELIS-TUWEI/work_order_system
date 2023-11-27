@@ -13,8 +13,8 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
     }
 
     // Function to convert dueDate values from Object to date string format to YYYY-MM-DD
-    const [startDate, endDate] = workDetails.dueDate?.map((dateString) => 
-    moment(dateString).format("YYYY-MM-DD")) ?? [];
+    const dueDateArray = Array.isArray(workDetails.dueDate) ? workDetails.dueDate : [] 
+    const [startDate, endDate] = dueDateArray.map(dateString => moment(dateString).format('YYYY-MM-DD'));
 
     // Display the assignedTo field as firstName of the assigned employee
     const assignedToName = workDetails.assignedTo
@@ -50,7 +50,12 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
                 <div className="details--header2">
                     <h2>Category: {workDetails.category?.categoryTitle}</h2>
-                    <p>Location: {workDetails.location?.locationTitle}</p>
+                    <p>Location: {Array.isArray(workDetails.location) && workDetails.location.map((location, index) => 
+                        <span key={location._id}>
+                            {location.locationTitle}
+                            {index < workDetails.location.length - 1 ? ", " : ""}
+                        </span>)}
+                    </p>
                     <p>Work Status: {workDetails?.status}</p>
                 </div>
             </div>

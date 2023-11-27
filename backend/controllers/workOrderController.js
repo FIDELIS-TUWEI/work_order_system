@@ -331,4 +331,4 @@ module.exports = {
     queryAllWork,
     getSingleWorkOrder,
     deleteWorkOrder,
-}
+};

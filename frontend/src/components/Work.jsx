@@ -10,7 +10,7 @@ import { deleteWorkOrder } from "../services/workApi"
 import { useState } from "react";
 
 
-const Work = ({allWork, user, loading, getAllWork}) => {
+const Work = ({allWork, user, loading, getAllWork }) => {
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
@@ -100,7 +100,7 @@ const Work = ({allWork, user, loading, getAllWork}) => {
                 </tr>
             </thead>
             <tbody>
-                {allWork.map((work) => (
+                {allWork?.map((work) => (
                 <tr key={work._id}>
                     <td>{work.title}</td>
                     <td>{work.location?.locationTitle}</td>

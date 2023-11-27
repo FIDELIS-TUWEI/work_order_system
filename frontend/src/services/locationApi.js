@@ -28,7 +28,7 @@ export const queryLocations = async () => {
 // Create Location
 export const createNewLocation = async (values) => {
     try {
-        return axios.post(`${WORK_URL}/create/location`, values);
+        return await axios.post(`${WORK_URL}/create/location`, values);
     } catch (error) {
         console.log("Error while creating new location", error);
         throw new Error("Error while creating new location");
@@ -38,7 +38,7 @@ export const createNewLocation = async (values) => {
 // Delete Location
 export const deleteLocation = async (id) => {
     try {
-        return axios.delete(`${WORK_URL}/delete/location/${id}`);
+        return await axios.delete(`${WORK_URL}/delete/location/${id}`);
     } catch (error) {
         console.log("Error while deleting location", error);
         throw new Error("Error while deleting location");
