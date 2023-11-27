@@ -41,7 +41,7 @@ const Profile = () => {
 
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Profile Details</Typography>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '20px' }}>Profile Details</Typography>
 
       <div className="details--card">
           <div className="company--logo">
