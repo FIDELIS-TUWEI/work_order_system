@@ -15,7 +15,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   const isWorkPending = workDetails?.status === 'Pending';
   const isWorkInProgress = workDetails?.status === 'In_Progress';
   const isWorkCompleted = workDetails?.status === 'Complete';
-  const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor"].includes(user?.role);
+  const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor", "hod", "engineer"].includes(user?.role);
 
   // Check work tracker status
   const isNotAttended = workDetails?.tracker === 'Not_Attended';
