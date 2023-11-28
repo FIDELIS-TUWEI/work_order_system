@@ -52,12 +52,12 @@ const Work = ({allWork, user, loading, getAllWork }) => {
 
   // Function to determine whether edit or delete button should be displayed
   const isEditAllowed = (work) => {
-    const isCompleted = work.status === "Complete"
-    const isReviewer = user?.role === "reviewer"
-    const isReviewed = work?.status === true
+    const isReviewed = work.status === "Reviewed"
+    const isReviewer = user?.role === "reviewer" || user?.role === "engineer"
+    const isReview = work?.status === true
 
     // Disable edit button for role engineer when work status is complete
-    if (isCompleted && (user?.role === "engineer" || (isReviewer && isReviewed))) {
+    if (isReviewed && (user?.role === "engineer" || (isReviewer && isReview))) {
         return false;
     }
 
