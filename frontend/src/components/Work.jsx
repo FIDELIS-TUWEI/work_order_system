@@ -61,11 +61,6 @@ const Work = ({allWork, user, loading, getAllWork }) => {
         return false;
     }
 
-    // Hide edit button for user role hod
-    if (user?.role === "hod") {
-        return false;
-    }
-
     // disable edit btn for hod and allow for the rest
     return isAuthorised;
   }  
