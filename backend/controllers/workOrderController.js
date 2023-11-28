@@ -174,7 +174,7 @@ async function handleInCompleteWorkOrder (updatedWorkOrder) {
 };
 
 // Handle Reviewed Work Order
-async function handleReviewedWorkOrder (updatedWorkOrder, userId) {
+async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
     updatedWorkOrder.reviewed = true;
     updatedWorkOrder.reviewedBy = req.body.reviewedBy;
     updatedWorkOrder.dateReviewed = req.body.dateReviewed;
