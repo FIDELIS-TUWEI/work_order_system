@@ -102,7 +102,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
         // check if work order is reviewed
         if (reviewed) {
-            await handleReviewedWorkOrder(updatedWorkOrder, userId);
+            await handleReviewedWorkOrder(updatedWorkOrder, userId, req);
         };
 
         // check if an employee is assigned to the work order
