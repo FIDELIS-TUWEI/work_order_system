@@ -72,7 +72,6 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                 <th>Title</th>
                 <th>Location</th>
                 <th>Service Type</th>
-                <th>Category</th>
                 <th>Status</th>
                 <th>Assigned To</th>
                 <th>Actions</th>
@@ -90,7 +89,6 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                         )}
                     </td>
                     <td>{work.serviceType}</td>
-                    <td>{work.category?.categoryTitle}</td>
                     <td>{work.status}</td>
                     <td>{work.assignedTo?.firstName} {work.assignedTo?.lastName}</td>
                     <td className="actions__btn">
