@@ -97,6 +97,6 @@ WorkReport.propTypes = {
   pages: PropTypes.number,
   handlePageChange: PropTypes.func,
   navigate: PropTypes.func
-}
+};
 
 export default WorkReport;
