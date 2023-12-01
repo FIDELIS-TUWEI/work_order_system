@@ -153,6 +153,6 @@ Work.propTypes = {
   user: PropTypes.object,
   loading: PropTypes.bool,
   getAllWork: PropTypes.func
-}
+};
 
 export default Work;
