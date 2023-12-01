@@ -83,7 +83,7 @@ const getWorkOrders = useCallback (async () => {
   // function to handle page change
   const handlePageChange = (newPage) => {
     setPage(newPage);
-  }
+  };
 
   return (
     <Layout>
