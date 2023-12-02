@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div style={{ textAlign: 'center', marginTop: '20px' }}>
       <p>
-        Work Order Management System. All Rights Reserved. Copyright &copy; {new Date().getFullYear()}.
+        Copyright &copy; {new Date().getFullYear()}. All Rights Reserved. 
       </p>
     </div>
   )

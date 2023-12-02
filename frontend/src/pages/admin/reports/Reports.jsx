@@ -72,6 +72,10 @@ const getWorkOrders = useCallback (async () => {
       startY: initialTableY,
     });
 
+    // Add pagination information
+    const pageInfo = `Page ${page} of ${pages}`;
+    doc.text(pageInfo, doc.internal.pageSize.width - 15, doc.internal.pageSize.height - 10, {align: "right"});
+
     doc.save("Work Orders.pdf");
     message.success("Report Generated Successfully"); 
   }
@@ -79,7 +83,7 @@ const getWorkOrders = useCallback (async () => {
   // function to handle page change
   const handlePageChange = (newPage) => {
     setPage(newPage);
-  }
+  };
 
   return (
     <Layout>

@@ -48,27 +48,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
   // Function to check if user is authorised to view, edit or delete work
   const isAuthorised = [
     "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
-  ].includes(user?.role);
-
-  // Function to determine whether edit or delete button should be displayed
-  const isEditAllowed = (work) => {
-    const isCompleted = work.status === "Complete"
-    const isReviewer = user?.role === "reviewer"
-    const isReviewed = work?.status === true
-
-    // Disable edit button for role engineer when work status is complete
-    if (isCompleted && (user?.role === "engineer" || (isReviewer && isReviewed))) {
-        return false;
-    }
-
-    // Hide edit button for user role hod
-    if (user?.role === "hod") {
-        return false;
-    }
-
-    // disable edit btn for hod and allow for the rest
-    return isAuthorised;
-  }  
+  ].includes(user?.role); 
 
   return (
     <>
@@ -92,9 +72,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                 <th>Title</th>
                 <th>Location</th>
                 <th>Service Type</th>
-                <th>Category</th>
                 <th>Status</th>
-                <th>Requested By</th>
                 <th>Assigned To</th>
                 <th>Actions</th>
                 </tr>
@@ -103,11 +81,15 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                 {allWork?.map((work) => (
                 <tr key={work._id}>
                     <td>{work.title}</td>
-                    <td>{work.location?.locationTitle}</td>
+                    <td>{Array.isArray(work.location) && work.location.map((location, index) =>
+                        <span key={location._id}>
+                            {location.locationTitle}
+                            {index < work.location.length - 1 ? ", " : ""}
+                        </span> 
+                        )}
+                    </td>
                     <td>{work.serviceType}</td>
-                    <td>{work.category?.categoryTitle}</td>
                     <td>{work.status}</td>
-                    <td>{work.requestedBy?.username}</td>
                     <td>{work.assignedTo?.firstName} {work.assignedTo?.lastName}</td>
                     <td className="actions__btn">
                     <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
@@ -117,16 +99,16 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                             This work is already reviewed, no need to review again.
                         </Typography.Text>
                     ) : (
-                            <Tooltip title={isEditAllowed(work) ? "Edit Work" : "You are not authorised to edit this work order"}>
+                            <Tooltip title="Edit Work">
                                 <Button danger style={{ border: 'none', marginRight: "5px"}} 
                                     onClick={() => navigate(`/edit/work/${work._id}`)}
-                                    disabled={!isEditAllowed(work)}
+                                    disabled={!isAuthorised}
                                 >
                                     <BiSolidEditAlt/>
                                 </Button> 
                             </Tooltip>
                     )}
-                        { isEditAllowed(work) && (
+                        { isAuthorised && (
                             <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work order"}>
                                 <Button danger style={{ border: 'none'}} onClick={() => showModal(work)} disabled={!["admin", "superadmin"].includes(user?.role)}>
                                     <MdDelete/>
@@ -171,6 +153,6 @@ Work.propTypes = {
   user: PropTypes.object,
   loading: PropTypes.bool,
   getAllWork: PropTypes.func
-}
+};
 
 export default Work;
