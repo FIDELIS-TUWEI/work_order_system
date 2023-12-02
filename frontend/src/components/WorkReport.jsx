@@ -1,14 +1,116 @@
 import PropTypes from "prop-types";
-import moment from "moment";
-import { Button, Card } from "antd";
-import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+import { Button, Card, Input, Space, Table } from "antd";
+import {GrFormNext, GrFormPrevious, GrSearch} from "react-icons/gr";
+import Highlighter from 'react-highlight-words';
 
 import "jspdf-autotable";
 import LoadingBox from "../components/LoadingBox";
+import { useRef, useState } from "react";
+import moment from "moment";
 
 
 const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pages, handlePageChange, navigate }) => {
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
 
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
+
+  const getColumnSearchProps = (dataIndex, title) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input 
+          ref={searchInput}
+          placeholder={`Search ${title}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<GrSearch />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <GrSearch style={{ color: filtered ? "#1890ff" : undefined }} />
+      ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ""}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      ...getColumnSearchProps("title", "Title"),
+    },
+    {
+      title: "Service Type",
+      dataIndex: "serviceType",
+      key: "serviceType",
+      ...getColumnSearchProps("serviceType", "Service Type"),
+    },
+    {
+      title: "Category",
+      dataIndex: "category.categoryTitle",
+      key: "category",
+      ...getColumnSearchProps("category.categoryTitle", "Category"),
+    },
+    {
+      title: "Priority",
+      dataIndex: "priority",
+      key: "priority",
+      ...getColumnSearchProps("priority", "Priority"),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      ...getColumnSearchProps("status", "Status"),
+    },
+  ]
   return (
     <>
       <Card title="Work Orders" style={{ margin: "15px" }}>
@@ -31,35 +133,13 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
           </div>
         ) : (
           <>
-
-            <table id="table">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Service Type</th>
-                  <th>Category</th>
-                  <th>Priority</th>
-                  <th>Assigned To</th>
-                  <th>Date Requested</th>
-                  <th>Requested By</th>
-                  <th>Date Completed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {workOrders.map((workOrder) => (
-                  <tr key={workOrder._id}>
-                    <td>{workOrder.title}</td>
-                    <td>{workOrder.serviceType}</td>
-                    <td>{workOrder.category ? workOrder.category.categoryTitle : ''}</td>
-                    <td>{workOrder.priority}</td>
-                    <td>{workOrder.assignedTo ? workOrder.assignedTo.firstName : 'Not Assigned'}</td>
-                    <td>{moment(workOrder.Date_Created).format("DD/MM/YYYY, hh:mm a")}</td>
-                    <td>{workOrder.requestedBy ? workOrder.requestedBy.username : 'Not Requested'}</td>
-                    <td>{workOrder.dateCompleted ? moment(workOrder.dateCompleted).format("DD/MM/YYYY, hh:mm a") : 'Not yet complete'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <Table 
+           id="table"
+            dataSource={workOrders}
+            columns={columns}
+            pagination={false}
+            rowKey={(record) => record._id}
+          />
             <p>Total Work Orders: {workOrders.length}</p>
             <div className="button__container">
               <Button style={{ 
