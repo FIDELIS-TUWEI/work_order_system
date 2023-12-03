@@ -5,6 +5,10 @@ const departmentSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-});
+},
+{
+    timestamps: { createdAt: "Date_Created", updatedAt: "Date_Updated" },
+}
+);
 
 module.exports = mongoose.model("Department", departmentSchema)
