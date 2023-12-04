@@ -110,7 +110,16 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       key: "status",
       ...getColumnSearchProps("status", "Status"),
     },
-  ]
+    {
+      title: "Date Requested",
+      dataIndex: "dateAdded",
+      key: "dateAdded",
+      render : (text) => 
+        text ? moment(text).format("DD/MM/YYYY, h:mm:ss a") : "Not yet Complete",
+        ...getColumnSearchProps("dateAdded", "Date Requested"), // Need to set
+    },
+  ];
+  
   return (
     <>
       <Card title="Work Orders" style={{ margin: "15px" }}>
