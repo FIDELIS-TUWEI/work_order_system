@@ -79,12 +79,28 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       ),
   });
 
+  // Format date
+  const dateCreated = (text) => {
+    return text ? moment(text).format("DD/MM/YYYY, hh:mm a") : "Not yet Created";
+  };
+  
+  const formattedDate = (text) => {
+    return text ? moment(text).format("DD/MM/YYYY, hh:mm a") : "Not yet Complete";
+  };
+
   const columns = [
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
       ...getColumnSearchProps("title", "Title"),
+    },
+    {
+      title: "Date Requested",
+      dataIndex: "dateAdded",
+      key: "dateAdded",
+      render : dateCreated,
+        ...getColumnSearchProps("dateAdded", "Date Requested"), // Need to set
     },
     {
       title: "Service Type",
@@ -111,15 +127,14 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       ...getColumnSearchProps("status", "Status"),
     },
     {
-      title: "Date Requested",
-      dataIndex: "dateAdded",
-      key: "dateAdded",
-      render : (text) => 
-        text ? moment(text).format("DD/MM/YYYY, h:mm:ss a") : "Not yet Complete",
-        ...getColumnSearchProps("dateAdded", "Date Requested"), // Need to set
+      title: "Date Completed",
+      dataIndex: "dateCompleted",
+      key: "dateCompleted",
+      render : formattedDate,
+        ...getColumnSearchProps("dateCompleted", "Date Completed"), // Need to set
     },
   ];
-  
+
   return (
     <>
       <Card title="Work Orders" style={{ margin: "15px" }}>
