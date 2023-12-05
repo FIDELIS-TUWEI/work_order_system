@@ -79,14 +79,13 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
   });
 
   // Format date
-  const dateCreated = (text) => {
-    return text ? moment(text).format("DD/MM/YYYY, hh:mm a") : "Not yet Created";
+  const formatDate = (date) => {
+    return moment(date).format("DD/MM/YYYY, hh:mm a");
   };
   
-  const formattedDate = (text) => {
-    if (text) {
-      const formatted = moment(text).format("DD/MM/YYYY, hh:mm a");
-      return formatted;
+  const formatDateCompleted = (date) => {
+    if (date) {
+      return formatDate(date); 
     } else {
       return "Not yet Complete";
     }
@@ -105,8 +104,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       align: "center",
       dataIndex: "dateAdded",
       key: "dateAdded",
-      render : dateCreated,
-        ...getColumnSearchProps("dateAdded", "Date Requested"), // Need to set
+      render : (text) => formatDate(text),
     },
     {
       title: "Service Type",
@@ -118,8 +116,13 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
     {
       title: "Category",
       align: "center",
-      dataIndex: "category.categoryTitle",
+      dataIndex: `category.categoryTitle`,
       key: "category",
+      render: (record) => (
+        <span>
+          {record.category?.categoryTitle}
+        </span>
+      ),
       ...getColumnSearchProps("category.categoryTitle", "Category"),
     },
     {
@@ -140,8 +143,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       align: "center",
       dataIndex: "dateCompleted",
       key: "dateCompleted",
-      render : (text) => formattedDate(text),
-        ...getColumnSearchProps("dateCompleted", "Date Completed"), // Need to set
+      render : formatDateCompleted,
     },
   ];
 
