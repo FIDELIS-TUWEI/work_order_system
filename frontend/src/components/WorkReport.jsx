@@ -157,33 +157,26 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
           </select>
         </div>
         
-
-        {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", margin: "20px" }}>
-            <LoadingBox />
-          </div>
-        ) : (
-          <>
-          <Table 
-           id="table"
-            dataSource={workOrders}
-            columns={columns}
-            pagination={false}
-            rowKey={(record) => record._id}
-          />
-            <p>Total Work Orders: {workOrders.length}</p>
-            <div className="button__container">
-              <Button style={{ 
-                color: 'white', 
-                backgroundColor: 'darkgreen', 
-                border: 'none' 
-              }} 
-                onClick={exportPDF}>
-                Generate Report
-              </Button>
-            </div>
-          </>
-          )}
+        <Table 
+          id="table"
+          dataSource={workOrders}
+          loading={loading}
+          bordered
+          columns={columns}
+          pagination={false}
+          rowKey={(record) => record._id}
+        />
+        <p>Total Work Orders: {workOrders.length}</p>
+        <div className="button__container">
+          <Button style={{ 
+            color: 'white', 
+            backgroundColor: 'darkgreen', 
+            border: 'none' 
+          }} 
+            onClick={exportPDF}>
+            Generate Report
+          </Button>
+        </div>
       </Card>
 
       <div className="pagination">
