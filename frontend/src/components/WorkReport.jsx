@@ -114,18 +114,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       ...getColumnSearchProps("serviceType", "Service Type"),
     },
     {
-      title: "Category",
-      align: "center",
-      dataIndex: `category.categoryTitle`,
-      key: "category",
-      render: (record) => (
-        <span>
-          {record.category?.categoryTitle}
-        </span>
-      ),
-      ...getColumnSearchProps("category.categoryTitle", "Category"),
-    },
-    {
       title: "Priority",
       align: "center",
       dataIndex: "priority",
@@ -163,7 +151,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
         </div>
         
         <Table 
-          id="table"
           dataSource={workOrders}
           loading={loading}
           columns={columns}
