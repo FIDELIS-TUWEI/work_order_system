@@ -166,7 +166,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
           id="table"
           dataSource={workOrders}
           loading={loading}
-          bordered
           columns={columns}
           pagination={false}
           rowKey={(record) => record._id}
