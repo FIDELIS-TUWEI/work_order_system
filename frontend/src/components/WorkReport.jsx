@@ -84,7 +84,12 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
   };
   
   const formattedDate = (text) => {
-    return text ? moment(text).format("DD/MM/YYYY, hh:mm a") : "Not yet Complete";
+    if (text) {
+      const formatted = moment(text).format("DD/MM/YYYY, hh:mm a");
+      return formatted;
+    } else {
+      return "Not yet Complete";
+    }
   };
 
   const columns = [
@@ -135,7 +140,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       align: "center",
       dataIndex: "dateCompleted",
       key: "dateCompleted",
-      render : formattedDate,
+      render : (text) => formattedDate(text),
         ...getColumnSearchProps("dateCompleted", "Date Completed"), // Need to set
     },
   ];
