@@ -1,10 +1,11 @@
-import { Button, Card, Tooltip, message } from 'antd';
+import { Button, Tooltip, Typography, message } from 'antd';
 import Layout from '../../../components/Layout';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../services/usersApi';
 import { useSelector } from 'react-redux';
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
+import Logo from "../../../assets/logo.png"
 
 const UserDetails = () => {
   const user = useSelector(selectUserInfo);
@@ -38,28 +39,51 @@ const UserDetails = () => {
 
   return (
     <Layout>
-      <Card title="User Details" style={{ margin: 'auto', width: '300px' }}>
-        <p>
-          First Name: {userDetails?.firstName}
-        </p>
-        <p>
-          Last Name: {userDetails?.lastName}
-        </p>
-        <p>
-          Username: {userDetails?.username}
-        </p>
-        <p>
-          Department: {userDetails?.department?.departmentName}
-        </p>
-        <p>
-          Designation: {userDetails?.designation?.designationName}
-        </p>
-        <p>
-          Role: {userDetails?.role}
-        </p>
-        <p>
-          Status: {userDetails?.active === true ? "Active" : "Not Active"}
-        </p>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '10px' }}>User Details</Typography>
+      <div className="details--card">
+        <div className="company--logo">
+            <img src={Logo} alt="Logo" />
+        </div>
+
+        <div className="details--header">
+          <div className="details--header1">
+            <h2>First Name: {userDetails?.firstName}</h2>
+            <p>Department: {userDetails?.department?.departmentName}</p>
+          </div>
+          <div className="details--header2">
+            <h2>Last Name: {userDetails?.lastName}</h2>
+            <p>Designation: {userDetails?.designation?.designationName}</p>
+          </div>
+        </div>
+
+        <hr />
+        <div className="details--grid">
+          <div className="details">
+            <span>Username:</span>
+            <span>{userDetails?.username}</span>
+          </div>
+          <div className="details">
+            <span>Email:</span>
+            <span>{userDetails?.email}</span>
+          </div>
+          <div className="details">
+            <span>Role:</span>
+            <span>{userDetails?.role}</span>
+          </div>
+          <div className="details">
+            <span>Active:</span>
+            <span>{userDetails?.active === true ? "Active" : "Not Active"}</span>
+          </div>
+        </div>
+        <div className="add-btn">
+        <Tooltip title="Back">
+          <Button 
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} 
+            onClick={() => {navigate(-1)}}
+          >
+            Back
+          </Button>
+        </Tooltip>
         <Tooltip title={user?.role !== "superadmin" ? "Only System admin can change password" : "Edit Password"}>
           <Button 
             onClick={() => {navigate(`/updatePassword/${userDetails?._id}`)}} 
@@ -69,15 +93,10 @@ const UserDetails = () => {
             Change Password
           </Button>
         </Tooltip>
-        <Tooltip title="Back">
-          <Button 
-            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} 
-            onClick={() => {navigate(-1)}}
-          >
-            Back
-          </Button>
-        </Tooltip>
-      </Card>
+        
+        </div>
+        
+        </div>
     </Layout>
   )
 }
