@@ -91,12 +91,14 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
   const columns = [
     {
       title: "Title",
+      align: "center",
       dataIndex: "title",
       key: "title",
       ...getColumnSearchProps("title", "Title"),
     },
     {
       title: "Date Requested",
+      align: "center",
       dataIndex: "dateAdded",
       key: "dateAdded",
       render : dateCreated,
@@ -104,30 +106,35 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
     },
     {
       title: "Service Type",
+      align: "center",
       dataIndex: "serviceType",
       key: "serviceType",
       ...getColumnSearchProps("serviceType", "Service Type"),
     },
     {
       title: "Category",
+      align: "center",
       dataIndex: "category.categoryTitle",
       key: "category",
       ...getColumnSearchProps("category.categoryTitle", "Category"),
     },
     {
       title: "Priority",
+      align: "center",
       dataIndex: "priority",
       key: "priority",
       ...getColumnSearchProps("priority", "Priority"),
     },
     {
       title: "Status",
+      align: "center",
       dataIndex: "status",
       key: "status",
       ...getColumnSearchProps("status", "Status"),
     },
     {
       title: "Date Completed",
+      align: "center",
       dataIndex: "dateCompleted",
       key: "dateCompleted",
       render : formattedDate,
