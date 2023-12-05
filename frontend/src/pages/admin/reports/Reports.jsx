@@ -67,8 +67,45 @@ const getWorkOrders = useCallback (async () => {
     doc.setFontSize(12);
     doc.text("Work Orders Report", 15, initialTableY - 10);
 
+    const columns = [
+      {
+        title: "Title",
+        dataKey: "title",
+      },
+      {
+        title: "Date Requested",
+        dataKey: "dateAdded",
+      },
+      {
+        title: "Service Type",
+        dataKey: "serviceType",
+      },
+      {
+        title: "Priority",
+        dataKey: "priority",
+      },
+      {
+        title: "Status",
+        dataKey: "status",
+      },
+    ];
+
+    const formatDate = (date) => moment(date).format("DD/MM/YYYY, hh:mm a");
+
+    const formatDateCompleted = (date) => (date ? formatDate(date) : "Not yet Complete");
+
+    const rows = workOrders.map((workOrder) => ({
+      title: workOrder.title,
+      dateAdded: formatDate(workOrder.dateAdded),
+      serviceType: workOrder.serviceType,
+      priority: workOrder.priority,
+      status: workOrder.status,
+      dateCompleted: formatDateCompleted(workOrder.dateCompleted),
+    }));
+
     doc.autoTable({
-      html: "#table",
+      head: [columns.map((col) => col.title)],
+      body: rows,
       startY: initialTableY,
     });
 
