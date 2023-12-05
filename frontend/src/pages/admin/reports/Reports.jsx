@@ -69,23 +69,23 @@ const getWorkOrders = useCallback (async () => {
 
     const columns = [
       {
-        title: "Title",
+        header: "Title",
         dataKey: "title",
       },
       {
-        title: "Date Requested",
+        header: "Date Requested",
         dataKey: "dateAdded",
       },
       {
-        title: "Service Type",
+        header: "Service Type",
         dataKey: "serviceType",
       },
       {
-        title: "Priority",
+        header: "Priority",
         dataKey: "priority",
       },
       {
-        title: "Status",
+        header: "Status",
         dataKey: "status",
       },
     ];
@@ -104,7 +104,7 @@ const getWorkOrders = useCallback (async () => {
     }));
 
     doc.autoTable({
-      head: [columns.map((col) => col.title)],
+      head: [columns.map((col) => col.header)],
       body: rows,
       startY: initialTableY,
     });
