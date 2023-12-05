@@ -4,7 +4,6 @@ import {GrFormNext, GrFormPrevious, GrSearch} from "react-icons/gr";
 import Highlighter from 'react-highlight-words';
 
 import "jspdf-autotable";
-import LoadingBox from "../components/LoadingBox";
 import { useRef, useState } from "react";
 import moment from "moment";
 
