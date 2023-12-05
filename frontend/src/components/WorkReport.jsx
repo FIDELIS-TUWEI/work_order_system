@@ -130,7 +130,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       align: "center",
       dataIndex: "status",
       key: "status",
-      ...getColumnSearchProps("status", "Status"),
     },
     {
       title: "Date Completed",
