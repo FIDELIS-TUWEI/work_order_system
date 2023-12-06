@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import { Button, Card, Input, Space, Table } from "antd";
-import {GrFormNext, GrFormPrevious, GrSearch} from "react-icons/gr";
+import { Button, Input, Space, Table } from "antd";
+import {GrSearch} from "react-icons/gr";
 import Highlighter from 'react-highlight-words';
 
 import "jspdf-autotable";
@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 import moment from "moment";
 
 
-const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pages, handlePageChange, navigate }) => {
+const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -194,7 +194,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
           dataSource={workOrders}
           loading={loading}
           columns={columns}
-          pagination={false}
+          pagination={{ pageSize: 5 }}
           scroll={{ x: 1500 }}
           rowKey={(record) => record._id}
         />
@@ -209,16 +209,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
             Generate Report
           </Button>
         </div>
-
-      <div className="pagination">
-        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
-          <GrFormPrevious />
-        </Button>
-        <span> Page {page} of {pages}</span>
-        <Button disabled={page === pages || workOrders.length === 0} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
-          <GrFormNext />
-        </Button>
-      </div>
     </>
   )
 };
@@ -228,10 +218,6 @@ WorkReport.propTypes = {
   loading: PropTypes.bool,
   setFilterStatus: PropTypes.func,
   exportPDF: PropTypes.func,
-  page: PropTypes.number,
-  pages: PropTypes.number,
-  handlePageChange: PropTypes.func,
-  navigate: PropTypes.func
 };
 
 export default WorkReport;
