@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 
-const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails }) => {
+const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails, loading }) => {
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit Employee Details</Typography>
@@ -48,6 +48,10 @@ const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails }) => {
           <div className="user_submit">
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
           </div>
+          <Col xs={24} md={24} lg={8}></Col>
+          <div className="loader">
+            { loading && <LoadingBox /> }
+          </div>
         </Form>
       </Card>
     </div>
@@ -58,6 +62,7 @@ UpdateEmployee.propTypes = {
   onFinishHandler: PropTypes.func,
   navigate: PropTypes.func,
   employeeDetails: PropTypes.object,
+  loading: PropTypes.bool
 }
 
 export default UpdateEmployee;
