@@ -85,12 +85,12 @@ const getWorkOrders = useCallback (async () => {
         dataKey: "priority",
       },
       {
-        header: "Status",
-        dataKey: "status",
-      },
-      {
         header: "Tracker",
         dataKey: "tracker",
+      },
+      {
+        header: "Assigned To",
+        dataKey: "assignedTo",
       },
       {
         header: "Supervisor",
@@ -100,10 +100,6 @@ const getWorkOrders = useCallback (async () => {
         header: "Date Completed",
         dataKey: "dateCompleted",
       },
-      {
-        header: "Review Comments",
-        dataKey: "reviewComments",
-      }
     ];
 
     const formatDate = (date) => moment(date).format("DD/MM/YYYY, hh:mm a");
@@ -115,11 +111,10 @@ const getWorkOrders = useCallback (async () => {
       formatDate(workOrder.dateAdded),
       workOrder.serviceType,
       workOrder.priority,
-      workOrder.status,
       workOrder.tracker,
+      `${workOrder.assignedTo.firstName} ${workOrder.assignedTo.lastName}`,
       workOrder.supervisedBy,
       formatDateCompleted(workOrder.dateCompleted),
-      workOrder.reviewComments,
     ]);
 
     doc.autoTable({
