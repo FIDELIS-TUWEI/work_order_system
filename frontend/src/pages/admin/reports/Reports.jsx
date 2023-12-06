@@ -73,10 +73,6 @@ const getWorkOrders = useCallback (async () => {
         dataKey: "title",
       },
       {
-        header: "Date Requested",
-        dataKey: "dateAdded",
-      },
-      {
         header: "Service Type",
         dataKey: "serviceType",
       },
@@ -85,8 +81,20 @@ const getWorkOrders = useCallback (async () => {
         dataKey: "priority",
       },
       {
+        header: "Category",
+        dataKey: "category",
+      },
+      {
+        header: "Requested By",
+        dataKey: "requestedBy",
+      },
+      {
         header: "Tracker",
         dataKey: "tracker",
+      },
+      {
+        header: "Date Requested",
+        dataKey: "dateAdded",
       },
       {
         header: "Assigned To",
@@ -108,10 +116,12 @@ const getWorkOrders = useCallback (async () => {
 
     const rows = workOrders.map((workOrder) => [
       workOrder.title,
-      formatDate(workOrder.dateAdded),
       workOrder.serviceType,
       workOrder.priority,
+      `${workOrder.category.categoryTitle}`,
+      `${workOrder.requestedBy.username}`,
       workOrder.tracker,
+      formatDate(workOrder.dateAdded),
       `${workOrder.assignedTo.firstName} ${workOrder.assignedTo.lastName}`,
       workOrder.supervisedBy,
       formatDateCompleted(workOrder.dateCompleted),
