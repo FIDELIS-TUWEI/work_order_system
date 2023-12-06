@@ -14,20 +14,23 @@ const EditWorkOrder = () => {
   const [workDetails, setWorkDetails] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {id} = useParams();
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
     try {
+      setLoading(true);
       await updateWorkOrder(id, values);
       if (workDetails.reviewed !== true) {
         message.success('Work Order Updated Successfully');
       }
       navigate('/work/list');
-
+      setLoading(false);
     } catch (error) {
       message.error(error.message, "Work Order Update Failed");
+      setLoading(false);
     }
   }
 
@@ -84,6 +87,7 @@ const EditWorkOrder = () => {
           employees={employees}
           selectedEmployee={selectedEmployee}
           handleEmployeeChange={handleEmployeeChange}
+          loading={loading}
         />
     </Layout>
   )
