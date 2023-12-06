@@ -10,12 +10,14 @@ import { message } from "antd";
 const EditEmployee = () => {
   const token = useSelector(selectToken);
   const [employeeDetails, setEmployeeDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
     try {
+      setLoading(true);
       await editEmployee(id, values, {
         withCredentials: true,
         headers: {
@@ -24,8 +26,10 @@ const EditEmployee = () => {
       }); 
       message.success('Employee Updated Successfully');
       navigate('/all/employees');
+      setLoading(false);
     } catch (error) {
       message.error(error.message, "Employee Update Failed");
+      setLoading(false);
     }
   };
 
@@ -57,6 +61,7 @@ const EditEmployee = () => {
         onFinishHandler={onFinishHandler}
         navigate={navigate}
         employeeDetails={employeeDetails}
+        loading={loading}
       />
     </Layout>
   )
