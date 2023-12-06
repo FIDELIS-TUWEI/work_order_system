@@ -141,6 +141,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
     },
     {
       title: "Date Requested",
+      width: 180,
       align: "center",
       dataIndex: "dateAdded",
       key: "dateAdded",
