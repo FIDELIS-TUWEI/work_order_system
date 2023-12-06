@@ -88,20 +88,24 @@ const getWorkOrders = useCallback (async () => {
         header: "Status",
         dataKey: "status",
       },
+      {
+        header: "Date Completed",
+        dataKey: "dateCompleted",
+      }
     ];
 
     const formatDate = (date) => moment(date).format("DD/MM/YYYY, hh:mm a");
 
     const formatDateCompleted = (date) => (date ? formatDate(date) : "Not yet Complete");
 
-    const rows = workOrders.map((workOrder) => ({
-      title: workOrder.title,
-      dateAdded: formatDate(workOrder.dateAdded),
-      serviceType: workOrder.serviceType,
-      priority: workOrder.priority,
-      status: workOrder.status,
-      dateCompleted: formatDateCompleted(workOrder.dateCompleted),
-    }));
+    const rows = workOrders.map((workOrder) => [
+      workOrder.title,
+      formatDate(workOrder.dateAdded),
+      workOrder.serviceType,
+      workOrder.priority,
+      workOrder.status,
+      formatDateCompleted(workOrder.dateCompleted),
+    ]);
 
     doc.autoTable({
       head: [columns.map((col) => col.header)],
