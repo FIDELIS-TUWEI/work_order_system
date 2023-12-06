@@ -121,21 +121,25 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       ...getColumnSearchProps("priority", "Priority"),
     },
     {
-      title: "Status",
-      align: "center",
-      dataIndex: "status",
-      key: "status",
-    },
-    {
       title: "Tracker",
       align: "center",
       dataIndex: "tracker",
-
+      key: "tracker",
+    },
+    {
+      title: "Assigned To",
+      align: "center",
+      dataIndex: "assignedTo",
+      key: "assignedTo",
+      render: (assignedTo) => (
+        assignedTo ? `${assignedTo.firstName} ${assignedTo.lastName}` : "Unassigned"
+      )
     },
     {
       title: "Supervisor",
       align: "center",
       dataIndex: "supervisedBy",
+      key: "supervisedBy",
     },
     {
       title: "Date Completed",
@@ -144,11 +148,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       key: "dateCompleted",
       render : formatDateCompleted,
     },
-    {
-      title: "Review Comments",
-      align: "center",
-      dataIndex: "reviewComments",
-    }
   ];
 
   return (
