@@ -89,8 +89,20 @@ const getWorkOrders = useCallback (async () => {
         dataKey: "status",
       },
       {
+        header: "Tracker",
+        dataKey: "tracker",
+      },
+      {
+        header: "Supervisor",
+        dataKey: "supervisedBy",
+      },
+      {
         header: "Date Completed",
         dataKey: "dateCompleted",
+      },
+      {
+        header: "Review Comments",
+        dataKey: "reviewComments",
       }
     ];
 
@@ -104,7 +116,10 @@ const getWorkOrders = useCallback (async () => {
       workOrder.serviceType,
       workOrder.priority,
       workOrder.status,
+      workOrder.tracker,
+      workOrder.supervisedBy,
       formatDateCompleted(workOrder.dateCompleted),
+      workOrder.reviewComments,
     ]);
 
     doc.autoTable({
