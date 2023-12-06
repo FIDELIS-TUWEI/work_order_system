@@ -127,17 +127,33 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       key: "status",
     },
     {
+      title: "Tracker",
+      align: "center",
+      dataIndex: "tracker",
+
+    },
+    {
+      title: "Supervisor",
+      align: "center",
+      dataIndex: "supervisedBy",
+    },
+    {
       title: "Date Completed",
       align: "center",
       dataIndex: "dateCompleted",
       key: "dateCompleted",
       render : formatDateCompleted,
     },
+    {
+      title: "Review Comments",
+      align: "center",
+      dataIndex: "reviewComments",
+    }
   ];
 
   return (
     <>
-      <Card title="Work Orders" style={{ margin: "15px" }}>
+      <Card title="Work Orders Report" style={{ margin: "15px" }}>
         <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
           <label style={{ fontWeight: "bold" }}>
             Filter By Status:
