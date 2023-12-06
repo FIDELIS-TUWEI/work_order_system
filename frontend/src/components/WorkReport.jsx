@@ -94,17 +94,11 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
   const columns = [
     {
       title: "Title",
+      fixed: "left",
       align: "center",
       dataIndex: "title",
       key: "title",
       ...getColumnSearchProps("title", "Title"),
-    },
-    {
-      title: "Date Requested",
-      align: "center",
-      dataIndex: "dateAdded",
-      key: "dateAdded",
-      render : (text) => formatDate(text),
     },
     {
       title: "Service Type",
@@ -121,10 +115,35 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       ...getColumnSearchProps("priority", "Priority"),
     },
     {
+      title: "Category",
+      align: "center",
+      dataIndex: "category",
+      key: "category",
+      render: (category) => (
+        category ? `${category.categoryTitle}` : "No Category"
+      )
+    },
+    {
+      title: "Requested By",
+      align: "center",
+      dataIndex: "requestedBy",
+      key: "requestedBy",
+      render: (requestedBy) => (
+        requestedBy ? `${requestedBy.username}` : "Null"
+      )
+    },
+    {
       title: "Tracker",
       align: "center",
       dataIndex: "tracker",
       key: "tracker",
+    },
+    {
+      title: "Date Requested",
+      align: "center",
+      dataIndex: "dateAdded",
+      key: "dateAdded",
+      render : (text) => formatDate(text),
     },
     {
       title: "Assigned To",
@@ -143,6 +162,9 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
     },
     {
       title: "Date Completed",
+      width: 200,
+      sorter: true,
+      fixed: "right",
       align: "center",
       dataIndex: "dateCompleted",
       key: "dateCompleted",
@@ -152,7 +174,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
 
   return (
     <>
-      <Card title="Work Orders Report" style={{ margin: "15px" }}>
         <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
           <label style={{ fontWeight: "bold" }}>
             Filter By Status:
@@ -170,6 +191,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
           loading={loading}
           columns={columns}
           pagination={false}
+          scroll={{ x: 1300 }}
           rowKey={(record) => record._id}
         />
         <p>Total Work Orders: {workOrders.length}</p>
@@ -183,7 +205,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
             Generate Report
           </Button>
         </div>
-      </Card>
 
       <div className="pagination">
         <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
