@@ -142,6 +142,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
     {
       title: "Date Requested",
       width: 180,
+      sorter: true,
       align: "center",
       dataIndex: "dateAdded",
       key: "dateAdded",
@@ -161,6 +162,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
       align: "center",
       dataIndex: "supervisedBy",
       key: "supervisedBy",
+      ...getColumnSearchProps("supervisedBy", "Supervisor"),
     },
     {
       title: "Date Completed",
