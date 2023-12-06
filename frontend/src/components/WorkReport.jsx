@@ -97,6 +97,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
       width: 180,
       fixed: "left",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "title",
       key: "title",
       ...getColumnSearchProps("title", "Title"),
@@ -104,6 +105,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     {
       title: "Service Type",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "serviceType",
       key: "serviceType",
       ...getColumnSearchProps("serviceType", "Service Type"),
@@ -111,6 +113,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     {
       title: "Priority",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "priority",
       key: "priority",
       ...getColumnSearchProps("priority", "Priority"),
@@ -118,6 +121,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     {
       title: "Category",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "category",
       key: "category",
       render: (category) => (
@@ -127,6 +131,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     {
       title: "Requested By",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "requestedBy",
       key: "requestedBy",
       render: (requestedBy) => (
@@ -136,6 +141,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     {
       title: "Tracker",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "tracker",
       key: "tracker",
     },
@@ -144,6 +150,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
       width: 180,
       sorter: true,
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "dateAdded",
       key: "dateAdded",
       render : (text) => formatDate(text),
@@ -151,6 +158,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     {
       title: "Assigned To",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "assignedTo",
       key: "assignedTo",
       render: (assignedTo) => (
@@ -160,6 +168,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     {
       title: "Supervisor",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "supervisedBy",
       key: "supervisedBy",
       ...getColumnSearchProps("supervisedBy", "Supervisor"),
@@ -170,6 +179,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
       sorter: true,
       fixed: "right",
       align: "center",
+      responsive: ["md", "lg"],
       dataIndex: "dateCompleted",
       key: "dateCompleted",
       render : formatDateCompleted,
