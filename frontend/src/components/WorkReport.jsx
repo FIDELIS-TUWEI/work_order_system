@@ -94,6 +94,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
   const columns = [
     {
       title: "Title",
+      width: 180,
       fixed: "left",
       align: "center",
       dataIndex: "title",
@@ -191,10 +192,10 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF, page, pag
           loading={loading}
           columns={columns}
           pagination={false}
-          scroll={{ x: 1300 }}
+          scroll={{ x: 1500 }}
           rowKey={(record) => record._id}
         />
-        <p>Total Work Orders: {workOrders.length}</p>
+        <p style={{ marginTop: "20px" }}>Total Work Orders: {workOrders.length}</p>
         <div className="button__container">
           <Button style={{ 
             color: 'white', 
