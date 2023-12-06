@@ -204,7 +204,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
           dataSource={workOrders}
           loading={loading}
           columns={columns}
-          pagination={{ pageSize: 5 }}
+          pagination={false}
           scroll={{ x: 1500 }}
           rowKey={(record) => record._id}
         />
