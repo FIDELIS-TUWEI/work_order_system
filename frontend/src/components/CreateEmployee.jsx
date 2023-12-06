@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
+import LoadingBox from './LoadingBox';
 
 const CreateEmployee = ({ onFinishHandler, loading, navigate }) => {
 
@@ -59,6 +60,10 @@ const CreateEmployee = ({ onFinishHandler, loading, navigate }) => {
           <div className="user_submit">
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Submit</Button>
           </div>
+          <Col xs={24} md={24} lg={8}></Col>
+          <div className="loader">
+            { loading && <LoadingBox /> }
+          </div>
         </Form>
       </Card>
     </div>
@@ -68,7 +73,7 @@ const CreateEmployee = ({ onFinishHandler, loading, navigate }) => {
 CreateEmployee.propTypes = {
   loading: PropTypes.bool,
   onFinishHandler: PropTypes.func,
-  navigate: PropTypes.func
+  navigate: PropTypes.func,
 }
 
 export default CreateEmployee;
