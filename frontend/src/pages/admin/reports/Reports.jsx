@@ -5,8 +5,10 @@ import { jsPDF } from "jspdf";
 import Logo from "../../../assets/logo.png";
 import Layout from "../../../components/Layout";
 import WorkReport from "../../../components/WorkReport";
-import { Typography, message } from "antd";
+import { Button, Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+
 
 
 const WORK_URL = "/hin";
@@ -110,9 +112,14 @@ const getWorkOrders = useCallback (async () => {
       },
     ];
 
+    // Format date work added
     const formatDate = (date) => moment(date).format("DD/MM/YYYY, hh:mm a");
 
+    // format date work completed
     const formatDateCompleted = (date) => (date ? formatDate(date) : "Not yet Complete");
+
+    // Display employee assigned
+    const showEmployeeName = (employee) => (employee ? `${employee.firstName} ${employee.lastName}` : "Unassigned");
 
     const rows = workOrders.map((workOrder) => [
       workOrder.title,
@@ -122,7 +129,7 @@ const getWorkOrders = useCallback (async () => {
       `${workOrder.requestedBy.username}`,
       workOrder.tracker,
       formatDate(workOrder.dateAdded),
-      `${workOrder.assignedTo.firstName} ${workOrder.assignedTo.lastName}`,
+      showEmployeeName(workOrder.assignedTo),
       workOrder.supervisedBy,
       formatDateCompleted(workOrder.dateCompleted),
     ]);
@@ -161,6 +168,15 @@ const getWorkOrders = useCallback (async () => {
         navigate={navigate}
       />
       
+      <div className="pagination">
+        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
+          <GrFormPrevious />
+        </Button>
+        <span> Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
+          <GrFormNext />
+        </Button>
+      </div>
     </Layout>
   )
 }
