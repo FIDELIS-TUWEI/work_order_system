@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 import { useNavigate } from "react-router-dom";
 
-const EditUserPassword = ({ onFinishHandler, password, setPassword }) => {
+const EditUserPassword = ({ onFinishHandler, password, setPassword, loading }) => {
   const navigate = useNavigate();
 
   const passwordRules = [
@@ -61,6 +61,10 @@ const EditUserPassword = ({ onFinishHandler, password, setPassword }) => {
               Change Password
             </Button>
           </div>
+          <Col xs={24} md={24} lg={8}></Col>
+          <div className="loader">
+            { loading && <LoadingBox /> }
+          </div>
         </Form>
       </Card>
     </>
@@ -71,6 +75,7 @@ EditUserPassword.propTypes = {
   onFinishHandler: PropTypes.func.isRequired,
   password: PropTypes.string.isRequired,
   setPassword: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 }
 
 export default EditUserPassword;
