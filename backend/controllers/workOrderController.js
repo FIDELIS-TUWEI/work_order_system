@@ -87,14 +87,8 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const { assignedTo, reviewed, ...updatedFields } = req.body;
 
-        // Update the work order
-        const updateOptions = {
-            new: true,
-            runValidators: true
-        };
-
         // Update the work order and populate the assignedTo field
-        const updatedWorkOrder = await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
+        const updatedWorkOrder = await updateWorkOrderDetails(id, updatedFields);
 
         // check if work order exists
         if (!updatedWorkOrder) {
@@ -103,73 +97,21 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Check work order tracker
         if (updatedFields.tracker === "In_Complete") {
-            const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
-            const text = `The following work order needs your attention: \n 
-            Title: ${updatedWorkOrder.title} \n
-            Priority: ${updatedWorkOrder.priority} \n
-            Description: ${updatedWorkOrder.description} \n
-            Service Type: ${updatedWorkOrder.serviceType} \n
-            Date Created: ${updatedWorkOrder.dateAdded} \n
-            Thank you for using Holiday Inn Work Order System.
-            `;
-
-            await sendEmailNotification(updatedWorkOrder, subject, text);
-
-            // Schedule the reversion of the work order status after 10 minutes
-            const timeoutId = setTimeout(function () {
-                updatedWorkOrder.status = "Pending";
-                updatedWorkOrder.assignedTo = null;
-                updatedWorkOrder.tracker = "Not_Attended";
-                updatedWorkOrder.trackerMessage = "";
-                updatedWorkOrder.dateAssigned = null;
-                updatedWorkOrder.dueDate = null;
-
-                // Save the updated work order
-                updatedWorkOrder.save();
-
-                clearTimeout(timeoutId);
-            }, 1 * 60 * 1000); // 10 minutes in milliseconds
-
-            // Save the updated work order
-            updatedWorkOrder.timeoutId = timeoutId;
-            await updatedWorkOrder.save();
+            await handleInCompleteWorkOrder(updatedWorkOrder);
         }
 
         // check if work order is reviewed
         if (reviewed) {
-            updatedWorkOrder.reviewed = true;
-            updatedWorkOrder.reviewedBy = req.body.reviewedBy;
-            updatedWorkOrder.dateReviewed = req.body.dateReviewed;
-            updatedWorkOrder.reviewComments = req.body.reviewComments;
-            await updatedWorkOrder.save();
-        } 
-
-        // clear the user who requested the work when the work is reviewed
-        if ( reviewed) {
-            await User.findByIdAndUpdate(userId, { $pull: { workOrders: id } });
+            await handleReviewedWorkOrder(updatedWorkOrder, userId, req);
         };
 
         // check if an employee is assigned to the work order
         if (assignedTo) {
-            // update the assignedTo field
-            updatedWorkOrder.assignedTo = assignedTo;
-            await updatedWorkOrder.save();
-
-            // Find the employee and add the work order to their assignedwork array
-            const employee = await Employee.findById(assignedTo);
-            if (employee) {
-                employee.assignedWork.push(id);
-                await employee.save();
-
-            }
+            await handleAssignedWorkOrder(updatedWorkOrder, assignedTo);
         };
 
         // Send an email notification
-        const subject = `A WORK ORDER HAS BEEN UPDATED`;
-        const text = `A work order with title ${updatedWorkOrder.title} has been updated by ${user.username}. \n
-        Thank you for your using Holiday Inn Work Order System.`;
-
-        await sendEmailNotification(updatedWorkOrder, subject, text);
+        await sendUpdateEmailNotification(updatedWorkOrder, user);
 
         // Return a response
         return res.status(200).json({
@@ -182,10 +124,103 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Functions broken down to make it easier to update the work order, read the code and debug
+async function updateWorkOrderDetails (id, updatedFields) {
+    const updateOptions = {
+        new: true,
+        runValidators: true
+    };
+
+    return await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
+}
+
+// Handle In Complete Work Order tracker
+async function handleInCompleteWorkOrder (updatedWorkOrder) {
+    const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
+    const text = `The following work order needs your attention: \n
+    Title: ${updatedWorkOrder.title} \n
+    Priority: ${updatedWorkOrder.priority} \n
+    Description: ${updatedWorkOrder.description} \n
+    Status: ${updatedWorkOrder.status} \n
+    Service Type: ${updatedWorkOrder.serviceType} \n
+    Tracker: ${updatedWorkOrder.tracker} \n
+    Tracker Message: ${updatedWorkOrder.trackerMessage} \n
+    Date Updated: ${updatedWorkOrder.Date_Updated} \n
+    Thank you for using Holiday Inn Work Order System.
+    `;
+
+    // send email notification
+    await sendEmailNotification(updatedWorkOrder, subject, text);
+
+    // Schedule the reversion of the work order status after 10 minutes
+    const timeoutId = setTimeout(function () {
+        try {
+            updatedWorkOrder.status = "Pending";
+            updatedWorkOrder.assignedTo = null;
+            updatedWorkOrder.tracker = "Not_Attended";
+            updatedWorkOrder.trackerMessage = "";
+            updatedWorkOrder.dateAssigned = null;
+            updatedWorkOrder.dueDate = null;
+
+            // Save the updated work order
+            updatedWorkOrder.save();
+        } catch (error) {
+            throw new Error("Failed to revert work order status", error.message);
+        }
+
+    }, 1 * 60 * 1000); // 1 minute in milliseconds
+
+    updatedWorkOrder.timeoutId = timeoutId;
+};
+
+// Handle Reviewed Work Order
+async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
+    updatedWorkOrder.reviewed = true;
+    updatedWorkOrder.reviewedBy = req.body.reviewedBy;
+    updatedWorkOrder.dateReviewed = req.body.dateReviewed;
+    updatedWorkOrder.reviewComments = req.body.reviewComments;
+    await updatedWorkOrder.save();
+
+    // clear the user's array of work orders when the work is reviewed
+    await User.findByIdAndUpdate(userId, { $pull: { workOrders: updatedWorkOrder._id } });
+
+};
+
+// Handle Assigned Work Orders
+async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
+    // update the assignedTo field
+    updatedWorkOrder.assignedTo = assignedTo;
+    await updatedWorkOrder.save();
+
+    // Find the employee and add the work order to their assignedwork array
+    const employee = await Employee.findById(assignedTo);
+    if (employee) {
+        employee.assignedWork.push(updatedWorkOrder._id);
+        await employee.save();
+    } else {
+        throw new Error("Employee not found");
+    }
+};
+
+// send email notification
+async function sendUpdateEmailNotification (updatedWorkOrder, user) {
+    const subject = `A WORK ORDER HAS BEEN UPDATED`;
+    const text = `The following details have been updated: \n
+        Title: ${updatedWorkOrder.title} \n
+        Status: ${updatedWorkOrder.status} \n
+        Tracker: ${updatedWorkOrder.tracker} \n
+        Tracker Message: ${updatedWorkOrder.trackerMessage} \n
+        Date Updated: ${updatedWorkOrder.Date_Updated} \n
+        Log in to your account to see more details about the updated work order.
+        Thank you for using Holiday Inn Work Order System.`;
+
+    await sendEmailNotification(updatedWorkOrder, subject, text);
+};
+
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     // Enable Pagination
-    const pageSize = 5;
+    const pageSize = 8;
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({}).estimatedDocumentCount();
     try {
@@ -331,4 +366,4 @@ module.exports = {
     queryAllWork,
     getSingleWorkOrder,
     deleteWorkOrder,
-}
+};

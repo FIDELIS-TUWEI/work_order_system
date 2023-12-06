@@ -1,12 +1,12 @@
 import { Button, Card, Typography } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
     <div style={{ textAlign: 'center', marginTop: '20px' }}>
       <p>
-        &copy; {new Date().getFullYear()} Work Order Management System. All Rights Reserved.
+        Copyright &copy; {new Date().getFullYear()}. All Rights Reserved. 
       </p>
     </div>
   )
@@ -16,7 +16,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <>
     <div style=
       {{ display: "flex", 
         flexDirection: "column", 
@@ -39,7 +38,6 @@ const Home = () => {
           src={Logo}
           alt="logo"
           style={{ width: '80%', height: 'auto' }}
-          lazyLoad
         />
 
         <Typography.Title level={3}>Work Order Management System</Typography.Title>
@@ -48,7 +46,6 @@ const Home = () => {
 
       <Footer />
     </div>
-    </>
   )
 }
 

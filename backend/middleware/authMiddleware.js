@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const ErrorResponse = require("../utils/errorResponse");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
+const cache = require("memory-cache");
 
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {
@@ -57,9 +58,27 @@ const setReviewedBy = asyncHandler(async (req, res, next) => {
     next();
 });
 
+// Cache middleware
+const cacheMiddleware = (req, res, next) => {
+    const key = '__express__' + req.originalUrl || req.url;
+    const cachedResponse = cache.get(key);
+
+    if (cachedResponse) {
+        return res.send(cachedResponse);
+    } else {
+        res.sendResponse = res.send;
+        res.send = (body) => {
+            cache.put(key, body, 10000);
+            res.sendResponse(body);
+        };
+        next();
+    }
+}
+
 module.exports = {
     protect,
     restrict,
     isAdmin,
-    setReviewedBy
+    setReviewedBy,
+    cacheMiddleware
 };

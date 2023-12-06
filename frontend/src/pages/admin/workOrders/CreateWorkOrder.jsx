@@ -101,6 +101,6 @@ const CreateWorkOrder = () => {
       />
     </Layout>
   )
-}
+};
 
-export default CreateWorkOrder
+export default CreateWorkOrder;

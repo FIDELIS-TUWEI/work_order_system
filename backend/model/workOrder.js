@@ -2,17 +2,6 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const workOrderSchema = new mongoose.Schema({
-    
-    requestedBy: {
-        type: ObjectId,
-        ref: "User",
-        required: true
-    },
-    priority: {
-        // High, Medium, Low
-        type: String,
-        required: true
-    },
     title: {
         type: String,
         required: true,
@@ -23,16 +12,23 @@ const workOrderSchema = new mongoose.Schema({
         required: true,
         min: [10, "Description must be at least 10 characters"]
     },
-    location: {
+    location: [{
         // Rooms, Open place, Back office, Admin office
         type: ObjectId,
         ref: "Location",
         required: true
+    }],
+    priority: {
+        // Normal, Urgent
+        type: String,
+        required: true,
+        enum: ["Normal", "Urgent"],
     },
     serviceType: {
         // Fix, Repair, Replace, Install, Upgrade, Remove
         type: String,
-        required: true
+        required: true,
+        enum: ["Fix", "Repair", "Replace", "Install", "Upgrade", "Remove"],
     },
     category: {
         // Wi-Fi/ Internet, Bulb/ Lights, Paint, Door/ Lock, Hvac panel, Hvac cold/ Hot
@@ -47,6 +43,11 @@ const workOrderSchema = new mongoose.Schema({
         enum: ["Pending", "In_Progress", "Complete", "Reviewed"],
         default: "Pending"
     },
+    requestedBy: {
+        type: ObjectId,
+        ref: "User",
+        required: true
+    },
     tracker: {
         // Not_Attended, In_Attendance, Attended, In_Complete
         type: String,
@@ -56,7 +57,7 @@ const workOrderSchema = new mongoose.Schema({
     },
     trackerMessage: {
         type: String,
-        default: ""
+        default: "No tracker message"
     },
     assignedTo: {
         type: ObjectId,
@@ -76,11 +77,11 @@ const workOrderSchema = new mongoose.Schema({
     },
     supervisedBy: {
         type: String,
-        default: ""
+        default: "Not supervised"
     },
     comments: {
         type: String,
-        default: ""
+        default: "No comments"
     },
     reviewed: {
         type: Boolean,
@@ -92,7 +93,7 @@ const workOrderSchema = new mongoose.Schema({
     },
     reviewComments: {
         type: String,
-        default: ""
+        default: "No review comments"
     },
     dateReviewed: {
         type: Date,
@@ -130,6 +131,6 @@ workOrderSchema.pre("save", async function (next) {
     };
 
     next();
-})
+});
 
 module.exports = mongoose.model("Workorder", workOrderSchema);

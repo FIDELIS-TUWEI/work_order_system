@@ -58,8 +58,7 @@ const Layout = ({ children }) => {
       <div className="layout">
         <div className="sidebar">
           <div className="logo">
-            <img src={Logo} alt="Company Logo" className="sidebar--logo" lazyLoad/>
-            {/*<h6>Holiday Inn</h6>*/}
+            <img src={Logo} alt="Holiday Inn" className="sidebar--logo" />
           </div>
           <hr />
 
@@ -74,7 +73,6 @@ const Layout = ({ children }) => {
                         <i>{menu.icon}</i>
                       </Tooltip>
                     </Link>
-                    {/*<Link to={menu.path}>{menu.name}</Link>*/}
                   </div>
                 </div>
               );
@@ -85,7 +83,6 @@ const Layout = ({ children }) => {
                     <i><RiLogoutCircleFill/></i>
                   </Tooltip>
                 </Link>
-                {/*<Link to="/">Logout</Link>*/}
               </div>
           </div>
         </div>

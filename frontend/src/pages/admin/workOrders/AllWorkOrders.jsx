@@ -1,43 +1,42 @@
 import { Button, message } from "antd"
 import Layout from "../../../components/Layout"
-import { getAllWorkOrders } from "../../../services/workApi";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
 import Work from "../../../components/Work";
+import { getAllWorkOrders } from "../../../services/workApi";
 
 
 const AllWorkOrders = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [allWork, setAllWork] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-
-  // Function to get all work orders from Api
+  // Function to get all work orders from API
   const getAllWork = async () => {
-      try {
-        setLoading(true);
-        const { data, pages } = await getAllWorkOrders(page, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setAllWork(data);
-        setPages(pages);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        message.error("Failed to fetch work orders", error.message);
-      }
+    try {
+      setLoading(true);
+      const { data, pages } = await getAllWorkOrders(page, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAllWork(data);
+      setPages(pages);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      message.error("Failed to fetch work orders", error.message);
+    }
   };
 
-
+  // UseEffect hook
   useEffect(() => {
     getAllWork();
   }, [page]);
@@ -47,13 +46,12 @@ const AllWorkOrders = () => {
     setPage(newPage);
   }
 
-
   return (
     <Layout>
       <Work 
         allWork={allWork} 
         user={user} 
-        loading={loading} 
+        loading={loading}
         getAllWork={getAllWork} 
       />
       

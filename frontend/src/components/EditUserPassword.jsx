@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
+import { useNavigate } from "react-router-dom";
 
 const EditUserPassword = ({ onFinishHandler, password, setPassword }) => {
+  const navigate = useNavigate();
 
   const passwordRules = [
     { required: true, message: "Enter your new password" },
@@ -43,6 +45,14 @@ const EditUserPassword = ({ onFinishHandler, password, setPassword }) => {
               </Form.Item>
             </Col>
           </Row>
+          <div className="add-btn">
+            <Button
+              onClick={() => navigate(-1)}
+              style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} 
+            >
+              Back
+            </Button>
+          </div>
           <div {...submitStyle}>
             <Button
               style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
