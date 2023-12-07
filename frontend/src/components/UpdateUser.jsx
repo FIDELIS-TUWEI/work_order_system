@@ -148,6 +148,6 @@ UpdateUser.propTypes = {
   allDesignations: PropTypes.array,
   selectedDesignation: PropTypes.string,
   handleDesignationChange: PropTypes.func
-}
+};
 
 export default UpdateUser;
