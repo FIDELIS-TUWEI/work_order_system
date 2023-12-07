@@ -9,8 +9,6 @@ import { Button, Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
-
-
 const WORK_URL = "/hin";
 
 const Reports = () => {
