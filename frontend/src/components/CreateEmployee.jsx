@@ -74,6 +74,6 @@ CreateEmployee.propTypes = {
   loading: PropTypes.bool,
   onFinishHandler: PropTypes.func,
   navigate: PropTypes.func,
-}
+};
 
 export default CreateEmployee;
