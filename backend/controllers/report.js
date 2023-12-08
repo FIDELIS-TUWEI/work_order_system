@@ -101,7 +101,7 @@ const countAllWorkOrders = asyncHandler (async (req, res, next) => {
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
-})
+});
 
 
 module.exports = {
