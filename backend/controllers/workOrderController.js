@@ -132,7 +132,7 @@ async function updateWorkOrderDetails (id, updatedFields) {
     };
 
     return await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
-}
+};
 
 // Handle In Complete Work Order tracker
 async function handleInCompleteWorkOrder (updatedWorkOrder) {
