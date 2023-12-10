@@ -48,7 +48,7 @@ const AllWorkOrders = () => {
 
   return (
     <Layout>
-      <Typography.Text style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Work Orders</Typography.Text>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Work Orders</Typography>
       <Work 
         allWork={allWork} 
         user={user} 
