@@ -212,7 +212,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
                 allowClear
                 style={{ width: '100%' }}
                 options={[
-                  { value: true, label: 'Reviewed' }, { value: false, label: 'Not Reviewed' }
+                  { value: true, label: 'Reviewed' }
                 ]}
               />
             </Form.Item>
@@ -252,23 +252,17 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 
     switch (true) {
       case isNotAttended && isWorkPending:
-        console.log("Rendering Assign Fields");
         return renderAssignFields();
       case isInAttendance && isWorkInProgress:
-        console.log("Rendering Tracking Fields");
         return renderTrackerFields();
       case isAttended && isWorkInProgress:
-        console.log("Rendering Complete Form Fields");
         return renderCompleteFormFields();
       case isInComplete && isWorkInProgress:
-        console.log("Redirecting to Work List");
         redirectToWorkList();
         break;
       case isWorkCompleted && isRoleAuthorized: 
-      console.log("Rendering Review Fields");
         return renderReviewFormFields();
       default:
-        console.log("Rendering Loader");
         return renderLoader();
     }
   }
