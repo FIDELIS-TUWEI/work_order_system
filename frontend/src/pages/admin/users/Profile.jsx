@@ -1,4 +1,4 @@
-import { Button, Typography, message } from 'antd'
+import { Button, Tooltip, Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
@@ -92,15 +92,25 @@ const Profile = () => {
           ) : null
         }
       </div>
-      <div className="add-btn">
-        <Button 
-          style={{ 
-            color: 'white', backgroundColor: 'darkgreen', border: 'none'
-            }} 
-            onClick={() => navigate(-1)}
+      <div style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '1rem' }}>
+        <Tooltip title="Back">
+          <Button 
+            style={{ 
+              color: 'white', backgroundColor: 'darkgreen', border: 'none'
+              }} 
+              onClick={() => navigate(-1)}
+            >
+              Back
+          </Button>
+        </Tooltip>
+        <Tooltip title="View Work History">
+          <Button 
+            onClick={() => {navigate(`/workHistory/${userDetails?._id}`)}} 
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
           >
-            Back
-        </Button>
+            Work History
+          </Button>
+        </Tooltip>
       </div>
     </Layout>
   )
