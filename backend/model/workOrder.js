@@ -99,11 +99,6 @@ const workOrderSchema = new mongoose.Schema({
         type: Date,
         index: true
     },
-    dateAdded: {
-        type: Date,
-        default: Date.now(),
-        index: true
-    }
 },
 
 { 
