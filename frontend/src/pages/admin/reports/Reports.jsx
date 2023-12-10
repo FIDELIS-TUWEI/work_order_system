@@ -94,7 +94,7 @@ const getWorkOrders = useCallback (async () => {
       },
       {
         header: "Date Requested",
-        dataKey: "dateAdded",
+        dataKey: "Date_Created",
       },
       {
         header: "Assigned To",
@@ -126,7 +126,7 @@ const getWorkOrders = useCallback (async () => {
       `${workOrder.category.categoryTitle}`,
       `${workOrder.requestedBy.username}`,
       workOrder.tracker,
-      formatDate(workOrder.dateAdded),
+      formatDate(workOrder.Date_Created),
       showEmployeeName(workOrder.assignedTo),
       workOrder.supervisedBy,
       formatDateCompleted(workOrder.dateCompleted),
