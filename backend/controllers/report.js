@@ -23,6 +23,7 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
             .populate("location", "locationTitle")
             .populate("category", "categoryTitle")
             .populate("reviewedBy", "firstName lastName")
+            .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
             .limit(pageSize)
             .exec();
