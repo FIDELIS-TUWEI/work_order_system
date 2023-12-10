@@ -175,13 +175,22 @@ async function handleInCompleteWorkOrder (updatedWorkOrder) {
 
 // Handle Reviewed Work Order
 async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
+    // Check if the work order has already been reviewed
+    if (updatedWorkOrder.reviewed) {
+        // If the work order has already been reviewed, do nothing and return
+        return;
+    }
+
+    // Update the work order only if it hasn't been reviewed
     updatedWorkOrder.reviewed = true;
     updatedWorkOrder.reviewedBy = req.body.reviewedBy;
     updatedWorkOrder.dateReviewed = req.body.dateReviewed;
     updatedWorkOrder.reviewComments = req.body.reviewComments;
+
+    // Save the updated work order
     await updatedWorkOrder.save();
 
-    // clear the user's array of work orders when the work is reviewed
+    // clear the user who requested the work order from the array of work orders when the work is reviewed
     await User.findByIdAndUpdate(userId, { $pull: { workOrders: updatedWorkOrder._id } });
 
 };
