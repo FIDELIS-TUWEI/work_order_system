@@ -1,4 +1,4 @@
-import { Button, message } from "antd"
+import { Button, Typography, message } from "antd"
 import Layout from "../../../components/Layout"
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -48,6 +48,7 @@ const AllWorkOrders = () => {
 
   return (
     <Layout>
+      <Typography.Text style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Work Orders</Typography.Text>
       <Work 
         allWork={allWork} 
         user={user} 
