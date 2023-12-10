@@ -114,6 +114,6 @@ const Profile = () => {
       </div>
     </Layout>
   )
-}
+};
 
 export default Profile;
