@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, message, Tooltip } from "antd"
+import { Button, Modal, message, Tooltip, Badge, Typography, Table } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
@@ -50,6 +50,117 @@ const Work = ({allWork, user, loading, getAllWork }) => {
     "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
   ].includes(user?.role); 
 
+  // AntD Table Columns
+  const columns = [
+    {
+      title: "Title",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "title",
+      key: "title",
+    },
+    {
+      title: "Location",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "location",
+      key: "location",
+      render: (locations) => (
+          <>
+              {Array.isArray(locations) && locations.map((location, index) =>
+                  <span key={location._id}>
+                      {location.locationTitle}
+                      {index < locations.length - 1 ? ", " : ""}
+                  </span> 
+              )}
+          </>
+      ),
+    },
+    {
+      title: "Service Type",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "serviceType",
+      key: "serviceType",
+    },
+    {
+      title: "Status",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "status",
+      key: "status",
+      render: (status) => (
+          <Badge
+            color={
+              status === "Pending"
+                ? "grey"
+                : status === "In_Progress"
+                ? "yellow"
+                : status === "Complete"
+                ? "green"
+                : "default"
+            }
+            text={status}
+          />
+      ),
+    },
+    {
+      title: "Assigned To",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "assignedTo",
+      key: "assignedTo",
+      render: (assignedTo) => (
+          assignedTo ? `${assignedTo.firstName} ${assignedTo.lastName}` : "Unassigned"
+      ),
+    },
+    {
+      title: "Actions",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "actions",
+      key: "actions",
+      render: (_, work) => (
+        <>
+              <Tooltip title="View Work">
+                <Button
+                    style={{ color: 'grey', border: 'none', margin: '0 5px' }}
+                    onClick={() => navigate(`/work/details/${work._id}`)}
+                >
+                  <AiFillEye />
+                </Button>
+              </Tooltip>
+              {work.status === "Reviewed" ? (
+                <Typography.Text style={{ fontSize: "1.5rem", fontWeight: "500", marginBottom: "1rem" }}>
+                    This work has already been reviewed, you cannot edit it
+                </Typography.Text>
+              ) : (
+                <Tooltip title="Edit Work">
+                    <Button
+                        style={{ color: 'green', border: 'none', margin: '0 5px' }}
+                        onClick={() => navigate(`/edit/work/${work._id}`)}
+                    >
+                        <BiSolidEditAlt />
+                    </Button>
+                </Tooltip>
+              )}
+
+              {isAuthorised && (
+                <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work"}>
+                    <Button
+                        style={{ color: 'red', border: 'none', margin: '0 5px' }}
+                        onClick={() => showModal(work)}
+                        disabled={!["admin", "superadmin"].includes(user?.role)}
+                    >
+                        <MdDelete />
+                    </Button>
+                </Tooltip>
+              )}
+        </>
+      ),      
+    },
+  ]
+
   return (
     <>
         <div className="add-btn">
@@ -61,81 +172,26 @@ const Work = ({allWork, user, loading, getAllWork }) => {
             </Button>
         </div>
 
-        <Card 
-            loading={loading} 
-            title="All Work Orders"
+        <Table
+            loading={loading}
+            columns={columns}
+            dataSource={allWork}
+            pagination={false}
+            rowKey="_id"
+        />
+
+        <Modal
+            title="Delete Work"
+            open={isModalVisible}
+            onOk={handleDelete} 
+            onCancel={handleCancel}
+            okText="Delete"
+            okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+            cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
         >
+            <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.title}?</p>
+        </Modal>
             
-        <table>
-            <thead>
-                <tr>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Service Type</th>
-                <th>Status</th>
-                <th>Assigned To</th>
-                <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {allWork?.map((work) => (
-                <tr key={work._id}>
-                    <td>{work.title}</td>
-                    <td>{Array.isArray(work.location) && work.location.map((location, index) =>
-                        <span key={location._id}>
-                            {location.locationTitle}
-                            {index < work.location.length - 1 ? ", " : ""}
-                        </span> 
-                        )}
-                    </td>
-                    <td>{work.serviceType}</td>
-                    <td>{work.status}</td>
-                    <td>{work.assignedTo?.firstName} {work.assignedTo?.lastName}</td>
-                    <td className="actions__btn">
-                    <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => navigate(`/work/details/${work._id}`)}><AiFillEye/></Button>
-                    
-                    {work?.status === "Reviewed" ? (
-                        <Typography.Text style={{ fontSize: '1.5rem', fontWeight: '500', marginBottom: '1rem' }}>
-                            This work is already reviewed, no need to review again.
-                        </Typography.Text>
-                    ) : (
-                            <Tooltip title="Edit Work">
-                                <Button danger style={{ border: 'none', marginRight: "5px"}} 
-                                    onClick={() => navigate(`/edit/work/${work._id}`)}
-                                    disabled={!isAuthorised}
-                                >
-                                    <BiSolidEditAlt/>
-                                </Button> 
-                            </Tooltip>
-                    )}
-                        { isAuthorised && (
-                            <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work order"}>
-                                <Button danger style={{ border: 'none'}} onClick={() => showModal(work)} disabled={!["admin", "superadmin"].includes(user?.role)}>
-                                    <MdDelete/>
-                                </Button>
-                            </Tooltip>
-                        )}
-                    </td>
-                </tr>
-                ))}
-            </tbody>
-            </table>
-
-            <Modal
-                title="Delete Work"
-                open={isModalVisible}
-                onOk={handleDelete} 
-                onCancel={handleCancel}
-                okText="Delete"
-                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
-            >
-                <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.title}?</p>
-            </Modal>
-            
-        </Card>
-        
-
         <div className="add-btn">
             <Button 
                 onClick={() => navigate(-1)} 
