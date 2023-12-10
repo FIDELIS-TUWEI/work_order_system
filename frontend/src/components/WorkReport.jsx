@@ -151,8 +151,8 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
       sorter: true,
       align: "center",
       responsive: ["md", "lg"],
-      dataIndex: "dateAdded",
-      key: "dateAdded",
+      dataIndex: "Date_Created",
+      key: "Date_Created",
       render : (text) => formatDate(text),
     },
     {
