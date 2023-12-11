@@ -2,7 +2,7 @@ import {useState, useEffect, useCallback} from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { getAllWorkQuery } from "../../../services/workApi";
-import { Card, message } from "antd";
+import { Card, Col, Row, message } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 const BarGraph = () => {
@@ -75,8 +75,10 @@ const BarGraph = () => {
     // Rest of the code...
 
   return (
-    <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap", margin: "15px 2px" }}>
-        <Card title="Work Orders Assigned To Employees" style={{ flex: 1, margin: "6px" }} loading={loading}>
+    <div style={{ margin: "15px 2px" }}>
+        <Row gutter={16}>
+        <Col xs={24} md={12} lg={8}>
+        <Card title="Work Orders Assigned To Employees" style={{ margin: "6px" }} loading={loading}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie data={workCountsArray} dataKey="count" nameKey="employee" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
@@ -85,8 +87,10 @@ const BarGraph = () => {
                 </PieChart>
             </ResponsiveContainer>
         </Card>
+        </Col>
 
-        <Card title="Work Orders By Status" style={{ flex: 1, margin: "6px" }} loading={loading}>
+        <Col xs={24} md={12} lg={8}>
+        <Card title="Work Orders By Status" style={{ margin: "6px" }} loading={loading}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie data={workStatusCountsArray} dataKey="count" nameKey="status" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
@@ -95,8 +99,10 @@ const BarGraph = () => {
                 </PieChart>
             </ResponsiveContainer>
         </Card>
+        </Col>
 
-        <Card title="WorkOrders Requested By Users" style={{ flex: 1, margin: "6px" }} loading={loading}>
+        <Col xs={24} md={12} lg={8}>
+        <Card title="WorkOrders Requested By Users" style={{ margin: "6px" }} loading={loading}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <LineChart>
                     <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
@@ -108,6 +114,8 @@ const BarGraph = () => {
                 </LineChart>
             </ResponsiveContainer>
         </Card>
+        </Col>
+        </Row>
     </div>
   )
 };
