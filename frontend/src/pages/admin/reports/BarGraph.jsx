@@ -103,7 +103,7 @@ const BarGraph = () => {
                     <XAxis dataKey="user" />
                     <YAxis />
                     <Tooltip />
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <CartesianGrid stroke="#ccc" />
                     <Legend />
                 </LineChart>
             </ResponsiveContainer>
