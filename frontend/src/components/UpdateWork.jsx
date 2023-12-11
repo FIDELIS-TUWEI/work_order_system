@@ -247,9 +247,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 
   // Rendering form fields using switch case condition to check work status and work tracker
   const renderFormFields = () => {
-    console.log("Tracker:", workDetails?.tracker);
-    console.log("Status:", workDetails?.status);
-
     switch (true) {
       case isNotAttended && isWorkPending:
         return renderAssignFields();
