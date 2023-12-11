@@ -77,7 +77,7 @@ const BarGraph = () => {
   return (
     <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap", margin: "15px 2px" }}>
         <Card title="Work Orders Assigned To Employees" style={{ flex: 1, margin: "6px" }} loading={loading}>
-            <ResponsiveContainer width="100%" aspect={2}>
+            <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie data={workCountsArray} dataKey="count" nameKey="employee" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
                     <Tooltip />
@@ -87,7 +87,7 @@ const BarGraph = () => {
         </Card>
 
         <Card title="Work Orders By Status" style={{ flex: 1, margin: "6px" }} loading={loading}>
-            <ResponsiveContainer width="100%" aspect={2}>
+            <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie data={workStatusCountsArray} dataKey="count" nameKey="status" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
                     <Tooltip />
@@ -97,7 +97,7 @@ const BarGraph = () => {
         </Card>
 
         <Card title="WorkOrders Requested By Users" style={{ flex: 1, margin: "6px" }} loading={loading}>
-            <ResponsiveContainer width="100%" aspect={3}>
+            <ResponsiveContainer width="100%" aspect={1}>
                 <LineChart>
                     <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
                     <XAxis dataKey="user" />
