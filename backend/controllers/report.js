@@ -5,7 +5,7 @@ const ErrorResponse = require("../utils/errorResponse");
 // Filter Work Orders
 const filterWorkStatus = asyncHandler (async (req, res, next) => {
     // Enable Pagination
-    const pageSize = 8;
+    const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({}).estimatedDocumentCount();
 
