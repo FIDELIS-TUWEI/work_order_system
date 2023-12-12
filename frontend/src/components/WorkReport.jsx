@@ -205,7 +205,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
           loading={loading}
           columns={columns}
           pagination={false}
-          scroll={{ x: 1500 }}
+          scroll={{ x: 1500, y: 240 }}
           rowKey={(record) => record._id}
         />
         <p style={{ marginTop: "20px" }}>Total Work Orders: {workOrders.length}</p>
