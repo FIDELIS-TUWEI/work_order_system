@@ -90,6 +90,10 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         // Update the work order and populate the assignedTo field
         const updatedWorkOrder = await updateWorkOrderDetails(id, updatedFields);
 
+
+        // check if any relevant fields were actually updated
+        const isUpdated = Object.keys(updatedFields).some(key => updatedFields[key] !== updatedWorkOrder[key]);
+
         // check if work order exists
         if (!updatedWorkOrder) {
             return next(new ErrorResponse("Work Order not found", 404));
@@ -101,7 +105,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         }
 
         // check if work order is reviewed
-        if (reviewed) {
+        if (!reviewed && isUpdated) {
             await handleReviewedWorkOrder(updatedWorkOrder, userId, req);
         };
 
