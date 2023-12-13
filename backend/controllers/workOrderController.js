@@ -233,7 +233,7 @@ async function sendUpdateEmailNotification (updatedWorkOrder, user) {
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     // Enable Pagination
-    const pageSize = 5;
+    const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({}).estimatedDocumentCount();
     try {
