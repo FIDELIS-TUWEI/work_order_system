@@ -48,7 +48,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
   // Function to check if user is authorised to view, edit or delete work
   const isAuthorised = [
     "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
-  ].includes(user?.role); 
+  ].includes(user?.role);
 
   // AntD Table Columns
   const columns = [
