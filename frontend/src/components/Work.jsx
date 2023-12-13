@@ -54,30 +54,17 @@ const Work = ({allWork, user, loading, getAllWork }) => {
   const columns = [
     {
       title: "Title",
+      width: 100,
+      fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "title",
       key: "title",
     },
     {
-      title: "Location",
-      align: "center",
-      responsive: ["md", "lg"],
-      dataIndex: "location",
-      key: "location",
-      render: (locations) => (
-          <>
-              {Array.isArray(locations) && locations.map((location, index) =>
-                  <span key={location._id}>
-                      {location.locationTitle}
-                      {index < locations.length - 1 ? ", " : ""}
-                  </span> 
-              )}
-          </>
-      ),
-    },
-    {
       title: "Service Type",
+      width: 100,
+      fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "serviceType",
@@ -85,6 +72,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
     },
     {
       title: "Status",
+      width: 100,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "status",
@@ -105,7 +93,26 @@ const Work = ({allWork, user, loading, getAllWork }) => {
       ),
     },
     {
+      title: "Location",
+      width: 100,
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "location",
+      key: "location",
+      render: (locations) => (
+          <>
+              {Array.isArray(locations) && locations.map((location, index) =>
+                  <span key={location._id}>
+                      {location.locationTitle}
+                      {index < locations.length - 1 ? ", " : ""}
+                  </span> 
+              )}
+          </>
+      ),
+    },
+    {
       title: "Assigned To",
+      width: 100,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "assignedTo",
@@ -116,6 +123,8 @@ const Work = ({allWork, user, loading, getAllWork }) => {
     },
     {
       title: "Actions",
+      width: 100,
+      fixed: "right",
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "actions",
@@ -177,6 +186,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
             columns={columns}
             dataSource={allWork}
             pagination={false}
+            scroll={{ x: 1500, y: 300 }}
             rowKey="_id"
         />
 
