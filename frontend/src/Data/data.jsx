@@ -78,7 +78,7 @@ export const UserMenu = [
         icon: <MdOutlineWork/>
     },
 
-]
+];
 
 export const HodMenu = [
     
