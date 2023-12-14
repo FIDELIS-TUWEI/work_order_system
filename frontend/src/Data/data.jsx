@@ -63,7 +63,7 @@ export const EngineerMenu = [
         path: "/work/reports",
         icon: <TbReport />
     }
-]
+];
 
 export const UserMenu = [
     
