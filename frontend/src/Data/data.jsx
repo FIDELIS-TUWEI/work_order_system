@@ -102,4 +102,4 @@ export const HodMenu = [
         path: "/work/reports",
         icon: <TbReport />
     }
-]
+];
