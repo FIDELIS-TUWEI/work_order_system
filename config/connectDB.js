@@ -5,7 +5,7 @@ const mongoURI = process.env.MONGO_URI;
 const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}
+};
 
 mongoose
     .connect(mongoURI, options)
