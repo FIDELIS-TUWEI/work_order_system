@@ -35,7 +35,7 @@ export const AdminMenu = [
         path: "/work/reports",
         icon: <TbReport />
     }
-]
+];
 
 export const EngineerMenu = [
     {
