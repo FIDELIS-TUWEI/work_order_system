@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -44,7 +44,78 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
   // Function to handle modal cancel
   const handleCancel = () => {
     setIsModalVisible(false);
-  }
+  };
+
+  // antD columns
+  const columns = [
+    {
+      title: "First Name",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "firstName",
+      key: "firstName",
+    },
+    {
+      title: "Last Name",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "lastName",
+      key: "lastName",
+    },
+    {
+      title: "Username",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "username",
+      key: "username",
+    },
+    {
+      title: "Role",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "role",
+      key: "role",
+    },
+    {
+      title: "Actions",
+      align: "center",
+      responsive: ["md", "lg"],
+      render: (_, user) => (
+        <>
+          <Tooltip title="View User Details">
+            <Button
+              style={{ color: "grey", border: "none", margin: "0 5px" }}
+              onClick={() => navigate(`/user/details/${user._id}`)}
+            >
+              <AiFillEye />
+            </Button>
+          </Tooltip>
+          {(currentUserRole !== "superadmin" || currentUserRole !== "admin") && (
+            <>
+              <Tooltip title="Edit User">
+                <Button
+                  style={{ color: "green", border: "none", margin: "0 5px" }}
+                  onClick={() => navigate(`/edit/user/${user._id}`)}
+                >
+                  <BiSolidEditAlt />
+                </Button>
+              </Tooltip>
+        
+              <Tooltip title="Delete User">
+                <Button
+                  style={{ color: "red", border: "none", margin: "0 5px" }}
+                  onClick={() => showModal(user)}
+                  disabled={currentUserRole !== "superadmin"}
+                >
+                  <MdDelete />
+                </Button>
+              </Tooltip>
+            </>
+          )}
+        </>
+      )
+    }
+  ]
 
   
 
@@ -64,76 +135,13 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
         title="All Users"
         style={{ margin: "15px" }}
       >
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allUsers.map((user) => (
-            <tr key={user._id}>
-              <td>{user.firstName}</td>
-              <td>{user.lastName}</td>
-              <td>{user.username}</td>
-              <td>{user.role}</td>
-              <td className="actions__btn">
-                <Button style={{ color: 'green', border: 'none', margin: '0 5px'}} onClick={() => {navigate(`/user/details/${user._id}`)}}>
-                  <AiFillEye/>
-                </Button>
-                {( currentUserRole === "admin" || user.role !== "superadmin") ? (
-                  <>
-                    <Button 
-                      danger 
-                      style={{
-                        border: 'none', marginRight: "5px"
-                        }} 
-                      onClick={() => {navigate(`/edit/user/${user._id}`)}}
-                    >
-                      <BiSolidEditAlt/>
-                    </Button>
-
-                    <Button 
-                      danger 
-                      style={{ border: 'none'}} 
-                      onClick={() => showModal(user)}
-                    >
-                      <MdDelete/>
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                  <Button 
-                    danger 
-                    style={{
-                      border: 'none', marginRight: "5px"
-                      }} 
-                    onClick={() => {navigate(`/edit/user/${user._id}`)}}
-                    disabled={currentUserRole !== "superadmin"}
-                  >
-                    <BiSolidEditAlt/>
-                  </Button>
-
-                  <Button 
-                    danger 
-                    style={{ border: 'none'}} 
-                    onClick={() => showModal(user)}
-                    disabled={currentUserRole !== "superadmin"}
-                  >
-                    <MdDelete/>
-                  </Button>
-                  </>
-                )}
-                
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table 
+        loading={loading}
+        dataSource={allUsers}
+        columns={columns}
+        pagination={false}
+        rowKey="_id"
+      />
 
       <Modal
         title="Delete User"
