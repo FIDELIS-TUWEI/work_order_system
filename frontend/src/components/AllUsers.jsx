@@ -105,7 +105,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
                 <Button
                   style={{ color: "red", border: "none", margin: "0 5px" }}
                   onClick={() => showModal(user)}
-                  disabled={currentUserRole !== "superadmin"}
+                  disabled={currentUserRole !== "superadmin" || currentUserRole !== "admin"}
                 >
                   <MdDelete />
                 </Button>
