@@ -96,6 +96,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
                 <Button
                   style={{ color: "green", border: "none", margin: "0 5px" }}
                   onClick={() => navigate(`/edit/user/${user._id}`)}
+                  disabled={currentUserRole !== "superadmin" || currentUserRole !== "admin"}
                 >
                   <BiSolidEditAlt />
                 </Button>
