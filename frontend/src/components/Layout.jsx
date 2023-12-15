@@ -44,9 +44,9 @@ const Layout = ({ children }) => {
   const renderMenu = () => {
     if (userInfo?.role === "admin" || userInfo?.role === "superadmin") {
       return AdminMenu;
-    } else if (userInfo?.role === "hod" || userInfo?.role === "supervisor" || userInfo?.role === "reviewer") {
+    } else if (userInfo?.role === "hod" || userInfo?.role === "reviewer") {
       return HodMenu;
-    } else if (userInfo?.role === "engineer") {
+    } else if (userInfo?.role === "engineer" || userInfo?.role === "supervisor") {
       return EngineerMenu;
     } else {
       return UserMenu;
