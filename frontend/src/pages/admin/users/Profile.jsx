@@ -105,7 +105,7 @@ const Profile = () => {
         </Tooltip>
         <Tooltip title="View Work History">
           <Button 
-            onClick={() => {navigate(`/workHistory/${userDetails?._id}`)}} 
+            onClick={() => {navigate(`/user/workHistory`)}} 
             style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
           >
             Work History
