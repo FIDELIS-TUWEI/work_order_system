@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Modal, message, Tooltip, Badge, Typography, Table } from "antd"
+import { Button, Modal, message, Tooltip, Badge, Table } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
@@ -139,10 +139,16 @@ const Work = ({allWork, user, loading, getAllWork }) => {
                   <AiFillEye />
                 </Button>
               </Tooltip>
-              {work.status === "Reviewed" ? (
-                <Typography.Text style={{ fontSize: "1.5rem", fontWeight: "500", marginBottom: "1rem" }}>
-                    This work has already been reviewed, you cannot edit it
-                </Typography.Text>
+              {work.reviewed === true ? (
+                <Tooltip title="This work has been reviewed, you cannot edit it!">
+                  <Button
+                      style={{ color: 'grey', border: 'none', margin: '0 5px' }}
+                      onClick={() => navigate(`/edit/work/${work._id}`)}
+                      disabled={work.reviewed === true}
+                  >
+                      <BiSolidEditAlt />
+                  </Button>
+                </Tooltip>
               ) : (
                 <Tooltip title="Edit Work">
                     <Button
