@@ -52,19 +52,10 @@ const userSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "Designation"
     },
-    notification: {
-        type: Array,
-        default: []
-    },
-    seenNotification: {
-        type: Array,
-        default: []
-    },
     workOrders: [
         {
             type: ObjectId,
-            ref: "Workorder",
-            required: true
+            ref: "Workorder"
         }
     ],
 }, 
