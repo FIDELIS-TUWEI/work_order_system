@@ -54,6 +54,16 @@ const UserWorkHistory = () => {
         },
     ]
 
+    const workOrderData = userData?.workOrders || [];
+
+    const tableData = workOrderData.map((workOrder) => {
+        return {
+            key: workOrder._id,
+            title: workOrder.title,
+            description: workOrder.description
+        }
+    })
+
   return (
     <Layout>
         <Typography 
@@ -64,7 +74,7 @@ const UserWorkHistory = () => {
 
         <Table 
             columns={columns}
-            dataSource={userData?.workOrders}
+            dataSource={tableData}
             rowKey="_id"
             pagination={false}
         />
