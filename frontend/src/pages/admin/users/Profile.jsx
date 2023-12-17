@@ -1,4 +1,4 @@
-import { Button, Tooltip, Typography, message } from 'antd'
+import { Button, Table, Tooltip, Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
@@ -37,6 +37,25 @@ const Profile = () => {
       getUserData(id);
     }
   }, [id, getUserData]);
+
+   // antd Columns
+   const columns = [
+    {
+        title: "Title",
+        fixed: "left",
+        align: "center",
+        responsive: ["md", "lg"],
+        dataIndex: "title",
+        key: "title",
+    },
+    {
+        title: "Description",
+        dataIndex: "description",
+        key: "description",
+        responsive: ["md", "lg"],
+        align: "center",
+    },
+]
 
 
   return (
@@ -103,15 +122,12 @@ const Profile = () => {
               Back
           </Button>
         </Tooltip>
-        <Tooltip title="View Work History">
-          <Button 
-            onClick={() => {navigate(`/user/workHistory`)}} 
-            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-          >
-            Work History
-          </Button>
-        </Tooltip>
       </div>
+      <Table
+        columns={columns}
+        dataSource={userData?.workOrders || []}
+        pagination={false}
+      />
     </Layout>
   )
 };
