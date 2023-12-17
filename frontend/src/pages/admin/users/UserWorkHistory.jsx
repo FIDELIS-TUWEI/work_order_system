@@ -51,7 +51,6 @@ const UserWorkHistory = () => {
             key: "description",
             responsive: ["md", "lg"],
             align: "center",
-            key: "description",
         },
     ]
 
