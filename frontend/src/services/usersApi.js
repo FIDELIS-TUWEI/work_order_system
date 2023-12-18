@@ -38,7 +38,7 @@ export const editUser = async (id, values) => {
 // API Service to delete user by id
 export const deleteUser = async (id) => {
     try {
-        return axios.delete(`${USERS_URL}/admin/user/delete/${id}`);
+        return await axios.delete(`${USERS_URL}/admin/user/delete/${id}`);
     } catch (error) {
         console.error("Error while deleting user", error);
         throw new Error("Failed to delete user");
