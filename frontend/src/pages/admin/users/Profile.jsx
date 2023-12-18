@@ -128,7 +128,7 @@ const Profile = () => {
         dataSource={userData?.workOrders || []}
         pagination={false}
       />
-      <p>Total Work Orders: {userData?.workOrders?.length} </p>
+      <Typography.Text>Total Work Orders: {userData?.workOrders?.length} </Typography.Text>
     </Layout>
   )
 };
