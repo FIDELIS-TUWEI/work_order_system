@@ -122,6 +122,16 @@ const Profile = () => {
               Back
           </Button>
         </Tooltip>
+        <Tooltip title="Back">
+          <Button 
+            style={{ 
+              color: 'white', backgroundColor: 'darkgreen', border: 'none'
+              }} 
+              onClick={() => navigate(`/user/work/history/${id}`)}
+            >
+              Work History
+          </Button>
+        </Tooltip>
       </div>
       <Table
         columns={columns}
