@@ -38,7 +38,6 @@ const UserWorkHistory = () => {
     const columns = [
         {
             title: "Title",
-            width: 100,
             fixed: "left",
             align: "center",
             responsive: ["md", "lg"],
@@ -47,11 +46,26 @@ const UserWorkHistory = () => {
         },
         {
             title: "Description",
-            dataIndex: "description",
-            key: "description",
             responsive: ["md", "lg"],
             align: "center",
+            dataIndex: "description",
+            key: "description",
+            
         },
+        {
+            title: "Status",
+            responsive: ["md", "lg"],
+            align: "center",
+            dataIndex: "status",
+            key: "status",
+        },
+        {
+            title: "Tracker",
+            responsive: ["md", "lg"],
+            align: "center",
+            dataIndex: "tracker",
+            key: "tracker",
+        }
     ]
 
   return (
