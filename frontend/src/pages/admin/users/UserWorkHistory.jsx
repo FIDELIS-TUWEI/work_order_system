@@ -68,6 +68,7 @@ const UserWorkHistory = () => {
             rowKey="_id"
             pagination={false}
         />
+      <Typography.Text>Total Work Orders: {userData?.workOrders?.length} </Typography.Text>
     </Layout>
   )
 };
