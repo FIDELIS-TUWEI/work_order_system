@@ -64,7 +64,7 @@ export const router = createBrowserRouter(
         <Route path="/work/reports" element={ <PrivateRoute> <Reports /> </PrivateRoute> } />
         <Route path="/reports" element={ <PrivateRoute> <WorkReport /> </PrivateRoute> } />
         <Route path="/profile/:id" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
-        <Route path="/user/workHistory" element={ <PrivateRoute> <UserWorkHistory /> </PrivateRoute> } />
+        <Route path="/user/work/history/:id" element={ <PrivateRoute> <UserWorkHistory /> </PrivateRoute> } />
         <Route path="/updatePassword/:id" element={ <PrivateRoute> <ChangePassword /> </PrivateRoute> } />
         <Route path="/user/details/:id" element={ <PrivateRoute> <UserDetails /> </PrivateRoute> } />
         <Route path="/edit/user/:id" element={ <PrivateRoute> <EditUser /> </PrivateRoute> } />
