@@ -1,4 +1,4 @@
-import { Button, Table, Tooltip, Typography, message } from 'antd'
+import { Button, Tooltip, Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
@@ -37,25 +37,6 @@ const Profile = () => {
       getUserData(id);
     }
   }, [id, getUserData]);
-
-   // antd Columns
-   const columns = [
-    {
-        title: "Title",
-        fixed: "left",
-        align: "center",
-        responsive: ["md", "lg"],
-        dataIndex: "title",
-        key: "title",
-    },
-    {
-        title: "Description",
-        dataIndex: "description",
-        key: "description",
-        responsive: ["md", "lg"],
-        align: "center",
-    },
-]
 
 
   return (
@@ -133,12 +114,6 @@ const Profile = () => {
           </Button>
         </Tooltip>
       </div>
-      <Table
-        columns={columns}
-        dataSource={userData?.workOrders || []}
-        pagination={false}
-      />
-      <Typography.Text>Total Work Orders: {userData?.workOrders?.length} </Typography.Text>
     </Layout>
   )
 };
