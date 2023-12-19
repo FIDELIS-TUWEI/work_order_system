@@ -120,6 +120,6 @@ ViewAllDepartments.propTypes = {
   page: PropTypes.number,
   pages: PropTypes.number,
   getDepartments: PropTypes.func
-}
+};
 
 export default ViewAllDepartments;
