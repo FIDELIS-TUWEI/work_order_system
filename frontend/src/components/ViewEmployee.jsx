@@ -68,6 +68,6 @@ ViewEmployee.propTypes = {
   employeeDetails: PropTypes.object,
   loading: PropTypes.bool,
   navigate: PropTypes.func
-}
+};
 
 export default ViewEmployee;
