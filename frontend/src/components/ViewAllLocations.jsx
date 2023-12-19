@@ -137,6 +137,6 @@ ViewAllLocations.propTypes = {
     getLocations: PropTypes.func,
     jumpToLastPage: PropTypes.func,
     jumpToFirstPage: PropTypes.func
-}
+};
 
 export default ViewAllLocations;
