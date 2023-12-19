@@ -6,8 +6,6 @@ import {IoLocation} from "react-icons/io5";
 import {HiOfficeBuilding} from "react-icons/hi";
 import {MdManageAccounts, MdGroups} from "react-icons/md";
 
-
-
 const Panel = () => {
     const navigate = useNavigate();
   return (
@@ -59,6 +57,6 @@ const Panel = () => {
         
     </div>
   )
-}
+};
 
 export default Panel;
