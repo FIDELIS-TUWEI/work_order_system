@@ -122,6 +122,6 @@ ViewAllCategories.propTypes = {
     pages: PropTypes.number,
     handlePageChange: PropTypes.func,
     getCategories: PropTypes.func
-}
+};
 
 export default ViewAllCategories;
