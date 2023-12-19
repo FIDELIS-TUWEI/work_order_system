@@ -5,6 +5,6 @@ const LoadingBox = () => {
   return (
       <MoonLoader color="green" />
   )
-}
+};
 
 export default LoadingBox;
