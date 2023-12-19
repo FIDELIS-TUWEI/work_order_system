@@ -121,6 +121,6 @@ ViewAllDesignations.propTypes = {
   page: PropTypes.number,
   pages: PropTypes.number,
   getDesignations: PropTypes.func
-}
+};
 
 export default ViewAllDesignations;
