@@ -63,6 +63,6 @@ UpdateEmployee.propTypes = {
   navigate: PropTypes.func,
   employeeDetails: PropTypes.object,
   loading: PropTypes.bool
-}
+};
 
 export default UpdateEmployee;
