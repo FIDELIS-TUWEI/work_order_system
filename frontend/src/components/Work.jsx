@@ -174,7 +174,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
         </>
       ),      
     },
-  ]
+  ];
 
   return (
     <>
