@@ -158,6 +158,6 @@ ViewWorkDetails.propTypes = {
     handlePrint: PropTypes.func,
     componentPDF: PropTypes.object,
     navigate: PropTypes.func
-}
+};
 
 export default ViewWorkDetails;
