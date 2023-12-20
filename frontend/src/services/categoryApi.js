@@ -18,7 +18,6 @@ export const createNewCategory = async (values) => {
     try {
         return await axios.post(`${WORK_URL}/new/category`, values);
     } catch (error) {
-        console.log("Error while creating new category", error);
         throw new Error("Error while creating new category");
     }
 };
