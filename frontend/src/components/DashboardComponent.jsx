@@ -130,6 +130,6 @@ DashboardComponent.propTypes = {
     totalUsersCount: PropTypes.number,
     activeUsersCount: PropTypes.number,
     employees: PropTypes.number
-}
+};
 
 export default DashboardComponent;
