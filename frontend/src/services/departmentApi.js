@@ -4,9 +4,8 @@ const WORK_URL = "/hin";
 // Create Department
 export const createNewDepartment = async (values) => {
     try {
-        return axios.post(`${WORK_URL}/new/department`, values);
+        return await axios.post(`${WORK_URL}/new/department`, values);
     } catch (error) {
-        console.log("Error while creating new department", error);
         throw new Error("Error while creating new department");
     }
 };
