@@ -6,7 +6,6 @@ export const createNewDesignation = async (values) => {
     try {
         return axios.post(`${WORK_URL}/new/designation`, values);
     } catch (error) {
-        console.log("Error while creating new designation", error);
         throw new Error("Error while creating new designation");
     }
 };
