@@ -4,7 +4,7 @@ const WORK_URL = "/hin";
 // New Employee
 export const createNewEmployee = async (values) => {
     try {
-        return axios.post(`${WORK_URL}/new/employee`, values);
+        return await axios.post(`${WORK_URL}/new/employee`, values);
     } catch (error) {
         console.log("Error while creating new employee", error);
         throw new Error("Error while creating new employee");
