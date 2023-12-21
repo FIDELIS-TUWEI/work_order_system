@@ -28,7 +28,6 @@ export const queryAllDesignations = async () => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.log("Error while querying all designations", error);
     throw new Error("Error while querying all designations");
   }
 };
