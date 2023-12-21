@@ -17,7 +17,6 @@ export const allDesignations = async (page) => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error while fetching all designations", error);
         throw new Error("Error while fetching all designations");
     }
 };
