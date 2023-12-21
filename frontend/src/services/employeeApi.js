@@ -61,7 +61,6 @@ export const employeeTotalWorkCount = async (id) => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.error('Error counting work assigned:', error);
     throw new Error("Error while counting work assigned");
   }
 };
