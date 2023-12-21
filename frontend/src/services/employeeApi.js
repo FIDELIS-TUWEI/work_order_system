@@ -82,7 +82,6 @@ export const editEmployee = async (id, values) => {
     const res =  await axios.put(`${WORK_URL}/edit/employee/${id}`, values);
     return res.data;
   } catch (error) {
-    console.log("Error while editing employee", error);
     throw new Error("Error while editing employee");
   }
 }
