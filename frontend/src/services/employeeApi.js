@@ -6,7 +6,6 @@ export const createNewEmployee = async (values) => {
     try {
         return await axios.post(`${WORK_URL}/new/employee`, values);
     } catch (error) {
-        console.log("Error while creating new employee", error);
         throw new Error("Error while creating new employee");
     }
 }
