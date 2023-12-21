@@ -39,7 +39,6 @@ export const getEmployeeData = async (id) => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.error('Error getting employee data from API:', error);
     throw new Error("Error while fetching employee data");
   }
 };
