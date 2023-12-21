@@ -28,7 +28,6 @@ export const getSingleEmployee = async (id) => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.error('Error getting single employee from API:', error);
     throw new Error("Error while fetching single employee");
   }
 };
