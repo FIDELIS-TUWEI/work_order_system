@@ -91,7 +91,6 @@ export const deleteEmployee = async (id) => {
   try {
     return await axios.delete(`${WORK_URL}/delete/employee/${id}`);
   } catch (error) {
-    console.log("Error while deleting employee", error);
     throw new Error("Error while deleting employee");
   }
 }
