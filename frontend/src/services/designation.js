@@ -4,7 +4,7 @@ const WORK_URL = "/hin";
 // Create Designation
 export const createNewDesignation = async (values) => {
     try {
-        return axios.post(`${WORK_URL}/new/designation`, values);
+        return await axios.post(`${WORK_URL}/new/designation`, values);
     } catch (error) {
         throw new Error("Error while creating new designation");
     }
