@@ -38,7 +38,6 @@ export const deleteDesignation = async (id) => {
         const res = await axios.delete(`${WORK_URL}/delete/designation/${id}`);
         return res.data;
     } catch (error) {
-        console.log("Error while deleting designation", error);
         throw new Error("Error while deleting designation");
     }
 }
