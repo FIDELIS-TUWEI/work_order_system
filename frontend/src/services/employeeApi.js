@@ -72,7 +72,6 @@ export const countAllEmployees = async () => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.log("Error while counting all employees", error);
     throw new Error("Error while counting all employees");
   }
 };
