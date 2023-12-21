@@ -17,7 +17,6 @@ export const getAllEmployees = async (page) => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.error('Error getting all employees from API:', error);
     throw new Error("Error while fetching all employees");
   }
 };
