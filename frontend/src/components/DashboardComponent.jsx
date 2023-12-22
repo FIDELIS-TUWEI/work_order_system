@@ -107,14 +107,24 @@ const DashboardComponent = ({ user, pendingWorkCount,
         </div>  
     )
 
-    
+    // Conditionally render custom card using switch case and user roles
+    const renderCustomCard = () => {
+        switch (true) {
+            case isAdmin:
+                return renderAdminsCard();
+            case isManager:
+                return renderManagersCard();
+            default:
+                return renderUsersCard();
+        }
+    } 
   return (
     <>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
             System Analytics
         </Typography>
         <Row gutter={16}>
-            {isAdmin ? renderAdminsCard() : isManager ? renderManagersCard() : renderUsersCard()}
+            {renderCustomCard()}
         </Row>
     </>
   )
