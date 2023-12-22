@@ -105,7 +105,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         }
 
         // check if work order is reviewed
-        if (!reviewed && isUpdated) {
+        if (reviewed && isUpdated) {
             await handleReviewedWorkOrder(updatedWorkOrder, userId, req);
         };
 
