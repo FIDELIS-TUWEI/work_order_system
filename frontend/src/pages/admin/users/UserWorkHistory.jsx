@@ -9,11 +9,13 @@ import { useParams } from "react-router-dom";
 const UserWorkHistory = () => {
     const token = useSelector(selectToken);
     const [userData, setUserData] = useState([]);
+    const [loading, setLoading] = useState(false);
     const { id } = useParams();
 
     // Function to get user data
     const getUserData = useCallback (async () => {
         try {
+            setLoading(true);
             const res = await getUserInfo(id, {
                 withCredentials: true,
                 headers: {
@@ -21,7 +23,9 @@ const UserWorkHistory = () => {
                 },
             });
             setUserData(res.data);
+            setLoading(false);
         } catch (error) {
+            setLoading(false);
             message.error("Failed to fetch user details", error.message);
         }
     }, [token]);
@@ -80,6 +84,7 @@ const UserWorkHistory = () => {
             columns={columns}
             dataSource={userData?.workOrders || []}
             rowKey="_id"
+            loading={loading}
             pagination={false}
         />
       <Typography.Text>Total Work Orders: {userData?.workOrders?.length} </Typography.Text>
