@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, Table, Tooltip, message } from "antd";
+import { Button, Modal, Table, Tooltip, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -131,11 +131,6 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
           </Button>  
       </div>
 
-      <Card
-        loading={loading}
-        title="All Users"
-        style={{ margin: "15px" }}
-      >
       <Table 
         loading={loading}
         dataSource={allUsers}
@@ -155,7 +150,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
       >
         <p>Are you sure you want to delete {selectedUserToDelete?.username}?</p>
       </Modal>
-      </Card>
+
       <div className="pagination">
         <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
           <GrFormPrevious />
