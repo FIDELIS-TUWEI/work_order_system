@@ -52,7 +52,6 @@ export const countReviewedWork = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error While fetching all work orders by reviewed status", error);
         throw new Error("Failed to fetch all reviewed work count");
     }
 };
