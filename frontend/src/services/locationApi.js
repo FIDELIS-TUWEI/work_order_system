@@ -37,7 +37,6 @@ export const deleteLocation = async (id) => {
     try {
         return await axios.delete(`${WORK_URL}/delete/location/${id}`);
     } catch (error) {
-        console.log("Error while deleting location", error);
         throw new Error("Error while deleting location");
     }
 }
