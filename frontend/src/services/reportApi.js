@@ -41,7 +41,6 @@ export const countCompletedWork = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error While fetching all work orders by completed status", error);
         throw new Error("Failed to fetch all completed work count");
     }
 };
