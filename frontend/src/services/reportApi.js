@@ -19,7 +19,6 @@ export const countPendingWork = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error while fetching all work orders by pending status", error);
         throw new Error("Failed to fetch all pending work count");
     }
 };
