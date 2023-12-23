@@ -30,7 +30,6 @@ export const countInProgressWork = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error while fetching all work orders by in progress status", error);
         throw new Error("Failed to fetch all in progress work count");
     }
 };
