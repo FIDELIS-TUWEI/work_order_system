@@ -63,7 +63,6 @@ export const countTotalWork = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error While fetching total work count", error);
         throw new Error("Failed to fetch total work count");
     }
 };
