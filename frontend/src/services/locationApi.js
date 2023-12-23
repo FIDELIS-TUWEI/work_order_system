@@ -28,7 +28,6 @@ export const createNewLocation = async (values) => {
     try {
         return await axios.post(`${WORK_URL}/create/location`, values);
     } catch (error) {
-        console.log("Error while creating new location", error);
         throw new Error("Error while creating new location");
     }
 }
