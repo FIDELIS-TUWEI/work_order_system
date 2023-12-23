@@ -8,7 +8,6 @@ export const allLocations = async (page) => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error while fetching all locations", error);
         throw new Error("Error while fetching all locations");
     }
 };
