@@ -8,7 +8,6 @@ export const getAllUsers = async (page) => {
         const data = response.data;
         return data;
     } catch (error) {
-        console.error("Error while fetching users", error);
         throw new Error("Failed to fetch users");
     }
 };
