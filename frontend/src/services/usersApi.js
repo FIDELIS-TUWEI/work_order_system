@@ -18,7 +18,6 @@ export const getUserInfo = async (id) => {
         const res = await axios.get(`${USERS_URL}/single/user/${id}`);
         return res.data;
     } catch (error) {
-        console.error("Error while fetching single user:", error);
         throw new Error("Failed to fetch user details");
     }
 };
