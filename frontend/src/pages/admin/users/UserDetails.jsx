@@ -93,17 +93,7 @@ const UserDetails = () => {
             Change Password
           </Button>
         </Tooltip>
-        <Tooltip title="View Work History">
-          <Button 
-            onClick={() => {navigate(`/workHistory/${userDetails?._id}`)}} 
-            style={{ color: 'black', backgroundColor: 'white', border: '1px solid black', marginLeft: '10px' }}
-          >
-            Work History
-          </Button>
-        </Tooltip>
-        
         </div>
-        
         </div>
     </Layout>
   )
