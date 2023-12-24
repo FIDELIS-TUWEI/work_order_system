@@ -69,7 +69,6 @@ export const countActiveUsers = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error While fetching total number of active users", error);
         throw new Error("Failed to fetch total number of active users");
     }
 };
