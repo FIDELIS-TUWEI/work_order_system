@@ -37,7 +37,6 @@ export const deleteUser = async (id) => {
     try {
         return await axios.delete(`${USERS_URL}/admin/user/delete/${id}`);
     } catch (error) {
-        console.error("Error while deleting user", error);
         throw new Error("Failed to delete user");
     }
 }
