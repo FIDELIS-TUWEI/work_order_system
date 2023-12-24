@@ -58,7 +58,6 @@ export const countAllUsers = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error While fetching total number of users", error);
         throw new Error("Failed to fetch total number of users");
     }
 };
