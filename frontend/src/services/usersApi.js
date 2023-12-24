@@ -47,7 +47,6 @@ export const updateUserPassword = async (id, values) => {
         const res = await axios.put(`${USERS_URL}/update/password/${id}`, values);
         return res.data;
     } catch (error) {
-        console.error("Error while updating user password", error);
         throw new Error("Failed to update user password");
     }
 }
