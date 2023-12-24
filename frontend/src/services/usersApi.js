@@ -28,7 +28,6 @@ export const editUser = async (id, values) => {
         const res = await axios.put(`${USERS_URL}/edit/${id}`, values);
         return res.data;
     } catch (error) {
-        console.error("Error while Updating user:", error);
         throw new Error("Failed to update user");
     }
 };
