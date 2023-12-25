@@ -28,7 +28,6 @@ export const getAllWorkQuery = async () => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error while fetching all work query", error);
         throw new Error("Error while fetching all work query");
     }
 };
