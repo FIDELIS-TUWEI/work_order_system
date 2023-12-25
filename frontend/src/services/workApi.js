@@ -17,7 +17,6 @@ export const getAllWorkOrders = async (page) => {
         const data = res.data;
         return data;
     } catch (error) {
-        console.log("Error while fetching all work orders", error);
         throw new Error("Error while fetching all work orders");
     }
 };
