@@ -6,7 +6,6 @@ export const createWorkOrder = async (values) => {
     try {
         return await axios.post(`${WORK_URL}/create/work`, values);
     } catch (error) {
-        console.log("Error while creating work", error);
         throw new Error("Error while creating work");
     }
 }
