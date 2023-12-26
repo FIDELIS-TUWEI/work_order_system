@@ -14,4 +14,4 @@ module.exports = {
     "react/prop-types": "on"
   },
 
-}
+};
