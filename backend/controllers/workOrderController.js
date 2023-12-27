@@ -344,7 +344,8 @@ cron.schedule("0 0 0 * * *", async () => {
         const overDueWorkOrders = await WorkOrder.find({ 
             dueDate: { $lte: currentDate },
             status: { $in: ["Pending", "In_Progress"] },
-        }).populate("requestedBy");
+            tracker: { $in: ["Not_Attended", "In_Attendance"]},
+        }).populate("requestedBy", "username");
 
         if (overDueWorkOrders.length > 0) {
             // Loop through overdue work orders and send an email
