@@ -202,7 +202,7 @@ const countEmployees = asyncHandler (async (req, res) => {
         })
         
     }
-})
+});
 
 // Get employee info
 const getEmployeeInfo = asyncHandler(async (req, res) => {
