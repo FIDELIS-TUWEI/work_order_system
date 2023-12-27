@@ -119,4 +119,4 @@ module.exports = {
     getAllDesignations,
     queryAllDesignations,
     deleteDesignation
-}
+};
