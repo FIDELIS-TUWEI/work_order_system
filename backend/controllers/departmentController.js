@@ -119,4 +119,4 @@ module.exports = {
     getAllDepartments,
     queryAllDepartments,
     deleteDepartment
-}
+};
