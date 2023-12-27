@@ -190,4 +190,4 @@ module.exports = {
     logout,
     getUserInfo,
     changePassword
-}
+};
