@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 import LoadingBox from "./LoadingBox";
+import { useNavigate } from "react-router-dom";
 
-const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails, loading }) => {
+const UpdateEmployee = ({ onFinishHandler, employeeDetails, loading }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit Employee Details</Typography>
@@ -44,7 +46,7 @@ const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails, loading })
           </Row>
 
           <div>
-            <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+            <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => {navigate(-1)}}>Go Back</Button>
           </div>
           <div className="user_submit">
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
@@ -61,7 +63,6 @@ const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails, loading })
 
 UpdateEmployee.propTypes = {
   onFinishHandler: PropTypes.func,
-  navigate: PropTypes.func,
   employeeDetails: PropTypes.object,
   loading: PropTypes.bool
 };
