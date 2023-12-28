@@ -27,9 +27,12 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
         : 'Not Requested';
 
     // Display the reviewedBy field as username of the user who reviewed the work 
-    const reviewedByUsername = workDetails.reviewedBy
-        ? (workDetails.reviewed ? `${workDetails.reviewedBy.username}` : 'Not Reviewed')
-        : 'Not Reviewed';
+    let reviewedByUsername = "Not Reviewed"
+        if (workDetails.reviewedBy) {
+            reviewedByUsername = workDetails.reviewed
+                ? `${workDetails.reviewedBy.username}`
+                : 'Not Reviewed';
+        }
 
     // Displaay review commments
     const reviewComments = workDetails.reviewComments
