@@ -189,10 +189,10 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
   return (
     <>
         <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
-          <label style={{ fontWeight: "bold" }}>
+          <label htmlFor="filterStatus" style={{ fontWeight: "bold" }}>
             Filter By Status:
           </label>
-          <select onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px" }}>
+          <select id="filterStatus" onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px" }}>
             <option value="">All</option>
             <option value="Pending">Pending</option>
             <option value="In_Progress">In Progress</option>
