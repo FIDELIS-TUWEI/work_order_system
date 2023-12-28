@@ -56,7 +56,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         Priority: ${priority} \n
         Description: ${description} \n
         Service Type: ${serviceType} \n
-        Date Created: ${savedWorkorder.dateAdded} \n
+        Date Created: ${savedWorkorder.Date_Created} \n
         Thank you for using Holiday Inn Work Order System.
         `;
 
