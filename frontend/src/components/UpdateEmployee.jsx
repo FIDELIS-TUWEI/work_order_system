@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
+import LoadingBox from "./LoadingBox";
 
 const UpdateEmployee = ({ onFinishHandler, navigate, employeeDetails, loading }) => {
   return (
