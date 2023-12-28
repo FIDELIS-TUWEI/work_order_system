@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, message } from "antd";
+import { Button, Modal, Table, Tooltip, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -55,8 +55,75 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
     if (isAuthorised) {
         return true;
     }
-
   };
+
+  // Antd table columns
+  const columns = [
+    {
+      title: "First Name",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "firstName",
+      key: "firstName",
+    },
+    {
+      title: "Last Name",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "lastName",
+      key: "lastName",
+    },
+    {
+      title: "Username",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "username",
+      key: "username",
+    },
+    {
+      title: "Phone",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Actions",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "actions",
+      key: "actions",
+      render: (_, employee) => (
+        <>
+          <Tooltip title="View Employee Details">
+            <Button style={{ color: "grey", border: "none", margin: "0 5px" }} onClick={() => navigate(`/employee/details/${employee._id}`)}>
+              <AiFillEye />
+            </Button>
+          </Tooltip>
+          {isEditAllowed() && (
+            <>
+              <Tooltip title="Edit Employee">
+                <Button
+                  style={{ color: "green", border: "none", margin: "0 5px" }}
+                  onClick={() => navigate(`/update/employee/${employee._id}`)}
+                >
+                  <BiSolidEditAlt />
+                </Button>
+              </Tooltip>
+              <Tooltip title="Delete Employee">
+                <Button
+                  style={{ color: "red", border: "none", margin: "0 5px" }}
+                  onClick={() => showModal(employee)}
+                >
+                  <MdDelete />
+                </Button>
+              </Tooltip>
+            </>
+          )}
+        </>
+      )
+    }
+  ];
 
   return (
     <div>
@@ -69,49 +136,13 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
         </Button>
       </div>
 
-      <Card
+      <Table 
         loading={loading}
-        title="All Employees"
-        style={{ margin: "15px" }}
-      >
-        <table>
-          <thead>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-              <th>Phone</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {employees.map((employee) => (
-              <tr key={employee._id}>
-                <td>{employee.firstName}</td>
-                <td>{employee.lastName}</td>
-                <td>{employee.username}</td>
-                <td>{employee.phone}</td>
-                <td className="actions__btn">
-                  <Button style={{ color: 'green', border: 'none', margin: '0 5px' }} onClick={() => navigate(`/employee/details/${employee._id}`)}>
-                    <AiFillEye />
-                  </Button>
-
-                  {isEditAllowed() && (
-                    <>
-                      <Button danger style={{ border: 'none', marginRight: "5px" }} onClick={() => navigate(`/update/employee/${employee._id}`)}>
-                        <BiSolidEditAlt />
-                      </Button>
-
-                      <Button danger style={{ border: 'none' }} onClick={() => showModal(employee)}>
-                        <MdDelete />
-                      </Button>
-                    </>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        columns={columns}
+        dataSource={employees}
+        pagination={false}
+        rowKey="_id"
+      />
 
         <Modal
           title="Delete Employee"
@@ -124,7 +155,6 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
         >
           <p>Are you sure you want to delete {selectedEmployeeToDelete?.firstName} {selectedEmployeeToDelete?.lastName}?</p>
         </Modal>
-      </Card>
       <div className="pagination">
         <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
           <GrFormPrevious />
