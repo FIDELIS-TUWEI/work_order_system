@@ -59,7 +59,6 @@ const EditEmployee = () => {
     <Layout>
       <UpdateEmployee 
         onFinishHandler={onFinishHandler}
-        navigate={navigate}
         employeeDetails={employeeDetails}
         loading={loading}
       />
