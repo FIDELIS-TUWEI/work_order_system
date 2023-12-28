@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import { Button, Card, Modal, message } from "antd";
+import { Button, Modal, Table, Tooltip, message } from "antd";
 import {MdDelete} from "react-icons/md";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { selectToken } from "../utils/redux/slices/authSlice";
@@ -43,6 +43,33 @@ const ViewAllCategories = ({
     const handleCancel = () => {
         setIsModalVisible(false);
     };
+
+    // Antd table columns
+    const columns = [
+        {
+            title: "Category",
+            align: "center",
+            responsive: ["md", "lg"],
+            dataIndex: "categoryTitle",
+            key: "categoryTitle",
+        },
+        {
+            title: "Actions",
+            align: "center",
+            responsive: ["md", "lg"],
+            render: (_, category) => (
+                <Tooltip title="Delete Category">
+                    <Button
+                        danger
+                        style={{ border: "none" }}
+                        onClick={() => showModal(category)}
+                    >
+                        <MdDelete />
+                    </Button>
+                </Tooltip>
+            )
+        }
+    ];
     
   return (
     <div>
@@ -55,29 +82,13 @@ const ViewAllCategories = ({
             </Button>
         </div>
         
-        <Card loading={loading} title="All Categories">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Categories</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {categories.map((category) => (
-                        <tr key={category._id}>
-                            <td>{category.categoryTitle}</td>
-                            <td className="actions__btn">
-                                <Button danger style={{ border: "none" }}
-                                    onClick={() => showModal(category)}
-                                >
-                                    <MdDelete />
-                                </Button>  
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <Table 
+            loading={loading}
+            columns={columns}
+            dataSource={categories}
+            rowKey="_id"
+            pagination={false}
+        />
 
             <Modal 
                 title="Confirm Delete Category" 
@@ -91,7 +102,6 @@ const ViewAllCategories = ({
                 <p>Are you sure you want to delete a category titled: {selectedCategoryToDelete?.categoryTitle}?</p>
             </Modal>
 
-        </Card>
         <div className="pagination">
             <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
                 <GrFormPrevious />
