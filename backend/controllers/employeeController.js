@@ -230,7 +230,12 @@ const getEmployeeInfo = asyncHandler(async (req, res) => {
 const editEmployee = asyncHandler(async (req, res) => {
     try {
         const employeeId = req.params.id;
-        const updatedEmployee = await Employee.findByIdAndUpdate(employeeId, req.body, { new: true });
+        const { ...updateFields } = req.body;
+        const updatedEmployee = await Employee.findByIdAndUpdate(employeeId, updateFields, { new: true });
+
+        if (!updatedEmployee) {
+            return res.status(404).json({ message: "Employee not found" });
+        }
 
         if (!updatedEmployee) {
             return res.status(404).json({ message: "Employee not found" });
@@ -238,7 +243,7 @@ const editEmployee = asyncHandler(async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            data: updatedEmployee
+            message: "Employee updated successfully",
         });
     } catch (error) {
         res.status(500).json({
