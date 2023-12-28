@@ -37,6 +37,7 @@ const createCategory = asyncHandler(async (req, res) => {
     }
 });
 
+// Get all categories
 const getAllCategories = asyncHandler(async (req, res) => {
     // Enable Pagination
     const pageSize = 5;
