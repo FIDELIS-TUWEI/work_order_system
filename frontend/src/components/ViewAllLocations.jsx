@@ -98,11 +98,11 @@ const ViewAllLocations = ({ navigate, loading,
             >
                 First Page
             </Button>
-            <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px' }}>
+            <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
                 <GrFormPrevious />
             </Button>
             <span> Page {page} of {pages}</span>
-            <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px' }}>
+            <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
                 <GrFormNext />
             </Button>
 
