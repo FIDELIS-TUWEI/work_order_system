@@ -5,7 +5,7 @@ import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { getAllEmployees } from "../../../services/employeeApi";
-import { message } from "antd";
+import { Typography, message } from "antd";
 
 const Employees = () => {
   const token = useSelector(selectToken);
@@ -47,6 +47,7 @@ const Employees = () => {
 
   return (
     <Layout>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Employees</Typography>
       <AllEmployees 
         navigate={navigate}
         loading={loading}
