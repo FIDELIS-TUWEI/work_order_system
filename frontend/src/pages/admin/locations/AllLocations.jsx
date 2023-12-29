@@ -5,7 +5,7 @@ import { selectToken } from "../../../utils/redux/slices/authSlice"
 import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { allLocations } from "../../../services/locationApi"
-import { message } from "antd"
+import { Typography, message } from "antd"
 
 const AllLocations = () => {
     const token = useSelector(selectToken);
@@ -60,6 +60,7 @@ const AllLocations = () => {
 
   return (
     <Layout>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Locations</Typography>
         <ViewAllLocations 
             navigate={navigate}
             loading={loading}
