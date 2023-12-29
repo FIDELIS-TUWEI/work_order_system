@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, message } from "antd";
+import { Button, Modal, Table, Tooltip, message } from "antd";
 import { useState } from "react";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
@@ -43,6 +43,34 @@ const ViewAllLocations = ({ navigate, loading,
         setIsModalVisible(false);
     };
 
+    // Antd Table Columns
+    const columns = [
+        {
+            title: "Location",
+            align: "center",
+            responsive: ["md", "lg"],
+            dataIndex: "locationTitle",
+            key: "locationTitle",
+        },
+        {
+            title: "Action",
+            align: "center",
+            responsive: ["md", "lg"],
+            key: "action",
+            render: (_, location) => (
+                <Tooltip title="Delete Location">
+                    <Button
+                        danger
+                        style={{ border: "none" }}
+                        onClick={() => showModal(location)}
+                    >
+                        <MdDelete />
+                    </Button>
+                </Tooltip>
+            ),
+        }
+    ]
+
   return (
     <>
         <div className="add-btn">
@@ -54,42 +82,26 @@ const ViewAllLocations = ({ navigate, loading,
             </Button>
         </div>
 
-        <Card loading={loading} title="All Locations">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Locations</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {locations.map((location) => (
-                        <tr key={location._id}>
-                            <td>{location.locationTitle}</td>
-                            <td className="actions__btn">
-                                <Button danger style={{ border: "none" }}
-                                    onClick={() => showModal(location)}
-                                >
-                                    <MdDelete />
-                                </Button>  
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <Table 
+            loading={loading}
+            columns={columns}
+            dataSource={locations}
+            rowKey="_id"
+            pagination={false}
+        />
 
-            <Modal
-                title="Delete Location"
-                open={isModalVisible}
-                onOk={handleDelete} 
-                onCancel={handleCancel}
-                okText="Delete"
-                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
-            >
-                <p>Are you sure you want to delete a location titled: {selectedLocationToDelete?.locationTitle}?</p>
-            </Modal>
-        </Card>
+        <Modal
+            title="Delete Location"
+            open={isModalVisible}
+            onOk={handleDelete} 
+            onCancel={handleCancel}
+            okText="Delete"
+            okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+            cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+        >
+            <p>Are you sure you want to delete a location titled: {selectedLocationToDelete?.locationTitle}?</p>
+        </Modal>
+
         <div className="pagination">
             <Button 
                 onClick={jumpToFirstPage} 
