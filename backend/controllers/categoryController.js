@@ -67,6 +67,27 @@ const getAllCategories = asyncHandler(async (req, res) => {
     }
 });
 
+// Query all categories without pagination
+const queryAllCategories = asyncHandler(async (req, res) => {
+    try {
+        const categories = await Category.find({});
+
+        if (!categories) {
+            return res.status(400).json({ message: "No categories found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: categories
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+})
+
 // Update category
 const updateCategory = asyncHandler(async (req, res, next) => {
     try {
@@ -109,6 +130,7 @@ const deleteCategory = asyncHandler(async (req, res) => {
 module.exports = {
     createCategory,
     getAllCategories,
+    queryAllCategories,
     updateCategory,
     deleteCategory
 };
