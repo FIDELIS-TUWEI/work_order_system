@@ -4,7 +4,7 @@ import ViewAllDepartments from '../../../components/ViewAllDepartments';
 import { selectToken } from '../../../utils/redux/slices/authSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { allDepartments } from '../../../services/departmentApi';
-import { message } from 'antd';
+import { Typography, message } from 'antd';
 
 const AllDepartments = () => {
   const token = useSelector(selectToken);
@@ -44,6 +44,7 @@ const AllDepartments = () => {
 
   return (
     <Layout>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Departments</Typography>
       <ViewAllDepartments 
         departments={departments}
         loading={loading}
