@@ -12,6 +12,17 @@ export const allWorkCategories = async (page) => {
     }
 };
 
+// Query all categories without pagination
+export const queryCategories = async () => {
+  try {
+    const res = await axios.get(`${WORK_URL}/query/all/categories`);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    throw new Error("Error while querying all categories");
+  }
+};
+
 // Create Work category
 export const createNewCategory = async (values) => {
     try {
