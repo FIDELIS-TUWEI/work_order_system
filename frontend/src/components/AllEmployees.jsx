@@ -144,17 +144,18 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
         rowKey="_id"
       />
 
-        <Modal
-          title="Delete Employee"
-          open={isModalVisible}
-          onOk={handleDelete}
-          onCancel={handleCancel}
-          okText="Delete"
-          okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-          cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
-        >
-          <p>Are you sure you want to delete {selectedEmployeeToDelete?.firstName} {selectedEmployeeToDelete?.lastName}?</p>
-        </Modal>
+      <Modal
+        title="Delete Employee"
+        open={isModalVisible}
+        onOk={handleDelete}
+        onCancel={handleCancel}
+        okText="Delete"
+        okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+        cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+      >
+        <p>Are you sure you want to delete {selectedEmployeeToDelete?.firstName} {selectedEmployeeToDelete?.lastName}?</p>
+      </Modal>
+      
       <div className="pagination">
         <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
           <GrFormPrevious />
