@@ -5,7 +5,7 @@ import { selectToken } from "../../../utils/redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../../../services/usersApi";
 import AllUsers from "../../../components/AllUsers";
-import { message } from "antd";
+import { Typography, message } from "antd";
 
 
 const UsersAll = () => {
@@ -46,6 +46,7 @@ const handlePageChange = (newPage) => {
 
   return (
     <Layout>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Users</Typography>
       <AllUsers 
         allUsers={allUsers}
         loading={loading}
