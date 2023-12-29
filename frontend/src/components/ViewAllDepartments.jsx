@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, message } from "antd";
+import { Button, Modal, Table, Tooltip, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -42,7 +42,35 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
   // Function to handle modal cancel
   const handleCancel = () => {
     setIsModalVisible(false);
-  }
+  };
+
+  // Antd Table Columns
+  const columns = [
+    {
+      title: "Departments",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "departmentName",
+      key: "departmentName",
+    },
+    {
+      title: "Action",
+      align: "center",
+      responsive: ["md", "lg"],
+      key: "action",
+      render: (_, department) => (
+        <Tooltip title="Delete Department">
+          <Button
+            danger
+            style={{ border: "none" }}
+            onClick={() => showModal(department)}
+          >
+            <MdDelete />
+          </Button>
+        </Tooltip>
+      ),
+    }
+  ]
 
   return (
     <>
@@ -55,42 +83,26 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
             </Button>
         </div>
 
-      <Card loading={loading} title="All Departments">
-        <table>
-          <thead>
-            <tr>
-              <th>Departments</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {departments.map((department) => (
-              <tr key={department._id}>
-                <td>{department.departmentName}</td>
-                <td className="actions__btn">
-                  <Button danger style={{ border: "none" }}
-                    onClick={() => showModal(department)}
-                  >
-                    <MdDelete />
-                  </Button>  
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <Table 
+        loading={loading}
+        columns={columns}
+        dataSource={departments}
+        rowKey="_id"
+        pagination={false}
+      />
 
-        <Modal
-          title="Delete Department"
-          open={isModalVisible}
-          onOk={handleDelete} 
-                onCancel={handleCancel}
-                okText="Delete"
-                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
-        >
-          <p>Are you sure you want to delete a department titled: {selectedDepartmentToDelete?.departmentName}?</p>
-        </Modal>
-      </Card>
+      <Modal
+        title="Delete Department"
+        open={isModalVisible}
+        onOk={handleDelete} 
+              onCancel={handleCancel}
+              okText="Delete"
+              okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+              cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+      >
+        <p>Are you sure you want to delete a department titled: {selectedDepartmentToDelete?.departmentName}?</p>
+      </Modal>
+
       <div className="pagination">
         <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
           <GrFormPrevious />
