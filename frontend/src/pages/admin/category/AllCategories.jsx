@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react"
 import { allWorkCategories } from "../../../services/categoryApi"
 import { useSelector } from "react-redux"
 import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice"
-import { message } from "antd"
+import { Typography, message } from "antd"
 
 const AllCategories = () => {
     const user = useSelector(selectUserInfo);
@@ -48,6 +48,7 @@ const AllCategories = () => {
     
   return (
     <Layout>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Categories</Typography>
         <ViewAllCategories 
             navigate={navigate}
             loading={loading}
