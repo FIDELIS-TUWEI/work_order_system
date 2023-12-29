@@ -158,7 +158,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Assigned To",
-      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "assignedTo",
@@ -169,7 +168,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Supervisor",
-      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "supervisedBy",
