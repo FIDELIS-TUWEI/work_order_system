@@ -130,6 +130,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Requested By",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "requestedBy",
@@ -157,6 +158,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Assigned To",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "assignedTo",
@@ -167,6 +169,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Supervisor",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "supervisedBy",
@@ -206,7 +209,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
           columns={columns}
           pagination={false}
           scroll={{ x: 1500, y: 240 }}
-          rowKey={(record) => record._id}
+          rowKey="_id"
         />
         <p style={{ marginTop: "20px" }}>Total Work Orders: {workOrders.length}</p>
         <div className="button__container">
