@@ -4,7 +4,7 @@ import ViewAllDesignations from '../../../components/ViewAllDesignations';
 import { selectToken } from '../../../utils/redux/slices/authSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { allDesignations } from '../../../services/designation';
-import { message } from 'antd';
+import { Typography, message } from 'antd';
 
 const AllDesignations = () => {
   const token = useSelector(selectToken);
@@ -44,6 +44,7 @@ const AllDesignations = () => {
 
   return (
     <Layout>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Designations</Typography>
       <ViewAllDesignations 
         designations={designations}
         loading={loading}
