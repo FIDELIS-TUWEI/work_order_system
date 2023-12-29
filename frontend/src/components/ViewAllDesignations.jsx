@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, message } from "antd";
+import { Button, Modal, Table, Tooltip, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -42,7 +42,35 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
   // Function to handle modal cancel
   const handleCancel = () => {
     setIsModalVisible(false);
-  }
+  };
+
+  //Antd Table columns
+  const columns = [
+    {
+      title: "Designation",
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "designationName",
+      key: "designationName",
+    },
+    {
+      title: "Action",
+      align: "center",
+      responsive: ["md", "lg"],
+      key: "action",
+      render: (_, designation) => (
+        <Tooltip title="Delete Designation">
+          <Button
+            danger
+            style={{ border: "none" }}
+            onClick={() => showModal(designation)}
+          >
+            <MdDelete />
+          </Button>
+        </Tooltip>
+      ),
+    }
+  ]
 
   return (
     <>
@@ -55,30 +83,13 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
       </Button>
       </div>
 
-      <Card loading={loading} title="All Designations">
-        <table>
-          <thead>
-            <tr>
-              <th>Designation</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {designations.map((designation) => (
-              <tr key={designation._id}>
-                <td>{designation.designationName}</td>
-                <td className="actions__btn">
-                  <Button danger style={{ border: "none" }}
-                    onClick={() => showModal(designation)}
-                  >
-                    <MdDelete />
-                  </Button>  
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Card>
+      <Table 
+        loading={loading}
+        columns={columns}
+        dataSource={designations}
+        rowKey="_id"
+        pagination={false}
+      />
 
       <Modal
         title="Delete Designation"
