@@ -94,6 +94,9 @@ const NewWork = ({
                 value={selectedCategory}
                 allowClear
                 style={{ width: '100%' }}
+                showSearch
+                onSearch={workLocation}
+                filterOption={false}
               >
                 {category.map((category) => (
                   <Option key={category._id} value={category._id}>{category.categoryTitle}</Option>
