@@ -5,7 +5,7 @@ import { createWorkOrder } from '../../../services/workApi'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice'
-import { allWorkCategories } from '../../../services/categoryApi'
+import { queryCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
 import { queryLocations } from '../../../services/locationApi';
 
@@ -67,7 +67,7 @@ const CreateWorkOrder = () => {
   // Function to get all categories from Services Api
   const getCategories = async () => {
     try {
-      const response = await allWorkCategories({
+      const response = await queryCategories({
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`
