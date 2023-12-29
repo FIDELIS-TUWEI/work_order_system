@@ -90,17 +90,17 @@ const ViewAllCategories = ({
             pagination={false}
         />
 
-            <Modal 
-                title="Confirm Delete Category" 
-                open={isModalVisible} 
-                onOk={handleDelete} 
-                onCancel={handleCancel}
-                okText="Delete"
-                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
-            >
-                <p>Are you sure you want to delete a category titled: {selectedCategoryToDelete?.categoryTitle}?</p>
-            </Modal>
+        <Modal 
+            title="Confirm Delete Category" 
+            open={isModalVisible} 
+            onOk={handleDelete} 
+            onCancel={handleCancel}
+            okText="Delete"
+            okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+            cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
+        >
+            <p>Are you sure you want to delete a category titled: {selectedCategoryToDelete?.categoryTitle}?</p>
+        </Modal>
 
         <div className="pagination">
             <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
