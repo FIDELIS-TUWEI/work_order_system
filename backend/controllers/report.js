@@ -39,6 +39,21 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Fetch Work Orders by date
+const fetchWorkOrdersByDate = asyncHandler (async (req, res, next) => {
+    const selectedDate = new Date(req.params.date);
+    const workOrderData = await WorkOrder.find({ Date_Created: { $gte: selectedDate, $lte: selectedDate + 1 } });
+
+    if (!workOrderData) {
+        return next(new ErrorResponse("Work Orders not found", 404));
+    };
+
+    res.status(200).json({
+        success: true,
+        data: workOrderData
+    });
+});
+
 // Count Work Orders with Pending status
 const countPendingWorkOrders = asyncHandler (async (req, res, next) => {
     try {
@@ -107,6 +122,7 @@ const countAllWorkOrders = asyncHandler (async (req, res, next) => {
 
 module.exports = {
     filterWorkStatus,
+    fetchWorkOrdersByDate,
     countPendingWorkOrders,
     countInProgressWorkOrders,
     countCompletedWorkOrders,
