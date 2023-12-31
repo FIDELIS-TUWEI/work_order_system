@@ -1,40 +1,32 @@
-import {useState, useEffect, useCallback} from "react";
-import { useSelector } from "react-redux";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
-import { getAllWorkQuery } from "../../../services/workApi";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Row, message } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { fetchWorkOrders } from "../../../utils/redux/slices/workSlice";
+import LoadingBox from "../../../components/LoadingBox";
 
 const BarGraph = () => {
-    const token = useSelector(selectToken);
-    const [workData, setWorkData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const workData = useSelector((state) => state.work);
+    const { isLoading, workOrders, error } = workData;
 
-    // Function to get All work orders from API Service
-    const allWork = useCallback (async () => {
-        try {
-            setLoading(true);
-            const { data } = await getAllWorkQuery({
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setWorkData(data);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            message.error("Failed to fetch work orders", error.message);
-        }
-    }, [token]);
+    console.log(workOrders);
 
     // useEffect hook
     useEffect(() => {
-        allWork();
-    }, [allWork]);
+        dispatch(fetchWorkOrders());
+    }, [dispatch]);
+
+    if (isLoading) {
+        return <LoadingBox />;
+    };
+
+    if (error) {
+       return message.error(error);
+    };
 
     // Count the number of work assigned to each employee
-    const workCounts = workData.reduce((counts, workOrder) => {
+    const workCounts = workOrders.data.reduce((counts, workOrder) => {
         const assignedTo = workOrder.assignedTo ? workOrder.assignedTo.firstName : "Unassigned";
         counts[assignedTo] = (counts[assignedTo] || 0) + 1;
         return counts;
@@ -47,7 +39,7 @@ const BarGraph = () => {
     const workCountsArray = Object.entries(workCounts).map(([employee, count], index) => ({ employee, count, fill: uniqueColors[index] }));
 
     // Count the number of requested by each user
-    const userCounts = workData.reduce((counts, workOrder) => {
+    const userCounts = workOrders.data.reduce((counts, workOrder) => {
         const requestedBy = workOrder.requestedBy.firstName;
         counts[requestedBy] = (counts[requestedBy] || 0) + 1;
         return counts;
@@ -60,7 +52,7 @@ const BarGraph = () => {
     const userCountsArray = Object.entries(userCounts).map(([user, count], index) => ({ user, count, fill: uniqueUserColors[index] }));
 
     // Count the number of work by status
-    const workStatusCounts = workData.reduce((counts, workOrder) => {
+    const workStatusCounts = workOrders.data.reduce((counts, workOrder) => {
       const status = workOrder.status;
       counts[status] = (counts[status] || 0) + 1;
       return counts;
@@ -78,7 +70,7 @@ const BarGraph = () => {
     <div style={{ margin: "15px 2px" }}>
         <Row gutter={16}>
         <Col xs={24} md={12} lg={8}>
-        <Card title="Work Orders Assigned To Employees" style={{ margin: "6px" }} loading={loading}>
+        <Card title="Work Orders Assigned To Employees" style={{ margin: "6px" }}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie data={workCountsArray} dataKey="count" nameKey="employee" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
@@ -90,7 +82,7 @@ const BarGraph = () => {
         </Col>
 
         <Col xs={24} md={12} lg={8}>
-        <Card title="Work Orders By Status" style={{ margin: "6px" }} loading={loading}>
+        <Card title="Work Orders By Status" style={{ margin: "6px" }}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie data={workStatusCountsArray} dataKey="count" nameKey="status" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
@@ -102,7 +94,7 @@ const BarGraph = () => {
         </Col>
 
         <Col xs={24} md={12} lg={8}>
-        <Card title="WorkOrders Requested By Users" style={{ margin: "6px" }} loading={loading}>
+        <Card title="WorkOrders Requested By Users" style={{ margin: "6px" }}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <LineChart>
                     <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
