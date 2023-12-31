@@ -10,8 +10,6 @@ const BarGraph = () => {
     const workData = useSelector((state) => state.work);
     const { isLoading, workOrders, error } = workData;
 
-    console.log(workOrders);
-
     // useEffect hook
     useEffect(() => {
         dispatch(fetchWorkOrders());
@@ -25,8 +23,11 @@ const BarGraph = () => {
        return message.error(error);
     };
 
+    // Check and ensure workOrders?.data is an array
+    const workDataArray = workOrders?.data || [];
+
     // Count the number of work assigned to each employee
-    const workCounts = workOrders.data.reduce((counts, workOrder) => {
+    const workCounts = workDataArray.reduce((counts, workOrder) => {
         const assignedTo = workOrder.assignedTo ? workOrder.assignedTo.firstName : "Unassigned";
         counts[assignedTo] = (counts[assignedTo] || 0) + 1;
         return counts;
@@ -39,7 +40,7 @@ const BarGraph = () => {
     const workCountsArray = Object.entries(workCounts).map(([employee, count], index) => ({ employee, count, fill: uniqueColors[index] }));
 
     // Count the number of requested by each user
-    const userCounts = workOrders.data.reduce((counts, workOrder) => {
+    const userCounts = workDataArray.reduce((counts, workOrder) => {
         const requestedBy = workOrder.requestedBy.firstName;
         counts[requestedBy] = (counts[requestedBy] || 0) + 1;
         return counts;
@@ -52,7 +53,7 @@ const BarGraph = () => {
     const userCountsArray = Object.entries(userCounts).map(([user, count], index) => ({ user, count, fill: uniqueUserColors[index] }));
 
     // Count the number of work by status
-    const workStatusCounts = workOrders.data.reduce((counts, workOrder) => {
+    const workStatusCounts = workDataArray.reduce((counts, workOrder) => {
       const status = workOrder.status;
       counts[status] = (counts[status] || 0) + 1;
       return counts;
