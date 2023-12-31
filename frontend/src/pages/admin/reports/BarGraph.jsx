@@ -16,7 +16,9 @@ const BarGraph = () => {
     }, [dispatch]);
 
     if (isLoading) {
-        return <LoadingBox />;
+        return <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+            <LoadingBox />
+        </div>;
     };
 
     if (error) {
