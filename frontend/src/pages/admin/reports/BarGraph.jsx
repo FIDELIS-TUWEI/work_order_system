@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Row, message } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { fetchWorkOrders, queryAllWork } from "../../../utils/redux/slices/workSlice";
+import { queryWorkOrders, queryAllWork } from "../../../utils/redux/slices/queryWorkSlice";
 import LoadingBox from "../../../components/LoadingBox";
 
 const BarGraph = () => {
@@ -12,7 +12,7 @@ const BarGraph = () => {
 
     // useEffect hook
     useEffect(() => {
-        dispatch(fetchWorkOrders());
+        dispatch(queryWorkOrders());
     }, [dispatch]);
 
     if (isLoading) {
