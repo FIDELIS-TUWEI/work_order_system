@@ -9,8 +9,8 @@ export const queryWorkOrders = createAsyncThunk("queryWorkOrders", async () => {
 })
 
 
-const workSlice = createSlice({
-    name: "work",
+const queryWorkSlice = createSlice({
+    name: "queryWork",
     initialState: {
         isLoading: false,
         workOrders: [],
@@ -34,4 +34,4 @@ const workSlice = createSlice({
 
 export const queryAllWork = (state) => state.work;
 
-export default workSlice.reducer;
+export default queryWorkSlice.reducer;
