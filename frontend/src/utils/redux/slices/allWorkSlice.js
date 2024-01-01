@@ -8,7 +8,7 @@ const workSlice = createSlice({
         error: false
     },
     reducers: {
-        workAdded (state, action) {
+        workAdded: (state, action) => {
             state.push(action.payload);
         }
     },
