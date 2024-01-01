@@ -5,9 +5,9 @@ import Logo from "../../assets/logo.png";
 const Footer = () => {
   return (
     <div style={{ textAlign: 'center', marginTop: '20px' }}>
-      <p>
-        Copyright &copy; {new Date().getFullYear()}. All Rights Reserved. 
-      </p>
+      <Typography>
+        &copy; {new Date().getFullYear()}. All Rights Reserved. 
+      </Typography>
     </div>
   )
 }
@@ -40,7 +40,7 @@ const Home = () => {
           style={{ width: '80%', height: 'auto' }}
         />
 
-        <Typography.Title level={3}>Work Order Management System</Typography.Title>
+        <Typography.Title level={2}>Work Order Management System</Typography.Title>
         <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate("/login")}>Login</Button>
       </Card>
 
