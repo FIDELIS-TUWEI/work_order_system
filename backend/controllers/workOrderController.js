@@ -51,12 +51,12 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Send Email notification
         const subject = "NEW WORK ORDER CREATED";
-        const text = `New Work Order with the following details has been created: \n
+        const text = `New Work Order with the following details has been created:
         Title: ${title} \n
         Priority: ${priority} \n
         Description: ${description} \n
-        Service Type: ${serviceType} \n
-        Date Created: ${savedWorkorder.Date_Created} \n
+        Service Type: ${serviceType} \n\n
+        Login to your account to view the work order details.
         Thank you for using Holiday Inn Work Order System.
         `;
 
