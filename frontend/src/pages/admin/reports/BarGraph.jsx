@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Row, message } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { fetchWorkOrders } from "../../../utils/redux/slices/workSlice";
+import { fetchWorkOrders, queryAllWork } from "../../../utils/redux/slices/workSlice";
 import LoadingBox from "../../../components/LoadingBox";
 
 const BarGraph = () => {
     const dispatch = useDispatch();
-    const workData = useSelector((state) => state.work);
+    const workData = useSelector(queryAllWork);
     const { isLoading, workOrders, error } = workData;
 
     // useEffect hook
