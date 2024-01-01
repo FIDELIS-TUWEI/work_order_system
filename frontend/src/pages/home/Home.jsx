@@ -40,7 +40,7 @@ const Home = () => {
           style={{ width: '80%', height: 'auto' }}
         />
 
-        <Typography.Title level={2}>Work Order Management System</Typography.Title>
+        <Typography.Title level={4}>Work Order Management System</Typography.Title>
         <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate("/login")}>Login</Button>
       </Card>
 
