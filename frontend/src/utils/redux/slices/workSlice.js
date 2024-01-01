@@ -32,4 +32,6 @@ const workSlice = createSlice({
     }
 });
 
+export const queryAllWork = (state) => state.work;
+
 export default workSlice.reducer;
