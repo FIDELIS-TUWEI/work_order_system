@@ -15,7 +15,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
   const [selectedUserToDelete, setSelectedUserToDelete] = useState(null);
   const token = useSelector(selectToken);
 
-  // determine whether edit or delete button should be displayed for the superadmin
+  // determine whether edit or delete button should be disabled for none admin or superadmin roles
   const currentUserRole = token.role;
 
   // Fucntion to show modal to delete user
@@ -50,6 +50,8 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
   const columns = [
     {
       title: "First Name",
+      width: 100,
+      fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "firstName",
@@ -57,6 +59,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
     },
     {
       title: "Last Name",
+      width: 100,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "lastName",
@@ -64,6 +67,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
     },
     {
       title: "Username",
+      width: 100,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "username",
@@ -71,6 +75,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
     },
     {
       title: "Role",
+      width: 100,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "role",
@@ -78,6 +83,8 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
     },
     {
       title: "Actions",
+      fixed: "right",
+      width: 120,
       align: "center",
       responsive: ["md", "lg"],
       render: (_, user) => (
@@ -157,6 +164,7 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
         columns={columns}
         pagination={false}
         rowKey="_id"
+        scroll={{ x: 600, y: 300 }}
       />
 
       <Modal
