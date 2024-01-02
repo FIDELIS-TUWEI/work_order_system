@@ -22,7 +22,7 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
             .populate("requestedBy", "username")
             .populate("location", "locationTitle")
             .populate("category", "categoryTitle")
-            .populate("reviewedBy", "firstName lastName")
+            .populate("verifiedBy", "firstName lastName")
             .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
             .limit(pageSize)
@@ -37,21 +37,6 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
     } catch (error) {
         next(error.message, 500);
     }
-});
-
-// Fetch Work Orders by date
-const fetchWorkOrdersByDate = asyncHandler (async (req, res, next) => {
-    const selectedDate = new Date(req.params.date);
-    const workOrderData = await WorkOrder.find({ Date_Created: { $gte: selectedDate, $lte: selectedDate + 1 } });
-
-    if (!workOrderData) {
-        return next(new ErrorResponse("Work Orders not found", 404));
-    };
-
-    res.status(200).json({
-        success: true,
-        data: workOrderData
-    });
 });
 
 // Count Work Orders with Pending status
@@ -122,7 +107,6 @@ const countAllWorkOrders = asyncHandler (async (req, res, next) => {
 
 module.exports = {
     filterWorkStatus,
-    fetchWorkOrdersByDate,
     countPendingWorkOrders,
     countInProgressWorkOrders,
     countCompletedWorkOrders,
