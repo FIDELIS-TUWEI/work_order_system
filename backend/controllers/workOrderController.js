@@ -28,7 +28,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     }
 
-    const { priority, title, description, location, serviceType, category } = req.body;
+    const { priority, description, location, serviceType, category } = req.body;
 
     try {
         
@@ -36,7 +36,6 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         const newWorkOrder = await WorkOrder({
             requestedBy: userId,
             priority,
-            title,
             description,
             location,
             serviceType,
@@ -52,10 +51,9 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         // Send Email notification
         const subject = "NEW WORK ORDER CREATED";
         const text = `New Work Order with the following details has been created:
-        Title: ${title} \n
-        Priority: ${priority} \n
         Description: ${description} \n
-        Service Type: ${serviceType} \n\n
+        Priority: ${priority} \n
+        Service Type: ${serviceType} \n
         Login to your account to view the work order details.
         Thank you for using Holiday Inn Work Order System.
         `;
@@ -115,7 +113,7 @@ const updateWorkOrder = asyncHandler (async (req, res, next) => {
         };
 
         // Send an email notification
-        await sendUpdateEmailNotification(updatedWorkOrder, user);
+        await sendUpdateEmailNotification(updatedWorkOrder);
 
         // Return a response
         return res.status(200).json({
@@ -141,10 +139,9 @@ async function updateWorkOrderDetails (id, updatedFields) {
 // Handle In Complete Work Order tracker
 async function handleInCompleteWorkOrder (updatedWorkOrder) {
     const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
-    const text = `The following work order needs your attention: \n
-    Title: ${updatedWorkOrder.title} \n
-    Priority: ${updatedWorkOrder.priority} \n
+    const text = `The following work order needs your attention:
     Description: ${updatedWorkOrder.description} \n
+    Priority: ${updatedWorkOrder.priority} \n
     Status: ${updatedWorkOrder.status} \n
     Service Type: ${updatedWorkOrder.serviceType} \n
     Tracker: ${updatedWorkOrder.tracker} \n
@@ -187,9 +184,9 @@ async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
 
     // Update the work order only if it hasn't been reviewed
     updatedWorkOrder.reviewed = true;
-    updatedWorkOrder.reviewedBy = req.body.reviewedBy;
-    updatedWorkOrder.dateReviewed = req.body.dateReviewed;
-    updatedWorkOrder.reviewComments = req.body.reviewComments;
+    updatedWorkOrder.verifiedBy = req.body.verifiedBy;
+    updatedWorkOrder.dateVerified = req.body.dateified;
+    updatedWorkOrder.verifyComments = req.body.verifyComments;
 
     // Save the updated work order
     await updatedWorkOrder.save();
@@ -216,10 +213,10 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
 };
 
 // send email notification
-async function sendUpdateEmailNotification (updatedWorkOrder, user) {
+async function sendUpdateEmailNotification (updatedWorkOrder) {
     const subject = `A WORK ORDER HAS BEEN UPDATED`;
     const text = `The following details have been updated: \n
-        Title: ${updatedWorkOrder.title} \n
+        Description: ${updatedWorkOrder.description} \n
         Status: ${updatedWorkOrder.status} \n
         Tracker: ${updatedWorkOrder.tracker} \n
         Tracker Message: ${updatedWorkOrder.trackerMessage} \n
@@ -241,7 +238,7 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
             .populate("requestedBy", "username")
             .populate("category", "categoryTitle")
             .populate("assignedTo", "firstName lastName")
-            .populate("reviewedBy", "username")
+            .populate("verifiedBy", "username")
             .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
             .limit(pageSize);
@@ -264,7 +261,7 @@ const queryAllWork = asyncHandler (async (req, res, next) => {
             .populate("requestedBy", "firstName")
             .populate("category", "categoryTitle")
             .populate("assignedTo", "firstName lastName")
-            .populate("reviewedBy", "username")
+            .populate("verifiedBy", "username")
             .sort({ Date_Created: -1 });
 
         if (!workOrders) {
@@ -289,7 +286,7 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
             .populate("location", "locationTitle")
             .populate("category", "categoryTitle")
             .populate("assignedTo", "firstName lastName")
-            .populate("reviewedBy", "username")
+            .populate("verifiedBy", "username")
             .exec();
         if (!work) {
             return next(new ErrorResponse("Work Order not found", 404));
@@ -321,7 +318,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Send Email Notification
         const subject = `WORK ORDER DELETED`;
-        const text = `The work order titled ${workOrder.title} has been deleted by ${deletedByUser.username}`;
+        const text = `The work order with description ${workOrder.description} has been deleted by ${deletedByUser.username}`;
 
         await sendEmailNotification(workOrder, subject, text);
 
