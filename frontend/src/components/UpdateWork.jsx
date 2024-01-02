@@ -28,7 +28,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
   const getStatusOptions = () => {
     const statusOptions = [
       { value: 'Pending', label: 'Pending' },
-      { value: 'In_Progress', label: 'In Progress' },
+      { value: 'In_Progress', label: 'In-progress' },
       { value: 'Complete', label: 'Complete' },
       { value: 'Reviewed', label: 'Reviewed' },
     ];
@@ -93,9 +93,9 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
             allowClear
             style={{ width: '100%' }}
             options={[
-              { value: 'In_Attendance', label: 'In Attendance' },
+              { value: 'In_Attendance', label: 'In-attendance' },
               { value: 'Attended', label: 'Attended' },
-              { value: 'In_Complete', label: 'In Complete' },
+              { value: 'In_Complete', label: 'In-complete' },
             ]}
           />
         </Form.Item>
@@ -134,9 +134,9 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
               allowClear
               style={{ width: '100%' }}
               options={[
-                { value: 'In_Attendance', label: 'In Attendance' },
+                { value: 'In_Attendance', label: 'In-attendance' },
                 { value: 'Attended', label: 'Attended' },
-                { value: 'In_Complete', label: 'In Complete' },
+                { value: 'In_Complete', label: 'In-complete' },
               ]}
             />
           </Form.Item>
@@ -219,9 +219,9 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
           </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
-              label="Review Comments"
-              name="reviewComments"
-              rules={[{ required: true, message: 'Please Enter Review Comments!' }]}
+              label="Verify Comments"
+              name="verifyComments"
+              rules={[{ required: true, message: 'Please Enter verify Comments!' }]}
             >
               <Input type='text' placeholder='Enter comments' />
             </Form.Item>
