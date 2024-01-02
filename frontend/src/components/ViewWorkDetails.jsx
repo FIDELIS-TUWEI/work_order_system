@@ -27,16 +27,16 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
         : 'Not Requested';
 
     // Display the reviewedBy field as username of the user who reviewed the work 
-    let reviewedByUsername = "Not Reviewed"
-        if (workDetails.reviewedBy) {
-            reviewedByUsername = workDetails.reviewed
-                ? `${workDetails.reviewedBy.username}`
+    let verifiedByUsername = "Not Reviewed"
+        if (workDetails.verifiedBy) {
+            verifiedByUsername = workDetails.reviewed
+                ? `${workDetails.verifiedBy.username}`
                 : 'Not Reviewed';
         }
 
-    // Displaay review commments
-    const reviewComments = workDetails.reviewComments
-        ? workDetails.reviewComments : 'No review comments';
+    // Display review commments
+    const verifyComments = workDetails.verifyComments
+        ? workDetails.verifyComments : 'No review comments';
 
   return (
     <>
@@ -46,13 +46,13 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
             </div>
             <div className="details--header">
                 <div className="details--header1">
-                    <h2>Work Description: {workDetails?.title}</h2>
+                    <h2>Category: {workDetails.category?.categoryTitle}</h2>
                     <p>Service Type: {workDetails?.serviceType}</p>
                     <p>Tracker: {workDetails?.tracker}</p>
                 </div>
 
                 <div className="details--header2">
-                    <h2>Category: {workDetails.category?.categoryTitle}</h2>
+                    <h2>Priority Level: {workDetails?.priority}</h2>
                     <p>Location: {Array.isArray(workDetails.location) && workDetails.location.map((location, index) => 
                         <span key={location._id}>
                             {location.locationTitle}
@@ -64,11 +64,6 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
             </div>
             <hr />
             <div className="details--grid">
-                <div className="details">
-                    <span>Priority Level:</span>
-                    <span>{workDetails?.priority}</span>
-                </div>
-
                 <div className="details">
                     <span>Description:</span>
                     <span>{workDetails?.description}</span>
@@ -132,18 +127,18 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
                 </div>
 
                 <div className="details">
-                    <span>Reviewed By:</span>
-                    <span>{reviewedByUsername}</span>
+                    <span>Verified By:</span>
+                    <span>{verifiedByUsername}</span>
                 </div>
 
                 <div className="details">
-                    <span>Review Comments:</span>
-                    <span>{reviewComments}</span>
+                    <span>Verify Comments:</span>
+                    <span>{verifyComments}</span>
                 </div>
 
                 <div className="details">
-                    <span>Date Reviewed:</span>
-                    <span>{workDetails?.dateReviewed ? moment(workDetails.dateReviewed).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}</span>
+                    <span>Date Verified:</span>
+                    <span>{workDetails?.dateVerified ? moment(workDetails.dateVerified).format("DD/MM/YYYY, hh:mm a") : "Not Reviewed"}</span>
                 </div>
             </div>
         </div>
