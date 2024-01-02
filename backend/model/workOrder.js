@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const workOrderSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        min: [10, "Title must be at least 10 characters"]
-    },
     description: {
         type: String,
         required: true,
@@ -87,15 +82,15 @@ const workOrderSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    reviewedBy: {
+    verifiedBy: {
         type: ObjectId,
         ref: "User",
     },
-    reviewComments: {
+    verifyComments: {
         type: String,
         default: "No review comments"
     },
-    dateReviewed: {
+    dateVerified: {
         type: Date,
         index: true
     },
@@ -121,8 +116,8 @@ workOrderSchema.pre("save", async function (next) {
     };
 
     // set date reviewed if the status is Reviewed and date reviewed is not set
-    if (workOrder.reviewed === true && !workOrder.dateReviewed) {
-        workOrder.dateReviewed = new Date();
+    if (workOrder.reviewed === true && !workOrder.dateVerified) {
+        workOrder.dateVerified = new Date();
     };
 
     next();
