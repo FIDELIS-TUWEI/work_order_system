@@ -7,12 +7,14 @@ const asyncHandler = require("express-async-handler");
 // Controller function to get all users
 const getAllUsers = asyncHandler (async (req, res, next) => {
     // Enable Pagination
-    const pageSize = 5;
+    const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
     const count = await User.find({}).estimatedDocumentCount();
 
     try {
-        const users = await User.find({}).sort({ createdAt: -1 }).select("-password").populate("workOrders")
+        const users = await User.find({}).select("-password")
+            .populate("workOrders")
+            .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
             .limit(pageSize)
         res.status(200).json({
