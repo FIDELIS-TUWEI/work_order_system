@@ -93,17 +93,18 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
 
   const columns = [
     {
-      title: "Title",
-      width: 180,
+      title: "Description",
+      width: 300,
       fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
-      dataIndex: "title",
-      key: "title",
-      ...getColumnSearchProps("title", "Title"),
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Service Type",
+      fixed: "left",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "serviceType",
@@ -112,6 +113,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Priority",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "priority",
@@ -120,6 +122,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Category",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "category",
@@ -141,6 +144,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Tracker",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "tracker",
@@ -158,6 +162,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Assigned To",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "assignedTo",
@@ -168,6 +173,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Supervisor",
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "supervisedBy",
@@ -196,7 +202,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
           <select id="filterStatus" onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px" }}>
             <option value="">All</option>
             <option value="Pending">Pending</option>
-            <option value="In_Progress">In Progress</option>
+            <option value="In_Progress">In-progress</option>
             <option value="Complete">Completed</option>
           </select>
         </div>
