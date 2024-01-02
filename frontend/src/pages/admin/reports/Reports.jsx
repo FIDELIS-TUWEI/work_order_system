@@ -69,10 +69,6 @@ const getWorkOrders = useCallback (async () => {
 
     const columns = [
       {
-        header: "Title",
-        dataKey: "title",
-      },
-      {
         header: "Service Type",
         dataKey: "serviceType",
       },
@@ -120,7 +116,6 @@ const getWorkOrders = useCallback (async () => {
     const showEmployeeName = (employee) => (employee ? `${employee.firstName} ${employee.lastName}` : "Unassigned");
 
     const rows = workOrders.map((workOrder) => [
-      workOrder.title,
       workOrder.serviceType,
       workOrder.priority,
       `${workOrder.category.categoryTitle}`,
