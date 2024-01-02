@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card } from "antd";
+import { Button, Table } from "antd";
 
 const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
 
@@ -28,34 +28,55 @@ const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
     ? employeeDetails.totalWorkCount
     : 0;
 
+    // antD columns
+    const columns = [
+      {
+        title: "Pending Work",
+        align: "center",
+        dataIndex: "totalPendingWork",
+      },
+      {
+        title: "In_Progress Work",
+        align: "center",
+        dataIndex: "totalInProgressWork",
+      },
+      {
+        title: "Completed Work",
+        align: "center",
+        dataIndex: "totalCompletedWork",
+      },
+      {
+        title: "Reviewed Work",
+        align: "center",
+        dataIndex: "reviewedWork",
+      },
+      {
+        title: "Total Work",
+        align: "center",
+        dataIndex: "totalWork",
+      }
+    ];
+
+    const dataSource = [
+      {
+        key: "1",
+        totalPendingWork,
+        totalInProgressWork,
+        totalCompletedWork,
+        reviewedWork,
+        totalWork
+      }
+    ]
+
   return (
     <div>
-      <Card
-        title="View Employee Details"
+      <Table 
         loading={loading}
-      >
-        <table>
-          <thead>
-            <tr>
-              <th>Total Work Pending</th>
-              <th>Total Work In Progress</th>
-              <th>Total Work Complete</th>
-              <th>Total Work Reviewed</th>
-              <th>Total Work Assigned</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{totalPendingWork}</td>
-              <td>{totalInProgressWork}</td>
-              <td>{totalCompletedWork}</td>
-              <td>{reviewedWork}</td>
-              <td>{totalWork}</td>
-            </tr>
-          </tbody>
-        </table>
-
-      </Card>
+        dataSource={dataSource}
+        columns={columns}
+        pagination={false}
+        rowKey={"key"}
+      />
 
       <div className="add-btn">
         <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none'}} onClick={() => navigate(-1)}>Back</Button>
