@@ -53,13 +53,13 @@ const Work = ({allWork, user, loading, getAllWork }) => {
   // AntD Table Columns
   const columns = [
     {
-      title: "Title",
+      title: "Description",
       width: 100,
       fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
-      dataIndex: "title",
-      key: "title",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Service Type",
@@ -81,7 +81,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
           <Badge
             color={
               status === "Pending"
-                ? "grey"
+                ? "red"
                 : status === "In_Progress"
                 ? "yellow"
                 : status === "Complete"
