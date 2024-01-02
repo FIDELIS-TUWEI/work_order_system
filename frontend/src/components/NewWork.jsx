@@ -19,25 +19,12 @@ const NewWork = ({
         <Typography style={{ fontSize: '1rem', fontWeight: '500' }}>Work Details: </Typography>
         <Row gutter={20}>
           <Col xs={24} md={24} lg={8}>
-            <Form.Item
-                name="title" 
-                label="Brief Work Title" 
-                required 
-                rules={[
-                  { required: true, message: 'Please a Brief Work Title!' },
-                  { min: 10, message: 'Brief Work Title must be at least 10 characters' }
-                ]}
-            >
-              <Input type='text' placeholder='Work Title' />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
             <Form.Item 
                 name="description" 
                 label="Work Description" 
                 required 
                 rules={[
-                  { required: true, message: 'Please a Work Description!' },
+                  { required: true, message: 'Please Enter Work Description!' },
                   { min: 10, message: 'Work Description must be at least 10 characters' }
                 ]}
             >
