@@ -6,16 +6,17 @@ export const queryWorkOrders = createAsyncThunk("queryWorkOrders", async () => {
     const res = await axios.get(`${WORK_URL}/query/all/work`);
     const data = res.data;
     return data;
-})
+});
 
+const initialState = {
+    isLoading: false,
+    workOrders: [],
+    error: false
+}
 
 const queryWorkSlice = createSlice({
     name: "queryWork",
-    initialState: {
-        isLoading: false,
-        workOrders: [],
-        error: false
-    },
+    initialState,
     extraReducers: (builder) => {
         builder
             .addCase(queryWorkOrders.pending, (state) => {
