@@ -28,7 +28,48 @@ const workSlice = createSlice({
     name: "work",
     initialState,
     reducers: {},
-    extraReducers: {}
+    extraReducers: {
+        [addWork.pending]: (state) => {
+            return {
+                ...state,
+                addWorkStatus: "pending",
+                addWorkError: "",
+                getWorkStatus: "",
+                getWorkError: "",
+                updateWorkStatus: "",
+                updateWorkError: "",
+                deleteWorkStatus: "",
+                deleteWorkError: ""
+            };
+        },
+        [addWork.fulfilled]: (state, action) => {
+            return {
+                ...state,
+                work: [action.payload, ...state.work],
+                addWorkStatus: "success",
+                addWorkError: "",
+                getWorkStatus: "",
+                getWorkError: "",
+                updateWorkStatus: "",
+                updateWorkError: "",
+                deleteWorkStatus: "",
+                deleteWorkError: ""
+            };
+        },
+        [addWork.rejected]: (state, action) => {
+            return {
+                ...state,
+                addWorkStatus: "rejected",
+                addWorkError: action.payload,
+                getWorkStatus: "",
+                getWorkError: "",
+                updateWorkStatus: "",
+                updateWorkError: "",
+                deleteWorkStatus: "",
+                deleteWorkError: ""
+            };
+        }
+    }
 });
 
 export const { workAdded } = workSlice.actions;
