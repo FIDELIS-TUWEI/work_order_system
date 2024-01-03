@@ -6,13 +6,34 @@ export const locationsApi = createApi({
     reducerPath: "locationsApi",
     baseQuery: fetchBaseQuery({ baseUrl: WORK_URL }),
     endpoints: (builder) => ({
+        createLocation: builder.mutation({
+            query: (values) => ({
+                url: `/create/location`,
+                method: "POST",
+                body: values,
+            }),
+        }),
+        allLocations: builder.query({
+            query: (page) => ({
+                url: `/all-locations?pageNumber=${page}`,
+                method: "GET",
+            }),
+        }),
         queryAllLocations: builder.query({
             query: () => ({
                 url: `/search/location`,
                 method: "GET",
             }),
+        }),
+        deleteLocation: builder.mutation({
+            query: (id) => ({
+                url: `/location/${id}`,
+                method: "DELETE",
+            }),
         })
     })
 });
 
-export const { useQueryAllLocationsQuery } = locationsApi;
+export const { useQueryAllLocationsQuery, useAllLocationsQuery } = locationsApi;
+
+export const { useCreateLocationMutation, useDeleteLocationMutation } = locationsApi;
