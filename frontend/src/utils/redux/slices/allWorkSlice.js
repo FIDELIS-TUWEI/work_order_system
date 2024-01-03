@@ -14,9 +14,9 @@ const initialState = {
     deleteWorkError: ""
 };
 
-export const addWork = createAsyncThunk("work/addWork", async (work, { rejectWithValue }) => {
+export const addWork = createAsyncThunk("work/addWork", async (values, { rejectWithValue }) => {
     try {
-        const res = await axios.post(`${WORK_URL}/create/work`, work)
+        const res = await axios.post(`${WORK_URL}/create/work`, values)
         return res.data
     } catch (error) {
         return rejectWithValue(error.response.data)
@@ -71,7 +71,5 @@ const workSlice = createSlice({
         }
     }
 });
-
-export const { workAdded } = workSlice.actions;
 
 export default workSlice.reducer;
