@@ -1,16 +1,17 @@
 import { message } from 'antd';
 import Layout from '../../../components/Layout'
 import { useEffect, useState } from 'react'
-import { createWorkOrder } from '../../../services/workApi'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice'
 import { queryCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
 import { queryLocations } from '../../../services/locationApi';
+import { addWork } from '../../../utils/redux/slices/allWorkSlice';
 
 
 const CreateWorkOrder = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
@@ -23,10 +24,10 @@ const CreateWorkOrder = () => {
   const authorisedAccess = user?.role === "admin" || user?.role === "superadmin" || user?.role === "supervisor" || user?.role === "hod" || user?.role === "reviewer" || user?.role === "engineer";
 
   // function to handle form submit
-  const onFinishHandler = async (values) => {
+  const onFinishHandler = (values) => {
     try {
       setLoading(true);
-      await createWorkOrder(values);
+      dispatch(addWork(values));
       if (authorisedAccess) {
         navigate("/work/list");
       } else {
