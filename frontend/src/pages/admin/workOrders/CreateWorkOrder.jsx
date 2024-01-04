@@ -2,16 +2,16 @@ import { message } from 'antd';
 import Layout from '../../../components/Layout'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice'
 import { queryCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
 import { queryLocations } from '../../../services/locationApi';
-import { addWork } from '../../../utils/redux/slices/allWorkSlice';
+import { useCreateWorkMutation } from '../../../utils/redux/slices/workSlice';
 
 
 const CreateWorkOrder = () => {
-  const dispatch = useDispatch();
+  const [addWork] = useCreateWorkMutation();
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
@@ -24,16 +24,26 @@ const CreateWorkOrder = () => {
   const authorisedAccess = user?.role === "admin" || user?.role === "superadmin" || user?.role === "supervisor" || user?.role === "hod" || user?.role === "reviewer" || user?.role === "engineer";
 
   // function to handle form submit
-  const onFinishHandler = (values) => {
+  const onFinishHandler = async (values) => {
     try {
       setLoading(true);
-      dispatch(addWork(values));
-      if (authorisedAccess) {
-        navigate("/work/list");
+      const { error } = await addWork(values);
+
+      if (error) {
+        if (error.status === 400 && error.data && error.data.message) {
+          message.error(error.data.message);
+        } else {
+          message.error("Failed to create new work order");
+        }
       } else {
-        navigate("/private");
-      }
-      message.success('Work Order Created Successfully');
+        message.success('Work Order Created Successfully');
+        if (authorisedAccess) {
+          navigate("/work/list");
+        } else {
+          navigate("/private");
+        }
+      } 
+      
       setLoading(false);
     } catch (error) {
       message.error(error.message);
