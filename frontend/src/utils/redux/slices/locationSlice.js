@@ -34,6 +34,4 @@ export const locationsApi = createApi({
     })
 });
 
-export const { useQueryAllLocationsQuery, useAllLocationsQuery } = locationsApi;
-
-export const { useCreateLocationMutation, useDeleteLocationMutation } = locationsApi;
+export const { useCreateLocationMutation, useQueryAllLocationsQuery, useAllLocationsQuery, useDeleteLocationMutation } = locationsApi;
