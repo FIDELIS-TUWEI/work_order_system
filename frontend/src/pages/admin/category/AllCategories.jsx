@@ -4,7 +4,7 @@ import ViewAllCategories from "../../../components/ViewAllCategories"
 import { useCallback, useEffect, useState } from "react"
 import { allWorkCategories } from "../../../services/categoryApi"
 import { useSelector } from "react-redux"
-import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice"
+import { selectToken, selectUserInfo } from "../../../features/auth/authSlice"
 import { Typography, message } from "antd"
 
 const AllCategories = () => {
