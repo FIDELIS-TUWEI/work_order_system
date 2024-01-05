@@ -1,7 +1,7 @@
 import { Button, Tooltip, Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
-import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo } from '../../../features/auth/authSlice';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import Logo from "../../../assets/logo.png"
