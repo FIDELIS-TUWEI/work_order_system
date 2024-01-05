@@ -8,7 +8,7 @@ const NewWork = ({
   loading, location, category, 
   onFinishHandler, selectedLocation, 
   selectedCategory, handleLocationChange, 
-  handleCategoryChange, navigate, workLocation
+  handleCategoryChange, navigate, workLocation, getCategories
 }) => {
 
   return (
@@ -82,7 +82,7 @@ const NewWork = ({
                 allowClear
                 style={{ width: '100%' }}
                 showSearch
-                onSearch={workLocation}
+                onSearch={getCategories}
                 filterOption={false}
               >
                 {category.map((category) => (
@@ -129,6 +129,7 @@ NewWork.propTypes = {
   location: PropTypes.array,
   category: PropTypes.array,
   workLocation: PropTypes.func,
+  getCategories: PropTypes.func,
   handleLocationChange: PropTypes.func,
   handleCategoryChange: PropTypes.func,
   onFinishHandler: PropTypes.func,
