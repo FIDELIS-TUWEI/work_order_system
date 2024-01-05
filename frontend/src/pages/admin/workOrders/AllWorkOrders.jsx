@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
-import { selectToken, selectUserInfo } from "../../../utils/redux/slices/authSlice";
+import { selectToken, selectUserInfo } from "../../../features/auth/authSlice";
 import Work from "../../../components/Work";
 import { getAllWorkOrders } from "../../../services/workApi";
 
