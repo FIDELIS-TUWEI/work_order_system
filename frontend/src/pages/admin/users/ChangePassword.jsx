@@ -3,7 +3,7 @@ import EditUserPassword from "../../../components/EditUserPassword"
 import Layout from "../../../components/Layout"
 import { updateUserPassword } from "../../../services/usersApi";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
+import { selectToken } from "../../../features/auth/authSlice";
 import { message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 
