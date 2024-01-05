@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import { Button, Modal, Table, Tooltip, message } from "antd";
 import {MdDelete} from "react-icons/md";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
-import { selectToken } from "../utils/redux/slices/authSlice";
+import { selectToken } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { deleteCategory } from "../services/categoryApi";
