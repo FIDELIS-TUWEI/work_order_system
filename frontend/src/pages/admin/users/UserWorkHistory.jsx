@@ -1,7 +1,7 @@
 import { Button, Table, Typography } from "antd";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
+import { selectToken } from "../../../features/auth/authSlice";
 import { useCallback, useEffect, useState } from "react";
 import { getUserInfo } from "../../../services/usersApi";
 import { useNavigate, useParams } from "react-router-dom";
