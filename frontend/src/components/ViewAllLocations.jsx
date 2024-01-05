@@ -4,7 +4,7 @@ import { useState } from "react";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
 import { useSelector } from "react-redux";
-import { selectToken } from "../utils/redux/slices/authSlice";
+import { selectToken } from "../features/auth/authSlice";
 import { deleteLocation } from "../services/locationApi";
 
 const ViewAllLocations = ({ navigate, loading, 
