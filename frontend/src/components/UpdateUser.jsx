@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { selectUserInfo } from "../utils/redux/slices/authSlice";
+import { selectUserInfo } from "../features/auth/authSlice";
 import { Button, Card, Col, Form, Input, Row, Select, Typography, message } from "antd";
 import LoadingBox from "./LoadingBox";
 
