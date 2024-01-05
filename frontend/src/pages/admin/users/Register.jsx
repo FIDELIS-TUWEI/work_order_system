@@ -2,7 +2,7 @@ import { message } from 'antd'
 import Layout from '../../../components/Layout';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo } from '../../../features/auth/authSlice';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CreateUser from '../../../components/CreateUser';
