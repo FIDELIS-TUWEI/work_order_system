@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "../Data/data"
+import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "../menu/Menu"
 import { useDispatch, useSelector } from "react-redux";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
