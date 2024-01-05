@@ -4,8 +4,8 @@ import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "../Data/data"
 import { useDispatch, useSelector } from "react-redux";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
-import { useLogoutMutation } from "../utils/redux/slices/authApiSlice";
-import {logout, selectUserInfo} from "../utils/redux/slices/authSlice";
+import { useLogoutMutation } from "../features/auth/authApiSlice";
+import {logout, selectUserInfo} from "../features/auth/authSlice";
 import { Tooltip, message } from "antd";
 import Logo from "../assets/logo.png"
 
