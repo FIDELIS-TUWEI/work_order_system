@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import Layout from "../../../components/Layout";
 import UpdateEmployee from "../../../components/UpdateEmployee";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
+import { selectToken } from "../../../features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { editEmployee, getEmployeeData } from "../../../services/employeeApi";
 import { useCallback, useEffect, useState } from "react";
