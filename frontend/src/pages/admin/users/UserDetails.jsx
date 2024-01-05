@@ -1,11 +1,11 @@
 import { Button, Tooltip, Typography, message } from 'antd';
-import Layout from '../../../components/Layout';
+import Layout from "@/components/Layout";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../services/usersApi';
 import { useSelector } from 'react-redux';
-import { selectToken, selectUserInfo } from '../../../features/auth/authSlice';
-import Logo from "../../../assets/images/logo.png"
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
+import Logo from "@/assets/images/logo.png";
 
 const UserDetails = () => {
   const user = useSelector(selectUserInfo);

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Button, Card, Col, Form, Input, Row, Select, Typography } from 'antd'
-import LoadingBox from "../../../components/LoadingBox"
+import LoadingBox from "@/components/LoadingBox"
 
 const {Option} = Select;
 

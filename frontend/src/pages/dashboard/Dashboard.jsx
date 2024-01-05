@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import Layout from "../../components/Layout"
-import { selectToken, selectUserInfo } from "../../features/auth/authSlice";
-import DashboardComponent from "../../components/DashboardComponent";
+import Layout from "@/components/Layout";
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
+import DashboardComponent from "@/pages/dashboard/DashboardComponent";
 import { countCompletedWork, countInProgressWork, countPendingWork, countReviewedWork, countTotalWork } from "../../services/reportApi";
 import { useCallback, useEffect, useState } from "react";
 import { countActiveUsers, countAllUsers } from "../../services/usersApi";

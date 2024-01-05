@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom"
-import Layout from "../../../components/Layout"
-import ViewAllCategories from "../../../components/ViewAllCategories"
+import Layout from "@/components/Layout"
+import ViewAllCategories from "@/pages/admin/category/ViewAllCategories"
 import { useCallback, useEffect, useState } from "react"
 import { allWorkCategories } from "../../../services/categoryApi"
 import { useSelector } from "react-redux"
-import { selectToken, selectUserInfo } from "../../../features/auth/authSlice"
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice"
 import { Typography, message } from "antd"
 
 const AllCategories = () => {

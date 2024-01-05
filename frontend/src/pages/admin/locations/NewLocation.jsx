@@ -1,9 +1,9 @@
 import { useState } from "react";
-import CreateLocation from "../../../components/CreateLocation"
-import Layout from "../../../components/Layout"
+import CreateLocation from "@/pages/admin/locations/CreateLocation";
+import Layout from "@/components/Layout";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { useCreateLocationMutation } from "../../../features/locations/locationSlice";
+import { useCreateLocationMutation } from "@/features/locations/locationSlice";
 
 const NewLocation = () => {
     const [addLocation] = useCreateLocationMutation();

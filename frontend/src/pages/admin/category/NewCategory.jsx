@@ -1,6 +1,6 @@
 import { useState } from "react"
-import CreateCategory from "../../../components/CreateCategory"
-import Layout from "../../../components/Layout"
+import CreateCategory from "@/pages/admin/category/CreateCategory"
+import Layout from "@/components/Layout"
 import { createNewCategory } from "../../../services/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { selectUserInfo } from "../../../features/auth/authSlice";
+import { selectUserInfo } from "@/features/auth/authSlice";
 import { Button, Card, Col, Form, Input, Row, Select, Typography, message } from "antd";
-import LoadingBox from "../../../components/LoadingBox";
+import LoadingBox from "@/components/LoadingBox";
 
 const { Option } = Select;
 

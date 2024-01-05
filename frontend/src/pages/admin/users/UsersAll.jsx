@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Layout from "../../../components/Layout";
+import Layout from "@/components/Layout";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../features/auth/authSlice";
+import { selectToken } from "@/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../../../services/usersApi";
-import AllUsers from "../../../components/AllUsers";
+import AllUsers from "@/pages/admin/users/AllUsers";
 import { Typography, message } from "antd";
 
 

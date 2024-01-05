@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
-import Layout from '../../../components/Layout'
+import Layout from "@/components/Layout";
 import { message } from 'antd'
 import { useSelector } from 'react-redux'
-import { selectToken, selectUserInfo } from '../../../features/auth/authSlice'
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice"
 import { useNavigate, useParams } from 'react-router-dom'
 import { getSingleWorkOrder, updateWorkOrder } from '../../../services/workApi'
-import UpdateWork from '../../../components/UpdateWork'
+import UpdateWork from "@/pages/admin/workOrders/UpdateWork";
 import { queryAllEmployees } from '../../../services/employeeApi'
 
 const EditWorkOrder = () => {

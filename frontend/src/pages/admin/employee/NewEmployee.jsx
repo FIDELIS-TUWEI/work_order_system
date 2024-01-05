@@ -1,5 +1,5 @@
-import Layout from "../../../components/Layout";
-import CreateEmployee from "../../../components/CreateEmployee";
+import Layout from "@/components/Layout";
+import CreateEmployee from "@/pages/admin/employee/CreateEmployee";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createNewEmployee } from "../../../services/employeeApi";

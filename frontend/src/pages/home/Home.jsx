@@ -1,6 +1,6 @@
 import { Button, Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/images/logo.png";
+import Logo from "@/assets/images/logo.png";
 
 const Footer = () => {
   return (

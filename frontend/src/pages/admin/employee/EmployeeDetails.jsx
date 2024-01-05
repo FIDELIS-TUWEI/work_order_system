@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import Layout from "../../../components/Layout";
-import ViewEmployee from "../../../components/ViewEmployee";
-import { selectToken } from "../../../features/auth/authSlice";
+import Layout from "@/components/Layout";
+import ViewEmployee from "@/pages/admin/employee/ViewEmployee";
+import { selectToken } from "@/features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { getSingleEmployee } from "../../../services/employeeApi";

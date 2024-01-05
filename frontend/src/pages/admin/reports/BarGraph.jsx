@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Row, message } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { queryWorkOrders, queryAllWork } from "../../../features/work/queryWorkSlice";
-import LoadingBox from "../../../components/LoadingBox";
+import { queryWorkOrders, queryAllWork } from "@/features/work/queryWorkSlice";
+import LoadingBox from "@/components/LoadingBox";
 
 const BarGraph = () => {
     const dispatch = useDispatch();

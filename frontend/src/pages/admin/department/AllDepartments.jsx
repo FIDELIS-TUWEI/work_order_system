@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import Layout from '../../../components/Layout';
-import ViewAllDepartments from '../../../components/ViewAllDepartments';
-import { selectToken } from '../../../features/auth/authSlice';
+import Layout from "@/components/Layout";
+import ViewAllDepartments from "@/pages/admin/department/ViewAllDepartments";
+import { selectToken } from "@/features/auth/authSlice";
 import { useCallback, useEffect, useState } from 'react';
 import { allDepartments } from '../../../services/departmentApi';
 import { Typography, message } from 'antd';

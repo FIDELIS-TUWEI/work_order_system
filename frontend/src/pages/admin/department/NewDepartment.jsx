@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import CreateDepartment from '../../../components/CreateDepartment';
-import Layout from '../../../components/Layout'
+import CreateDepartment from "@/pages/admin/department/CreateDepartment";
+import Layout from "@/components/Layout";
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import { createNewDepartment } from '../../../services/departmentApi';

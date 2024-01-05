@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import CreateDesignation from '../../../components/CreateDesignation';
-import Layout from '../../../components/Layout';
+import CreateDesignation from "@/pages/admin/designation/CreateDesignation";
+import Layout from "@/components/Layout";
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import { createNewDesignation } from '../../../services/designation';

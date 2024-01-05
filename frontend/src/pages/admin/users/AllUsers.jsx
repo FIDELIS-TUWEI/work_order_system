@@ -4,7 +4,7 @@ import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
-import { selectToken } from "../../../features/auth/authSlice";
+import { selectToken } from "@/features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { deleteUser } from "../../../services/usersApi";

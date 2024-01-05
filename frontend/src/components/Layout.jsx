@@ -1,13 +1,13 @@
 import PropTypes from "prop-types"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "../menu/Menu"
+import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "@/menu/Menu"
 import { useDispatch, useSelector } from "react-redux";
 import {CgProfile} from "react-icons/cg";
 import {RiLogoutCircleFill} from "react-icons/ri";
-import { useLogoutMutation } from "../features/auth/authApiSlice";
-import {logout, selectUserInfo} from "../features/auth/authSlice";
+import { useLogoutMutation } from "@/features/auth/authApiSlice";
+import {logout, selectUserInfo} from "@/features/auth/authSlice";
 import { Tooltip, message } from "antd";
-import Logo from "../assets/images/logo.png";
+import Logo from "@/assets/images/logo.png";
 
 const Layout = ({ children }) => {
   const userInfo = useSelector(selectUserInfo);

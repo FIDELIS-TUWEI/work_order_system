@@ -1,10 +1,10 @@
 import { Button, Tooltip, Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
-import { selectToken, selectUserInfo } from '../../../features/auth/authSlice';
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 
 import { useNavigate, useParams } from 'react-router-dom';
-import Logo from "../../../assets/images/logo.png"
+import Logo from "@/assets/images/logo.png"
 import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../services/usersApi';
 

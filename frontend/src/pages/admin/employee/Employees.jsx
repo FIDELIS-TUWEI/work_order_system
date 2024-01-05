@@ -1,7 +1,7 @@
-import Layout from "../../../components/Layout";
-import AllEmployees from "../../../components/AllEmployees";
+import Layout from "@/components/Layout";
+import AllEmployees from "@/pages/admin/employee/AllEmployees";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../features/auth/authSlice";
+import { selectToken } from "@/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { getAllEmployees } from "../../../services/employeeApi";

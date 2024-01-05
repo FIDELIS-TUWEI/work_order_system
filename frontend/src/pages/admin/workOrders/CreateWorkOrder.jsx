@@ -1,13 +1,13 @@
 import { message } from 'antd';
-import Layout from '../../../components/Layout'
+import Layout from "@/components/Layout";
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectToken, selectUserInfo } from '../../../features/auth/authSlice'
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice"
 import { queryCategories } from '../../../services/categoryApi'
-import NewWork from '../../../components/NewWork';
+import NewWork from "@/pages/admin/workOrders/NewWork";
 import { queryLocations } from '../../../services/locationApi';
-import { useCreateWorkMutation } from '../../../features/work/workSlice';
+import { useCreateWorkMutation } from "@/features/work/workSlice";
 
 
 const CreateWorkOrder = () => {

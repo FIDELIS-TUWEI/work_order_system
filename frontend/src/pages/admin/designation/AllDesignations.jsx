@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
-import Layout from '../../../components/Layout';
-import ViewAllDesignations from '../../../components/ViewAllDesignations';
-import { selectToken } from '../../../features/auth/authSlice';
+import Layout from "@/components/Layout";
+import ViewAllDesignations from "@/pages/admin/designation/ViewAllDesignations";
+import { selectToken } from   "@/features/auth/authSlice";
 import { useCallback, useEffect, useState } from 'react';
 import { allDesignations } from '../../../services/designation';
 import { Typography, message } from 'antd';

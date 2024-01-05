@@ -1,11 +1,11 @@
 import { message } from "antd";
-import Layout from "../../../components/Layout";
+import Layout from "@/components/Layout";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../features/auth/authSlice";
+import { selectToken } from "@/features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { editUser, getUserInfo } from "../../../services/usersApi";
 import { useCallback, useEffect, useState } from "react";
-import UpdateUser from "../../../components/UpdateUser";
+import UpdateUser from "@/pages/admin/users/UpdateUser";
 import { queryAllDepartments } from "../../../services/departmentApi";
 import { queryAllDesignations } from "../../../services/designation";
 

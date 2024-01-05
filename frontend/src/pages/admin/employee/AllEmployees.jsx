@@ -6,7 +6,7 @@ import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectToken, selectUserInfo } from "../../../features/auth/authSlice";
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 import { deleteEmployee } from "../../../services/employeeApi";
 
 

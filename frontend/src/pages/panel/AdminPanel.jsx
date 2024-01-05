@@ -1,5 +1,5 @@
-import Layout from "../../components/Layout";
-import Panel from "./Panel";
+import Layout from "@/components/Layout";
+import Panel from "@/pages/panel/Panel";
 
 const AdminPanel = () => {
   return (

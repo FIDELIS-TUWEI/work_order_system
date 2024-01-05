@@ -1,9 +1,9 @@
 import { useState } from "react"
-import EditUserPassword from "../../../components/EditUserPassword"
-import Layout from "../../../components/Layout"
+import EditUserPassword from "@/pages/admin/users/EditUserPassword"
+import Layout from "@/components/Layout"
 import { updateUserPassword } from "../../../services/usersApi";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../../features/auth/authSlice";
+import { selectToken } from "@/features/auth/authSlice";
 import { message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 

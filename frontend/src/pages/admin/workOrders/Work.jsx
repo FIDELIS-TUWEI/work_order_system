@@ -4,7 +4,7 @@ import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
 import { useNavigate } from "react-router-dom"
-import { selectToken } from "../../../features/auth/authSlice"
+import { selectToken } from "@/features/auth/authSlice"
 import { useSelector } from "react-redux"
 import { deleteWorkOrder } from "../../../services/workApi"
 import { useState } from "react";
