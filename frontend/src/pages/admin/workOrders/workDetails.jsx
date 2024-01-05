@@ -2,7 +2,7 @@ import { message } from "antd"
 import Layout from "../../../components/Layout"
 import { useSelector } from "react-redux"
 import { useCallback, useEffect, useRef, useState } from "react";
-import { selectToken } from "../../../utils/redux/slices/authSlice";
+import { selectToken } from "../../../features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleWorkOrder } from "../../../services/workApi";
 import { useReactToPrint } from "react-to-print";
