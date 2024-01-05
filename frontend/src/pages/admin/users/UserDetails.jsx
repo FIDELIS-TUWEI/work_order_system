@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { getUserInfo } from '../../../services/usersApi';
 import { useSelector } from 'react-redux';
-import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice';
+import { selectToken, selectUserInfo } from '../../../features/auth/authSlice';
 import Logo from "../../../assets/logo.png"
 
 const UserDetails = () => {
