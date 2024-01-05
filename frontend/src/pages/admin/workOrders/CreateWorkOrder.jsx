@@ -109,6 +109,7 @@ const CreateWorkOrder = () => {
         handleCategoryChange={handleCategoryChange} 
         navigate={navigate}
         workLocation={workLocation}
+        getCategories={getCategories}
       />
     </Layout>
   )
