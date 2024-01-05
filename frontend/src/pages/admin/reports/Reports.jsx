@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import Logo from "../../../assets/images/logo.png";
 import Layout from "../../../components/Layout";
-import WorkReport from "../../../components/WorkReport";
+import WorkReport from "./WorkReport";
 import { Button, Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
