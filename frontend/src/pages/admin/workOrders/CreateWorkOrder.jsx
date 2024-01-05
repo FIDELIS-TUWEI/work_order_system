@@ -3,11 +3,11 @@ import Layout from '../../../components/Layout'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectToken, selectUserInfo } from '../../../utils/redux/slices/authSlice'
+import { selectToken, selectUserInfo } from '../../../features/auth/authSlice'
 import { queryCategories } from '../../../services/categoryApi'
 import NewWork from '../../../components/NewWork';
 import { queryLocations } from '../../../services/locationApi';
-import { useCreateWorkMutation } from '../../../utils/redux/slices/workSlice';
+import { useCreateWorkMutation } from '../../../features/work/workSlice';
 
 
 const CreateWorkOrder = () => {
