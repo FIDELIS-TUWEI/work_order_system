@@ -3,7 +3,7 @@ import CreateLocation from "../../../components/CreateLocation"
 import Layout from "../../../components/Layout"
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
-import { useCreateLocationMutation } from "../../../utils/redux/slices/locationSlice";
+import { useCreateLocationMutation } from "../../../features/locations/locationSlice";
 
 const NewLocation = () => {
     const [addLocation] = useCreateLocationMutation();
