@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import { Button } from "antd"
 import moment from "moment"
 import LoadingBox from "./LoadingBox";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/images/logo.png";
 
 const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navigate }) => {
     // Conditional statement to check if dueDate is empty

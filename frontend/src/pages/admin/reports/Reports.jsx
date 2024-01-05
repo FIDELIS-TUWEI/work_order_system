@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
-import Logo from "../../../assets/logo.png";
+import Logo from "../../../assets/images/logo.png";
 import Layout from "../../../components/Layout";
 import WorkReport from "../../../components/WorkReport";
 import { Button, Typography, message } from "antd";

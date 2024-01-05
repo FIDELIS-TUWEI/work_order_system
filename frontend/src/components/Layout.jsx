@@ -7,7 +7,7 @@ import {RiLogoutCircleFill} from "react-icons/ri";
 import { useLogoutMutation } from "../features/auth/authApiSlice";
 import {logout, selectUserInfo} from "../features/auth/authSlice";
 import { Tooltip, message } from "antd";
-import Logo from "../assets/logo.png"
+import Logo from "../assets/images/logo.png";
 
 const Layout = ({ children }) => {
   const userInfo = useSelector(selectUserInfo);
