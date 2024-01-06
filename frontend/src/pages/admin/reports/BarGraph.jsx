@@ -1,19 +1,10 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Card, Col, Row, message } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { queryWorkOrders, queryAllWork } from "@/features/work/queryWorkSlice";
 import LoadingBox from "@/components/LoadingBox";
+import { useQueryAllWorkQuery } from "@/features/work/workSlice";
 
 const BarGraph = () => {
-    const dispatch = useDispatch();
-    const workData = useSelector(queryAllWork);
-    const { isLoading, workOrders, error } = workData;
-
-    // useEffect hook
-    useEffect(() => {
-        dispatch(queryWorkOrders());
-    }, [dispatch]);
+    const { data: workOrders, isLoading, error } = useQueryAllWorkQuery();
 
     if (isLoading) {
         return <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
@@ -22,7 +13,7 @@ const BarGraph = () => {
     };
 
     if (error) {
-       return message.error(error);
+        return message.error(error);
     };
 
     // Check and ensure workOrders?.data is an array
