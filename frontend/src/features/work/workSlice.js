@@ -13,21 +13,34 @@ export const workApi = createApi({
                 body: values,
             }),
         }),
-        allWork: builder.query({
+        WorkOrders: builder.query({
             query: (page) => ({
-                url: `/all-work?pageNumber=${page}`,
+                url: `/getall/work?pageNumber=${page}`,
+                method: "GET",
+            }),
+        }),
+        singleWork: builder.query({
+            query: (id) => ({
+                url: `/single/work/${id}`,
                 method: "GET",
             }),
         }),
         queryAllWork: builder.query({
             query: () => ({
-                url: `/search/work`,
+                url: `/query/all/work`,
                 method: "GET",
+            }),
+        }),
+        updateWork: builder.mutation({
+            query: ({ id, values }) => ({
+                url: `/update/work/${id}`,
+                method: "PUT",
+                body: values,
             }),
         }),
         deleteWork: builder.mutation({
             query: (id) => ({
-                url: `/work/${id}`,
+                url: `/delete/work/${id}`,
                 method: "DELETE",
             }),
         })
@@ -36,7 +49,9 @@ export const workApi = createApi({
 
 export const {
     useCreateWorkMutation,
+    useWorkOrdersQuery,
+    useSingleWorkQuery,
     useQueryAllWorkQuery,
-    useAllWorkQuery,
+    useUpdateWorkMutation,
     useDeleteWorkMutation,
 } = workApi;
