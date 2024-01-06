@@ -11,7 +11,8 @@ const store = configureStore({
         [workApi.reducerPath]: workApi.reducer,
         [locationsApi.reducerPath]: locationsApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware, workApi.middleware, locationsApi.middleware),
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware().concat(apiSlice.middleware, workApi.middleware, locationsApi.middleware),
     devTools: true
 });
 
