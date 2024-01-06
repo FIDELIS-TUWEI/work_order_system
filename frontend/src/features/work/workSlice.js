@@ -49,7 +49,7 @@ export const workApi = createApi({
             providesTags: ["WorkOrder"],
         }),
         updateWork: builder.mutation({
-            query: ({ id, ...values }) => ({
+            query: ({id, values}) => ({
                 url: `/update/work/${id}`,
                 method: "PUT",
                 body: values,
