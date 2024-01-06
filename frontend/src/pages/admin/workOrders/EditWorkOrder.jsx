@@ -4,29 +4,39 @@ import { message } from 'antd'
 import { useSelector } from 'react-redux'
 import { selectToken, selectUserInfo } from "@/features/auth/authSlice"
 import { useNavigate, useParams } from 'react-router-dom'
-import { getSingleWorkOrder, updateWorkOrder } from '../../../services/workApi'
+import { getSingleWorkOrder} from '../../../services/workApi'
 import UpdateWork from "@/pages/admin/workOrders/UpdateWork";
 import { queryAllEmployees } from '../../../services/employeeApi'
+import { useUpdateWorkMutation } from '@/features/work/workSlice';
 
 const EditWorkOrder = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
+  const [updateWorkOrder] = useUpdateWorkMutation();
   const [workDetails, setWorkDetails] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {id} = useParams();
+  const { id } = useParams();
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
     try {
       setLoading(true);
-      await updateWorkOrder(id, values);
-      if (workDetails.reviewed !== true) {
+      const { error } = await updateWorkOrder(id, values).unwrap();
+
+      if (error) {
+        if (error.status === 400 && error.data && error.data.message) {
+          message.error(error.data.message);
+        } else {
+          message.error("Failed to update work order");
+        }
+      } else {
         message.success('Work Order Updated Successfully');
+        navigate('/work/list');
       }
-      navigate('/work/list');
+
       setLoading(false);
     } catch (error) {
       message.error(error.message, "Work Order Update Failed");
