@@ -25,24 +25,28 @@ export const locationsApi = createApi({
                 method: "POST",
                 body: values,
             }),
+            invalidatesTags: ["Location"],
         }),
         locations: builder.query({
             query: (page) => ({
                 url: `/all-locations?pageNumber=${page}`,
                 method: "GET",
             }),
+            providesTags: ["Location"],
         }),
         queryAllLocations: builder.query({
             query: () => ({
                 url: `/search/location`,
                 method: "GET",
             }),
+            providesTags: ["Location"],
         }),
         deleteLocation: builder.mutation({
             query: (id) => ({
                 url: `/delete/location/${id}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["Location"],
         })
     })
 });
