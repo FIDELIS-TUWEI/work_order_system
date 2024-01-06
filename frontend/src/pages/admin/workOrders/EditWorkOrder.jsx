@@ -4,6 +4,7 @@ import { message } from 'antd'
 import { useSelector } from 'react-redux'
 import { selectToken, selectUserInfo } from "@/features/auth/authSlice"
 import { useNavigate, useParams } from 'react-router-dom'
+import { getSingleWorkOrder} from '../../../services/workApi'
 import UpdateWork from "@/pages/admin/workOrders/UpdateWork";
 import { queryAllEmployees } from '../../../services/employeeApi'
 import { useSingleWorkQuery, useUpdateWorkMutation } from '@/features/work/workSlice';
@@ -11,12 +12,15 @@ import { useSingleWorkQuery, useUpdateWorkMutation } from '@/features/work/workS
 const EditWorkOrder = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
-  const [workDetails] = useSingleWorkQuery();
   const [updateWorkOrder, { isLoading}] = useUpdateWorkMutation();
+  const [workDetails, setWorkDetails] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
+  const { data: singleWork } = useSingleWorkQuery(id);
+
+  console.log(singleWork);
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
@@ -38,6 +42,21 @@ const EditWorkOrder = () => {
       message.error(error.message, "Work Order Update Failed");
     }
   }
+
+  // Function to get work order details
+  const getWorkOrderDetails = useCallback (async (id) => {
+    try {
+      const res = await getSingleWorkOrder(id, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setWorkDetails(res.data);
+    } catch (error) {
+      message.error("Failed to fetch work order details", error.message);
+    }
+  }, [token]);
 
   // Function to handle change in employee selection
   const handleEmployeeChange = (value) => {
@@ -61,8 +80,11 @@ const EditWorkOrder = () => {
 
   // UseEffect hook
   useEffect(() => {
+    if (id) {
+      getWorkOrderDetails(id);
       getEmployees();
-  }, [getEmployees]);
+    }
+  }, [id, getWorkOrderDetails, getEmployees]);
   
   return (
     <Layout>
