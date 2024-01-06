@@ -12,20 +12,19 @@ import { useUpdateWorkMutation } from '@/features/work/workSlice';
 const EditWorkOrder = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
-  const [updateWorkOrder] = useUpdateWorkMutation();
+  const [updateWorkOrder, { isLoading}] = useUpdateWorkMutation();
   const [workDetails, setWorkDetails] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
     try {
-      setLoading(true);
-      const { error } = await updateWorkOrder(id, values).unwrap();
-
+      const { data, error } = await updateWorkOrder({id, values}).unwrap();
+      console.log("Updated work order:", data);
+      console.log("Update error:", error);
       if (error) {
         if (error.status === 400 && error.data && error.data.message) {
           message.error(error.data.message);
@@ -37,10 +36,8 @@ const EditWorkOrder = () => {
         navigate('/work/list');
       }
 
-      setLoading(false);
     } catch (error) {
       message.error(error.message, "Work Order Update Failed");
-      setLoading(false);
     }
   }
 
@@ -97,7 +94,7 @@ const EditWorkOrder = () => {
           employees={employees}
           selectedEmployee={selectedEmployee}
           handleEmployeeChange={handleEmployeeChange}
-          loading={loading}
+          isLoading={isLoading}
         />
     </Layout>
   )
