@@ -22,9 +22,8 @@ const EditWorkOrder = () => {
   // Function to handle form submit
   const onFinishHandler = async (values) => {
     try {
-      const { data, error } = await updateWorkOrder({id, values}).unwrap();
-      console.log("Updated work order:", data);
-      console.log("Update error:", error);
+      const { error } = await updateWorkOrder({id, values}).unwrap();
+
       if (error) {
         if (error.status === 400 && error.data && error.data.message) {
           message.error(error.data.message);
