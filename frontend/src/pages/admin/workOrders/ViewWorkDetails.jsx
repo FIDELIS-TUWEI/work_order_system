@@ -18,7 +18,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 
     // Display the assignedTo field as firstName of the assigned employee
     const assignedToName = workDetails.assignedTo
-        ? `${workDetails.assignedTo.firstName}`
+        ? `${workDetails.assignedTo.firstName} ${workDetails.assignedTo.lastName}`
         : 'Not Assigned';
 
     // Display the requestedBy field as username of the user who requested the work
@@ -151,7 +151,7 @@ const ViewWorkDetails = ({ workDetails, loading, componentPDF, handlePrint, navi
 };
 
 ViewWorkDetails.propTypes = {
-    workDetails: PropTypes.array,
+    workDetails: PropTypes.object,
     loading: PropTypes.bool,
     handlePrint: PropTypes.func,
     componentPDF: PropTypes.object,
