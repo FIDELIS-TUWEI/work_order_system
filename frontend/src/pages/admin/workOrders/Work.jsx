@@ -3,14 +3,17 @@ import { Button, Modal, message, Tooltip, Badge, Table } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { selectToken } from "@/features/auth/authSlice"
 import { useSelector } from "react-redux"
 import { deleteWorkOrder } from "../../../services/workApi"
 import { useState } from "react";
+import { useDeleteWorkMutation } from "@/features/work/workSlice";
 
 
 const Work = ({allWork, user, loading, getAllWork }) => {
+  const { id } = useParams();
+  const [deleteWork] = useDeleteWorkMutation(id);
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
@@ -25,15 +28,19 @@ const Work = ({allWork, user, loading, getAllWork }) => {
   // Function to confirm modal delete
   const handleDelete = async () => {
       try {
-          await deleteWorkOrder(selectedWorkToDelete._id, {
-              withCredentials: true,
-              headers: {
-                  Authorization: `Bearer ${token}`,
-              },
-          });
-          message.success("Work deleted successfully");
-          setIsModalVisible(false);
-          getAllWork();
+          const { error } = await deleteWork(selectedWorkToDelete._id).unwrap();
+
+          if (error) {
+              if (error.status === 400 && error.data && error.data.message) {
+                  message.error(error.data.message);
+              } else {
+                  message.error("Failed to delete work order");
+              }
+          } else {
+            message.success("Work deleted successfully");
+            setIsModalVisible(false);
+            getAllWork();
+          }
       } catch (error) {
           console.error(error);
           message.error("An error occurred while deleting the work order", error);
