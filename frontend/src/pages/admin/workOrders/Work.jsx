@@ -53,6 +53,28 @@ const Work = ({allWork, user, loading, getAllWork }) => {
     "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
   ].includes(user?.role);
 
+  // Status badge colors
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Pending":
+        return "red";
+      case "In_Progress":
+        return "yellow";
+      case "Complete":
+        return "green";
+      default:
+        return "default";
+    }
+  };
+
+  const renderStatusBagde = (status) => (
+      <Badge
+        color={getStatusColor(status)}
+        text={status}
+      />
+  );
+  
+
   // AntD Table Columns
   const columns = [
     {
@@ -80,20 +102,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
       responsive: ["md", "lg"],
       dataIndex: "status",
       key: "status",
-      render: (status) => (
-          <Badge
-            color={
-              status === "Pending"
-                ? "red"
-                : status === "In_Progress"
-                ? "yellow"
-                : status === "Complete"
-                ? "green"
-                : "default"
-            }
-            text={status}
-          />
-      ),
+      render: renderStatusBagde,
     },
     {
       title: "Location",
