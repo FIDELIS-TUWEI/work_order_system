@@ -7,15 +7,21 @@ import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 import Work from "@/pages/admin/workOrders/Work";
 import { getAllWorkOrders } from "../../../services/workApi";
+import { useWorkOrdersQuery } from "@/features/work/workSlice";
 
 
 const AllWorkOrders = () => {
+  const { data: workOrders, isLoading, error } = useWorkOrdersQuery();
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [allWork, setAllWork] = useState([]);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  console.log("All WorkOrders : ", workOrders);
+  console.log("Loading :", isLoading);
+  console.log("Error : ", error);
 
   // Function to get all work orders from API
   const getAllWork = async () => {
