@@ -86,6 +86,11 @@ const workOrderSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "User",
     },
+    verifiedByUsername: {
+        type: String,
+        ref: "User",
+        default: "Not Verified",
+    },
     verifyComments: {
         type: String,
         default: "No review comments"
