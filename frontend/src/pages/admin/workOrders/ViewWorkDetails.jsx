@@ -3,13 +3,9 @@ import { Button, message } from "antd"
 import moment from "moment"
 import LoadingBox from "@/components/LoadingBox";
 import Logo from "@/assets/images/logo.png";
-import { useSingleWorkQuery } from "@/features/work/workSlice";
-import { useParams } from "react-router-dom";
 
-const ViewWorkDetails = ({ componentPDF, handlePrint, navigate }) => {
-    const { id } = useParams();
-    const { data: workDetails, isLoading, error } = useSingleWorkQuery(id);
-    // Conditional statement to check if dueDate is empty
+const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, handlePrint, navigate }) => {
+    // Conditional statement to display loading and error messages
     if (isLoading) {
         return <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             <LoadingBox />
@@ -19,9 +15,6 @@ const ViewWorkDetails = ({ componentPDF, handlePrint, navigate }) => {
     if (error) {
         return message.error(error);
     };
-
-    // check if the workDetails is an array
-    const workDetailsArray = workDetails?.data || [];
 
     // Function to convert dueDate values from Object to date string format to YYYY-MM-DD
     const dueDateArray = Array.isArray(workDetailsArray.dueDate) ? workDetailsArray?.dueDate : []
@@ -154,6 +147,9 @@ const ViewWorkDetails = ({ componentPDF, handlePrint, navigate }) => {
 };
 
 ViewWorkDetails.propTypes = {
+    workDetailsArray: PropTypes.object,
+    isLoading: PropTypes.bool,
+    error: PropTypes.object,
     handlePrint: PropTypes.func,
     componentPDF: PropTypes.object,
     navigate: PropTypes.func
