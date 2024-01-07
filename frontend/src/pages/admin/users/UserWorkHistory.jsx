@@ -42,14 +42,6 @@ const UserWorkHistory = () => {
     // antd Columns
     const columns = [
         {
-            title: "Title",
-            fixed: "left",
-            align: "center",
-            responsive: ["md", "lg"],
-            dataIndex: "title",
-            key: "title",
-        },
-        {
             title: "Description",
             responsive: ["md", "lg"],
             align: "center",
