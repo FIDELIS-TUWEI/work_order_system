@@ -101,15 +101,6 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
         </Form.Item>
       </Col>
       <Col xs={24} md={24} lg={8}>
-        <Form.Item
-          label="Tracking Comments"
-          name="trackerMessage"
-          rules={[{ required: true, message: 'Please Enter Tracking Comments!' }]}
-        >
-          <Input type='text' placeholder='Enter Tracking comments' />
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={24} lg={8}>
         <Form.Item 
           name="dueDate" 
           label="Due Date" 
