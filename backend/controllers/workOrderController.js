@@ -184,7 +184,14 @@ async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
 
     // Update the work order only if it hasn't been reviewed
     updatedWorkOrder.reviewed = true;
-    updatedWorkOrder.verifiedBy = req.body.verifiedBy;
+    updatedWorkOrder.verifiedBy = userId;
+
+    const verifyingUser = await User.findById(userId).select("username")
+
+    if (verifyingUser) {
+        updatedWorkOrder.verifiedByUsername = verifyingUser.username || "No username";
+    };
+
     updatedWorkOrder.dateVerified = req.body.dateVerified;
     updatedWorkOrder.verifyComments = req.body.verifyComments;
 
