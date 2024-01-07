@@ -22,7 +22,6 @@ const ViewWorkDetails = ({ componentPDF, handlePrint, navigate }) => {
 
     // check if the workDetails is an array
     const workDetailsArray = workDetails?.data || [];
-    console.log(workDetailsArray);
 
     // Function to convert dueDate values from Object to date string format to YYYY-MM-DD
     const dueDateArray = Array.isArray(workDetailsArray.dueDate) ? workDetailsArray?.dueDate : []
@@ -37,12 +36,6 @@ const ViewWorkDetails = ({ componentPDF, handlePrint, navigate }) => {
     const requestedByUsername = workDetailsArray.requestedBy
         ? `${workDetailsArray.requestedBy.username}`
         : 'Not Requested';
-
-    // Display the reviewedBy field as username of the user who reviewed the work
-    const verifiedByUsername = workDetailsArray.verifiedBy
-        ? `${workDetailsArray.verifiedBy.username}`
-        : 'Not Reviewed';
-        console.log(verifiedByUsername);
 
     // Display review commments
     const verifyComments = workDetailsArray.verifyComments
@@ -109,7 +102,7 @@ const ViewWorkDetails = ({ componentPDF, handlePrint, navigate }) => {
                 </div>
 
                 <div className="details">
-                    <span>Tracking Comments:</span>
+                    <span>Tracker Message:</span>
                     <span>{workDetailsArray?.trackerMessage}</span>
                 </div>
 
@@ -138,7 +131,7 @@ const ViewWorkDetails = ({ componentPDF, handlePrint, navigate }) => {
 
                 <div className="details">
                     <span>Verified By:</span>
-                    <span>{verifiedByUsername}</span>
+                    <span>{workDetailsArray?.verifiedByUsername}</span>
                 </div>
 
                 <div className="details">
