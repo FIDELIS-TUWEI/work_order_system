@@ -89,7 +89,54 @@ const Work = ({allWork, user, loading, getAllWork }) => {
   // Render assignedTo
   const renderAssigned = (assignedTo) => (
     assignedTo ? `${assignedTo.firstName} ${assignedTo.lastName}` : "Unassigned"
-  )
+  );
+
+  // Render actions
+  const renderActions = (work, isAuthorised, user, showModal, navigate) => (
+    <>
+      <Tooltip title="View Work">
+        <Button
+            style={{ color: 'grey', border: 'none', margin: '0 5px' }}
+            onClick={() => navigate(`/work/details/${work._id}`)}
+        >
+          <AiFillEye />
+        </Button>
+      </Tooltip>
+
+      {work.reviewed === true ? (
+        <Tooltip title="This work has been reviewed, you cannot edit it!">
+          <Button
+              style={{ color: 'grey', border: 'none', margin: '0 5px' }}
+              onClick={() => navigate(`/edit/work/${work._id}`)}
+              disabled={work.reviewed === true}
+          >
+              <BiSolidEditAlt />
+          </Button>
+        </Tooltip>
+      ) : (
+        <Tooltip title="Edit Work">
+            <Button
+                style={{ color: 'green', border: 'none', margin: '0 5px' }}
+                onClick={() => navigate(`/edit/work/${work._id}`)}
+            >
+                <BiSolidEditAlt />
+            </Button>
+        </Tooltip>
+      )}
+
+      {isAuthorised && (
+        <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work"}>
+            <Button
+                style={{ color: 'red', border: 'none', margin: '0 5px' }}
+                onClick={() => showModal(work)}
+                disabled={!["admin", "superadmin"].includes(user?.role)}
+            >
+                <MdDelete />
+            </Button>
+        </Tooltip>
+      )}
+        </>
+  );
   
 
   // AntD Table Columns
@@ -147,50 +194,8 @@ const Work = ({allWork, user, loading, getAllWork }) => {
       responsive: ["md", "lg"],
       dataIndex: "actions",
       key: "actions",
-      render: (_, work) => (
-        <>
-              <Tooltip title="View Work">
-                <Button
-                    style={{ color: 'grey', border: 'none', margin: '0 5px' }}
-                    onClick={() => navigate(`/work/details/${work._id}`)}
-                >
-                  <AiFillEye />
-                </Button>
-              </Tooltip>
-              {work.reviewed === true ? (
-                <Tooltip title="This work has been reviewed, you cannot edit it!">
-                  <Button
-                      style={{ color: 'grey', border: 'none', margin: '0 5px' }}
-                      onClick={() => navigate(`/edit/work/${work._id}`)}
-                      disabled={work.reviewed === true}
-                  >
-                      <BiSolidEditAlt />
-                  </Button>
-                </Tooltip>
-              ) : (
-                <Tooltip title="Edit Work">
-                    <Button
-                        style={{ color: 'green', border: 'none', margin: '0 5px' }}
-                        onClick={() => navigate(`/edit/work/${work._id}`)}
-                    >
-                        <BiSolidEditAlt />
-                    </Button>
-                </Tooltip>
-              )}
-
-              {isAuthorised && (
-                <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work"}>
-                    <Button
-                        style={{ color: 'red', border: 'none', margin: '0 5px' }}
-                        onClick={() => showModal(work)}
-                        disabled={!["admin", "superadmin"].includes(user?.role)}
-                    >
-                        <MdDelete />
-                    </Button>
-                </Tooltip>
-              )}
-        </>
-      ),      
+      render: (_, work) => 
+        renderActions(work, isAuthorised, user, showModal, navigate)
     },
   ];
 
