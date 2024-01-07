@@ -73,6 +73,18 @@ const Work = ({allWork, user, loading, getAllWork }) => {
         text={status}
       />
   );
+
+  // Render locationTitle
+  const renderLocation = (locations) => (
+    <>
+      {Array.isArray(locations) && locations.map((location, index) =>
+          <span key={location._id}>
+              {location.locationTitle}
+              {index < locations.length - 1 ? ", " : ""}
+          </span> 
+      )}
+    </>
+  );
   
 
   // AntD Table Columns
@@ -111,16 +123,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
       responsive: ["md", "lg"],
       dataIndex: "location",
       key: "location",
-      render: (locations) => (
-          <>
-              {Array.isArray(locations) && locations.map((location, index) =>
-                  <span key={location._id}>
-                      {location.locationTitle}
-                      {index < locations.length - 1 ? ", " : ""}
-                  </span> 
-              )}
-          </>
-      ),
+      render: renderLocation,
     },
     {
       title: "Assigned To",
