@@ -185,14 +185,14 @@ async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
     // Update the work order only if it hasn't been reviewed
     updatedWorkOrder.reviewed = true;
     updatedWorkOrder.verifiedBy = req.body.verifiedBy;
-    updatedWorkOrder.dateVerified = req.body.dateified;
+    updatedWorkOrder.dateVerified = req.body.dateVerified;
     updatedWorkOrder.verifyComments = req.body.verifyComments;
 
     // Save the updated work order
     await updatedWorkOrder.save();
 
-    // clear the user who requested the work order from the array of work orders when the work is reviewed
-    await User.findByIdAndUpdate(userId, { $pull: { workOrders: updatedWorkOrder._id } });
+    // Update the user's workOrders array
+    await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
 
 };
 
