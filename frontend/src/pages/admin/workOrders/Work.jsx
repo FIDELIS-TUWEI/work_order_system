@@ -85,6 +85,11 @@ const Work = ({allWork, user, loading, getAllWork }) => {
       )}
     </>
   );
+
+  // Render assignedTo
+  const renderAssigned = (assignedTo) => (
+    assignedTo ? `${assignedTo.firstName} ${assignedTo.lastName}` : "Unassigned"
+  )
   
 
   // AntD Table Columns
@@ -132,9 +137,7 @@ const Work = ({allWork, user, loading, getAllWork }) => {
       responsive: ["md", "lg"],
       dataIndex: "assignedTo",
       key: "assignedTo",
-      render: (assignedTo) => (
-          assignedTo ? `${assignedTo.firstName} ${assignedTo.lastName}` : "Unassigned"
-      ),
+      render: renderAssigned,
     },
     {
       title: "Actions",
