@@ -114,9 +114,9 @@ const BarGraph = () => {
         </Card>
         </Col>
 
-        <Col xs={24} md={12} lg={8}>
+        <Col>
         <Card title="WorkOrders Requested By Users" style={{ margin: "6px" }}>
-            <ResponsiveContainer width="100%" aspect={1}>
+            <ResponsiveContainer width="100%" minWidth={700} aspect={1}>
                 <LineChart>
                     <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
                     <XAxis dataKey="user" />
