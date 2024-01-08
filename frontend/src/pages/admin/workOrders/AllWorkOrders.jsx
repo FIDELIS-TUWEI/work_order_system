@@ -11,7 +11,7 @@ import { useWorkOrdersQuery } from "@/features/work/workSlice";
 
 
 const AllWorkOrders = () => {
-  const { data: workOrders, isLoading, error } = useWorkOrdersQuery();
+  const { data: workOrders, isLoading, error } = useWorkOrdersQuery(1);
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [allWork, setAllWork] = useState([]);
