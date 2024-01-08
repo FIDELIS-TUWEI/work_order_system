@@ -52,26 +52,31 @@ const BarGraph = () => {
       return counts;
     }, {});
 
-    // generate unique colors for each status
-    const uniqueStatusColors = generateUniqueColors(Object.keys(workStatusCounts).length);
-
+    // Map status to colors
+    const statusColors = new Map([
+      ["Pending", "red"],
+      ["In_Progress", "yellow"],
+      ["Complete", "green"],
+    ])
     // Convert the workStatusCounts object to an array of objects
-    const workStatusCountsArray = Object.entries(workStatusCounts).map(([status, count], index) => ({ status, count, fill: uniqueStatusColors[index] }));
-
-    // Rest of the code...
+    const workStatusCountsArray = Object.entries(workStatusCounts).map(([status, count]) => ({ 
+        status, 
+        count, 
+        fill: statusColors.get(status) || "#8884d8"
+    }));
 
   return (
     <div style={{ margin: "15px 2px" }}>
         <Row gutter={16}>
         <Col xs={24} md={12} lg={8}>
         <Card title="Work Orders Assigned To Employees" style={{ margin: "6px" }}>
-            <ResponsiveContainer aspect={1} width="70%" height="10%">
+            <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie 
                         data={workCountsArray} 
                         dataKey="count" 
                         nameKey="employee" 
-                        cx={250} 
+                        cx={160} 
                         cy={100} 
                         innerRadius={60}
                         outerRadius={80} 
@@ -87,20 +92,20 @@ const BarGraph = () => {
 
         <Col xs={24} md={12} lg={8}>
         <Card title="Work Orders By Status" style={{ margin: "6px" }}>
-            <ResponsiveContainer aspect={1} width="70%" height="10%">
+            <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie 
                         data={workStatusCountsArray} 
                         dataKey="count" 
                         nameKey="status" 
-                        cx={250} 
+                        cx={160} 
                         cy={100}
                         startAngle={180}
                         endAngle={0} 
                         innerRadius={50}
                         outerRadius={70} 
                         paddingAngle={5}
-                        fill="#8884d8"  
+                        fill={(entry) => entry.data.fill}  
                     />
                     <Tooltip />
                     <Legend />
