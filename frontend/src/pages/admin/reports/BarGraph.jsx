@@ -76,8 +76,8 @@ const BarGraph = () => {
                         data={workCountsArray} 
                         dataKey="count" 
                         nameKey="employee" 
-                        cx={160} 
-                        cy={100} 
+                        cx="50%" 
+                        cy="50%" 
                         innerRadius={60}
                         outerRadius={80} 
                         paddingAngle={5}
@@ -98,8 +98,8 @@ const BarGraph = () => {
                         data={workStatusCountsArray} 
                         dataKey="count" 
                         nameKey="status" 
-                        cx={160} 
-                        cy={100}
+                        cx="50%" 
+                        cy="50%"
                         startAngle={180}
                         endAngle={0} 
                         innerRadius={50}
