@@ -65,9 +65,19 @@ const BarGraph = () => {
         <Row gutter={16}>
         <Col xs={24} md={12} lg={8}>
         <Card title="Work Orders Assigned To Employees" style={{ margin: "6px" }}>
-            <ResponsiveContainer width="100%" aspect={1}>
+            <ResponsiveContainer aspect={1} width="70%" height="10%">
                 <PieChart>
-                    <Pie data={workCountsArray} dataKey="count" nameKey="employee" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
+                    <Pie 
+                        data={workCountsArray} 
+                        dataKey="count" 
+                        nameKey="employee" 
+                        cx={250} 
+                        cy={100} 
+                        innerRadius={60}
+                        outerRadius={80} 
+                        paddingAngle={5}
+                        fill="#8884d8"  
+                    />
                     <Tooltip />
                     <Legend />
                 </PieChart>
@@ -77,9 +87,21 @@ const BarGraph = () => {
 
         <Col xs={24} md={12} lg={8}>
         <Card title="Work Orders By Status" style={{ margin: "6px" }}>
-            <ResponsiveContainer width="100%" aspect={1}>
+            <ResponsiveContainer aspect={1} width="70%" height="10%">
                 <PieChart>
-                    <Pie data={workStatusCountsArray} dataKey="count" nameKey="status" cx="50%" cy="50%" outerRadius={80} fill="#8884d8"  />
+                    <Pie 
+                        data={workStatusCountsArray} 
+                        dataKey="count" 
+                        nameKey="status" 
+                        cx={250} 
+                        cy={100}
+                        startAngle={180}
+                        endAngle={0} 
+                        innerRadius={50}
+                        outerRadius={70} 
+                        paddingAngle={5}
+                        fill="#8884d8"  
+                    />
                     <Tooltip />
                     <Legend />
                 </PieChart>
