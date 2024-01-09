@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -136,13 +136,15 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
         </Button>
       </div>
 
-      <Table 
-        loading={loading}
-        columns={columns}
-        dataSource={employees}
-        pagination={false}
-        rowKey="_id"
-      />
+      <Card>
+        <Table 
+          loading={loading}
+          columns={columns}
+          dataSource={employees}
+          pagination={false}
+          rowKey="_id"
+        />
+      </Card>
 
       <Modal
         title="Delete Employee"
