@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Modal, message, Tooltip, Badge, Table } from "antd"
+import { Button, Modal, message, Tooltip, Badge, Table, Card } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
@@ -210,14 +210,16 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
             </Button>
         </div>
 
-        <Table
-            loading={loading}
-            columns={columns}
-            dataSource={workOrdersArray}
-            pagination={false}
-            scroll={{ x: 1500, y: 300 }}
-            rowKey="_id"
-        />
+        <Card>
+          <Table
+              loading={loading}
+              columns={columns}
+              dataSource={workOrdersArray}
+              pagination={false}
+              scroll={{ x: 1500, y: 300 }}
+              rowKey="_id"
+          />
+        </Card>
 
         <Modal
             title="Delete Work"
