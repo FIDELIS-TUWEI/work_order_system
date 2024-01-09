@@ -7,7 +7,7 @@ import { BiSolidUserCheck } from "react-icons/bi";
 
 // Dashboard card
 const DashboardCard = ({ title, value, icon }) => (
-    <Card className="custom-card">
+    <Card className="custom-card" hoverable>
         <Space direction="horizontal">
             {icon}
             <Statistic title={title} value={value} />
@@ -121,45 +121,57 @@ const DashboardComponent = ({ user, pendingWorkCount,
     // Render Managers card
     const renderManagersCard = () => (
         <Space direction="horizontal">
-            <DashboardCard 
-                title={"Total Work"} 
-                value={totalWorkCount} 
-                icon={
-                    <MdOutlineWork size={24} color="grey" />
-                }
-            />
+            <Row gutter={16}>
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Total Work"} 
+                        value={totalWorkCount} 
+                        icon={
+                            <MdOutlineWork size={24} color="grey" />
+                        }
+                    />
+                </Col>
 
-            <DashboardCard
-                title={"Pending Work"}
-                value={pendingWorkCount}
-                icon={
-                    <MdOutlinePendingActions size={24} color="orange" />
-                } 
-            />
+                <Col span={8}>
+                    <DashboardCard
+                        title={"Pending Work"}
+                        value={pendingWorkCount}
+                        icon={
+                            <MdOutlinePendingActions size={24} color="orange" />
+                        } 
+                    />
+                </Col>
 
-            <DashboardCard 
-                title={"Progress Work"}
-                value={inProgressCount}
-                icon={
-                    <FaHourglassHalf size={24} color="blue" />
-                }
-            />
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Progress Work"}
+                        value={inProgressCount}
+                        icon={
+                            <FaHourglassHalf size={24} color="blue" />
+                        }
+                    />
+                </Col>
 
-            <DashboardCard 
-                title={"Completed Work"}
-                value={completedCount}
-                icon={
-                    <FaCheckCircle size={24} color="green" />
-                }
-            />
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Completed Work"}
+                        value={completedCount}
+                        icon={
+                            <FaCheckCircle size={24} color="green" />
+                        }
+                    />
+                </Col>
 
-            <DashboardCard 
-                title={"Reviewed Work"}
-                value={reviewedCount}
-                icon={
-                    <MdOutlinePreview size={24} color="purple" />
-                }
-            />
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Reviewed Work"}
+                        value={reviewedCount}
+                        icon={
+                            <MdOutlinePreview size={24} color="purple" />
+                        }
+                    />
+                </Col>
+            </Row>
         </Space>
     );
 
@@ -185,7 +197,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
     } 
   return (
     <Space direction="vertical" size={24}>
-        <Typography.Title level={4}>Dashboard Analytics</Typography.Title>
+        <Typography.Title level={4} style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard Analytics</Typography.Title>
             {renderCustomCard()}
     </Space>
   )
