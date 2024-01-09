@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, message } from "antd";
 import { useState } from "react";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
@@ -82,13 +82,15 @@ const ViewAllLocations = ({ navigate, loading,
             </Button>
         </div>
 
-        <Table 
-            loading={loading}
-            columns={columns}
-            dataSource={locations}
-            rowKey="_id"
-            pagination={false}
-        />
+        <Card>
+            <Table 
+                loading={loading}
+                columns={columns}
+                dataSource={locations}
+                rowKey="_id"
+                pagination={false}
+            />
+        </Card>
 
         <Modal
             title="Delete Location"
