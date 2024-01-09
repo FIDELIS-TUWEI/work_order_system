@@ -16,7 +16,6 @@ const AllWorkOrders = () => {
 
   const { data: workOrdersArray, pages } = data || {};
 
-  console.log("All Work Orders:", workOrdersArray);
 
  // Handle errors
  useEffect(() => {
