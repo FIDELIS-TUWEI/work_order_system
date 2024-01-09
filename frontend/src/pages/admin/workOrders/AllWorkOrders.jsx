@@ -13,13 +13,13 @@ import { useWorkOrdersQuery } from "@/features/work/workSlice";
 const AllWorkOrders = () => {
   const user = useSelector(selectUserInfo);
   const [page, setPage] = useState(1);
-  const { data: workOrders, isLoading, error } = useWorkOrdersQuery(page);
+  const { data: workOrders, isLoading: loading, error } = useWorkOrdersQuery(page);
 
   const workOrdersArray = workOrders?.data || [];
-  
-  console.log("All WorkOrders : ", workOrdersArray);
-  console.log("Loading :", isLoading);
-  console.log("Error : ", error);
+ // Handle errors
+ if (error) {
+    message.error(error.message);
+  };
 
   return (
     <Layout>
@@ -27,7 +27,7 @@ const AllWorkOrders = () => {
       <Work 
         workOrdersArray={workOrdersArray}
         user={user} 
-        isLoading={isLoading}
+        loading={loading}
       />
       
       <div className="pagination">
