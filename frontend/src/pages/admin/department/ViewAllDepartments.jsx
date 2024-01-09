@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
@@ -83,13 +83,15 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
             </Button>
         </div>
 
-      <Table 
-        loading={loading}
-        columns={columns}
-        dataSource={departments}
-        rowKey="_id"
-        pagination={false}
-      />
+      <Card>
+        <Table 
+          loading={loading}
+          columns={columns}
+          dataSource={departments}
+          rowKey="_id"
+          pagination={false}
+        />
+      </Card>
 
       <Modal
         title="Delete Department"
