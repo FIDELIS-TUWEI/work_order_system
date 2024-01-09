@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useDeleteWorkMutation } from "@/features/work/workSlice";
 
 
-const Work = ({workOrdersArray, user, loading, }) => {
+const Work = ({workOrdersArray, user, loading, refetch }) => {
   const { id } = useParams();
   const [deleteWork] = useDeleteWorkMutation(id);
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ const Work = ({workOrdersArray, user, loading, }) => {
           } else {
             message.success("Work deleted successfully");
             setIsModalVisible(false);
+            refetch();
           }
       } catch (error) {
           console.error(error);
@@ -246,6 +247,7 @@ Work.propTypes = {
   workOrdersArray: PropTypes.array,
   user: PropTypes.object,
   loading: PropTypes.bool,
+  refetch: PropTypes.func
 };
 
 export default Work;
