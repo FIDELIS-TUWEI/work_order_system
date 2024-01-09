@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Card, Space, Statistic, Typography } from "antd";
+import { Card, Col, Row, Space, Statistic, Typography } from "antd";
 import { MdGroups, MdOutlinePendingActions, MdOutlinePreview, MdOutlineWork } from "react-icons/md";
 import { FaCheckCircle, FaHourglassHalf,  } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6";
@@ -7,7 +7,7 @@ import { BiSolidUserCheck } from "react-icons/bi";
 
 // Dashboard card
 const DashboardCard = ({ title, value, icon }) => (
-    <Card>
+    <Card className="custom-card">
         <Space direction="horizontal">
             {icon}
             <Statistic title={title} value={value} />
@@ -33,54 +33,69 @@ const DashboardComponent = ({ user, pendingWorkCount,
     // Render admin or superadmin card
     const renderAdminsCard = () => (
         <Space direction="horizontal">
-            <DashboardCard 
-                title={"Total Work"} 
-                value={totalWorkCount} 
-                icon={
-                    <MdOutlineWork size={24} color="grey" />
-                }
-            />
+        <Row gutter={16}>
 
-            <DashboardCard 
-                title={"Pending Work"}
-                value={pendingWorkCount}
-                icon={
-                    <MdOutlinePendingActions size={24} color="orange" />
-                }
-            />
+            <Col span={8}>
+                <DashboardCard 
+                    title={"Total Work"} 
+                    value={totalWorkCount} 
+                    icon={
+                        <MdOutlineWork size={24} color="grey" />
+                    }
+                />
+            </Col>
 
-            <DashboardCard 
-                title={"Progress Work"}
-                value={inProgressCount}
-                icon={
-                    <FaHourglassHalf size={24} color="blue" />
-                }
-            />
+            <Col span={8}>
+                <DashboardCard 
+                    title={"Pending Work"}
+                    value={pendingWorkCount}
+                    icon={
+                        <MdOutlinePendingActions size={24} color="orange" />
+                    }
+                />
+            </Col>
 
-            <DashboardCard 
-                title={"Completed Work"}
-                value={completedCount}
-                icon={
-                    <FaCheckCircle size={24} color="green" />
-                }
-            />
+            <Col span={8}>
+                <DashboardCard 
+                    title={"Progress Work"}
+                    value={inProgressCount}
+                    icon={
+                        <FaHourglassHalf size={24} color="blue" />
+                    }
+                />
+            </Col>
 
-            <DashboardCard 
-                title={"Reviewed Work"}
-                value={reviewedCount}
-                icon={
-                    <MdOutlinePreview size={24} color="purple" />
-                }
-            />
+            <Col span={8}>
+                <DashboardCard 
+                    title={"Completed Work"}
+                    value={completedCount}
+                    icon={
+                        <FaCheckCircle size={24} color="green" />
+                    }
+                />
+            </Col>
 
-            <DashboardCard 
-                title={"Total Users"}
-                value={totalUsersCount}
-                icon={
-                    <MdGroups size={24} color="brown" />
-                }
-            />
+            <Col span={8}>
+                <DashboardCard 
+                    title={"Reviewed Work"}
+                    value={reviewedCount}
+                    icon={
+                        <MdOutlinePreview size={24} color="purple" />
+                    }
+                />
+            </Col>
 
+            <Col span={8}>
+                <DashboardCard 
+                    title={"Total Users"}
+                    value={totalUsersCount}
+                    icon={
+                        <MdGroups size={24} color="brown" />
+                    }
+                />
+            </Col>
+
+            <Col span={8}>
             <DashboardCard 
                 title={"Active Users"}
                 value={activeUsersCount}
@@ -88,7 +103,9 @@ const DashboardComponent = ({ user, pendingWorkCount,
                     <BiSolidUserCheck size={24} color="violet" />
                 }
             />
+            </Col>
 
+            <Col span={8}>
             <DashboardCard 
                 title={"Total Employees"}
                 value={employees}
@@ -96,6 +113,8 @@ const DashboardComponent = ({ user, pendingWorkCount,
                     <FaUsersLine size={24} color="black" />
                 }
             />
+            </Col>
+        </Row>
         </Space>
     );
 
@@ -167,7 +186,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
   return (
     <Space direction="vertical" size={24}>
         <Typography.Title level={4}>Dashboard Analytics</Typography.Title>
-        {renderCustomCard()}
+            {renderCustomCard()}
     </Space>
   )
 };
