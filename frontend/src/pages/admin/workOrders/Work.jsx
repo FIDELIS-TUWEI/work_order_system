@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useDeleteWorkMutation } from "@/features/work/workSlice";
 
 
-const Work = ({workOrdersArray, user, isLoading, }) => {
+const Work = ({workOrdersArray, user, loading, }) => {
   const { id } = useParams();
   const [deleteWork] = useDeleteWorkMutation(id);
   const navigate = useNavigate();
@@ -210,7 +210,7 @@ const Work = ({workOrdersArray, user, isLoading, }) => {
         </div>
 
         <Table
-            isLoading={isLoading}
+            loading={loading}
             columns={columns}
             dataSource={workOrdersArray}
             pagination={false}
@@ -245,7 +245,7 @@ const Work = ({workOrdersArray, user, isLoading, }) => {
 Work.propTypes = {
   workOrdersArray: PropTypes.array,
   user: PropTypes.object,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 export default Work;
