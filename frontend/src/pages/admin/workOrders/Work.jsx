@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useDeleteWorkMutation } from "@/features/work/workSlice";
 
 
-const Work = ({allWork, user, loading, getAllWork }) => {
+const Work = ({workOrdersArray, user, isLoading, }) => {
   const { id } = useParams();
   const [deleteWork] = useDeleteWorkMutation(id);
   const navigate = useNavigate();
@@ -35,7 +35,6 @@ const Work = ({allWork, user, loading, getAllWork }) => {
           } else {
             message.success("Work deleted successfully");
             setIsModalVisible(false);
-            getAllWork();
           }
       } catch (error) {
           console.error(error);
@@ -211,9 +210,9 @@ const Work = ({allWork, user, loading, getAllWork }) => {
         </div>
 
         <Table
-            loading={loading}
+            isLoading={isLoading}
             columns={columns}
-            dataSource={allWork}
+            dataSource={workOrdersArray}
             pagination={false}
             scroll={{ x: 1500, y: 300 }}
             rowKey="_id"
@@ -244,10 +243,9 @@ const Work = ({allWork, user, loading, getAllWork }) => {
 };
 
 Work.propTypes = {
-  allWork: PropTypes.array,
+  workOrdersArray: PropTypes.array,
   user: PropTypes.object,
-  loading: PropTypes.bool,
-  getAllWork: PropTypes.func
+  isLoading: PropTypes.bool,
 };
 
 export default Work;
