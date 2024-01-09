@@ -34,42 +34,42 @@ const DashboardComponent = ({ user, pendingWorkCount,
     const renderAdminsCard = () => (
         <Space direction="horizontal">
             <DashboardCard 
-                title={"Total Work Orders"} 
+                title={"Total Work"} 
                 value={totalWorkCount} 
                 icon={
-                    <MdOutlineWork size={32} color="grey" />
+                    <MdOutlineWork size={24} color="grey" />
                 }
             />
 
             <DashboardCard 
-                title={"Pending Work Orders"}
+                title={"Pending Work"}
                 value={pendingWorkCount}
                 icon={
-                    <MdOutlinePendingActions size={32} color="orange" />
+                    <MdOutlinePendingActions size={24} color="orange" />
                 }
             />
 
             <DashboardCard 
-                title={"In Progress Work Orders"}
+                title={"Progress Work"}
                 value={inProgressCount}
                 icon={
-                    <FaHourglassHalf size={32} color="blue" />
+                    <FaHourglassHalf size={24} color="blue" />
                 }
             />
 
             <DashboardCard 
-                title={"Completed Work Orders"}
+                title={"Completed Work"}
                 value={completedCount}
                 icon={
-                    <FaCheckCircle size={32} color="green" />
+                    <FaCheckCircle size={24} color="green" />
                 }
             />
 
             <DashboardCard 
-                title={"Reviewed Work Orders"}
+                title={"Reviewed Work"}
                 value={reviewedCount}
                 icon={
-                    <MdOutlinePreview size={32} color="purple" />
+                    <MdOutlinePreview size={24} color="purple" />
                 }
             />
 
@@ -77,7 +77,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
                 title={"Total Users"}
                 value={totalUsersCount}
                 icon={
-                    <MdGroups size={32} color="brown" />
+                    <MdGroups size={24} color="brown" />
                 }
             />
 
@@ -85,7 +85,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
                 title={"Active Users"}
                 value={activeUsersCount}
                 icon={
-                    <BiSolidUserCheck size={32} color="violet" />
+                    <BiSolidUserCheck size={24} color="violet" />
                 }
             />
 
@@ -93,7 +93,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
                 title={"Total Employees"}
                 value={employees}
                 icon={
-                    <FaUsersLine size={32} color="black" />
+                    <FaUsersLine size={24} color="black" />
                 }
             />
         </Space>
@@ -103,42 +103,42 @@ const DashboardComponent = ({ user, pendingWorkCount,
     const renderManagersCard = () => (
         <Space direction="horizontal">
             <DashboardCard 
-                title={"Total Work Orders"} 
+                title={"Total Work"} 
                 value={totalWorkCount} 
                 icon={
-                    <MdOutlineWork size={32} color="grey" />
+                    <MdOutlineWork size={24} color="grey" />
                 }
             />
 
             <DashboardCard
-                title={"Pending Work Orders"}
+                title={"Pending Work"}
                 value={pendingWorkCount}
                 icon={
-                    <MdOutlinePendingActions size={32} color="orange" />
+                    <MdOutlinePendingActions size={24} color="orange" />
                 } 
             />
 
             <DashboardCard 
-                title={"In Progress Work Orders"}
+                title={"Progress Work"}
                 value={inProgressCount}
                 icon={
-                    <FaHourglassHalf size={32} color="blue" />
+                    <FaHourglassHalf size={24} color="blue" />
                 }
             />
 
             <DashboardCard 
-                title={"Completed Work Orders"}
+                title={"Completed Work"}
                 value={completedCount}
                 icon={
-                    <FaCheckCircle size={32} color="green" />
+                    <FaCheckCircle size={24} color="green" />
                 }
             />
 
             <DashboardCard 
-                title={"Reviewed Work Orders"}
+                title={"Reviewed Work"}
                 value={reviewedCount}
                 icon={
-                    <MdOutlinePreview size={32} color="purple" />
+                    <MdOutlinePreview size={24} color="purple" />
                 }
             />
         </Space>
@@ -165,7 +165,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
         }
     } 
   return (
-    <Space direction="vertical" size={20}>
+    <Space direction="vertical" size={24}>
         <Typography.Title level={4}>Dashboard Analytics</Typography.Title>
         {renderCustomCard()}
     </Space>
