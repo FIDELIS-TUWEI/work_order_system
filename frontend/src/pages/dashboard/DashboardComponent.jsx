@@ -1,5 +1,25 @@
 import PropTypes from "prop-types";
-import { Card, Col, Row, Typography } from "antd";
+import { Card, Space, Statistic, Typography } from "antd";
+import { MdGroups, MdOutlinePendingActions, MdOutlinePreview, MdOutlineWork } from "react-icons/md";
+import { FaCheckCircle, FaHourglassHalf,  } from "react-icons/fa";
+import { FaUsersLine } from "react-icons/fa6";
+import { BiSolidUserCheck } from "react-icons/bi";
+
+// Dashboard card
+const DashboardCard = ({ title, value, icon }) => (
+    <Card>
+        <Space direction="horizontal">
+            {icon}
+            <Statistic title={title} value={value} />
+        </Space>
+    </Card>
+);
+
+DashboardCard.propTypes = {
+    title: PropTypes.string,
+    value: PropTypes.number,
+    icon: PropTypes.element
+}
 
 const DashboardComponent = ({ user, pendingWorkCount, 
     inProgressCount, completedCount, reviewedCount, 
@@ -12,90 +32,116 @@ const DashboardComponent = ({ user, pendingWorkCount,
 
     // Render admin or superadmin card
     const renderAdminsCard = () => (
-        <>
-            <Col span={8}>
-                <Card title="Total Work Orders" bordered={false} className="custom-card">
-                    {totalWorkCount}
-                </Card>
-            </Col>
+        <Space direction="horizontal">
+            <DashboardCard 
+                title={"Total Work Orders"} 
+                value={totalWorkCount} 
+                icon={
+                    <MdOutlineWork size={32} color="grey" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="Pending Work Orders" bordered={false} className="custom-card">
-                    {pendingWorkCount}
-                </Card>
-            </Col>
+            <DashboardCard 
+                title={"Pending Work Orders"}
+                value={pendingWorkCount}
+                icon={
+                    <MdOutlinePendingActions size={32} color="orange" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="In Progress Work Orders" bordered={false} className="custom-card">
-                    {inProgressCount}
-                </Card>
-            </Col>
+            <DashboardCard 
+                title={"In Progress Work Orders"}
+                value={inProgressCount}
+                icon={
+                    <FaHourglassHalf size={32} color="blue" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="Completed Work Orders" bordered={false} className="custom-card">
-                    {completedCount}
-                </Card>
-            </Col>
+            <DashboardCard 
+                title={"Completed Work Orders"}
+                value={completedCount}
+                icon={
+                    <FaCheckCircle size={32} color="green" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="Reviewed Work Orders" bordered={false} className="custom-card">
-                    {reviewedCount}
-                </Card>
-            </Col>
+            <DashboardCard 
+                title={"Reviewed Work Orders"}
+                value={reviewedCount}
+                icon={
+                    <MdOutlinePreview size={32} color="purple" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="Total Users" bordered={false} className="custom-card">
-                    {totalUsersCount}
-                </Card>
-            </Col>
+            <DashboardCard 
+                title={"Total Users"}
+                value={totalUsersCount}
+                icon={
+                    <MdGroups size={32} color="brown" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="Active Users" bordered={false} className="custom-card">
-                    {activeUsersCount}
-                </Card>
-            </Col>
+            <DashboardCard 
+                title={"Active Users"}
+                value={activeUsersCount}
+                icon={
+                    <BiSolidUserCheck size={32} color="violet" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="Total Employees" bordered={false} className="custom-card">
-                    {employees}
-                </Card>
-            </Col>
-        </>
+            <DashboardCard 
+                title={"Total Employees"}
+                value={employees}
+                icon={
+                    <FaUsersLine size={32} color="black" />
+                }
+            />
+        </Space>
     );
 
     // Render Managers card
     const renderManagersCard = () => (
-        <>
-            <Col span={8}>
-                <Card title="Total Work Orders" bordered={false} className="custom-card">
-                    {totalWorkCount}
-                </Card>
-            </Col>
-            
-            <Col span={8}>
-                <Card title="Pending Work Orders" bordered={false} className="custom-card">
-                    {pendingWorkCount}
-                </Card>
-            </Col>
+        <Space direction="horizontal">
+            <DashboardCard 
+                title={"Total Work Orders"} 
+                value={totalWorkCount} 
+                icon={
+                    <MdOutlineWork size={32} color="grey" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="In Progress Work Orders" bordered={false} className="custom-card">
-                    {inProgressCount}
-                </Card>
-            </Col>
+            <DashboardCard
+                title={"Pending Work Orders"}
+                value={pendingWorkCount}
+                icon={
+                    <MdOutlinePendingActions size={32} color="orange" />
+                } 
+            />
 
-            <Col span={8}>
-                <Card title="Completed Work Orders" bordered={false} className="custom-card">
-                    {completedCount}
-                </Card>
-            </Col>
+            <DashboardCard 
+                title={"In Progress Work Orders"}
+                value={inProgressCount}
+                icon={
+                    <FaHourglassHalf size={32} color="blue" />
+                }
+            />
 
-            <Col span={8}>
-                <Card title="Reviewed Work Orders" bordered={false} className="custom-card">
-                    {reviewedCount}
-                </Card>
-            </Col>
-        </>
+            <DashboardCard 
+                title={"Completed Work Orders"}
+                value={completedCount}
+                icon={
+                    <FaCheckCircle size={32} color="green" />
+                }
+            />
+
+            <DashboardCard 
+                title={"Reviewed Work Orders"}
+                value={reviewedCount}
+                icon={
+                    <MdOutlinePreview size={32} color="purple" />
+                }
+            />
+        </Space>
     );
 
     // Render Users card
@@ -119,14 +165,10 @@ const DashboardComponent = ({ user, pendingWorkCount,
         }
     } 
   return (
-    <>
-        <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
-            System Analytics
-        </Typography>
-        <Row gutter={16}>
-            {renderCustomCard()}
-        </Row>
-    </>
+    <Space direction="vertical" size={20}>
+        <Typography.Title level={4}>Dashboard Analytics</Typography.Title>
+        {renderCustomCard()}
+    </Space>
   )
 };
 
