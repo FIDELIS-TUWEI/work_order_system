@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import { Button, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, message } from "antd";
 import {MdDelete} from "react-icons/md";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { selectToken } from "@/features/auth/authSlice";
@@ -82,13 +82,15 @@ const ViewAllCategories = ({
             </Button>
         </div>
         
-        <Table 
-            loading={loading}
-            columns={columns}
-            dataSource={categories}
-            rowKey="_id"
-            pagination={false}
-        />
+        <Card>
+            <Table 
+                loading={loading}
+                columns={columns}
+                dataSource={categories}
+                rowKey="_id"
+                pagination={false}
+            />
+        </Card>
 
         <Modal 
             title="Confirm Delete Category" 
