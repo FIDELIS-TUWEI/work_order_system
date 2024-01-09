@@ -55,8 +55,7 @@
     min-height: 100%;
     width: 80px;
     border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 0  2px gray;
+    background-color: hwb(0 96% 4%);
     margin-right: 20px;
     color: #000;
 }
@@ -115,7 +114,7 @@
 .body {
     min-height: 90vh;
     box-shadow: 0 0  2px gray;
-    background-color: #fff;
+    background-color: hwb(0 96% 4%);
     padding: 1rem;
 }
 
@@ -246,7 +245,6 @@ table tr:hover {
 }
 
 .custom-card {
-    background-color: rgb(0, 121, 0);
     color: #fff;
     cursor: pointer;
     transition: all .3s ease;
