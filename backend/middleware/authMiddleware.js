@@ -52,12 +52,6 @@ const isAdmin = asyncHandler(async (req, res, next) => {
     next();
 });
 
-// Middleware to set the reviewedBy field
-const setReviewedBy = asyncHandler(async (req, res, next) => {
-    req.body.reviewedBy = req.user._id;
-    next();
-});
-
 // Cache middleware
 const cacheMiddleware = (req, res, next) => {
     const key = '__express__' + req.originalUrl || req.url;
@@ -79,6 +73,5 @@ module.exports = {
     protect,
     restrict,
     isAdmin,
-    setReviewedBy,
     cacheMiddleware
 };
