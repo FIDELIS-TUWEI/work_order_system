@@ -55,7 +55,7 @@ const BarGraph = () => {
     // Map status to colors
     const statusColors = new Map([
       ["Pending", "red"],
-      ["In_Progress", "yellow"],
+      ["In_Progress", "orange"],
       ["Complete", "green"],
     ])
     // Convert the workStatusCounts object to an array of objects
@@ -63,6 +63,25 @@ const BarGraph = () => {
         status, 
         count, 
         fill: statusColors.get(status) || "#8884d8"
+    }));
+
+    // Count work by priority
+    const workPriorityCounts = workDataArray.reduce((counts, workOrder) => {
+      const priority = workOrder.priority;
+      counts[priority] = (counts[priority] || 0) + 1;
+      return counts;
+    }, {});
+
+    // Map priority to colors
+    const priorityColors = new Map([
+      ["Urgent", "red"],
+      ["Normal", "green"],
+    ])
+    // Convert the workPriorityCounts object to an array of objects
+    const workPriorityCountsArray = Object.entries(workPriorityCounts).map(([priority, count]) => ({ 
+        priority, 
+        count, 
+        fill: priorityColors.get(priority) || "#8884d8"
     }));
 
   return (
@@ -113,6 +132,30 @@ const BarGraph = () => {
             </ResponsiveContainer>
         </Card>
         </Col>
+
+        <Col xs={24} md={12} lg={8}>
+        <Card title="Work Orders By Priority" style={{ margin: "6px" }}>
+            <ResponsiveContainer width="100%" aspect={1}>
+                <PieChart>
+                    <Pie
+                        data={workPriorityCountsArray}
+                        dataKey="count"
+                        nameKey="priority"
+                        cx="50%"
+                        cy="50%"
+                        startAngle={180}
+                        endAngle={0}
+                        innerRadius={50}
+                        outerRadius={70}
+                        paddingAngle={5}
+                        fill={(entry) => entry.data.fill}
+                    />
+                    <Tooltip />
+                    <Legend />
+                </PieChart>
+            </ResponsiveContainer>
+        </Card>
+        </Col> 
 
         <Col>
         <Card title="WorkOrders Requested By Users" style={{ margin: "6px" }}>
