@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Input, Space, Table } from "antd";
+import { Button, Card, Input, Space, Table } from "antd";
 import {GrSearch} from "react-icons/gr";
 import Highlighter from 'react-highlight-words';
 
@@ -207,14 +207,17 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
           </select>
         </div>
         
-        <Table 
-          dataSource={workOrders}
-          loading={loading}
-          columns={columns}
-          pagination={false}
-          scroll={{ x: 1500, y: 240 }}
-          rowKey="_id"
-        />
+        <Card>
+          <Table 
+            dataSource={workOrders}
+            loading={loading}
+            columns={columns}
+            pagination={false}
+            scroll={{ x: 1500, y: 240 }}
+            rowKey="_id"
+          />
+        </Card>
+
         <p style={{ marginTop: "20px" }}>Total Work Orders: {workOrders.length}</p>
         <div className="button__container">
           <Button style={{ 
