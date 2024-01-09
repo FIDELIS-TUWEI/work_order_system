@@ -13,42 +13,42 @@ const Panel = () => {
         <Row gutter={16}>
             <Col span={8}>
                 <Card className="custom-card" hoverable title="Users" onClick={() => navigate("/users/all")}>
-                    <Button icon={<FaUsers />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}> 
+                    <Button icon={<FaUsers />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
                         Users
                     </Button>
                 </Card>
                 </Col>
                 <Col span={8}>
                 <Card className="custom-card" hoverable title="Work Orders" onClick={() => navigate("/all/employees")}>
-                    <Button icon={<MdGroups />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}> 
+                    <Button icon={<MdGroups />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
                         Employees
                     </Button>
                 </Card>
                 </Col>
             <Col span={8}>
                 <Card className="custom-card" hoverable title="Categories" onClick={() => navigate("/all-categories")}>
-                    <Button icon={<BiSolidCategory />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}> 
+                    <Button icon={<BiSolidCategory />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
                         Categories
                     </Button>
                 </Card>
             </Col>
             <Col span={8}>
                 <Card className="custom-card" hoverable title="Locations" onClick={() => navigate("/all-locations")}>
-                    <Button icon={<IoLocation />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}>
+                    <Button icon={<IoLocation />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}>
                         Locations
                     </Button>
                 </Card>
             </Col>
             <Col span={8}>
                 <Card className="custom-card" hoverable title="All Departments" onClick={() => navigate("/all/departments")}>
-                    <Button icon={<HiOfficeBuilding />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}>
+                    <Button icon={<HiOfficeBuilding />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}>
                         Departments
                     </Button>
                 </Card>
             </Col>
             <Col span={8}>
                 <Card className="custom-card" hoverable title="All Designations" onClick={() => navigate("/all/designations")}>
-                    <Button icon={<MdManageAccounts />} size="large" style={{ color: 'black', backgroundColor: 'white', border: 'none' }}>
+                    <Button icon={<MdManageAccounts />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}>
                         Designations
                     </Button>
                 </Card>
