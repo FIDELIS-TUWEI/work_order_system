@@ -152,7 +152,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Date Requested",
-      width: 180,
+      width: 200,
       sorter: true,
       align: "center",
       responsive: ["md", "lg"],
