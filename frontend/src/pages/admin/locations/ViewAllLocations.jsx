@@ -1,18 +1,15 @@
 import PropTypes from "prop-types";
 import { Button, Card, Modal, Table, Tooltip, message } from "antd";
 import { useState } from "react";
-import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
-import { useSelector } from "react-redux";
-import { selectToken } from "@/features/auth/authSlice";
-import { deleteLocation } from "../../../services/locationApi";
+import { useParams } from "react-router-dom";
+import { useDeleteLocationMutation } from "@/features/locations/locationSlice";
 
-const ViewAllLocations = ({ navigate, loading, 
-    locations, page, pages, handlePageChange, getLocations, jumpToLastPage, jumpToFirstPage
-}) => {
+const ViewAllLocations = ({ navigate, loading, locationsArray, refetch }) => {
+    const { id } = useParams();
+    const [deleteLocation] = useDeleteLocationMutation(id);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedLocationToDelete, setSelectedLocationToDelete] = useState(null);
-    const token = useSelector(selectToken);
 
     // Function to show modal to delete category
     const showModal = async (location) => {
@@ -23,15 +20,19 @@ const ViewAllLocations = ({ navigate, loading,
     // Function to confirm modal delete
     const handleDelete = async () => {
         try {
-            await deleteLocation(selectedLocationToDelete._id, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            message.success("Location deleted successfully");
-            setIsModalVisible(false);
-            getLocations();
+            const { error } = await deleteLocation(selectedLocationToDelete._id).unwrap();
+
+            if (error) {
+                if (error.status === 400 && error.data && error.data.message) {
+                    message.error(error.data.message);
+                } else {
+                    message.error("Failed to delete location");
+                }
+            } else {
+                message.success("Location deleted successfully");
+                setIsModalVisible(false);
+                refetch();
+            }
         } catch (error) {
             console.error(error);
             message.error("An error occurred while deleting the location", error);
@@ -86,7 +87,7 @@ const ViewAllLocations = ({ navigate, loading,
             <Table 
                 loading={loading}
                 columns={columns}
-                dataSource={locations}
+                dataSource={locationsArray}
                 rowKey="_id"
                 pagination={false}
             />
@@ -104,31 +105,6 @@ const ViewAllLocations = ({ navigate, loading,
             <p>Are you sure you want to delete a location titled: {selectedLocationToDelete?.locationTitle}?</p>
         </Modal>
 
-        <div className="pagination">
-            <Button 
-                onClick={jumpToFirstPage} 
-                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginRight: "10px" }}
-                disabled={page === 1}
-            >
-                First Page
-            </Button>
-            <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-                <GrFormPrevious />
-            </Button>
-            <span> Page {page} of {pages}</span>
-            <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-                <GrFormNext />
-            </Button>
-
-            <Button 
-                onClick={jumpToLastPage} 
-                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: "10px" }}
-                disabled={page === pages}
-            >
-                Last Page
-            </Button>
-      </div>
-
       <div className="add-btn">
         <Button 
           onClick={() => navigate(-1)} 
@@ -144,13 +120,8 @@ const ViewAllLocations = ({ navigate, loading,
 ViewAllLocations.propTypes = {
     navigate: PropTypes.func,
     loading: PropTypes.bool,
-    locations: PropTypes.array,
-    page: PropTypes.number,
-    pages: PropTypes.number,
-    handlePageChange: PropTypes.func,
-    getLocations: PropTypes.func,
-    jumpToLastPage: PropTypes.func,
-    jumpToFirstPage: PropTypes.func
+    locationsArray: PropTypes.array,
+    refetch: PropTypes.func,
 };
 
 export default ViewAllLocations;
