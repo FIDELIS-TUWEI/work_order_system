@@ -45,7 +45,7 @@ const createLocation = asyncHandler(async (req, res) => {
 // @access Private
 const getAllLocations = asyncHandler(async (req, res) => {
     // Enable Pagination
-    const pageSize = 5;
+    const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Location.find({}).estimatedDocumentCount();
     try {
