@@ -195,16 +195,25 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
 
   return (
     <>
-        <div style={{ display: "flex", justifyContent: "flex-end", margin: "20px" }}>
+        <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
           <label htmlFor="filterStatus" style={{ fontWeight: "bold" }}>
             Filter By Status:
           </label>
-          <select id="filterStatus" onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px" }}>
+          <select id="filterStatus" onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
             <option value="">All</option>
             <option value="Pending">Pending</option>
             <option value="In_Progress">In-progress</option>
             <option value="Complete">Completed</option>
           </select>
+          <Button style={{ 
+            color: 'white', 
+            backgroundColor: 'darkgreen', 
+            border: 'none', 
+            marginLeft: '30px'
+            }} 
+            onClick={exportPDF}>
+            Generate Report
+          </Button>
         </div>
         
         <Card>
@@ -219,16 +228,6 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
         </Card>
 
         <p style={{ marginTop: "20px" }}>Total Work Orders: {workOrders.length}</p>
-        <div className="button__container">
-          <Button style={{ 
-            color: 'white', 
-            backgroundColor: 'darkgreen', 
-            border: 'none' 
-          }} 
-            onClick={exportPDF}>
-            Generate Report
-          </Button>
-        </div>
     </>
   )
 };
