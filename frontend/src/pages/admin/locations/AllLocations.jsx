@@ -1,47 +1,31 @@
-import { useSelector } from "react-redux"
 import Layout from "@/components/Layout"
 import ViewAllLocations from "@/pages/admin/locations/ViewAllLocations"
-import { selectToken } from "@/features/auth/authSlice"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { allLocations } from "../../../services/locationApi"
-import { Typography, message } from "antd"
+import { Button, Typography, message } from "antd"
+import { useLocationsQuery } from "@/features/locations/locationSlice";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+
 
 const AllLocations = () => {
-    const token = useSelector(selectToken);
-    const [locations, setLocations] = useState([]);
     const [page, setPage] = useState(1);
-    const [pages, setPages] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const { data, isLoading: loading, error, refetch } = useLocationsQuery(page);
     const navigate = useNavigate();
 
-    // Function to get all Work Locations
-    const getLocations = useCallback (async () => {
-        try {
-            setLoading(true);
-            const { data, pages } = await allLocations(page, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setLocations(data);
-            setPages(pages);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            message.error("Failed to fetch locations", error.message);
-        }
-    }, [token, page]);
+    const { data: locationsArray, pages } = data || {};
+    console.log("All Locations: ", locationsArray);
 
-    // UseEffect hook
+    // Handle Errors
     useEffect(() => {
-        getLocations();
-    }, [page, getLocations]);
+        if (error) {
+            message.error(error.message);
+        };
+    }, [error]);
 
     // Function to handle page change
     const handlePageChange = (newPage) => {
         setPage(newPage);
+        refetch();
     };
 
     // Function to jump to first page
@@ -64,14 +48,34 @@ const AllLocations = () => {
         <ViewAllLocations 
             navigate={navigate}
             loading={loading}
-            locations={locations}
-            page={page}
-            pages={pages}
-            handlePageChange={handlePageChange}
-            getLocations={getLocations}
-            jumpToLastPage={jumpToLastPage}
-            jumpToFirstPage={jumpToFirstPage}
+            locationsArray={locationsArray}
+            refetch={refetch}
         />
+
+        <div className="pagination">
+            <Button 
+                onClick={jumpToFirstPage} 
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginRight: "10px" }}
+                disabled={page === 1}
+            >
+                First Page
+            </Button>
+            <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+                <GrFormPrevious />
+            </Button>
+            <span> Page {page} of {pages}</span>
+            <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+                <GrFormNext />
+            </Button>
+
+            <Button 
+                onClick={jumpToLastPage} 
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: "10px" }}
+                disabled={page === pages}
+            >
+                Last Page
+            </Button>
+      </div>
     </Layout>
   )
 }
