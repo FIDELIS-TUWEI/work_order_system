@@ -1,10 +1,11 @@
 import { Button, Card, Col, Row } from "antd"
 import { useNavigate } from "react-router-dom";
-import {FaUsers} from 'react-icons/fa';
+import {FaFolder, FaUsers} from 'react-icons/fa';
 import {BiSolidCategory} from "react-icons/bi";
 import {IoLocation} from "react-icons/io5";
 import {HiOfficeBuilding} from "react-icons/hi";
 import {MdManageAccounts, MdGroups} from "react-icons/md";
+import { FaMapLocationDot, FaUsersLine } from "react-icons/fa6";
 
 const Panel = () => {
     const navigate = useNavigate();
@@ -20,21 +21,21 @@ const Panel = () => {
                 </Col>
                 <Col span={8}>
                 <Card className="custom-card" hoverable title="Work Orders" onClick={() => navigate("/all/employees")}>
-                    <Button icon={<MdGroups />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
+                    <Button icon={<FaUsersLine />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
                         Employees
                     </Button>
                 </Card>
                 </Col>
             <Col span={8}>
                 <Card className="custom-card" hoverable title="Categories" onClick={() => navigate("/all-categories")}>
-                    <Button icon={<BiSolidCategory />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
+                    <Button icon={<FaFolder />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
                         Categories
                     </Button>
                 </Card>
             </Col>
             <Col span={8}>
                 <Card className="custom-card" hoverable title="Locations" onClick={() => navigate("/all-locations")}>
-                    <Button icon={<IoLocation />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}>
+                    <Button icon={<FaMapLocationDot />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}>
                         Locations
                     </Button>
                 </Card>
