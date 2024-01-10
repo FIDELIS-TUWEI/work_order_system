@@ -90,6 +90,7 @@ const ViewAllLocations = ({ navigate, loading, locationsArray, refetch }) => {
                 dataSource={locationsArray}
                 rowKey="_id"
                 pagination={false}
+                scroll={{ y: 300 }}
             />
         </Card>
 
