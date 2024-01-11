@@ -88,7 +88,7 @@ const BarGraph = () => {
     <div style={{ margin: "15px 2px" }}>
         <Row gutter={16}>
         <Col xs={24} md={12} lg={8}>
-        <Card title="Work Orders Assigned To Employees" style={{ margin: "6px" }}>
+        <Card title="Work Assigned" style={{ margin: "6px" }}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie 
@@ -110,7 +110,7 @@ const BarGraph = () => {
         </Col>
 
         <Col xs={24} md={12} lg={8}>
-        <Card title="Work Orders By Status" style={{ margin: "6px" }}>
+        <Card title="Work Status" style={{ margin: "6px" }}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie 
@@ -134,7 +134,7 @@ const BarGraph = () => {
         </Col>
 
         <Col xs={24} md={12} lg={8}>
-        <Card title="Work Orders By Priority" style={{ margin: "6px" }}>
+        <Card title="Work Priority" style={{ margin: "6px" }}>
             <ResponsiveContainer width="100%" aspect={1}>
                 <PieChart>
                     <Pie
@@ -158,7 +158,7 @@ const BarGraph = () => {
         </Col> 
 
         <Col>
-        <Card title="WorkOrders Requested By Users" style={{ margin: "6px" }}>
+        <Card title="Work Requested" style={{ margin: "6px" }}>
             <ResponsiveContainer width="100%" minWidth={700} aspect={1}>
                 <LineChart>
                     <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
