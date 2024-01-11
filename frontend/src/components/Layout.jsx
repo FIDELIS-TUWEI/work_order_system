@@ -54,9 +54,20 @@ const Layout = ({ children }) => {
   }
 
   return (
-    <div className="main">
-      <div className="layout">
-        <div className="sidebar">
+    <main className="main">
+      <header className="header">
+            <div className="header-title">
+              <h4>Work Order Management System</h4>
+            </div>
+            <div className="header-content">
+              <i><CgProfile/></i>
+              <Link to={`/profile/${userInfo?._id}`}>
+                {userInfo?.firstName}, {userInfo?.lastName}
+              </Link>
+            </div>
+          </header>
+      <section className="layout">
+        <nav className="sidebar">
           <div className="logo">
             <img src={Logo} alt="Holiday Inn" className="sidebar--logo" />
           </div>
@@ -85,23 +96,12 @@ const Layout = ({ children }) => {
                 </Link>
               </div>
           </div>
-        </div>
+        </nav>
         <div className="content">
-          <div className="header">
-            <div className="header-title">
-              <h4>Work Order Management System</h4>
-            </div>
-            <div className="header-content">
-              <i><CgProfile/></i>
-              <Link to={`/profile/${userInfo?._id}`}>
-                {userInfo?.firstName}, {userInfo?.lastName}
-              </Link>
-            </div>
-          </div>
-          <div className="body">{children}</div>
+          <main className="body">{children}</main>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
