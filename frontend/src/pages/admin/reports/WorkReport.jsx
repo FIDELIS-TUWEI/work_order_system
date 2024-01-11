@@ -133,7 +133,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
     },
     {
       title: "Requested By",
-      width: 150,
+      width: 160,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "requestedBy",
