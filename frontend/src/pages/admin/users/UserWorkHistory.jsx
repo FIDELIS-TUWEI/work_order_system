@@ -1,4 +1,4 @@
-import { Button, Table, Typography } from "antd";
+import { Button, Card, Table, Typography } from "antd";
 import Layout from "@/components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken } from "@/features/auth/authSlice";
@@ -73,6 +73,7 @@ const UserWorkHistory = () => {
             Work History
         </Typography>
 
+        <Card>
         <Table 
             columns={columns}
             dataSource={userData?.workOrders || []}
@@ -80,6 +81,7 @@ const UserWorkHistory = () => {
             loading={loading}
             pagination={false}
         />
+        </Card>
       <Typography.Text>Total Work Orders: {userData?.workOrders?.length} </Typography.Text>
       <div className="add-btn">
         <Button 
