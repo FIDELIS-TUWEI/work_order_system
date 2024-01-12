@@ -6,6 +6,7 @@ import { workApi } from "./work/workSlice";
 import { employeesApi } from "./employees/employeeSlice";
 import { designationsApi } from "./designations/designationSlice";
 import { departmentsApi } from "./departments/departmentSlice";
+import { categoriesApi } from "./categories/categorySlice";
 
 const store = configureStore({
     reducer: {
@@ -16,12 +17,14 @@ const store = configureStore({
         [employeesApi.reducerPath]: employeesApi.reducer,
         [designationsApi.reducerPath]: designationsApi.reducer,
         [departmentsApi.reducerPath]: departmentsApi.reducer,
+        [categoriesApi.reducerPath]: categoriesApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware().concat(
             apiSlice.middleware, workApi.middleware, 
             locationsApi.middleware, employeesApi.middleware,
             designationsApi.middleware, departmentsApi.middleware,
+            categoriesApi.middleware,
         ),
     devTools: true
 });
