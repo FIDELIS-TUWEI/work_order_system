@@ -13,3 +13,48 @@ const baseQuery = fetchBaseQuery({
         return headers;
     },
 });
+
+export const designationsApi = createApi({
+    reducerPath: "designationsApi",
+    baseQuery,
+    tagTypes: ["Designations"],
+    endpoints: (builder) => ({
+        createDesignation: builder.mutation({
+            query: (values) => ({
+                url: `/new.designation`,
+                method: "POST",
+                body: values,
+            }),
+            invalidatesTags: ["Designations"],
+        }),
+        allDesignations: builder.query({
+            query: (page) => ({
+                url: `/all-designations?pageNumber=${page}`,
+                method: "GET",
+            }),
+            providesTags: ["Designations"],
+        }),
+        quertAllDesignations: builder.query({
+            query: () => ({
+                url: `/query/all-designations`,
+                method: "GET",
+            }),
+            providesTags: ["Designations"],
+        }),
+        deleteDesignation: builder.mutation({
+            query: (id) => ({
+                url: `/delete/designations/${id}`,
+                method: "DELETE",
+                body: id,
+            }),
+            invalidatesTags: ["Designations"],
+        })
+    })
+});
+
+export const {
+    useCreateDesignationMutation,
+    useAllDesignationsQuery,
+    useQuertAllDesignationsQuery,
+    useDeleteDesignationMutation,
+} = designationsApi;
