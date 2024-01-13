@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd"
 import { useNavigate } from "react-router-dom";
+import LoadingBox from "@/components/LoadingBox";
 
 const EditUserPassword = ({ onFinishHandler, password, setPassword, loading }) => {
   const navigate = useNavigate();
