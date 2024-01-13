@@ -27,6 +27,7 @@ const EditWorkOrder = () => {
       if (error) {
         if (error.status === 400 && error.data && error.data.message) {
           message.error(error.data.message);
+          navigate('/work/list');
         } else {
           message.error("Failed to update work order");
         }
@@ -36,7 +37,7 @@ const EditWorkOrder = () => {
       }
 
     } catch (error) {
-      message.error(error.message, "Work Order Update Failed");
+      message.error(error.message);
     }
   }
 
