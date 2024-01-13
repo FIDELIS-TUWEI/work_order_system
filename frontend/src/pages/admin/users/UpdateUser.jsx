@@ -6,7 +6,7 @@ import LoadingBox from "@/components/LoadingBox";
 
 const { Option } = Select;
 
-const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmentsArray, selectedDepartment, handleDepartmentChange, allDesignations, selectedDesignation, handleDesignationChange }) => {
+const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmentsArray, selectedDepartment, handleDepartmentChange, designationsArray, selectedDesignation, handleDesignationChange }) => {
 
   const user = useSelector(selectUserInfo);
 
@@ -75,7 +75,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmen
                 allowClear
                 style={{ width: '100%' }}
               >
-                {allDesignations.map((designation) => (
+                {designationsArray.map((designation) => (
                   <Option key={designation._id} value={designation._id}>{designation.designationName}</Option>
                 ))}
               </Select>
@@ -145,7 +145,7 @@ UpdateUser.propTypes = {
   departmentsArray: PropTypes.array,
   selectedDepartment: PropTypes.string,
   handleDepartmentChange: PropTypes.func,
-  allDesignations: PropTypes.array,
+  designationsArray: PropTypes.array,
   selectedDesignation: PropTypes.string,
   handleDesignationChange: PropTypes.func
 };
