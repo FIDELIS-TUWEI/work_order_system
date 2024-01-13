@@ -35,6 +35,7 @@ const CreateWorkOrder = () => {
       if (error) {
         if (error.status === 400 && error.data && error.data.message) {
           message.error(error.data.message);
+          navigate("/work/list");
         } else {
           message.error("Failed to create new work order");
         }
