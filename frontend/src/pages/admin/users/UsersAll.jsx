@@ -1,61 +1,49 @@
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
-import { useSelector } from "react-redux";
-import { selectToken } from "@/features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../../../services/usersApi";
 import AllUsers from "@/pages/admin/users/AllUsers";
-import { Typography, message } from "antd";
+import { Button, Typography, message } from "antd";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+import { useGetAllUsersQuery } from "@/features/users/userSlice";
 
 
 const UsersAll = () => {
-  const token = useSelector(selectToken);
-  const [allUsers, setAllUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1);
-  const navigate = useNavigate();
+  const { data, isLoading: loading, error, refetch } = useGetAllUsersQuery(page);
 
-  // Function to get all users from Api
-const getUsers = async () => {
-  try {
-    setLoading(true);
-    const { data, pages } = await getAllUsers(page, {
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setAllUsers(data);
-    setPages(pages);
-    setLoading(false);
-  } catch (error) {
-    setLoading(false);
-    message.error("Failed to fetch users", error.message);
-  }
-};
+  const { data: allUsersArray, pages } = data || {};
 
-useEffect(() => {
-  getUsers();
-}, [page]);
+  // Handle Errors
+  useEffect(() => {
+    if (error) {
+      message.error(error.message);
+    };
+  }, [error]);
 
 // function to handle page change
 const handlePageChange = (newPage) => {
   setPage(newPage);
+  refetch();
 }
 
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Users</Typography>
       <AllUsers 
-        allUsers={allUsers}
+        allUsersArray={allUsersArray}
         loading={loading}
-        page={page}
-        pages={pages}
         handlePageChange={handlePageChange}
-        navigate={navigate}
-        getUsers={getUsers}
+        refetch={refetch}
       />
+
+      <div className="pagination">
+        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
+          <GrFormPrevious />
+        </Button>
+        <span> Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
+          <GrFormNext />
+        </Button>
+      </div>
     </Layout>
   )
 }
