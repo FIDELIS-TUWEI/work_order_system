@@ -12,21 +12,17 @@ import { useQueryAllCategoriesQuery } from '@/features/categories/categorySlice'
 
 const CreateWorkOrder = () => {
   const [addWork] = useCreateWorkMutation();
+  const { data: locations } = useQueryAllLocationsQuery();
+  const { data: categories } = useQueryAllCategoriesQuery();
   const user = useSelector(selectUserInfo);
   const [loading, setLoading] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
 
-  const { data: locations, error } = useQueryAllLocationsQuery();
-
+  // Check and ensure the data being fetched is an array
   const locationsArray = locations?.data || [];
-
-  const { data: categories } = useQueryAllCategoriesQuery();
-
   const categoriesArray = categories?.data || [];
-
-  console.log("Query All Categories", categoriesArray);
 
   const authorisedAccess = user?.role === "admin" || user?.role === "superadmin" || user?.role === "supervisor" || user?.role === "hod" || user?.role === "reviewer" || user?.role === "engineer";
 
