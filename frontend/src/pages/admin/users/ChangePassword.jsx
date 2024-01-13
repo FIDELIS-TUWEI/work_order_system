@@ -23,7 +23,7 @@ const ChangePassword = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      navigate('/work/list');
+      navigate('/users/all');
       message.success('Password Updated Successfully');
       setLoading(false);
     } catch (error) {
