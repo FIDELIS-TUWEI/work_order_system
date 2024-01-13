@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import CreateUser from "@/pages/admin/users/CreateUser";
 import { queryAllDepartments } from '../../../services/departmentApi';
 import { queryAllDesignations } from '../../../services/designation';
-const USERS_URL = "/hin";
+import { useRegisterUserMutation } from '@/features/users/userSlice';
 
 
 const Register = () => {
+  const [registerUser] = useRegisterUserMutation();
   const [allDepartments, setAllDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [allDesignations, setAllDesignations] = useState([]);
@@ -26,17 +26,23 @@ const Register = () => {
 const onFinishHandler = async (values) => {
   try {
     setLoading(true);
-    const res = await axios.post(`${USERS_URL}/register`, values);
-    if (res.data) {
-      message.success("User Registered Succesfully");
-      navigate('/users/all');
-      setLoading(false);
+    const { error } = await registerUser(values);
+
+    if (error) {
+      if (error.status === 400 && error.data && error.data.message) {
+        message.error(error.data.message);
+        navigate('/users/all');
+      } else {
+        message.error("User Registration Failed");
+      }
     } else {
-      message.error("User Registration Failed");
+      navigate('/users/all');
+      message.success("User Registered Succesfully");
+      setLoading(false);
     }
   } catch (error) {
     setLoading(false);
-    message.error("User Registration Failed", error);
+    message.error( error.message);
   }
 }
 
