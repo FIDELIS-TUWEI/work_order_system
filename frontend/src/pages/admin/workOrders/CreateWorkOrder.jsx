@@ -1,23 +1,20 @@
 import { message } from 'antd';
 import Layout from "@/components/Layout";
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectToken, selectUserInfo } from "@/features/auth/authSlice"
-import { queryCategories } from '../../../services/categoryApi'
+import { selectUserInfo } from "@/features/auth/authSlice"
 import NewWork from "@/pages/admin/workOrders/NewWork";
-import { queryLocations } from '../../../services/locationApi';
 import { useCreateWorkMutation } from "@/features/work/workSlice";
 import { useQueryAllLocationsQuery } from '@/features/locations/locationSlice';
+import { useQueryAllCategoriesQuery } from '@/features/categories/categorySlice';
 
 
 const CreateWorkOrder = () => {
   const [addWork] = useCreateWorkMutation();
   const user = useSelector(selectUserInfo);
-  const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
 
@@ -25,7 +22,11 @@ const CreateWorkOrder = () => {
 
   const locationsArray = locations?.data || [];
 
-  console.log("Query All Locations: ", locationsArray);
+  const { data: categories } = useQueryAllCategoriesQuery();
+
+  const categoriesArray = categories?.data || [];
+
+  console.log("Query All Categories", categoriesArray);
 
   const authorisedAccess = user?.role === "admin" || user?.role === "superadmin" || user?.role === "supervisor" || user?.role === "hod" || user?.role === "reviewer" || user?.role === "engineer";
 
@@ -66,31 +67,10 @@ const CreateWorkOrder = () => {
     setSelectedCategory(value);
   }
 
-  // Function to get all categories from Services Api
-  const getCategories = async () => {
-    try {
-      const response = await queryCategories({
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setCategory(response.data);
-    } catch (error) {
-      message.error("Error while fetching all categories", error.message);
-    }
-  };
-
-  // UseEffect hook
-  useEffect(() => {
-    getCategories();
-  }, []);
-
   return (
     <Layout>
       <NewWork 
         loading={loading} 
-        category={category} 
         onFinishHandler={onFinishHandler}
         selectedLocation={selectedLocation}
         selectedCategory={selectedCategory}
@@ -98,7 +78,7 @@ const CreateWorkOrder = () => {
         handleCategoryChange={handleCategoryChange} 
         navigate={navigate}
         locationsArray={locationsArray}
-        getCategories={getCategories}
+        categoriesArray={categoriesArray}
       />
     </Layout>
   )
