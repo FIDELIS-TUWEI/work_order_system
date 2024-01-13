@@ -5,10 +5,10 @@ import LoadingBox from "@/components/LoadingBox";
 const { Option } = Select;
 
 const NewWork = ({ 
-  loading, locationsArray, category, 
+  loading, locationsArray, categoriesArray, 
   onFinishHandler, selectedLocation, 
   selectedCategory, handleLocationChange, 
-  handleCategoryChange, navigate, workLocation, getCategories
+  handleCategoryChange, navigate
 }) => {
 
   return (
@@ -81,10 +81,9 @@ const NewWork = ({
                 allowClear
                 style={{ width: '100%' }}
                 showSearch
-                onSearch={getCategories}
                 filterOption={false}
               >
-                {category.map((category) => (
+                {categoriesArray.map((category) => (
                   <Option key={category._id} value={category._id}>{category.categoryTitle}</Option>
                 ))}
               </Select>
@@ -126,8 +125,7 @@ const NewWork = ({
 
 NewWork.propTypes = {
   locationsArray: PropTypes.array,
-  category: PropTypes.array,
-  getCategories: PropTypes.func,
+  categoriesArray: PropTypes.array,
   handleLocationChange: PropTypes.func,
   handleCategoryChange: PropTypes.func,
   onFinishHandler: PropTypes.func,
