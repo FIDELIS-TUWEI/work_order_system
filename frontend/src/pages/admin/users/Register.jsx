@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 import { useEffect, useState } from 'react';
 import CreateUser from "@/pages/admin/users/CreateUser";
-import { queryAllDepartments } from '../../../services/departmentApi';
-import { queryAllDesignations } from '../../../services/designation';
 import { useRegisterUserMutation } from '@/features/users/userSlice';
 import { useQueryAllDepartmentsQuery } from '@/features/departments/departmentSlice';
 import { useQueryAllDesignationsQuery } from '@/features/designations/designationSlice';
