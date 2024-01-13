@@ -20,7 +20,7 @@ const CreateWorkOrder = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
 
-  // Check and ensure the data being fetched is an array
+  // Logic to check the data being fetched is an array
   const locationsArray = locations?.data || [];
   const categoriesArray = categories?.data || [];
 
