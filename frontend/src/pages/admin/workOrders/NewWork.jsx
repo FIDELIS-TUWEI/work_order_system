@@ -5,7 +5,7 @@ import LoadingBox from "@/components/LoadingBox";
 const { Option } = Select;
 
 const NewWork = ({ 
-  loading, location, category, 
+  loading, locationsArray, category, 
   onFinishHandler, selectedLocation, 
   selectedCategory, handleLocationChange, 
   handleCategoryChange, navigate, workLocation, getCategories
@@ -44,10 +44,9 @@ const NewWork = ({
                 allowClear
                 style={{ width: '100%' }}
                 showSearch
-                onSearch={workLocation}
                 filterOption={false}
               >
-                {location.map((location) => (
+                {locationsArray.map((location) => (
                   <Option key={location._id} value={location._id}>{location.locationTitle}</Option>
                 ))}
               </Select>
@@ -126,9 +125,8 @@ const NewWork = ({
 };
 
 NewWork.propTypes = {
-  location: PropTypes.array,
+  locationsArray: PropTypes.array,
   category: PropTypes.array,
-  workLocation: PropTypes.func,
   getCategories: PropTypes.func,
   handleLocationChange: PropTypes.func,
   handleCategoryChange: PropTypes.func,
