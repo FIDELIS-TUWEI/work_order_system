@@ -10,6 +10,7 @@ const UsersAll = () => {
   const [page, setPage] = useState(1);
   const { data, isLoading: loading, error, refetch } = useGetAllUsersQuery(page);
 
+  // Fetch paginated data pages
   const { data: allUsersArray, pages } = data || {};
 
   // Handle Errors
