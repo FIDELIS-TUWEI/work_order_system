@@ -8,6 +8,7 @@ import { queryCategories } from '../../../services/categoryApi'
 import NewWork from "@/pages/admin/workOrders/NewWork";
 import { queryLocations } from '../../../services/locationApi';
 import { useCreateWorkMutation } from "@/features/work/workSlice";
+import { useQueryAllLocationsQuery } from '@/features/locations/locationSlice';
 
 
 const CreateWorkOrder = () => {
@@ -15,11 +16,16 @@ const CreateWorkOrder = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
+
+  const { data: locations, error } = useQueryAllLocationsQuery();
+
+  const locationsArray = locations?.data || [];
+
+  console.log("Query All Locations: ", locationsArray);
 
   const authorisedAccess = user?.role === "admin" || user?.role === "superadmin" || user?.role === "supervisor" || user?.role === "hod" || user?.role === "reviewer" || user?.role === "engineer";
 
@@ -55,21 +61,6 @@ const CreateWorkOrder = () => {
     setSelectedLocation(value);
   }
 
-  // Function to get all work Locations from Services Api
-  const workLocation = async () => {
-    try {
-      const response = await queryLocations({
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setLocation(response.data);
-    } catch (error) {
-      message.error("Error while fetching all locations query", error.message);
-    }
-  };
-
   // Function to handle change in category
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
@@ -92,7 +83,6 @@ const CreateWorkOrder = () => {
 
   // UseEffect hook
   useEffect(() => {
-    workLocation();
     getCategories();
   }, []);
 
@@ -101,14 +91,13 @@ const CreateWorkOrder = () => {
       <NewWork 
         loading={loading} 
         category={category} 
-        location={location} 
         onFinishHandler={onFinishHandler}
         selectedLocation={selectedLocation}
         selectedCategory={selectedCategory}
         handleLocationChange={handleLocationChange}
         handleCategoryChange={handleCategoryChange} 
         navigate={navigate}
-        workLocation={workLocation}
+        locationsArray={locationsArray}
         getCategories={getCategories}
       />
     </Layout>
