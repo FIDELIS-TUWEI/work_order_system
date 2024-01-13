@@ -8,19 +8,25 @@ import CreateUser from "@/pages/admin/users/CreateUser";
 import { queryAllDepartments } from '../../../services/departmentApi';
 import { queryAllDesignations } from '../../../services/designation';
 import { useRegisterUserMutation } from '@/features/users/userSlice';
+import { useQueryAllDepartmentsQuery } from '@/features/departments/departmentSlice';
+import { useQueryAllDesignationsQuery } from '@/features/designations/designationSlice';
 
 
 const Register = () => {
   const [registerUser] = useRegisterUserMutation();
-  const [allDepartments, setAllDepartments] = useState([]);
+  const { data: departments } = useQueryAllDepartmentsQuery();
+  const { data: designations } = useQueryAllDesignationsQuery();
   const [selectedDepartment, setSelectedDepartment] = useState(null);
-  const [allDesignations, setAllDesignations] = useState([]);
   const [selectedDesignation, setSelectedDesignation] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const userInfo = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
+
+  // Logic to check the data being fetched is an array
+  const departmentsArray = departments?.data || [];
+  const designationsArray = designations?.data || [];
 
 // function to create user
 const onFinishHandler = async (values) => {
@@ -46,39 +52,9 @@ const onFinishHandler = async (values) => {
   }
 }
 
-// Function to get all departments from API service
-const getDepartments = async () => {
-  try {
-    const res = await queryAllDepartments({
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setAllDepartments(res.data);
-  } catch (error) {
-    message.error("Error while fetching all departments", error.message);
-  }
-};
-
 // Function to handle Department Change
 const handleDepartmentChange = (value) => {
   setSelectedDepartment(value);
-};
-
-// Function to fetch all designations form API service
-const getDesignations = async () => {
-  try {
-    const res = await queryAllDesignations({
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setAllDesignations(res.data);
-  } catch (error) {
-    message.error("Error while fetching all designations", error.message);
-  }
 };
 
 // Function to handle designation change
@@ -93,19 +69,13 @@ useEffect(() => {
   }
 }, [userInfo, navigate, token]);
 
-// useEffect hook
-useEffect(() => {
-  getDepartments();
-  getDesignations();
-}, []);
-
   return (
     <Layout>
       <CreateUser 
         onFinishHandler={onFinishHandler}
         loading={loading}
-        allDepartments={allDepartments}
-        allDesignations={allDesignations}
+        departmentsArray={departmentsArray}
+        designationsArray={designationsArray}
         selectedDepartment={selectedDepartment}
         selectedDesignation={selectedDesignation}
         handleDepartmentChange={handleDepartmentChange}
