@@ -3,21 +3,22 @@ import Layout from "@/components/Layout";
 import { useSelector } from "react-redux";
 import { selectToken } from "@/features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { editUser, getUserInfo } from "../../../services/usersApi";
+import { getUserInfo } from "../../../services/usersApi";
 import { useCallback, useEffect, useState } from "react";
 import UpdateUser from "@/pages/admin/users/UpdateUser";
 import { queryAllDepartments } from "../../../services/departmentApi";
 import { queryAllDesignations } from "../../../services/designation";
+import { useEditUserMutation } from "@/features/users/userSlice";
 
 
 const EditUser = () => {
+  const [editUser, { isLoading: loading }] = useEditUserMutation();
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
   const [allDepartments, setAllDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [allDesignations, setAllDesignations] = useState([]);
   const [selectedDesignation, setSelectedDesignation] = useState(null);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {id} = useParams();
 
@@ -25,20 +26,21 @@ const EditUser = () => {
   // function to handle form submit
   const onFinishHandler = async (values) => {
     try {
-      setLoading(true);
-      await editUser(id, values, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const { error } = await editUser({id, values}).unwrap();
       
-      message.success('User Updated Successfully');
-      navigate('/users/all');
-      setLoading(false);
+      if (error) {
+        if (error === 400 && error.data && error.data.message) {
+          message.error(error.data.message);
+          navigate('/users/all');
+        } else {
+          message.error("Failed to update user details")
+        }
+      } else {
+        message.success('User Updated Successfully');
+        navigate('/users/all');
+      }
     } catch (error) {
-      message.error("User Update Failed", error.message);
-      setLoading(false);
+      message.error(error.message);
     }
   }
 
