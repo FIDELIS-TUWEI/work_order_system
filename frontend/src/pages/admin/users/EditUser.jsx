@@ -6,21 +6,24 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfo } from "../../../services/usersApi";
 import { useCallback, useEffect, useState } from "react";
 import UpdateUser from "@/pages/admin/users/UpdateUser";
-import { queryAllDepartments } from "../../../services/departmentApi";
 import { queryAllDesignations } from "../../../services/designation";
 import { useEditUserMutation } from "@/features/users/userSlice";
+import { useQueryAllDepartmentsQuery } from "@/features/departments/departmentSlice";
 
 
 const EditUser = () => {
   const [editUser, { isLoading: loading }] = useEditUserMutation();
+  const { data: departments } = useQueryAllDepartmentsQuery();
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
-  const [allDepartments, setAllDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [allDesignations, setAllDesignations] = useState([]);
   const [selectedDesignation, setSelectedDesignation] = useState(null);
   const navigate = useNavigate();
   const {id} = useParams();
+
+  // Logic to check the data being fetched is an array
+  const departmentsArray = departments?.data || [];
 
 
   // function to handle form submit
@@ -64,17 +67,6 @@ const EditUser = () => {
     setSelectedDepartment(value);
   };
 
-  // Function to get Departments
-  const getAllDepartments = useCallback (async () => {
-    const res = await queryAllDepartments({
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setAllDepartments(res.data);
-  }, [token]);
-
   // Function to handle change in designation
   const handleDesignationChange = (value) => {
     setSelectedDesignation(value);
@@ -96,9 +88,8 @@ const EditUser = () => {
     if (id) {
       getUserDetails(id);
     }
-    getAllDepartments();
     getAllDesignations();
-  }, [id, getAllDepartments, getAllDesignations, getUserDetails]);
+  }, [id, getAllDesignations, getUserDetails]);
 
   return (
     <Layout>
@@ -107,10 +98,9 @@ const EditUser = () => {
         onFinishHandler={onFinishHandler}
         navigate={navigate}
         loading={loading}
-        allDepartments={allDepartments}
+        departmentsArray={departmentsArray}
         selectedDepartment={selectedDepartment}
         handleDepartmentChange={handleDepartmentChange}
-        getAllDepartments={getAllDepartments}
         allDesignations={allDesignations}
         selectedDesignation={selectedDesignation}
         handleDesignationChange={handleDesignationChange}
