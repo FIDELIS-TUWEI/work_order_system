@@ -9,11 +9,13 @@ import UpdateUser from "@/pages/admin/users/UpdateUser";
 import { queryAllDesignations } from "../../../services/designation";
 import { useEditUserMutation } from "@/features/users/userSlice";
 import { useQueryAllDepartmentsQuery } from "@/features/departments/departmentSlice";
+import { useQueryAllDesignationsQuery } from "@/features/designations/designationSlice";
 
 
 const EditUser = () => {
   const [editUser, { isLoading: loading }] = useEditUserMutation();
   const { data: departments } = useQueryAllDepartmentsQuery();
+  const { data: designations } = useQueryAllDesignationsQuery();
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
@@ -24,6 +26,7 @@ const EditUser = () => {
 
   // Logic to check the data being fetched is an array
   const departmentsArray = departments?.data || [];
+  const designationsArray = designations?.data || [];
 
 
   // function to handle form submit
@@ -72,24 +75,12 @@ const EditUser = () => {
     setSelectedDesignation(value);
   };
 
-  // Function to get Designations
-  const getAllDesignations = useCallback (async () => {
-    const res = await queryAllDesignations({
-      withCredentials: true,
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    setAllDesignations(res.data);
-  }, [token]);
-
   // UseEffect hook
   useEffect(() => {
     if (id) {
-      getUserDetails(id);
+      getUserDetails(id)
     }
-    getAllDesignations();
-  }, [id, getAllDesignations, getUserDetails]);
+  }, [id, getUserDetails]);
 
   return (
     <Layout>
@@ -101,7 +92,7 @@ const EditUser = () => {
         departmentsArray={departmentsArray}
         selectedDepartment={selectedDepartment}
         handleDepartmentChange={handleDepartmentChange}
-        allDesignations={allDesignations}
+        designationsArray={designationsArray}
         selectedDesignation={selectedDesignation}
         handleDesignationChange={handleDesignationChange}
       />
