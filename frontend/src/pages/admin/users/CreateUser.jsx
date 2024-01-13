@@ -5,7 +5,7 @@ import LoadingBox from "@/components/LoadingBox"
 const {Option} = Select;
 
 const CreateUser = ({ 
-  onFinishHandler, loading, allDepartments, allDesignations,
+  onFinishHandler, loading, departmentsArray, designationsArray,
   selectedDepartment, selectedDesignation,
   handleDepartmentChange, handleDesignationChange 
 }) => {
@@ -70,7 +70,7 @@ const CreateUser = ({
                 allowClear
                 style={{ width: '100%' }}
               >
-                {allDepartments.map((department) => (
+                {departmentsArray.map((department) => (
                   <Option key={department._id} value={department._id}>{department.departmentName}</Option>
                 ))}
               </Select>
@@ -88,7 +88,7 @@ const CreateUser = ({
                 allowClear
                 style={{ width: '100%' }}
               >
-                {allDesignations.map((designation) => (
+                {designationsArray.map((designation) => (
                   <Option key={designation._id} value={designation._id}>{designation.designationName}</Option>
                 ))}
               </Select>
@@ -119,8 +119,8 @@ const CreateUser = ({
 CreateUser.propTypes = {
   loading: PropTypes.bool,
   onFinishHandler: PropTypes.func,
-  allDepartments: PropTypes.array,
-  allDesignations: PropTypes.array,
+  departmentsArray: PropTypes.array,
+  designationsArray: PropTypes.array,
   selectedDepartment: PropTypes.string,
   selectedDesignation: PropTypes.string,
   handleDepartmentChange: PropTypes.func,
