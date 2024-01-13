@@ -34,7 +34,7 @@ export const designationsApi = createApi({
             }),
             providesTags: ["Designations"],
         }),
-        quertAllDesignations: builder.query({
+        queryAllDesignations: builder.query({
             query: () => ({
                 url: `/query/all-designations`,
                 method: "GET",
@@ -55,6 +55,6 @@ export const designationsApi = createApi({
 export const {
     useCreateDesignationMutation,
     useAllDesignationsQuery,
-    useQuertAllDesignationsQuery,
+    useQueryAllDesignationsQuery,
     useDeleteDesignationMutation,
 } = designationsApi;
