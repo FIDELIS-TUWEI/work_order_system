@@ -1,16 +1,19 @@
 import PropTypes from "prop-types";
-import { Button, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
-import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
 import { selectToken } from "@/features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { deleteUser } from "../../../services/usersApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDeleteUserMutation } from "@/features/users/userSlice";
 
 
-const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, getUsers}) => {
+const AllUsers = ({ allUsersArray, loading, refetch}) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [deleteUser] = useDeleteUserMutation(id);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedUserToDelete, setSelectedUserToDelete] = useState(null);
   const token = useSelector(selectToken);
@@ -27,15 +30,19 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
   // Function to confirm modal delete
   const handleDelete = async () => {
       try {
-         await deleteUser(selectedUserToDelete._id, {
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-         });
-         message.success("User deleted successfully");
-         setIsModalVisible(false);
-         getUsers();
+         const { error } = await deleteUser(selectedUserToDelete._id).unwrap();
+
+         if (error) {
+          if (error.status === 400 && error.data && error.data.message) {
+            message.error(error.data.message);
+          } else {
+            message("Failed to delete the User")
+          }
+         } else {
+          message.success("User deleted successfully");
+          setIsModalVisible(false);
+          refetch();
+         }
       } catch (error) {
           message.error("An error occurred while deleting the user", error);
       }
@@ -158,14 +165,16 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
           </Button>  
       </div>
 
-      <Table 
-        loading={loading}
-        dataSource={allUsers}
-        columns={columns}
-        pagination={false}
-        rowKey="_id"
-        scroll={{ x: 600, y: 300 }}
-      />
+      <Card>
+        <Table 
+          loading={loading}
+          dataSource={allUsersArray}
+          columns={columns}
+          pagination={false}
+          rowKey="_id"
+          scroll={{ x: 600, y: 300 }}
+        />
+      </Card>
 
       <Modal
         title="Delete User"
@@ -178,16 +187,6 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
       >
         <p>Are you sure you want to delete {selectedUserToDelete?.username}?</p>
       </Modal>
-
-      <div className="pagination">
-        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
-          <GrFormPrevious />
-        </Button>
-        <span> Page {page} of {pages}</span>
-        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'lightgrey' }}>
-          <GrFormNext />
-        </Button>
-      </div>
 
       <div className="add-btn">
         <Button 
@@ -202,13 +201,9 @@ const AllUsers = ({ allUsers, loading, page, pages, handlePageChange, navigate, 
 };
 
 AllUsers.propTypes = {
-  navigate: PropTypes.func,
   loading: PropTypes.bool,
-  allUsers: PropTypes.array,
-  handlePageChange: PropTypes.func,
-  page: PropTypes.number,
-  pages: PropTypes.number,
-  getUsers: PropTypes.func
+  allUsersArray: PropTypes.array,
+  refetch: PropTypes.func
 }
 
 export default AllUsers;
