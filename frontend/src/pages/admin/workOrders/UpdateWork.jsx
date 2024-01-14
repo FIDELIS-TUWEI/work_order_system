@@ -6,22 +6,22 @@ import moment from "moment";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange, isLoading }) => {
+const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange, isLoading }) => {
   // Function to disable past dates and future dates in DatePicker
   const disabledDate = current => {
     return current && current < moment().startOf('day');
   }
   // to render edit columns based on work status and user role
-  const isWorkPending = workDetails?.status === 'Pending';
-  const isWorkInProgress = workDetails?.status === 'In_Progress';
-  const isWorkCompleted = workDetails?.status === 'Complete';
+  const isWorkPending = singleWorkArray?.status === 'Pending';
+  const isWorkInProgress = singleWorkArray?.status === 'In_Progress';
+  const isWorkCompleted = singleWorkArray?.status === 'Complete';
   const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor", "hod", "engineer"].includes(user?.role);
 
   // Check work tracker status
-  const isNotAttended = workDetails?.tracker === 'Not_Attended';
-  const isInAttendance = workDetails?.tracker === 'In_Attendance';
-  const isAttended = workDetails?.tracker === 'Attended';
-  const isInComplete = workDetails?.tracker === 'In_Complete';
+  const isNotAttended = singleWorkArray?.tracker === 'Not_Attended';
+  const isInAttendance = singleWorkArray?.tracker === 'In_Attendance';
+  const isAttended = singleWorkArray?.tracker === 'Attended';
+  const isInComplete = singleWorkArray?.tracker === 'In_Complete';
 
 
    // Function to disable current status with disabled attribute
@@ -33,7 +33,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
       { value: 'Reviewed', label: 'Reviewed' },
     ];
 
-    const currentIndex = statusOptions.findIndex(option => option.value === workDetails?.status);
+    const currentIndex = statusOptions.findIndex(option => option.value === singleWorkArray?.status);
 
     if (currentIndex !== -1 && currentIndex < statusOptions.length - 1) {
       return statusOptions.map((option, index) => ({
@@ -189,7 +189,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 
   // if Work is complete check if user is authprised
   const renderReviewFormFields = () => {
-    if (isWorkCompleted && !workDetails?.reviewed) {
+    if (isWorkCompleted && !singleWorkArray?.reviewed) {
       return (
         <>
           <Col xs={24} md={24} lg={8}>
@@ -260,7 +260,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
             Edit Work Order
         </Typography>
-        <Card title={workDetails?.title} style={{ margin: '15px' }}>
+        <Card title={singleWorkArray?.title} style={{ margin: '15px' }}>
         <Form onFinish={onFinishHandler} layout='vertical'>
             
             <Row gutter={20}>
@@ -285,7 +285,7 @@ const UpdateWork = ({ workDetails, onFinishHandler, user, navigate, employees, s
 UpdateWork.propTypes = {
   onFinishHandler: PropTypes.func,
   navigate: PropTypes.func,
-  workDetails: PropTypes.array,
+  singleWorkArray: PropTypes.array,
   user: PropTypes.object,
   employees: PropTypes.array,
   selectedEmployee: PropTypes.string,
