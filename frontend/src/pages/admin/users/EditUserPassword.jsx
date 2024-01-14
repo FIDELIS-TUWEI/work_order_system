@@ -77,6 +77,6 @@ EditUserPassword.propTypes = {
   password: PropTypes.string.isRequired,
   setPassword: PropTypes.func.isRequired,
   loading: PropTypes.bool,
-}
+};
 
 export default EditUserPassword;
