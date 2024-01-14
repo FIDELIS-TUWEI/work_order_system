@@ -6,7 +6,7 @@ import moment from "moment";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employees, selectedEmployee, handleEmployeeChange, isLoading }) => {
+const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employeesArray, selectedEmployee, handleEmployeeChange, isLoading }) => {
   // Function to disable past dates and future dates in DatePicker
   const disabledDate = current => {
     return current && current < moment().startOf('day');
@@ -63,7 +63,7 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
             onChange={handleEmployeeChange}
             filterOption={false}
           >
-            {employees.map((employee) => (
+            {employeesArray.map((employee) => (
               <Option key={employee._id} value={employee._id}>{employee.firstName} {employee.lastName}</Option>
             ))}
           </Select>
@@ -287,7 +287,7 @@ UpdateWork.propTypes = {
   navigate: PropTypes.func,
   singleWorkArray: PropTypes.array,
   user: PropTypes.object,
-  employees: PropTypes.array,
+  employeesArray: PropTypes.array,
   selectedEmployee: PropTypes.string,
   handleEmployeeChange: PropTypes.func,
   isLoading: PropTypes.bool
