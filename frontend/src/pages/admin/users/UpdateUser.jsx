@@ -6,7 +6,7 @@ import LoadingBox from "@/components/LoadingBox";
 
 const { Option } = Select;
 
-const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmentsArray, selectedDepartment, handleDepartmentChange, designationsArray, selectedDesignation, handleDesignationChange }) => {
+const UpdateUser = ({ onFinishHandler, userDataArray, navigate, loading, departmentsArray, selectedDepartment, handleDepartmentChange, designationsArray, selectedDesignation, handleDesignationChange }) => {
 
   const user = useSelector(selectUserInfo);
 
@@ -16,7 +16,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmen
   return (
     <div>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Edit User Details</Typography>
-      <Card title={userDetails?.username} style={{ margin: '15px' }}>
+      <Card title={userDataArray?.username} style={{ margin: '15px' }}>
         <Form onFinish={onFinishHandler} layout="vertical" style={{ margin: "18px"}}>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={8}>
@@ -24,7 +24,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmen
                 name="firstName" 
                 label="First Name"
               > 
-                <Input type='text' placeholder={userDetails?.firstName} />
+                <Input type='text' placeholder={userDataArray?.firstName} />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
@@ -32,7 +32,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmen
                 name="lastName" 
                 label="Last Name" 
               >
-                <Input type='text' placeholder={userDetails?.lastName} />
+                <Input type='text' placeholder={userDataArray?.lastName} />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
@@ -40,7 +40,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmen
                 name="email" 
                 label="Email Address" 
               >
-                <Input type='text' placeholder={userDetails?.email} />
+                <Input type='text' placeholder={userDataArray?.email} />
               </Form.Item>
             </Col>
             <Col xs={24} md={24} lg={8}>
@@ -139,7 +139,7 @@ const UpdateUser = ({ onFinishHandler, userDetails, navigate, loading, departmen
 // Props validation
 UpdateUser.propTypes = {
   onFinishHandler: PropTypes.func,
-  userDetails: PropTypes.array,
+  userDataArray: PropTypes.array,
   navigate: PropTypes.func,
   loading: PropTypes.bool,
   departmentsArray: PropTypes.array,
