@@ -1,36 +1,34 @@
 import { useState } from "react"
 import EditUserPassword from "@/pages/admin/users/EditUserPassword"
 import Layout from "@/components/Layout"
-import { updateUserPassword } from "../../../services/usersApi";
-import { useSelector } from "react-redux";
-import { selectToken } from "@/features/auth/authSlice";
 import { message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { useChangePasswordMutation } from "@/features/users/userSlice";
 
 const ChangePassword = () => {
-  const token = useSelector(selectToken);
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const {id} = useParams();
+  const [changePassword, { isLoading: loading }] = useChangePasswordMutation();
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const onFinishHandler = async (values) => {
     try {
-      setLoading(true);
-      await updateUserPassword(id, values, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      navigate('/users/all');
-      message.success('Password Updated Successfully');
-      setLoading(false);
+      const { error } = await changePassword({id, values}).unwrap();
+      if (error) {
+        if (error === 400 && error.data && error.data.message) {
+          message.error(error.data.message);
+          navigate('/users/all');
+        } else {
+          message.error("User Password update failed, try again later!");
+        }
+      } else {
+        navigate('/users/all');
+        message.success('Password Updated Successfully');
+      }
     } catch (error) {
       message.error('Password Update Failed');
-      setLoading(false);
     }
-  }
+  };
 
   return (
     <Layout>
@@ -42,6 +40,6 @@ const ChangePassword = () => {
       />
     </Layout>
   )
-}
+};
 
 export default ChangePassword;
