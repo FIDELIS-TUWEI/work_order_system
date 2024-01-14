@@ -7,17 +7,21 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getSingleWorkOrder} from '../../../services/workApi'
 import UpdateWork from "@/pages/admin/workOrders/UpdateWork";
 import { queryAllEmployees } from '../../../services/employeeApi'
-import { useUpdateWorkMutation } from '@/features/work/workSlice';
+import { useSingleWorkQuery, useUpdateWorkMutation } from '@/features/work/workSlice';
 
 const EditWorkOrder = () => {
+  const { id } = useParams();
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
   const [updateWorkOrder, { isLoading}] = useUpdateWorkMutation();
+  const { data: singleWork } = useSingleWorkQuery(id);
   const [workDetails, setWorkDetails] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const navigate = useNavigate();
-  const { id } = useParams();
+
+  const singleWorkArray = singleWork?.data || [];
+  console.log("Single work Details: ", singleWorkArray);
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
