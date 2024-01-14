@@ -6,8 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfo } from "../../../services/usersApi";
 import { useCallback, useEffect, useState } from "react";
 import UpdateUser from "@/pages/admin/users/UpdateUser";
-import { queryAllDesignations } from "../../../services/designation";
-import { useEditUserMutation } from "@/features/users/userSlice";
+import { useEditUserMutation, useGetSingleUserQuery } from "@/features/users/userSlice";
 import { useQueryAllDepartmentsQuery } from "@/features/departments/departmentSlice";
 import { useQueryAllDesignationsQuery } from "@/features/designations/designationSlice";
 
@@ -16,10 +15,10 @@ const EditUser = () => {
   const [editUser, { isLoading: loading }] = useEditUserMutation();
   const { data: departments } = useQueryAllDepartmentsQuery();
   const { data: designations } = useQueryAllDesignationsQuery();
+  const { data: userData } = useGetSingleUserQuery();
   const token = useSelector(selectToken);
   const [userDetails, setUserDetails] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
-  const [allDesignations, setAllDesignations] = useState([]);
   const [selectedDesignation, setSelectedDesignation] = useState(null);
   const navigate = useNavigate();
   const {id} = useParams();
