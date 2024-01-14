@@ -82,16 +82,13 @@ const EditWorkOrder = () => {
 
   // UseEffect hook
   useEffect(() => {
-    if (id) {
-      getWorkOrderDetails(id);
       getEmployees();
-    }
-  }, [id, getWorkOrderDetails, getEmployees]);
+  }, [getEmployees]);
   
   return (
     <Layout>
         <UpdateWork 
-          workDetails={workDetails}
+          singleWorkArray={singleWorkArray}
           onFinishHandler={onFinishHandler}
           user={user}
           navigate={navigate}
