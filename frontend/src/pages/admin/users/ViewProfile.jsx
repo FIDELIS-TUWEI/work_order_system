@@ -107,7 +107,7 @@ const ViewProfile = ({ loading, error, id, user, navigate, userInfoArray }) => {
 ViewProfile.propTypes = {
     loading: PropTypes.bool,
     error: PropTypes.object,
-    id: PropTypes.object,
+    id: PropTypes.string,
     user: PropTypes.object,
     navigate: PropTypes.func,
     userInfoArray: PropTypes.array
