@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import { Button, Tooltip } from 'antd'
 import Logo from "@/assets/images/logo.png"
 
-const ViewProfile = ({ user, navigate, userData }) => {
+const ViewProfile = ({ user, navigate, userInfoArray }) => {
 
-  const designationTitle = userData.designation
-    ? `${userData.designation.designationName}`
+  const designationTitle = userInfoArray.designation
+    ? `${userInfoArray.designation.designationName}`
     : "No designation"
 
   return (
@@ -17,11 +17,11 @@ const ViewProfile = ({ user, navigate, userData }) => {
 
           <div className="details--header">
             <div className="details--header1">
-              <h2>First Name: {userData?.firstName}</h2>
-              <p>Department: {userData?.department?.departmentName}</p>
+              <h2>First Name: {userInfoArray?.firstName}</h2>
+              <p>Department: {userInfoArray?.department?.departmentName}</p>
             </div>
             <div className="details--header2">
-              <h2>Last Name: {userData?.lastName}</h2>
+              <h2>Last Name: {userInfoArray?.lastName}</h2>
               <p>Designation: {designationTitle}</p>
             </div>
           </div>
@@ -30,19 +30,19 @@ const ViewProfile = ({ user, navigate, userData }) => {
         <div className="details--grid">
           <div className="details">
             <span>Username:</span>
-            <span>{userData?.username}</span>
+            <span>{userInfoArray?.username}</span>
           </div>
           <div className="details">
             <span>Email:</span>
-            <span>{userData?.email}</span>
+            <span>{userInfoArray?.email}</span>
           </div>
           <div className="details">
             <span>Role:</span>
-            <span>{userData?.role}</span>
+            <span>{userInfoArray?.role}</span>
           </div>
           <div className="details">
             <span>Active:</span>
-            <span>{userData?.active === true ? "Active" : "Not Active"}</span>
+            <span>{userInfoArray?.active === true ? "Active" : "Not Active"}</span>
           </div>
         </div>
         {
@@ -85,10 +85,10 @@ const ViewProfile = ({ user, navigate, userData }) => {
   )
 };
 
-ViewProfile.PropTypes = {
+ViewProfile.propTypes = {
     user: PropTypes.object,
     navigate: PropTypes.func,
-    userData: PropTypes.array
+    userInfoArray: PropTypes.array
 };
 
 export default ViewProfile;
