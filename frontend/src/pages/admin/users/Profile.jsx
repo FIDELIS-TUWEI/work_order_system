@@ -16,7 +16,6 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const userInfoArray = userInfo?.data || [];
-  console.log("User Profile Info: ", userInfoArray);
 
   // Conditional statement to display loading and error messages
   if (loading) {
