@@ -1,4 +1,3 @@
-import { Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
 import { selectUserInfo } from "@/features/auth/authSlice";
@@ -6,7 +5,6 @@ import { selectUserInfo } from "@/features/auth/authSlice";
 import { useNavigate, useParams } from 'react-router-dom';
 import ViewProfile from './ViewProfile';
 import { useGetSingleUserQuery } from '@/features/users/userSlice';
-import LoadingBox from '@/components/LoadingBox';
 
 
 const Profile = () => {
@@ -17,28 +15,18 @@ const Profile = () => {
 
   const userInfoArray = userInfo?.data || [];
 
-  // Conditional statement to display loading and error messages
-  if (loading) {
-    return <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-        <LoadingBox />
-    </div>;
-};
-
-if (error) {
-    return message.error(error);
-};
-
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '10px' }}>
-        Profile Details
-      </Typography>
 
       <ViewProfile 
+        loading={loading}
+        error={error}
+        id={id}
         user={user}
         userInfoArray={userInfoArray}
         navigate={navigate}
       />
+
     </Layout>
   )
 };
