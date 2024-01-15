@@ -1,43 +1,33 @@
 import { Typography, message } from 'antd'
 import Layout from '../../../components/Layout'
 import { useSelector } from 'react-redux';
-import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
+import { selectUserInfo } from "@/features/auth/authSlice";
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
-import { getUserInfo } from '../../../services/usersApi';
 import ViewProfile from './ViewProfile';
+import { useGetSingleUserQuery } from '@/features/users/userSlice';
+import LoadingBox from '@/components/LoadingBox';
 
 
 const Profile = () => {
   const {id} = useParams();
+  const { data: userInfo, isLoading: loading, error } = useGetSingleUserQuery(id);
   const user = useSelector(selectUserInfo);
-  const token = useSelector(selectToken);
-  const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
 
-  // Function to get user data
-  const getUserData = useCallback (async (id) => {
-    try {
-      const res = await getUserInfo(id, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUserData(res.data);
-    } catch (error) {
-      message.error("Failed to fetch user details", error.message);
-    }
-  }, [token]);
+  const userInfoArray = userInfo?.data || [];
+  console.log("User Profile Info: ", userInfoArray);
 
-  // useEffect hook
-  useEffect(() => {
-    if (id) {
-      getUserData(id);
-    }
-  }, [id, getUserData]);
+  // Conditional statement to display loading and error messages
+  if (loading) {
+    return <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <LoadingBox />
+    </div>;
+};
 
+if (error) {
+    return message.error(error);
+};
 
   return (
     <Layout>
@@ -47,7 +37,7 @@ const Profile = () => {
 
       <ViewProfile 
         user={user}
-        userData={userData}
+        userInfoArray={userInfoArray}
         navigate={navigate}
       />
     </Layout>
