@@ -13,6 +13,8 @@ const UserWorkHistory = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const userDataArray = userData?.workOrders || [];
+
     // Function to get user data
     const getUserData = useCallback (async () => {
         try {
@@ -76,7 +78,7 @@ const UserWorkHistory = () => {
         <Card>
         <Table 
             columns={columns}
-            dataSource={userData?.workOrders || []}
+            dataSource={userDataArray}
             rowKey="_id"
             loading={loading}
             pagination={false}
