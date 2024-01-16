@@ -39,77 +39,74 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Count Work Orders with Pending status
-const countPendingWorkOrders = asyncHandler (async (req, res, next) => {
+// Count Work Orders with status using mongoDB aggregation pipeline
+const countWorkStatus = asyncHandler (async (req, res, next) => {
     try {
-        const countPending = await WorkOrder.countDocuments({ status: "Pending" });
-        res.status(200).json({ 
-            success: true, 
-            data: countPending 
-        });
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-});
+        const result = await WorkOrder.aggregate([
+            {
+                $group: {
+                    _id: '$status',
+                    count: { $sum: 1 }
+                },
+            },
+        ]);
 
-// Count Work Orders with In Progress status
-const countInProgressWorkOrders = asyncHandler (async (req, res, next) => {
-    try {
-        const countInProgress = await WorkOrder.countDocuments({ status: "In_Progress" });
-        res.status(200).json({ 
+        const counts = {
+            pending: 0,
+            inProgress: 0,
+            completed: 0
+        };
+
+        result.forEach((item) => {
+            if (item._id === 'Pending') counts.pending = item.count;
+            else if (item._id === 'In_Progress') counts.inProgress = item.count;
+            else if (item._id === 'Complete') counts.completed = item.count;
+        });
+
+        res.status(200).json({
             success: true,
-            data: countInProgress 
+            data: counts
         });
+
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
 });
 
-// Count Work Orders with Completed status
-const countCompletedWorkOrders = asyncHandler (async (req, res, next) => {
+// Count reviewed work
+const countReviewed = asyncHandler (async (req, res, next) => {
     try {
-        const countCompleted = await WorkOrder.countDocuments({ status: "Complete" });
-        res.status(200).json({ 
-            success: true, 
-            data: countCompleted 
-        });
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-});
+        const totalReviewed = await WorkOrder.countDocuments({ reviewed: true });
 
-// Count Work Orders with Reviewed status
-const countReviewedWorkOrders = asyncHandler (async (req, res, next) => {
-    try {
-        const countReviewed = await WorkOrder.countDocuments({ reviewed: true });
-        res.status(200).json({ 
-            success: true, 
-            data: countReviewed 
+        res.status(200).json({
+            success: true,
+            data: totalReviewed
         });
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-});
 
-// Count All Work Orders
-const countAllWorkOrders = asyncHandler (async (req, res, next) => {
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500))
+    }
+})
+
+// Count Total work orders
+const countTotalWork = asyncHandler (async (req, res, next) => {
     try {
         const totalWorkCount = await WorkOrder.countDocuments();
-        res.status(200).json({ 
-            success: true,
-            data: totalWorkCount 
-        });
+
+        res.status(200).json({
+            success: true, 
+            data: totalWorkCount
+        })
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        return next(new ErrorResponse(error.message, 500))
     }
 });
+
 
 
 module.exports = {
     filterWorkStatus,
-    countPendingWorkOrders,
-    countInProgressWorkOrders,
-    countCompletedWorkOrders,
-    countReviewedWorkOrders,
-    countAllWorkOrders
+    countWorkStatus,
+    countReviewed,
+    countTotalWork,
 };
