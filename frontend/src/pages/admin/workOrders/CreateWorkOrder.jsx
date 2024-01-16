@@ -11,11 +11,10 @@ import { useQueryAllCategoriesQuery } from '@/features/categories/categorySlice'
 
 
 const CreateWorkOrder = () => {
-  const [addWork] = useCreateWorkMutation();
+  const [addWork, { isLoading: loading }] = useCreateWorkMutation();
   const { data: locations } = useQueryAllLocationsQuery();
   const { data: categories } = useQueryAllCategoriesQuery();
   const user = useSelector(selectUserInfo);
-  const [loading, setLoading] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
@@ -29,7 +28,6 @@ const CreateWorkOrder = () => {
   // function to handle form submit
   const onFinishHandler = async (values) => {
     try {
-      setLoading(true);
       const { error } = await addWork(values);
 
       if (error) {
@@ -48,7 +46,6 @@ const CreateWorkOrder = () => {
         }
       } 
       
-      setLoading(false);
     } catch (error) {
       message.error(error.message);
     }
