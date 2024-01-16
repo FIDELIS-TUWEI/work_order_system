@@ -20,9 +20,13 @@ export const reportsApi = createApi({
     tagTypes: ["Reports"],
     endpoints: (builder) => ({
         getFilterStatus: builder.query ({
-            query: () => ({
+            query: (args) => ({
                 url: `/work`,
                 method: "GET",
+                params: {
+                    pageNumber: args.page,
+                    status: args.status
+                }
             }),
             providesTags: ["Reports"],
         }),
