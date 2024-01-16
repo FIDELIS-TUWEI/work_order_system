@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 import moment from "moment";
 
 
-const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
+const WorkReport = ({ workOrdersData, loading, handleStatusChange, exportPDF }) => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -199,7 +199,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
           <label htmlFor="filterStatus" style={{ fontWeight: "bold" }}>
             Filter By Status:
           </label>
-          <select id="filterStatus" onChange={(e) => setFilterStatus(e.target.value)} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
+          <select id="filterStatus" onChange={handleStatusChange} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
             <option value="">All</option>
             <option value="Pending">Pending</option>
             <option value="In_Progress">In-progress</option>
@@ -218,7 +218,7 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
         
         <Card>
           <Table 
-            dataSource={workOrders}
+            dataSource={workOrdersData}
             loading={loading}
             columns={columns}
             pagination={false}
@@ -227,15 +227,15 @@ const WorkReport = ({ workOrders, loading, setFilterStatus, exportPDF }) => {
           />
         </Card>
 
-        <p style={{ marginTop: "20px" }}>Total Work Orders: {workOrders.length}</p>
+        <p style={{ marginTop: "20px" }}>Total Work Orders: {workOrdersData?.length}</p>
     </>
   )
 };
 
 WorkReport.propTypes = {
-  workOrders: PropTypes.array,
+  workOrdersData: PropTypes.array,
   loading: PropTypes.bool,
-  setFilterStatus: PropTypes.func,
+  handleStatusChange: PropTypes.func,
   exportPDF: PropTypes.func,
 };
 
