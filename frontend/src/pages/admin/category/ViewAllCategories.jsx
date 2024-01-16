@@ -1,15 +1,15 @@
 import PropTypes from "prop-types"
 import { Button, Card, Modal, Table, Tooltip, Typography, message } from "antd";
 import {MdDelete} from "react-icons/md";
-import { selectToken } from "@/features/auth/authSlice";
-import { useSelector } from "react-redux";
 import { useState } from "react";
-import { deleteCategory } from "../../../services/categoryApi";
+import { useDeleteCategoryMutation } from "@/features/categories/categorySlice";
+import { useParams } from "react-router-dom";
 
 const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
+    const {id} = useParams();
+    const [deleteCategory] = useDeleteCategoryMutation(id)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
-    const token = useSelector(selectToken);
 
     // Function to show modal to delete category
     const showModal = async (category) => {
@@ -20,18 +20,21 @@ const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
     // Function to confirm modal delete
     const handleDelete = async () => {
         try {
-            await deleteCategory(selectedCategoryToDelete._id, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            message.success("Category deleted successfully");
-            setIsModalVisible(false);
-            refetch();
+            const { error } = await deleteCategory(selectedCategoryToDelete._id).unwrap();
+
+            if (error) {
+                if (error === 400 && error.data && error.data.message) {
+                    message.error(error.data.message)
+                } else {
+                    message.error("Failed to delete Category")
+                }
+            } else {
+                message.success("Category deleted successfully");
+                setIsModalVisible(false);
+                refetch();
+            }
         } catch (error) {
-            console.error(error);
-            message.error("An error occurred while deleting the category", error);
+            message.error(error.message);
         }
     };
 
