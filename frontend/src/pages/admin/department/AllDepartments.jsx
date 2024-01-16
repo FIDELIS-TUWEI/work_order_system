@@ -1,60 +1,50 @@
-import { useSelector } from 'react-redux';
 import Layout from "@/components/Layout";
 import ViewAllDepartments from "@/pages/admin/department/ViewAllDepartments";
-import { selectToken } from "@/features/auth/authSlice";
-import { useCallback, useEffect, useState } from 'react';
-import { allDepartments } from '../../../services/departmentApi';
-import { Typography, message } from 'antd';
+import { useEffect, useState } from 'react';
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+
+import { useAllDepartmentsQuery } from '@/features/departments/departmentSlice';
+import { Button } from "antd";
 
 const AllDepartments = () => {
-  const token = useSelector(selectToken);
-  const [departments, setDepartments] = useState([]);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1);
-  const [loading, setLoading] = useState(false);
-  
-  // Function to get all departments
-  const getDepartments = useCallback (async () => {
-    try {
-      setLoading(true);
-      const { data, pages } = await allDepartments(page, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setDepartments(data);
-      setPages(pages);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      message.error('Error while fetching all departments', error.message);
-    }
-  }, [token, page]);
+  const { data, isLoading: loading, error, refetch } = useAllDepartmentsQuery(page);
 
-  // UseEffect hook
+  const { data: departments, pages } = data || {};
+  
   useEffect(() => {
-    getDepartments();
-  }, [page, getDepartments]);
+    if (error) {
+      message.error(error.message);
+    }
+  }, [error])
 
   // Function to handle page change
   const handlePageChange = (newPage) => {
     setPage(newPage);
+    refetch();
   }
 
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Departments</Typography>
+
       <ViewAllDepartments 
         departments={departments}
         loading={loading}
-        handlePageChange={handlePageChange}
-        page={page}
-        pages={pages}
-        getDepartments={getDepartments}
+        refetch={refetch}
       />
+
+      <div className="pagination">
+        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+          <GrFormPrevious />
+        </Button>
+        <span> Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+          <GrFormNext />
+        </Button>
+      </div>
+
     </Layout>
   )
-}
+};
 
 export default AllDepartments;
