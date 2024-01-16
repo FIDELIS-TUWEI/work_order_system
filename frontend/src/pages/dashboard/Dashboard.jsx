@@ -2,98 +2,27 @@ import { useSelector } from "react-redux";
 import Layout from "@/components/Layout";
 import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 import DashboardComponent from "@/pages/dashboard/DashboardComponent";
-import { countCompletedWork, countInProgressWork, countPendingWork, countReviewedWork, countTotalWork } from "../../services/reportApi";
 import { useCallback, useEffect, useState } from "react";
 import { countActiveUsers, countAllUsers } from "../../services/usersApi";
 import { countAllEmployees } from "../../services/employeeApi";
 import { message } from "antd";
+import { useGetWorkCountByStatusQuery, useTotalReviewedWorkQuery, useTotalWorkCountQuery } from "@/features/reports/reportSlice";
 
 const Dashboard = () => {
   const user = useSelector(selectUserInfo);
   const token = useSelector(selectToken);
-  const [pendingWorkCount, setPendingWorkCount] = useState(0);
-  const [inProgressCount, setInProgressCount] = useState(0);
-  const [completedCount, setCompletedCount] = useState(0);
-  const [reviewedCount, setReviewedCount] = useState(0);
-  const [totalWorkCount, setTotalWorkCount] = useState(0);
   const [totalUsersCount, setTotalUsersCount] = useState(0);
   const [activeUsersCount, setActiveUsersCount] = useState(0);
   const [employees, setEmployees] = useState(0);
+  const { data: reviewed } = useTotalReviewedWorkQuery();
+  const { data: counts } = useGetWorkCountByStatusQuery();
+  const { data: workTotal } = useTotalWorkCountQuery()
 
-  // Function to get work orders with pending status from API Service
-  const getPendingWorkCount = useCallback (async () => {
-    try {
-      const res = await countPendingWork({
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setPendingWorkCount(res.data);
-    } catch (error) {
-      message.error("Error while fetching pending work count", error.message);
-    }
-  });
-
-  // Function to get work orders with In_Progress status from API Service
-  const getInProgressWorkCount = useCallback (async () => {
-    try {
-      const res = await countInProgressWork({
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setInProgressCount(res.data);
-    } catch (error) {
-      message.error("Error while fetching in progress work count", error.message);
-    }
-  });
-
-  // Function to get work orders with completed status from API Service
-  const getCompletedWorkCount = useCallback (async () => {
-    try {
-      const res = await countCompletedWork({
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setCompletedCount(res.data);
-    } catch (error) {
-      message.error("Error while fetching completed work count", error.message);
-    }
-  });
-
-  // Function to get work orders with reviewed status from API Service
-  const getReviewedWorkCount = useCallback (async () => {
-    try {
-      const res = await countReviewedWork({
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setReviewedCount(res.data);
-    } catch (error) {
-      message.error("Error while fetching reviewed work count", error.message);
-    }
-  });
-
-  // Function to get total work count
-  const getTotalWorkCount = useCallback (async () => {
-    try {
-      const res = await countTotalWork({
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setTotalWorkCount(res.data);
-    } catch (error) {
-      message.error("Error while fetching total work count", error.message);
-    }
-  });
+  const pendingCount = counts?.data.pending;
+  const inProgressCount = counts?.data.inProgress;
+  const completedCount = counts?.data.completed;
+  const reviewCount = reviewed?.data || {};
+  const workCountData = workTotal?.data || {};
 
   // Function to get Total users count
   const getTotalUsersCount = useCallback (async () => {
@@ -142,25 +71,20 @@ const Dashboard = () => {
 
   // UseEffect hook
   useEffect(() => {
-    getPendingWorkCount();
-    getInProgressWorkCount();
-    getCompletedWorkCount();
-    getReviewedWorkCount();
-    getTotalWorkCount();
     getTotalUsersCount();
     getTotalActiveUsers();
     getAllEmployees();
-  }, [getTotalWorkCount, getTotalUsersCount, getTotalActiveUsers, getAllEmployees, getPendingWorkCount, getInProgressWorkCount, getCompletedWorkCount, getReviewedWorkCount]);
+  }, [ getTotalUsersCount, getTotalActiveUsers, getAllEmployees]);
 
   return (
     <Layout>
       <DashboardComponent 
-        user={user} 
-        pendingWorkCount={pendingWorkCount}
+        pendingCount={pendingCount}
         inProgressCount={inProgressCount}
         completedCount={completedCount}
-        reviewedCount={reviewedCount}
-        totalWorkCount={totalWorkCount}
+        reviewedCount={reviewCount}
+        workCountData={workCountData}
+        user={user} 
         totalUsersCount={totalUsersCount}
         activeUsersCount={activeUsersCount}
         employees={employees}
