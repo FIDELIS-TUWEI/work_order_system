@@ -1,14 +1,24 @@
-import { Typography } from "antd"
 import Layout from "@/components/Layout"
 import BarGraph from "./BarGraph"
+import { useQueryAllWorkQuery } from "@/features/work/workSlice";
 
 const Analytics = () => {
+  const { data: workOrders, isLoading: loading, error } = useQueryAllWorkQuery();
+
+  // Check and ensure workOrders?.data is an array
+  const workDataArray = workOrders?.data || [];
+
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Work Order Analytics</Typography>
-      <BarGraph />
+
+      <BarGraph 
+        workDataArray={workDataArray}
+        loading={loading}
+        error={error}
+      />
+
     </Layout>
   )
-}
+};
 
-export default Analytics
+export default Analytics;
