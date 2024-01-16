@@ -36,7 +36,8 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ["Pending", "In_Progress", "Complete", "Reviewed"],
-        default: "Pending"
+        default: "Pending",
+        index: true,
     },
     requestedBy: {
         type: ObjectId,
@@ -47,8 +48,9 @@ const workOrderSchema = new mongoose.Schema({
         // Not_Attended, In_Attendance, Attended, In_Complete
         type: String,
         required: true,
-        enum: ["Not_Attended", "In_Attendance", "In_Complete", "Attended",],
+        enum: ["Not_Attended", "In_Attendance", "In_Complete", "Attended"],
         default: "Not_Attended",
+        index: true,
     },
     trackerMessage: {
         type: String,
