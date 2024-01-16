@@ -1,64 +1,53 @@
 import { useNavigate } from "react-router-dom"
 import Layout from "@/components/Layout"
 import ViewAllCategories from "@/pages/admin/category/ViewAllCategories"
-import { useCallback, useEffect, useState } from "react"
-import { allWorkCategories } from "../../../services/categoryApi"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { selectToken, selectUserInfo } from "@/features/auth/authSlice"
-import { Typography, message } from "antd"
+import { selectUserInfo } from "@/features/auth/authSlice"
+import { useAllCategoriesQuery } from "@/features/categories/categorySlice"
+import { Button, message } from "antd";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
 const AllCategories = () => {
     const user = useSelector(selectUserInfo);
-    const token = useSelector(selectToken);
-    const [categories, setCategories] = useState([]);
     const [page, setPage] = useState(1);
-    const [pages, setPages] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const { data, isLoading: loading, error, refetch } = useAllCategoriesQuery(page)
     const navigate = useNavigate();
 
-    // Function to get all Work Categories
-    const getCategories = useCallback (async () => {
-        try {
-            setLoading(true)
-            const { data, pages } = await allWorkCategories(page, {
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setCategories(data);
-            setPages(pages);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            message.error("Failed to fetch categories", error.message);
-            
-        }
-    }, [token, page]);
+    const { data: categories, pages } = data || {};
 
-    // UseEffect hook
+    // Handle errors
     useEffect(() => {
-        getCategories();
-    }, [page, getCategories]);
+        if (error) {
+        message.error(error.message);
+        };
+    }, [error]);
 
     // Function to handle page change
     const handlePageChange = (newPage) => {
         setPage(newPage);
+        refetch();
     };
     
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Categories</Typography>
         <ViewAllCategories 
             navigate={navigate}
             loading={loading}
             categories={categories}
             user={user}
-            page={page}
-            pages={pages}
-            handlePageChange={handlePageChange}
-            getCategories={getCategories}
+            refetch={refetch}
         />
+
+        <div className="pagination">
+            <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+                <GrFormPrevious />
+            </Button>
+        <span> Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+            <GrFormNext />
+        </Button>
+        </div>
     </Layout>
   )
 }
