@@ -1,16 +1,12 @@
 import PropTypes from "prop-types"
-import { Button, Card, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, Typography, message } from "antd";
 import {MdDelete} from "react-icons/md";
-import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { selectToken } from "@/features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { deleteCategory } from "../../../services/categoryApi";
 
-const ViewAllCategories = ({ 
-    navigate, loading, categories, 
-    page, pages, handlePageChange, getCategories
-}) => {
+const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
     const token = useSelector(selectToken);
@@ -32,7 +28,7 @@ const ViewAllCategories = ({
             });
             message.success("Category deleted successfully");
             setIsModalVisible(false);
-            getCategories();
+            refetch();
         } catch (error) {
             console.error(error);
             message.error("An error occurred while deleting the category", error);
@@ -72,57 +68,52 @@ const ViewAllCategories = ({
     ];
     
   return (
-    <div>
-        <div className="add-btn">
-            <Button
-                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-                onClick={() => navigate("/new/category")}
+    <>
+        <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
+            All Categories
+        </Typography>
+        <div>
+            <div className="add-btn">
+                <Button
+                    style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+                    onClick={() => navigate("/new/category")}
+                >
+                    Add Category
+                </Button>
+            </div>
+            
+            <Card>
+                <Table 
+                    loading={loading}
+                    columns={columns}
+                    dataSource={categories}
+                    rowKey="_id"
+                    pagination={false}
+                />
+            </Card>
+
+            <Modal 
+                title="Confirm Delete Category" 
+                open={isModalVisible} 
+                onOk={handleDelete} 
+                onCancel={handleCancel}
+                okText="Delete"
+                okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
+                cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
             >
-                Add Category
+                <p>Are you sure you want to delete a category titled: {selectedCategoryToDelete?.categoryTitle}?</p>
+            </Modal>
+
+        <div className="add-btn">
+            <Button 
+            onClick={() => navigate(-1)} 
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+            >
+            Go Back
             </Button>
         </div>
-        
-        <Card>
-            <Table 
-                loading={loading}
-                columns={columns}
-                dataSource={categories}
-                rowKey="_id"
-                pagination={false}
-            />
-        </Card>
-
-        <Modal 
-            title="Confirm Delete Category" 
-            open={isModalVisible} 
-            onOk={handleDelete} 
-            onCancel={handleCancel}
-            okText="Delete"
-            okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
-            cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
-        >
-            <p>Are you sure you want to delete a category titled: {selectedCategoryToDelete?.categoryTitle}?</p>
-        </Modal>
-
-        <div className="pagination">
-            <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-                <GrFormPrevious />
-            </Button>
-        <span> Page {page} of {pages}</span>
-        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-          <GrFormNext />
-        </Button>
-      </div>
-
-      <div className="add-btn">
-        <Button 
-          onClick={() => navigate(-1)} 
-          style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
-        >
-          Go Back
-        </Button>
-      </div>
-    </div>
+        </div>
+    </>
   )
 };
 
@@ -130,10 +121,7 @@ ViewAllCategories.propTypes = {
     navigate: PropTypes.func,
     loading: PropTypes.bool,
     categories: PropTypes.array,
-    page: PropTypes.number,
-    pages: PropTypes.number,
-    handlePageChange: PropTypes.func,
-    getCategories: PropTypes.func
+    refetch: PropTypes.func
 };
 
 export default ViewAllCategories;
