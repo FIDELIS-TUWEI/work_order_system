@@ -1,17 +1,16 @@
 import PropTypes from "prop-types";
 import { Button, Card, Modal, Table, Tooltip, Typography, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectToken } from "@/features/auth/authSlice";
-import { deleteDepartment } from "../../../services/departmentApi";
+import { useDeleteDepartmentMutation } from "@/features/departments/departmentSlice";
 
 
 const ViewAllDepartments = ({ departments, loading, refetch }) => {
+  const { id } = useParams();
+  const [deleteDepartment] = useDeleteDepartmentMutation(id);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedDepartmentToDelete, setSelectedDepartmentToDelete] = useState(null);
-  const token = useSelector(selectToken);
   const navigate = useNavigate();
 
   // Function to show modal to delete department
@@ -23,18 +22,21 @@ const ViewAllDepartments = ({ departments, loading, refetch }) => {
   // Function to confirm modal delete department
   const handleDelete = async () => {
     try {
-      await deleteDepartment(selectedDepartmentToDelete._id, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      message.success("Department deleted successfully");
-      setIsModalVisible(false);
-      refetch();
+      const { error } = await deleteDepartment(selectedDepartmentToDelete._id).unwrap();
+
+      if (error) {
+        if (error === 400 && error.data && error.data.message) {
+          message.error(error.data.message);
+        } else {
+          message.error("Failed to delete department")
+        }
+      } else {
+        message.success("Department deleted successfully");
+        setIsModalVisible(false);
+        refetch();
+      }
     } catch (error) {
-      console.error(error);
-      message.error("An error occurred while deleting the department", error);
+      message.error(error.message);
     }
   };
 
