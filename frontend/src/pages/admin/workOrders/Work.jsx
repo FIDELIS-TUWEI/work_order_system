@@ -38,8 +38,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
             refetch();
           }
       } catch (error) {
-          console.error(error);
-          message.error("An error occurred while deleting the work order", error);
+          message.error(error.message);
       }
   };
 
