@@ -28,7 +28,7 @@ const CreateWorkOrder = () => {
   // function to handle form submit
   const onFinishHandler = async (values) => {
     try {
-      const { error } = await addWork(values);
+      const { error } = await addWork(values).unwrap();
 
       if (error) {
         if (error.status === 400 && error.data && error.data.message) {
