@@ -1,12 +1,11 @@
-import { Card, Col, Row, message } from "antd";
+import PropTypes from "prop-types";
+import { Card, Col, Row, message, Typography } from "antd";
 import {  ResponsiveContainer, Tooltip, Legend, PieChart, Pie, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import LoadingBox from "@/components/LoadingBox";
-import { useQueryAllWorkQuery } from "@/features/work/workSlice";
 
-const BarGraph = () => {
-    const { data: workOrders, isLoading, error } = useQueryAllWorkQuery();
-
-    if (isLoading) {
+const BarGraph = ({ workDataArray, loading, error }) => {
+    // Conditional statements to check fetching data and handle errors
+    if (loading) {
         return <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             <LoadingBox />
         </div>;
@@ -15,9 +14,6 @@ const BarGraph = () => {
     if (error) {
         return message.error(error);
     };
-
-    // Check and ensure workOrders?.data is an array
-    const workDataArray = workOrders?.data || [];
 
     // Count the number of work assigned to each employee
     const workCounts = workDataArray.reduce((counts, workOrder) => {
@@ -85,94 +81,99 @@ const BarGraph = () => {
     }));
 
   return (
-    <div style={{ margin: "15px 2px" }}>
-        <Row gutter={16}>
-        <Col xs={24} md={12} lg={8}>
-        <Card title="Work Assigned" style={{ margin: "6px" }}>
-            <ResponsiveContainer width="100%" aspect={1}>
-                <PieChart>
-                    <Pie 
-                        data={workCountsArray} 
-                        dataKey="count" 
-                        nameKey="employee" 
-                        cx="50%" 
-                        cy="50%" 
-                        innerRadius={60}
-                        outerRadius={80} 
-                        paddingAngle={5}
-                        fill="#8884d8"  
-                    />
-                    <Tooltip />
-                    <Legend />
-                </PieChart>
-            </ResponsiveContainer>
-        </Card>
-        </Col>
+    <>
+        <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
+            Work Order Analytics
+        </Typography>
+        <div style={{ margin: "15px 2px" }}>
+            <Row gutter={16}>
+            <Col xs={24} md={12} lg={8}>
+            <Card title="Work Assigned" style={{ margin: "6px" }}>
+                <ResponsiveContainer width="100%" aspect={1}>
+                    <PieChart>
+                        <Pie 
+                            data={workCountsArray} 
+                            dataKey="count" 
+                            nameKey="employee" 
+                            cx="50%" 
+                            cy="50%" 
+                            innerRadius={60}
+                            outerRadius={80} 
+                            paddingAngle={5}
+                            fill="#8884d8"  
+                        />
+                        <Tooltip />
+                        <Legend />
+                    </PieChart>
+                </ResponsiveContainer>
+            </Card>
+            </Col>
 
-        <Col xs={24} md={12} lg={8}>
-        <Card title="Work Status" style={{ margin: "6px" }}>
-            <ResponsiveContainer width="100%" aspect={1}>
-                <PieChart>
-                    <Pie 
-                        data={workStatusCountsArray} 
-                        dataKey="count" 
-                        nameKey="status" 
-                        cx="50%" 
-                        cy="50%"
-                        startAngle={180}
-                        endAngle={0} 
-                        innerRadius={50}
-                        outerRadius={70} 
-                        paddingAngle={5}
-                        fill={(entry) => entry.data.fill}  
-                    />
-                    <Tooltip />
-                    <Legend />
-                </PieChart>
-            </ResponsiveContainer>
-        </Card>
-        </Col>
+            <Col xs={24} md={12} lg={8}>
+            <Card title="Work Status" style={{ margin: "6px" }}>
+                <ResponsiveContainer width="100%" aspect={1}>
+                    <PieChart>
+                        <Pie 
+                            data={workStatusCountsArray} 
+                            dataKey="count" 
+                            nameKey="status" 
+                            cx="50%" 
+                            cy="50%"
+                            startAngle={180}
+                            endAngle={0} 
+                            innerRadius={50}
+                            outerRadius={70} 
+                            paddingAngle={5}
+                            fill={(entry) => entry.data.fill}  
+                        />
+                        <Tooltip />
+                        <Legend />
+                    </PieChart>
+                </ResponsiveContainer>
+            </Card>
+            </Col>
 
-        <Col xs={24} md={12} lg={8}>
-        <Card title="Work Priority" style={{ margin: "6px" }}>
-            <ResponsiveContainer width="100%" aspect={1}>
-                <PieChart>
-                    <Pie
-                        data={workPriorityCountsArray}
-                        dataKey="count"
-                        nameKey="priority"
-                        cx="50%"
-                        cy="50%"
-                        startAngle={180}
-                        endAngle={0}
-                        innerRadius={50}
-                        outerRadius={70}
-                        paddingAngle={5}
-                        fill={(entry) => entry.data.fill}
-                    />
-                    <Tooltip />
-                    <Legend />
-                </PieChart>
-            </ResponsiveContainer>
-        </Card>
-        </Col> 
+            <Col xs={24} md={12} lg={8}>
+            <Card title="Work Priority" style={{ margin: "6px" }}>
+                <ResponsiveContainer width="100%" aspect={1}>
+                    <PieChart>
+                        <Pie
+                            data={workPriorityCountsArray}
+                            dataKey="count"
+                            nameKey="priority"
+                            cx="50%"
+                            cy="50%"
+                            startAngle={180}
+                            endAngle={0}
+                            innerRadius={50}
+                            outerRadius={70}
+                            paddingAngle={5}
+                            fill={(entry) => entry.data.fill}
+                        />
+                        <Tooltip />
+                        <Legend />
+                    </PieChart>
+                </ResponsiveContainer>
+            </Card>
+            </Col> 
 
-        <Col>
-        <Card title="Work Requested" style={{ margin: "6px" }}>
-            <ResponsiveContainer width="100%" minWidth={700} aspect={1}>
-                <LineChart>
-                    <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
-                    <XAxis dataKey="user" />
-                    <YAxis />
-                    <Tooltip />
-                    <CartesianGrid stroke="#ccc" />
-                    <Legend />
-                </LineChart>
-            </ResponsiveContainer>
-        </Card>
-        </Col>
-        </Row>
-    </div>
+            <Col>
+            <Card title="Work Requested" style={{ margin: "6px" }}>
+                <ResponsiveContainer width="100%" minWidth={700} aspect={1}>
+                    <LineChart>
+                        <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
+                        <XAxis dataKey="user" />
+                        <YAxis />
+                        <Tooltip />
+                        <CartesianGrid stroke="#ccc" />
+                        <Legend />
+                    </LineChart>
+                </ResponsiveContainer>
+            </Card>
+            </Col>
+            </Row>
+        </div>
+    </>
   )
 };
 
@@ -188,6 +189,12 @@ const generateUniqueColors = (count) => {
     }
 
     return colors;
-}
+};
+
+BarGraph.propTypes = {
+    workDataArray: PropTypes.array,
+    loading: PropTypes.bool,
+    error: PropTypes.object
+};
 
 export default BarGraph;
