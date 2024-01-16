@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
-import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "@/features/auth/authSlice";
 import { deleteDepartment } from "../../../services/departmentApi";
 
 
-const ViewAllDepartments = ({ departments, loading, handlePageChange, page, pages, getDepartments }) => {
+const ViewAllDepartments = ({ departments, loading, refetch }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedDepartmentToDelete, setSelectedDepartmentToDelete] = useState(null);
   const token = useSelector(selectToken);
@@ -32,7 +31,7 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
       });
       message.success("Department deleted successfully");
       setIsModalVisible(false);
-      getDepartments();
+      refetch();
     } catch (error) {
       console.error(error);
       message.error("An error occurred while deleting the department", error);
@@ -74,6 +73,9 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
 
   return (
     <>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
+        All Departments
+      </Typography>
       <div className="add-btn">
             <Button
                 style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
@@ -105,16 +107,6 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
         <p>Are you sure you want to delete a department titled: {selectedDepartmentToDelete?.departmentName}?</p>
       </Modal>
 
-      <div className="pagination">
-        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-          <GrFormPrevious />
-        </Button>
-        <span> Page {page} of {pages}</span>
-        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-          <GrFormNext />
-        </Button>
-      </div>
-
       <div className="add-btn">
         <Button 
           onClick={() => navigate(-1)} 
@@ -130,10 +122,7 @@ const ViewAllDepartments = ({ departments, loading, handlePageChange, page, page
 ViewAllDepartments.propTypes = {
   departments: PropTypes.array,
   loading: PropTypes.bool,
-  handlePageChange: PropTypes.func,
-  page: PropTypes.number,
-  pages: PropTypes.number,
-  getDepartments: PropTypes.func
+  refetch: PropTypes.func
 };
 
 export default ViewAllDepartments;
