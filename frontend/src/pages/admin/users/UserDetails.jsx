@@ -1,45 +1,29 @@
-import { Button, Tooltip, Typography, message } from 'antd';
 import Layout from "@/components/Layout";
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
-import { getUserInfo } from '../../../services/usersApi';
 import { useSelector } from 'react-redux';
-import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
-import Logo from "@/assets/images/logo.png";
+import { selectUserInfo } from "@/features/auth/authSlice";
+import { useGetSingleUserQuery } from '@/features/users/userSlice';
+import UserData from './UserData';
 
 const UserDetails = () => {
-  const user = useSelector(selectUserInfo);
-  const token = useSelector(selectToken);
-  const [userDetails, setUserDetails] = useState([]);
-  const navigate = useNavigate();
   const {id} = useParams();
+  const { data: userInfo, isLoading: loading, error } = useGetSingleUserQuery(id);
+  const user = useSelector(selectUserInfo);
+  const navigate = useNavigate();
 
-
-  // function to get user details
-  const getUserDetails = useCallback (async (id) => {
-    try {
-      const res = await getUserInfo(id, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUserDetails(res.data);
-    } catch (error) {
-      message.error("Failed to fetch user details", error.message);
-    }
-  }, [token]);
-
-  // UseEffect hook
-  useEffect(() => {
-    if (id) {
-      getUserDetails(id);
-    }
-  }, [id, getUserDetails]);
+  const userInfoArray = userInfo?.data || [];
 
   return (
     <Layout>
-      
+
+      <UserData 
+        userInfoArray={userInfoArray}
+        navigate={navigate}
+        user={user}
+        loading={loading}
+        error={error}
+      />
+
     </Layout>
   )
 }
