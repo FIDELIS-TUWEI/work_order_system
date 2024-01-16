@@ -23,7 +23,7 @@ DashboardCard.propTypes = {
 
 const DashboardComponent = ({ user, pendingCount, 
     inProgressCount, completedCount, workCountData, reviewedCount, 
-    totalUsersCount, activeUsersCount, employees 
+    usersData, countActiveUsers, countEmployees 
 }) => {
 
     // Conditional render for admin or superadmin
@@ -88,7 +88,7 @@ const DashboardComponent = ({ user, pendingCount,
             <Col span={8}>
                 <DashboardCard 
                     title={"Total Users"}
-                    value={totalUsersCount}
+                    value={usersData}
                     icon={
                         <MdGroups size={24} color="brown" />
                     }
@@ -98,7 +98,7 @@ const DashboardComponent = ({ user, pendingCount,
             <Col span={8}>
             <DashboardCard 
                 title={"Active Users"}
-                value={activeUsersCount}
+                value={countActiveUsers}
                 icon={
                     <BiSolidUserCheck size={24} color="violet" />
                 }
@@ -108,7 +108,7 @@ const DashboardComponent = ({ user, pendingCount,
             <Col span={8}>
             <DashboardCard 
                 title={"Total Employees"}
-                value={employees}
+                value={countEmployees}
                 icon={
                     <FaUsersLine size={24} color="black" />
                 }
@@ -210,9 +210,9 @@ DashboardComponent.propTypes = {
     completedCount: PropTypes.number,
     workCountData: PropTypes.number,
     reviewedCount: PropTypes.number,
-    totalUsersCount: PropTypes.number,
-    activeUsersCount: PropTypes.number,
-    employees: PropTypes.number
+    usersData: PropTypes.number,
+    countActiveUsers: PropTypes.number,
+    countEmployees: PropTypes.number
 };
 
 export default DashboardComponent;
