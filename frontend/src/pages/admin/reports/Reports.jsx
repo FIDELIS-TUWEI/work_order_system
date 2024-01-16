@@ -1,47 +1,36 @@
-import axios from "axios";
 import moment from "moment";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { jsPDF } from "jspdf";
 import Logo from "@/assets/images/logo.png";
 import Layout from "@/components/Layout";
 import WorkReport from "./WorkReport";
 import { Button, Typography, message } from "antd";
-import { useNavigate } from "react-router-dom";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+import { useGetFilterStatusQuery } from "@/features/reports/reportSlice";
 
-const WORK_URL = "/hin";
 
 const Reports = () => {
-  const [workOrders, setWorkOrders] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const { data, isLoading: loading, error, refetch } = useGetFilterStatusQuery({page, status: filterStatus})
 
+  const { data: workOrdersData, pages } = data || {};
 
-// Function to fetch all work orders from API
-const getWorkOrders = useCallback (async () => {
-  try {
-    setLoading(true);
-    const res = await axios.get(`${WORK_URL}/work`, {
-      params: {
-        pageNumber: page,
-        status: filterStatus
-      },
-    });
-    setWorkOrders(res.data.data);
-    setPages(res.data.pages);
-    setLoading(false);
-  } catch (error) {
-    message.error("Failed to fetch work orders", error.message);
-  }
-}, [filterStatus, page]);
+  console.log("Filtered data: ", workOrdersData);
+  console.log("Error: ", error);
 
-  // useEffect hook
-  useEffect(() => {
-    getWorkOrders();
-  }, [filterStatus, page, getWorkOrders]);
+  // Handle status change
+  const handleStatusChange = (event) => {
+    const newStatus = event.target.value
+    setFilterStatus(newStatus);
+    refetch();
+  };
+
+  // function to handle page change
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+    refetch();
+  };
 
   // Function to generate and export pending work orders
   const exportPDF = async () => {
@@ -115,7 +104,7 @@ const getWorkOrders = useCallback (async () => {
     // Display employee assigned
     const showEmployeeName = (employee) => (employee ? `${employee.firstName} ${employee.lastName}` : "Unassigned");
 
-    const rows = workOrders.map((workOrder) => [
+    const rows = workOrdersData.map((workOrder) => [
       workOrder.serviceType,
       workOrder.priority,
       `${workOrder.category.categoryTitle}`,
@@ -139,26 +128,17 @@ const getWorkOrders = useCallback (async () => {
 
     doc.save("Work Orders.pdf");
     message.success("Report Generated Successfully"); 
-  }
-
-  // function to handle page change
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
   };
 
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Reports</Typography>
       <WorkReport 
-        workOrders={workOrders}
+        workOrdersData={workOrdersData}
         handlePageChange={handlePageChange}
-        pages={pages}
-        page={page}
         loading={loading}
-        getWorkOrders={getWorkOrders}
-        setFilterStatus={setFilterStatus}
+        handleStatusChange={handleStatusChange}
         exportPDF={exportPDF}
-        navigate={navigate}
       />
       
       <div className="pagination">
