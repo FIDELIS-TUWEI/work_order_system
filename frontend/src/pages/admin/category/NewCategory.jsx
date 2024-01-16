@@ -1,22 +1,35 @@
-import { useState } from "react"
 import CreateCategory from "@/pages/admin/category/CreateCategory"
 import Layout from "@/components/Layout"
-import { createNewCategory } from "../../../services/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
+import { useCreateCategoryMutation } from "@/features/categories/categorySlice";
 
 const NewCategory = () => {
-    const [loading, setLoading] = useState(false);
+    const [newCategory, { isLoading: loading }] = useCreateCategoryMutation()
     const navigate = useNavigate();
 
     // Function to handle form submit
     const onFinishHandler = async (values) => {
-        setLoading(true);
-        await createNewCategory(values);
-        navigate("/all-categories");
-        message.success("New Category Created Succesfully");
-        setLoading(false);
-    }
+        try {
+          const { error } = await newCategory(values).unwrap();
+  
+          if (error) {
+            if (error === 400 && error.data && error.data.message) {
+              message.error(error.data.message)
+              navigate("/all-categories");
+            } else {
+              message.error("Failed to create new category")
+            }
+          } else {
+            message.success("New Category Created Succesfully");
+            navigate("/all-categories");
+          }
+
+        } catch (error) {
+          message.error(error.message);
+        }
+    };
+
   return (
     <Layout>
         <CreateCategory 
@@ -26,6 +39,6 @@ const NewCategory = () => {
         />
     </Layout>
   )
-}
+};
 
-export default NewCategory
+export default NewCategory;
