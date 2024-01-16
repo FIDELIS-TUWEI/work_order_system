@@ -19,7 +19,7 @@ export const reportsApi = createApi({
     baseQuery,
     tagTypes: ["Reports"],
     endpoints: (builder) => ({
-        getFilterStatus: builder.query ({
+        getFilterStatus: builder.query({
             query: (args) => ({
                 url: `/work`,
                 method: "GET",
@@ -30,9 +30,33 @@ export const reportsApi = createApi({
             }),
             providesTags: ["Reports"],
         }),
+        getWorkCountByStatus: builder.query ({
+            query: () => ({
+                url: `/report/work/count/status`,
+                method: "GET",
+            }),
+            providesTags: ["Reports"],
+        }),
+        totalReviewedWork: builder.query({
+            query: () => ({
+                url: `/report/work/total/reviewed`,
+                method: "GET",
+            }),
+            providesTags: ["Reports"]
+        }),
+        totalWorkCount: builder.query({
+            query: () => ({
+                url: `/report/total/work/count`,
+                method: "GET",
+            }),
+            providesTags: ["Reports"]
+        }),
     })
 });
 
 export const {
     useGetFilterStatusQuery,
+    useGetWorkCountByStatusQuery,
+    useTotalReviewedWorkQuery,
+    useTotalWorkCountQuery
 } = reportsApi;
