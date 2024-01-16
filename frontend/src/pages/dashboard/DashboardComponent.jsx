@@ -21,9 +21,9 @@ DashboardCard.propTypes = {
     icon: PropTypes.element
 }
 
-const DashboardComponent = ({ user, pendingWorkCount, 
-    inProgressCount, completedCount, reviewedCount, 
-    totalWorkCount, totalUsersCount, activeUsersCount, employees 
+const DashboardComponent = ({ user, pendingCount, 
+    inProgressCount, completedCount, workCountData, reviewedCount, 
+    totalUsersCount, activeUsersCount, employees 
 }) => {
 
     // Conditional render for admin or superadmin
@@ -38,7 +38,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
             <Col span={8}>
                 <DashboardCard 
                     title={"Total Work"} 
-                    value={totalWorkCount} 
+                    value={workCountData} 
                     icon={
                         <MdOutlineWork size={24} color="grey" />
                     }
@@ -48,7 +48,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
             <Col span={8}>
                 <DashboardCard 
                     title={"Pending Work"}
-                    value={pendingWorkCount}
+                    value={pendingCount}
                     icon={
                         <MdOutlinePendingActions size={24} color="orange" />
                     }
@@ -125,7 +125,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
                 <Col span={8}>
                     <DashboardCard 
                         title={"Total Work"} 
-                        value={totalWorkCount} 
+                        value={workCountData} 
                         icon={
                             <MdOutlineWork size={24} color="grey" />
                         }
@@ -135,7 +135,7 @@ const DashboardComponent = ({ user, pendingWorkCount,
                 <Col span={8}>
                     <DashboardCard
                         title={"Pending Work"}
-                        value={pendingWorkCount}
+                        value={pendingCount}
                         icon={
                             <MdOutlinePendingActions size={24} color="orange" />
                         } 
@@ -205,11 +205,11 @@ const DashboardComponent = ({ user, pendingWorkCount,
 
 DashboardComponent.propTypes = {
     user: PropTypes.object,
-    pendingWorkCount: PropTypes.number,
+    pendingCount: PropTypes.number,
     inProgressCount: PropTypes.number,
     completedCount: PropTypes.number,
+    workCountData: PropTypes.number,
     reviewedCount: PropTypes.number,
-    totalWorkCount: PropTypes.number,
     totalUsersCount: PropTypes.number,
     activeUsersCount: PropTypes.number,
     employees: PropTypes.number
