@@ -21,7 +21,7 @@ export const designationsApi = createApi({
     endpoints: (builder) => ({
         createDesignation: builder.mutation({
             query: (values) => ({
-                url: `/new.designation`,
+                url: `/new/designation`,
                 method: "POST",
                 body: values,
             }),
@@ -43,7 +43,7 @@ export const designationsApi = createApi({
         }),
         deleteDesignation: builder.mutation({
             query: (id) => ({
-                url: `/delete/designations/${id}`,
+                url: `/delete/designation/${id}`,
                 method: "DELETE",
                 body: id,
             }),
