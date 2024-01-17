@@ -102,7 +102,7 @@ const login = asyncHandler (async (req, res, next) => {
             return next(new ErrorResponse("Invalid Credentials", 401));
         }
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
