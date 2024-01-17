@@ -1,18 +1,16 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, Table, Tooltip, message } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button, Card, Modal, Table, Tooltip, Typography, message } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
 import {MdDelete} from "react-icons/md";
-import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectToken } from "@/features/auth/authSlice";
-import { deleteDesignation } from "../../../services/designation";
+import { useDeleteDesignationMutation } from "@/features/designations/designationSlice";
 
 
-const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pages, getDesignations }) => {
+const ViewAllDesignations = ({ designations, loading, refetch }) => {
+  const { id } = useParams();
+  const [deleteDesignation] = useDeleteDesignationMutation(id);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedDesignationToDelete, setSelectedDesignationToDelete] = useState(null);
-  const token = useSelector(selectToken);
   const navigate = useNavigate();
 
   // Function to show modal to delete designation
@@ -24,18 +22,21 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
   // Function to confirm modal delete designation
   const handleDelete = async () => {
     try {
-      await deleteDesignation(selectedDesignationToDelete._id, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      message.success("Designation deleted successfully");
-      setIsModalVisible(false);
-      getDesignations();
+      const { error } = await deleteDesignation(selectedDesignationToDelete._id).unwrap();
+
+      if (error) {
+        if (error === 400 && error.data && error.data.message) {
+          message.error(error.data.message);
+        } else {
+          message.error("Failed to delete designation");
+        }
+      } else {
+        message.success("Designation deleted successfully");
+        setIsModalVisible(false);
+        refetch();
+      }
     } catch (error) {
-      console.error(error);
-      message.error("An error occurred while deleting the designation", error);
+      message.error(error.message);
     }
   };
 
@@ -74,6 +75,9 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
 
   return (
     <>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
+        All Designations
+      </Typography>
       <div className="add-btn">
       <Button
           style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
@@ -105,16 +109,6 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
         <p>Are you sure you want to delete a designation titled: {selectedDesignationToDelete?.designationName}?</p>
       </Modal>
 
-      <div className="pagination">
-        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-          <GrFormPrevious />
-        </Button>
-        <span> Page {page} of {pages}</span>
-        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-          <GrFormNext />
-        </Button>
-      </div>
-
       <div className="add-btn">
         <Button 
           onClick={() => navigate(-1)} 
@@ -130,10 +124,7 @@ const ViewAllDesignations = ({ designations, loading, handlePageChange, page, pa
 ViewAllDesignations.propTypes = {
   designations: PropTypes.array,
   loading: PropTypes.bool,
-  handlePageChange: PropTypes.func,
-  page: PropTypes.number,
-  pages: PropTypes.number,
-  getDesignations: PropTypes.func
+  refetch: PropTypes.func
 };
 
 export default ViewAllDesignations;
