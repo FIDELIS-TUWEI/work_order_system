@@ -58,15 +58,20 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Send Email notification
         const subject = "NEW WORK ORDER CREATED";
-        const text = `New Work Order with the following details has been created:
-        Description: ${description} \n
-        Priority: ${priority} \n
-        Service Type: ${serviceType} \n
-        Login to your account to view the work order details.
-        Thank you for using Holiday Inn Work Order System.
+        const emailText = `
+            New Work Order Created
+
+            Work Order details:
+            - Description: ${description}
+            - Priority: ${priority}
+            - Service Type: ${serviceType}
+
+            Thank you for using Holiday Inn Work Order System.
+
+            Login to your account to view the work order details.
         `;
 
-        await sendEmailNotification(savedWorkorder, subject, text);
+        await sendEmailNotification(savedWorkorder, subject, emailText);
 
         // Return a response
         return res.status(201).json({
