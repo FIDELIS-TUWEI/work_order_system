@@ -108,26 +108,4 @@ const workOrderSchema = new mongoose.Schema({
 }
 );
 
-// Pre save hook to set date assigned before save
-workOrderSchema.pre("save", async function (next) {
-    const workOrder = this;
-
-    // set date assigned if the status is In_Progress and date assigned is not set
-    if (workOrder.status === "In_Progress" && !workOrder.dateAssigned) {
-        workOrder.dateAssigned = new Date();
-    }
-
-    // set date completed if the status is Complete and date completed is not set
-    if (workOrder.status === "Complete" && !workOrder.dateCompleted) {
-        workOrder.dateCompleted = new Date();
-    };
-
-    // set date reviewed if the status is Reviewed and date reviewed is not set
-    if (workOrder.reviewed === true && !workOrder.dateVerified) {
-        workOrder.dateVerified = new Date();
-    };
-
-    next();
-});
-
 module.exports = mongoose.model("Workorder", workOrderSchema);
