@@ -1,5 +1,5 @@
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import Logo from "@/assets/images/logo.png";
 import Layout from "@/components/Layout";
@@ -16,8 +16,11 @@ const Reports = () => {
 
   const { data: workOrdersData, pages } = data || {};
 
-  console.log("Filtered data: ", workOrdersData);
-  console.log("Error: ", error);
+  useEffect(() => {
+    if (error) {
+      message.error(error.message)
+    }
+  }, [error]);
 
   // Handle status change
   const handleStatusChange = (event) => {
