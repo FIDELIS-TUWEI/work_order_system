@@ -58,10 +58,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
 
         // Send Email notification
         const subject = "NEW WORK ORDER CREATED";
-        const emailText = `
-            New Work Order Created
-
-            Work Order details:
+        const emailText = `New Work Order Created with the following details:
             - Description: ${description}
             - Priority: ${priority}
             - Service Type: ${serviceType}
@@ -256,9 +253,9 @@ async function sendUpdateEmailNotification (updatedWorkOrder) {
          - Tracker Message: ${updatedWorkOrder.trackerMessage}
          - Date Updated: ${updatedWorkOrder.Date_Updated}
 
-        Log in to your account to see more details about the updated work order.
-
         Thank you for using Holiday Inn Work Order System.
+
+        Log in to your account to see more details about the updated work order.
     `;
 
     await sendEmailNotification(updatedWorkOrder, subject, text);
