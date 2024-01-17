@@ -5,15 +5,17 @@ import {AiFillEye} from "react-icons/ai";
 import {MdDelete} from "react-icons/md";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
-import { deleteEmployee } from "../../../services/employeeApi";
+import { selectUserInfo } from "@/features/auth/authSlice";
+import { useParams } from "react-router-dom";
+import { useDeleteEmployeeMutation } from "@/features/employees/employeeSlice";
 
 
 const AllEmployees = ({ navigate, loading, employees, refetch }) => {
+  const { id } = useParams();
+  const [deleteEmployee] = useDeleteEmployeeMutation(id);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedEmployeeToDelete, setSelectedEmployeeToDelete] = useState(null);
   const user = useSelector(selectUserInfo);
-  const token = useSelector(selectToken);
 
   // Function to show modal to delete employee
   const showModal = async (employee) => {
@@ -24,17 +26,21 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
   // Function to confirm modal delete
   const handleDelete = async () => {
       try {
-          await deleteEmployee(selectedEmployeeToDelete._id, {
-              withCredentials: true,
-              headers: {
-                  Authorization: `Bearer ${token}`,
-              },
-          });
-          message.success("Employee deleted successfully");
-          setIsModalVisible(false);
-          refetch();
+          const { error } = await deleteEmployee(selectedEmployeeToDelete._id).unwrap();
+
+          if (error) {
+            if (error === 400 && error.data && error.data.message) {
+              message.error(error.data.message);
+            } else {
+              message.error("Failed to delete employee")
+            }
+          } else {
+            message.success("Employee deleted successfully");
+            setIsModalVisible(false);
+            refetch();
+          }
       } catch (error) {
-          message.error("An error occurred while deleting the employee:", error);
+          message.error(error.message);
       }
   };
 
