@@ -133,7 +133,37 @@ async function updateWorkOrderDetails (id, updatedFields) {
         runValidators: true
     };
 
+    if (updatedFields.assignedTo) {
+        updatedFields.dateAssigned = new Date();
+    }
+
+    if (updatedFields.status === "Complete") {
+        updatedFields.dateCompleted = new Date();
+    }
+
+    if (updatedFields.reviewed) {
+        updatedFields.dateVerified = new Date(); 
+    }
+
     return await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
+};
+
+// Handle Assigned Work Orders
+async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
+    // update the assignedTo field
+    updatedWorkOrder.assignedTo = assignedTo;
+    updatedWorkOrder.dateAssigned = new Date();
+
+    await updatedWorkOrder.save();
+
+    // Find the employee and add the work order to their assignedwork array
+    const employee = await Employee.findById(assignedTo);
+    if (employee) {
+        employee.assignedWork.push(updatedWorkOrder._id);
+        await employee.save();
+    } else {
+        throw new Error("Employee not found");
+    }
 };
 
 // Handle In Complete Work Order tracker
@@ -192,7 +222,7 @@ async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
         updatedWorkOrder.verifiedByUsername = verifyingUser.username || "No username";
     };
 
-    updatedWorkOrder.dateVerified = req.body.dateVerified;
+    updatedWorkOrder.dateVerified = new Date();
     updatedWorkOrder.verifyComments = req.body.verifyComments;
 
     // Save the updated work order
@@ -201,22 +231,6 @@ async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
     // Update the user's workOrders array
     await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
 
-};
-
-// Handle Assigned Work Orders
-async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
-    // update the assignedTo field
-    updatedWorkOrder.assignedTo = assignedTo;
-    await updatedWorkOrder.save();
-
-    // Find the employee and add the work order to their assignedwork array
-    const employee = await Employee.findById(assignedTo);
-    if (employee) {
-        employee.assignedWork.push(updatedWorkOrder._id);
-        await employee.save();
-    } else {
-        throw new Error("Employee not found");
-    }
 };
 
 // send email notification
