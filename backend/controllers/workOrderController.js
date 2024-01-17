@@ -8,15 +8,23 @@ const cron = require("node-cron");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
-    const recepients = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
-    
-    for (const recepient of recepients) {
-        sendEmail({
-            email: recepient,
-            subject: subject,
-            text: text
-        });
+    const requestedUser = await User.findById(WorkOrder.requestedBy).select("email");
+
+    if (!requestedUser) {
+        console.error("Requested User not found");
+        return;
     }
+    const engineerEmail = ["fideliofidel9@gmail.com"];
+    const ccList = [...engineerEmail, "fidel.tuwei@holidayinnnairobi.com"]
+    
+    const emailOptions = {
+        email: requestedUser.email,
+        cc: ccList.join(", "),
+        subject: subject,
+        text: text
+    }
+
+    sendEmail(emailOptions);
 };
 
 // Create Work Order
