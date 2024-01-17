@@ -20,7 +20,7 @@ const Panel = () => {
                 </Card>
                 </Col>
                 <Col span={8}>
-                <Card className="custom-card" hoverable title="Work Orders" onClick={() => navigate("/all/employees")}>
+                <Card className="custom-card" hoverable title="Employees" onClick={() => navigate("/all/employees")}>
                     <Button icon={<FaUsersLine />} size="large" style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}> 
                         Employees
                     </Button>
