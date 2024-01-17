@@ -249,14 +249,17 @@ async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
 // send email notification
 async function sendUpdateEmailNotification (updatedWorkOrder) {
     const subject = `A WORK ORDER HAS BEEN UPDATED`;
-    const text = `The following details have been updated: \n
-        Description: ${updatedWorkOrder.description} \n
-        Status: ${updatedWorkOrder.status} \n
-        Tracker: ${updatedWorkOrder.tracker} \n
-        Tracker Message: ${updatedWorkOrder.trackerMessage} \n
-        Date Updated: ${updatedWorkOrder.Date_Updated} \n
+    const text = `The following details have been updated:
+         - Description: ${updatedWorkOrder.description}
+         - Status: ${updatedWorkOrder.status}
+         - Tracker: ${updatedWorkOrder.tracker}
+         - Tracker Message: ${updatedWorkOrder.trackerMessage}
+         - Date Updated: ${updatedWorkOrder.Date_Updated}
+
         Log in to your account to see more details about the updated work order.
-        Thank you for using Holiday Inn Work Order System.`;
+
+        Thank you for using Holiday Inn Work Order System.
+    `;
 
     await sendEmailNotification(updatedWorkOrder, subject, text);
 };
