@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import { Button, Card, Modal, Table, Tooltip, message } from "antd";
+import { Button, Card, Modal, Table, Tooltip, Typography, message } from "antd";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {AiFillEye} from "react-icons/ai";
-import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -10,7 +9,7 @@ import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 import { deleteEmployee } from "../../../services/employeeApi";
 
 
-const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pages, getEmployees }) => {
+const AllEmployees = ({ navigate, loading, employees, refetch }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedEmployeeToDelete, setSelectedEmployeeToDelete] = useState(null);
   const user = useSelector(selectUserInfo);
@@ -33,7 +32,7 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
           });
           message.success("Employee deleted successfully");
           setIsModalVisible(false);
-          getEmployees();
+          refetch();
       } catch (error) {
           message.error("An error occurred while deleting the employee:", error);
       }
@@ -127,6 +126,10 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
 
   return (
     <div>
+      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
+        All Employees
+      </Typography>
+
       <div className="add-btn">
         <Button
         style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
@@ -157,16 +160,6 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
       >
         <p>Are you sure you want to delete {selectedEmployeeToDelete?.firstName} {selectedEmployeeToDelete?.lastName}?</p>
       </Modal>
-      
-      <div className="pagination">
-        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-          <GrFormPrevious />
-        </Button>
-        <span>Page {page} of {pages}</span>
-        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
-          <GrFormNext />
-        </Button>
-      </div>
 
       <div className="add-btn">
         <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate(-1)}>
@@ -181,10 +174,7 @@ AllEmployees.propTypes = {
   navigate: PropTypes.func,
   loading: PropTypes.bool,
   employees: PropTypes.array,
-  handlePageChange: PropTypes.func,
-  page: PropTypes.number,
-  pages: PropTypes.number,
-  getEmployees: PropTypes.func,
+  refetch: PropTypes.func,
 };
 
 export default AllEmployees;
