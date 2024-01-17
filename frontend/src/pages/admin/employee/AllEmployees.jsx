@@ -46,7 +46,7 @@ const AllEmployees = ({ navigate, loading, employees, handlePageChange, page, pa
 
   // Function to determine authorised user roles
   const isAuthorised = [
-    "admin", "superadmin", "supervisor"
+    "admin", "superadmin", "supervisor", "engineer"
   ].includes(user?.role);
 
 
