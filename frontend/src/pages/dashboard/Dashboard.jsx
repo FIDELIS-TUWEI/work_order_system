@@ -15,14 +15,14 @@ const Dashboard = () => {
   const { data: activeUsers } = useCountActiveUsersQuery();
   const { data: totalEmployees } = useCountAllEmployeesQuery();
 
-  const pendingCount = counts?.data.pending;
-  const inProgressCount = counts?.data.inProgress;
-  const completedCount = counts?.data.completed;
-  const reviewCount = reviewed?.data || {};
-  const workCountData = workTotal?.data || {};
-  const usersData = totalUsers?.data || {};
-  const countActiveUsers = activeUsers?.data || {};
-  const countEmployees = totalEmployees?.data || {};
+  const pendingCount = counts?.data.pending || [];
+  const inProgressCount = counts?.data.inProgress || [];
+  const completedCount = counts?.data.completed || [];
+  const reviewCount = reviewed?.data || [];
+  const workCountData = workTotal?.data || [];
+  const usersData = totalUsers?.data || [];
+  const countActiveUsers = activeUsers?.data || [];
+  const countEmployees = totalEmployees?.data || [];
 
 
   return (
