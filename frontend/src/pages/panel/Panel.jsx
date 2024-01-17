@@ -1,10 +1,8 @@
 import { Button, Card, Col, Row } from "antd"
 import { useNavigate } from "react-router-dom";
 import {FaFolder, FaUsers} from 'react-icons/fa';
-import {BiSolidCategory} from "react-icons/bi";
-import {IoLocation} from "react-icons/io5";
 import {HiOfficeBuilding} from "react-icons/hi";
-import {MdManageAccounts, MdGroups} from "react-icons/md";
+import {MdManageAccounts} from "react-icons/md";
 import { FaMapLocationDot, FaUsersLine } from "react-icons/fa6";
 
 const Panel = () => {
