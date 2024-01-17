@@ -16,7 +16,7 @@ const LogIn = () => {
     const userInfo = useSelector(selectUserInfo);
     const token = useSelector(selectToken);
 
-    const [login, { isLoading }] = useLoginMutation();
+    const [login, { isLoading, error }] = useLoginMutation();
 
 
     useEffect(() => {
@@ -30,11 +30,20 @@ const LogIn = () => {
     const onFinishHandler = async (values) => {
         try {
             const res = await login(values).unwrap();
-            dispatch(setCredentials({ ...res }));
-            message.success("Login Succesful");
-            navigate('/private');
+
+            if (error) {
+                if (error === 400 && error.data && error.data.message) {
+                    message.error(error.data.message);
+                } else {
+                    message.error("Failed to Login, try again later!")
+                }
+            } else {
+                dispatch(setCredentials({ ...res }));
+                message.success("Login Succesful");
+                navigate('/private');
+            };
         } catch (error) {
-            message.error("Login Failed",error.data.error);
+            message.error(error.message);
         }
     }
 
