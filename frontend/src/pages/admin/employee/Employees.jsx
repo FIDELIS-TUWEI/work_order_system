@@ -1,62 +1,50 @@
 import Layout from "@/components/Layout";
 import AllEmployees from "@/pages/admin/employee/AllEmployees";
-import { useSelector } from "react-redux";
-import { selectToken } from "@/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
-import { getAllEmployees } from "../../../services/employeeApi";
-import { Typography, message } from "antd";
+import { useEffect, useState } from "react";
+import { Button, message } from "antd";
+import {GrFormNext, GrFormPrevious} from "react-icons/gr";
+import { useEmployeesQuery } from "@/features/employees/employeeSlice";
 
 const Employees = () => {
-  const token = useSelector(selectToken);
-  const [employees, setEmployees] = useState([]);
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const { data, isLoading: loading, error, refetch } = useEmployeesQuery(page);
   const navigate = useNavigate();
 
-  // Function to get all employees
-  const getEmployees = useCallback (async () => {
-    try {
-      setLoading(true);
-      const { data, pages } = await getAllEmployees(page, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setEmployees(data);
-      setPages(pages);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      message.error('Error while fetching all employees', error.message);
-    }
-  }, [token, page]);
-  
+  const { data: employees, pages } = data || {};
 
-  // UseEffect hook
   useEffect(() => {
-    getEmployees();
-  }, [page, getEmployees]);
+    if (error) {
+      message.error(error.message);
+    }
+  }, [error]);
 
   // Function to handle page change
   const handlePageChange = (newPage) => {
     setPage(newPage);
+    refetch();
   }
 
   return (
     <Layout>
-      <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Employees</Typography>
+
       <AllEmployees 
         navigate={navigate}
         loading={loading}
         employees={employees}
         handlePageChange={handlePageChange}
-        page={page}
-        pages={pages}
-        getEmployees={getEmployees}
+        refetch={refetch}
       />
+
+      <div className="pagination">
+        <Button disabled={page === 1} onClick={() => handlePageChange(page - 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+          <GrFormPrevious />
+        </Button>
+        <span>Page {page} of {pages}</span>
+        <Button disabled={page === pages} onClick={() => handlePageChange(page + 1)} style={{ border: 'none', margin: '0 5px', backgroundColor: 'darkgrey' }}>
+          <GrFormNext />
+        </Button>
+      </div>
     </Layout>
   )
 }
