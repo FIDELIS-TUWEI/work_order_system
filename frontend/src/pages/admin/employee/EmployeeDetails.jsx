@@ -1,43 +1,22 @@
-import { useSelector } from "react-redux";
 import Layout from "@/components/Layout";
 import ViewEmployee from "@/pages/admin/employee/ViewEmployee";
-import { selectToken } from "@/features/auth/authSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
-import { getSingleEmployee } from "../../../services/employeeApi";
+import { useEffect } from "react";
 import { message } from "antd";
+import { useSingleEmployeeQuery } from "@/features/employees/employeeSlice";
 
 const EmployeeDetails = () => {
-  const token = useSelector(selectToken);
-  const [employeeDetails, setEmployeeDetails] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const { id } = useParams();
+  const { data: singleEmployee, isLoading: loading, error } = useSingleEmployeeQuery(id);
+  const navigate = useNavigate();
 
-  // Function to get employee details
-  const getEmployeeDetails = useCallback (async (id) => {
-    try {
-      setLoading(true);
-      const res = await getSingleEmployee(id, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setEmployeeDetails(res.data);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      message.error("Failed to fetch employee details", error.message);
-    }
-  }, [token]);
+  const employeeDetails = singleEmployee?.data || {};
 
-  // UseEffect hook
   useEffect(() => {
-    if (id) {
-      getEmployeeDetails(id);
+    if (error) {
+      message.error(error.message)
     }
-  }, [id, getEmployeeDetails]);
+  }, [error]);
 
   return (
     <Layout>
