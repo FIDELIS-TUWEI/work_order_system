@@ -8,7 +8,7 @@ import {
   NewCategory, AllCategories, AllLocations, NewLocation,
   AdminPanel, NewDepartment, AllDepartments, AllDesignations,
   NewDesignation, ChangePassword, Employees, EditEmployee,
-  EmployeeDetails, NewEmployee, UserWorkHistory 
+  EmployeeDetails, NewEmployee, UserWorkHistory, DailyWork 
 } from "@/pages/index";
 
 export const router = createBrowserRouter(
@@ -44,6 +44,7 @@ export const router = createBrowserRouter(
         <Route path="/updatePassword/:id" element={ <PrivateRoute> <ChangePassword /> </PrivateRoute> } />
         <Route path="/user/details/:id" element={ <PrivateRoute> <UserDetails /> </PrivateRoute> } />
         <Route path="/edit/user/:id" element={ <PrivateRoute> <EditUser /> </PrivateRoute> } />
+        <Route path="/workOrders/daily" element={ <PrivateRoute> <DailyWork /> </PrivateRoute> } />
         <Route path="*" element={<NotFound />} />
       </Route>
     )
