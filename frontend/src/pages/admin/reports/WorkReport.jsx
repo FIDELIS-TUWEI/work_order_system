@@ -6,12 +6,14 @@ import Highlighter from 'react-highlight-words';
 import "jspdf-autotable";
 import { useRef, useState } from "react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 
 const WorkReport = ({ workOrdersData, loading, handleStatusChange, exportPDF }) => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const navigate = useNavigate();
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -205,6 +207,7 @@ const WorkReport = ({ workOrdersData, loading, handleStatusChange, exportPDF }) 
             <option value="In_Progress">In-progress</option>
             <option value="Complete">Completed</option>
           </select>
+
           <Button style={{ 
             color: 'white', 
             backgroundColor: 'darkgreen', 
@@ -213,6 +216,16 @@ const WorkReport = ({ workOrdersData, loading, handleStatusChange, exportPDF }) 
             }} 
             onClick={exportPDF}>
             Generate Report
+          </Button>
+          
+          <Button style={{ 
+            color: 'white', 
+            backgroundColor: 'darkgreen', 
+            border: 'none', 
+            marginLeft: '30px'
+            }} 
+            onClick={() => navigate("/workOrders/daily")}>
+            Daily Work
           </Button>
         </div>
         
