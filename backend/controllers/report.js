@@ -39,6 +39,27 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
     }
 });
 
+// Logic to get work orders created in a day
+const workCreatedByDate = asyncHandler (async (req, res, next) => {
+    try {
+        const selectedDate = new Date(req.params.selectedDate);
+
+        const startOfDay = new Date(selectedDate.setHours(0, 0, 0, 0));
+        const endOfDay = new Date(selectedDate.setHours(23, 59, 59, 999));
+
+        const workOrders = await WorkOrder.find({
+            Date_Created: { $gte: startOfDay, $lt: endOfDay },
+        });
+
+        res.status(200).json({
+            success: true,
+            data: workOrders
+        });
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
+})
+
 // Count Work Orders with status using mongoDB aggregation pipeline
 const countWorkStatus = asyncHandler (async (req, res, next) => {
     try {
@@ -106,6 +127,7 @@ const countTotalWork = asyncHandler (async (req, res, next) => {
 
 module.exports = {
     filterWorkStatus,
+    workCreatedByDate,
     countWorkStatus,
     countReviewed,
     countTotalWork,
