@@ -36,7 +36,7 @@ const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
         dataIndex: "totalPendingWork",
       },
       {
-        title: "In_Progress Work",
+        title: "In-progress Work",
         align: "center",
         dataIndex: "totalInProgressWork",
       },
