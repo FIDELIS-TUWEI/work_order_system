@@ -14,7 +14,7 @@ const CreateEmployee = ({ onFinishHandler, loading, navigate }) => {
       >
         New Employee Form
       </Typography>
-      <Card title="Add Employee" style={{ margin: '15px' }} loading={loading}>
+      <Card title="Add Employee" style={{ margin: '15px' }}>
         <Form layout="vertical" onFinish={onFinishHandler}>
           <Row gutter={16}>
             <Col xs={24} md={24} lg={8}>
