@@ -6,30 +6,34 @@ import { useNavigate, useParams } from "react-router-dom";
 import { editEmployee, getEmployeeData } from "../../../services/employeeApi";
 import { useCallback, useEffect, useState } from "react";
 import { message } from "antd";
+import { useEditEmployeeMutation } from "@/features/employees/employeeSlice";
 
 const EditEmployee = () => {
+  const { id } = useParams();
+  const [editEmployee, { isLoading: loading }] = useEditEmployeeMutation()
   const token = useSelector(selectToken);
   const [employeeDetails, setEmployeeDetails] = useState([]);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
 
   // Function to handle form submit
   const onFinishHandler = async (values) => {
     try {
-      setLoading(true);
-      await editEmployee(id, values, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }); 
-      message.success('Employee Updated Successfully');
-      navigate('/all/employees');
-      setLoading(false);
+      const { error } = await editEmployee({id, values}).unwrap(); 
+
+      if (error) {
+        if (error === 400 && error.data && error.data.message) {
+          message.error(error.data.message);
+          navigate('/all/employees');
+        } else {
+          message.error("Failed to Update employee")
+        }
+      } else {
+        message.success('Employee Updated Successfully');
+        navigate('/all/employees');
+      }
+      
     } catch (error) {
-      message.error(error.message, "Employee Update Failed");
-      setLoading(false);
+      message.error(error.message);
     }
   };
 
