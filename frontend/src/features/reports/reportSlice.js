@@ -37,6 +37,12 @@ export const reportsApi = createApi({
             }),
             providesTags: ["Reports"],
         }),
+        getWorkByDate: builder.query({
+            query: (selectedDate) => ({
+                url: `/work/created/date/${selectedDate}`,
+                mehtod: "GET",
+            }),
+        }),
         totalReviewedWork: builder.query({
             query: () => ({
                 url: `/report/work/total/reviewed`,
@@ -57,6 +63,7 @@ export const reportsApi = createApi({
 export const {
     useGetFilterStatusQuery,
     useGetWorkCountByStatusQuery,
+    useGetWorkByDateQuery,
     useTotalReviewedWorkQuery,
     useTotalWorkCountQuery
 } = reportsApi;
