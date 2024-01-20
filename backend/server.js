@@ -1,7 +1,8 @@
 require("dotenv").config();
 require("../config/connectDB");
 const express = require('express');
-const app = express();
+let app = express();
+const rateLimit = require("express-rate-limit");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require("helmet");
@@ -12,6 +13,14 @@ const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 
 // Middleware
+let limiter = rateLimit({
+    max: 1000,
+    windowMs: 60 * 60 * 1000,
+    message: "Too many requests from this IP. Please try again later."
+});
+
+app.use('/hin', limiter);
+
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
 app.use(morgan('dev'));
