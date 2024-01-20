@@ -13,6 +13,8 @@ const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 
 // Middleware
+app.use(helmet());
+
 let limiter = rateLimit({
     max: 1000,
     windowMs: 60 * 60 * 1000,
@@ -20,8 +22,6 @@ let limiter = rateLimit({
 });
 
 app.use('/hin', limiter);
-
-app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
 app.use(morgan('dev'));
 app.use(bodyParser.json({ limit: "5mb" }));
