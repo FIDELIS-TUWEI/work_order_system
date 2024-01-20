@@ -8,7 +8,6 @@ const WORK_URL = "/hin";
 const DailyWork = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [workOrders, setWorkOrders] = useState([]);
-    console.log("Daily Work:", workOrders);
 
     // Function to handle date selected
     const handleDateSelect = async (value) => {
@@ -48,7 +47,6 @@ const DailyWork = () => {
         },
         {
             title: "Service Type",
-            fixed: "left",
             width: 150,
             align: "center",
             responsive: ["md", "lg"],
