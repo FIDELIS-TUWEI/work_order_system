@@ -33,7 +33,7 @@ const signupUser = asyncHandler (async (req, res) => {
 
         // Send email notification
         const recepients = ["fideliofidel9@gmail.com"]
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
 
         const emailSubject = `New User successfully Created`;
         const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
@@ -157,7 +157,7 @@ const changePassword = asyncHandler(async (req, res, next) => {
 
         // Send email notification
         const recepients = ["fideliofidel9@gmail.com"]
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
 
         const emailSubject = `Password Changed`;
         const emailText = `Password changed successfully for ${updateUser.username}`;
