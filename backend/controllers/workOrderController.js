@@ -15,8 +15,12 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
         console.error("Requested User not found");
         return;
     }
-    const engineerEmail = ["fideliofidel9@gmail.com"];
-    const ccList = [...engineerEmail, "fidel.tuwei@holidayinnnairobi.com"]
+    const engineerEmail = ["solomon.ouma@holidayinnnairobi.com"];
+    const ccList = [
+        ...engineerEmail, "fidel.tuwei@holidayinnnairobi.com", "ms@holidayinnnairobi.com",
+        "workshop@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com", 
+        "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"
+    ]
     
     const emailOptions = {
         email: requestedUser.email,
