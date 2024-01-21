@@ -77,10 +77,6 @@ const Reports = () => {
         dataKey: "category",
       },
       {
-        header: "Requested By",
-        dataKey: "requestedBy",
-      },
-      {
         header: "Tracker",
         dataKey: "tracker",
       },
@@ -116,7 +112,6 @@ const Reports = () => {
       workOrder.serviceType,
       workOrder.priority,
       `${workOrder.category.categoryTitle}`,
-      `${workOrder.requestedBy.username}`,
       workOrder.tracker,
       formatDate(workOrder.Date_Created),
       showEmployeeName(workOrder.assignedTo),
