@@ -53,6 +53,10 @@ const DailyWork = () => {
         // Report table columns
         const columns = [
             {
+                header: "Description",
+                dataKey: "description",
+            },
+            {
               header: "Service Type",
               dataKey: "serviceType",
             },
