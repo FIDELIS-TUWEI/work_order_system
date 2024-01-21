@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { useState } from "react";
 import axios from "axios";
-import { Card, DatePicker, Table } from "antd";
+import AllDailyWork from "./AllDailyWork";
 
 const WORK_URL = "/hin";
 
@@ -22,52 +22,15 @@ const DailyWork = () => {
         }
     };
 
-    const columns = [
-        {
-            title: "Description",
-            align: "center",
-            responsive: ["md", "lg"],
-            dataIndex: "description",
-            key: "description",
-        },
-        {
-            title: "Priority",
-            align: "center",
-            responsive: ["md", "lg"],
-            dataIndex: "priority",
-            key: "priority"
-        },
-        {
-            title: "Tracker",
-            width: 150,
-            align: "center",
-            responsive: ["md", "lg"],
-            dataIndex: "tracker",
-            key: "tracker",
-        },
-        {
-            title: "Service Type",
-            width: 150,
-            align: "center",
-            responsive: ["md", "lg"],
-            dataIndex: "serviceType",
-            key: "serviceType",
-        },
-    ]
   return (
     <Layout>
-        <DatePicker value={selectedDate} onSelect={handleDateSelect} />
-
-        <Card title="Daily Work Report" style={{ marginTop: "20px"  }}>
-            <Table 
-                columns={columns}
-                dataSource={workOrders?.data || []}
-                rowKey="_id"
-                pagination={false}
-            />
-        </Card>
+        <AllDailyWork 
+            selectedDate={selectedDate}
+            handleDateSelect={handleDateSelect}
+            workOrders={workOrders}
+        />
     </Layout>
   )
 }
 
-export default DailyWork
+export default DailyWork;
