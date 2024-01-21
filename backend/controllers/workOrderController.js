@@ -180,14 +180,15 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
 async function handleInCompleteWorkOrder (updatedWorkOrder) {
     const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
     const text = `The following work order needs your attention:
-    Description: ${updatedWorkOrder.description} \n
-    Priority: ${updatedWorkOrder.priority} \n
-    Status: ${updatedWorkOrder.status} \n
-    Service Type: ${updatedWorkOrder.serviceType} \n
-    Tracker: ${updatedWorkOrder.tracker} \n
-    Tracker Message: ${updatedWorkOrder.trackerMessage} \n
-    Date Updated: ${updatedWorkOrder.Date_Updated} \n
-    Thank you for using Holiday Inn Work Order System.
+        - Description: ${updatedWorkOrder.description}
+        - Priority: ${updatedWorkOrder.priority}
+        - Status: ${updatedWorkOrder.status}
+        - Service Type: ${updatedWorkOrder.serviceType}
+        - Tracker: ${updatedWorkOrder.tracker}
+        - Tracker Message: ${updatedWorkOrder.trackerMessage}
+        - Date Updated: ${updatedWorkOrder.Date_Updated}
+
+        Thank you for using Holiday Inn Work Order System.
     `;
 
     // send email notification
@@ -367,34 +368,37 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 });
 
 // Check Due Date of Work Orders that are due and send an email notification
-cron.schedule("0 0 0 * * *", async () => {
+cron.schedule("15 13 * * *", async () => {
     try {
-        const currentDate = new Date();
 
         // Find all work orders with due date less than or equal to the current date
         const overDueWorkOrders = await WorkOrder.find({ 
-            dueDate: { $lte: currentDate },
             status: { $in: ["Pending", "In_Progress"] },
             tracker: { $in: ["Not_Attended", "In_Attendance"]},
         }).populate("requestedBy", "username");
 
         if (overDueWorkOrders.length > 0) {
-            // Loop through overdue work orders and send an email
-            for (const workOrder of overDueWorkOrders) {
-                const userEmail = workOrder.requestedBy.email;
-                const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"];
+            const emailSubject = `Work Order Reminder`;
+            let emailText = `The following work orders need your immediate attention:\n`
 
-                const emailSubject = `Work Order Due Date Reminder`;
-                const emailText = `Your work order with title ${workOrder.title} has a due date of ${workOrder.dueDate}. Please take action as soon as possible.`;
+            overDueWorkOrders.forEach((workOrder) => {
+                emailText += `\nWork Order Description: ${workOrder.description}`
+            });
 
-                // Send the email with cc email addresses
-                sendEmail({
-                    email: userEmail,
-                    cc: ccEmails,
-                    subject: emailSubject,
-                    text: emailText
-                });
-            }
+            // Email addresses
+            const engineerEmail = "fideliofidel9@gmail.com"
+            const ccEmails = [
+                 "fidel.tuwei@holidayinnnairobi.com",
+            ];
+
+            // Send email
+            sendEmail({
+                email: engineerEmail,
+                cc: ccEmails,
+                subject: emailSubject,
+                text: emailText
+            });
+
             console.log("Emails sent for overdue work orders successfully");
         } else {
             console.log("No overdue work orders found");
