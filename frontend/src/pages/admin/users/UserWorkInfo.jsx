@@ -39,7 +39,7 @@ const UserWorkInfo = ({ userHistoryArray, navigate, loading, error }) => {
   return (
     <>
        <Typography 
-            style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}
+            style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold', marginBottom: "16px" }}
         >
             Work History
         </Typography>
