@@ -61,6 +61,10 @@ const Reports = () => {
 
     const columns = [
       {
+        header: "Description",
+        dataKey: "description",
+      },
+      {
         header: "Service Type",
         dataKey: "serviceType",
       },
@@ -108,6 +112,7 @@ const Reports = () => {
     const showEmployeeName = (employee) => (employee ? `${employee.firstName} ${employee.lastName}` : "Unassigned");
 
     const rows = workOrdersData.map((workOrder) => [
+      workOrder.description,
       workOrder.serviceType,
       workOrder.priority,
       `${workOrder.category.categoryTitle}`,
