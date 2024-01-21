@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
+const moment = require("moment");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
@@ -367,28 +368,29 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Check Due Date of Work Orders that are due and send an email notification
-cron.schedule("15 13 * * *", async () => {
+// Check Work Orders status and send an email notification everyday at 10 am
+cron.schedule("00 10 * * *", async (next) => {
     try {
 
         // Find all work orders with due date less than or equal to the current date
-        const overDueWorkOrders = await WorkOrder.find({ 
+        const workOrderStatus = await WorkOrder.find({ 
             status: { $in: ["Pending", "In_Progress"] },
             tracker: { $in: ["Not_Attended", "In_Attendance"]},
         }).populate("requestedBy", "username");
 
-        if (overDueWorkOrders.length > 0) {
+        if (workOrderStatus.length > 0) {
             const emailSubject = `Work Order Reminder`;
             let emailText = `The following work orders need your immediate attention:\n`
 
-            overDueWorkOrders.forEach((workOrder) => {
+            workOrderStatus.forEach((workOrder) => {
                 emailText += `\nWork Order Description: ${workOrder.description}`
             });
 
             // Email addresses
-            const engineerEmail = "fideliofidel9@gmail.com"
+            const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
             const ccEmails = [
-                 "fidel.tuwei@holidayinnnairobi.com",
+                 "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
+                 "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
             ];
 
             // Send email
@@ -399,14 +401,51 @@ cron.schedule("15 13 * * *", async () => {
                 text: emailText
             });
 
-            console.log("Emails sent for overdue work orders successfully");
-        } else {
-            console.log("No overdue work orders found");
         }
     } catch (error) {
-        console.error("Error sending email:", error);
+        next(error);
     }
 });
+
+// Check due date for work orders and send an email notification everyday at 3 pm
+cron.schedule("00 15 * * *", async (next) => {
+    try {
+        const currentDate = moment();
+    
+        // Find all overDue dates
+        const dueWorkDate = await WorkOrder.find({
+            dueDate: { $lte: currentDate.toDate() },
+            status: "In_Progress",
+            tracker: { $in: ["In_Attendance, In_Complete"] },
+        }). populate("requestedBy", "username");
+    
+        if (dueWorkDate.length > 0) {
+            const emailSubject = `WORK ORDER DUE DATE REMINDER`
+            let emailText = `The following work orders need your immediate attention:\n`;
+
+            dueWorkDate.forEach((workOrder) => {
+                emailText += `\nWork Order with description: ${workOrder.description} and due date: ${moment(workOrder.dueDate).format("DD-MM-YYYY, hh:mm a")}\n`
+            });
+
+            // Email Addresses
+            const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
+            const ccEmails = [
+                "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
+                "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
+            ];
+
+            // Send email
+            sendEmail({
+                email: engineerEmail,
+                cc: ccEmails,
+                subject: emailSubject,
+                text: emailText
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+})
 
 module.exports = {
     createWorkOrder,
