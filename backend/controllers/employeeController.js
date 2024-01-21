@@ -32,7 +32,10 @@ const newEmployee = asyncHandler ( async (req, res) => {
 
         // Send email notification
         const recepients = ["fideliofidel9@gmail.com"];
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+        const ccEmails = [
+            "fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", 
+            "joel.njau@holidayinnnairobi.com", "solomon.ouma@holidayinnnairobi.com"
+        ];
 
         const emailSubject = `New employee created`;
         const emailText = `An employee with name ${newEmployee.firstName} ${newEmployee.lastName} has been created.`;
@@ -273,7 +276,10 @@ const deleteEmployee = asyncHandler(async (req, res) => {
 
         // Send email notification
         const recepients = ["fideliofidel9@gmail.com"]
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+        const ccEmails = [
+            "fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", 
+            "joel.njau@holidayinnnairobi.com"
+        ];
 
         const emailSubject = `Employee deleted successfully`;
         const emailText = `An employee with name ${deletedEmployee.firstName} ${deletedEmployee.lastName} has been deleted.`;
