@@ -69,10 +69,6 @@ const DailyWork = () => {
               dataKey: "category",
             },
             {
-              header: "Requested By",
-              dataKey: "requestedBy",
-            },
-            {
               header: "Tracker",
               dataKey: "tracker",
             },
@@ -109,7 +105,6 @@ const DailyWork = () => {
             workOrder.serviceType,
             workOrder.priority,
             `${workOrder.category.categoryTitle}`,
-            `${workOrder.requestedBy.username}`,
             workOrder.tracker,
             formatDate(workOrder.Date_Created),
             showEmployeeName(workOrder.assignedTo),
