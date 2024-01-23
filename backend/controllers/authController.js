@@ -1,8 +1,8 @@
+require("dotenv").config();
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
 
