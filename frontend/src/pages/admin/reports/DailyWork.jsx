@@ -7,7 +7,7 @@ import Logo from "@/assets/images/logo.png";
 import moment from "moment";
 import { message } from "antd";
 
-const WORK_URL = "/hin";
+const baseUrl = process.env.NODE_ENV === "production" ? "/hin" : 'http://localhost:5000/hin';
 
 const DailyWork = () => {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -19,7 +19,7 @@ const DailyWork = () => {
         const formattedDate = value.format("YYYY-MM-DD")
 
         try {
-            const res = await axios.get(`${WORK_URL}/work/created/date/${formattedDate}`);
+            const res = await axios.get(`${baseUrl}/work/created/date/${formattedDate}`);
             setWorkOrders(res.data);
         } catch (error) {
             console.error(error.message);
