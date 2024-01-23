@@ -1,18 +1,18 @@
 import { apiSlice } from "../api/apiSlice";
-const USERS_URL = "/hin";
+const baseUrl = process.env.NODE_ENV === "production" ? "/hin" : 'http://localhost:5000/hin';
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data) => ({
-                url: `${ USERS_URL }/login`,
+                url: `${ baseUrl }/login`,
                 method: "POST",
                 body: data,
             }),
         }),
         logout: builder.mutation({
             query: () => ({
-                url: `${ USERS_URL }/logout`,
+                url: `${ baseUrl }/logout`,
                 method: "POST",
             }),
         }),
