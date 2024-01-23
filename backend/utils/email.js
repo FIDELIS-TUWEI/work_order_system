@@ -7,8 +7,8 @@ const sendEmail = (option) => {
         // SMTP configuration options here
         service: "gmail",
         auth: {
-            user: USER,
-            pass: PASS
+            user: process.env.USER,
+            pass: process.env.PASS
         }
     });
 
