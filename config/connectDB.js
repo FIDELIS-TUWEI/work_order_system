@@ -6,7 +6,7 @@ const mongoHost = process.env.MONGO_HOST
 const mongoDbName = process.env.MONGO_DB_NAME
 
 // Database connection
-const mongoURI = process.env.MONGO_URI || `mongodb+srv://${mongoUser}:${mongoPass}@${mongoHost}.mongodb.net/${mongoDbName}?retryWrites=true&w=majority`
+const mongoURI = process.env.MONGO_URI || `mongodb+srv://${mongoUser}:${mongoPass}@${mongoHost}/${mongoDbName}?retryWrites=true&w=majority`
 const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true
