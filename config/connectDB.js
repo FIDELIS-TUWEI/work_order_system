@@ -12,8 +12,8 @@ const connectDB = async () => {
             useUnifiedTopology: true,
         };
 
-        const connected = await mongoose.connect(mongoURI, options)
-        console.log(`Mongo Database is connected Succesfully. ${connected}`);
+        await mongoose.connect(mongoURI, options)
+        console.log(`MongoDB Database is connected Succesfully.`);
     } catch (error) {
         console.log(`Error connecting to MongoDB, ${error}`);
         process.exit(1);
