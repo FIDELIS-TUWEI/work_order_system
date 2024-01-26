@@ -1,7 +1,6 @@
-require("dotenv").config();
+const dotenv = require("dotenv")
 require("../config/connectDB");
 const express = require('express');
-let app = express();
 const rateLimit = require("express-rate-limit");
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,6 +10,9 @@ const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
+
+dotenv.config();
+let app = express();
 
 // Middleware
 app.use(helmet());
