@@ -1,5 +1,5 @@
 const dotenv = require("dotenv")
-require("../config/connectDB");
+const connectDB = require("../config/connectDB");
 const express = require('express');
 const rateLimit = require("express-rate-limit");
 const bodyParser = require('body-parser');
@@ -13,6 +13,7 @@ const hpp = require("hpp");
 
 dotenv.config();
 let app = express();
+connectDB();
 
 // Middleware
 app.use(helmet());
