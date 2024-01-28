@@ -7,7 +7,7 @@ import Logo from "@/assets/images/logo.png";
 import moment from "moment";
 import { message } from "antd";
 
-const baseUrl = process.env.NODE_ENV === "production" ? "/hin" : 'http://localhost:5000/hin';
+const baseUrl = import.meta.env.VITE_SERVER_URL
 
 const DailyWork = () => {
     const [selectedDate, setSelectedDate] = useState(null);

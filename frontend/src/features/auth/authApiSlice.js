@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-const baseUrl = process.env.NODE_ENV === "production" ? "/hin" : 'http://localhost:5000/hin';
+const baseUrl = import.meta.env.VITE_SERVER_URL
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
