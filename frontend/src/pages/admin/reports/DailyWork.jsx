@@ -7,7 +7,7 @@ import Logo from "@/assets/images/logo.png";
 import moment from "moment";
 import { message } from "antd";
 
-const baseUrl = import.meta.env.VITE_SERVER_URL
+const baseUrl = `${import.meta.env.VITE_SERVER_URL}/hin`
 
 const DailyWork = () => {
     const [selectedDate, setSelectedDate] = useState(null);
