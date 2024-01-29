@@ -43,7 +43,7 @@ const LogIn = () => {
                 navigate('/private');
             };
         } catch (error) {
-            message.error("Unable to login, please try again later", error);
+            message.error(error?.data.message);
         }
     }
 
