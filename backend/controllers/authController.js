@@ -91,11 +91,16 @@ const login = asyncHandler (async (req, res, next) => {
         });
 
         if (user && passwordIsMatch) {
-            const { password, ...restParams } = user._doc
+            //const { password, ...restParams } = user._doc
+            const userResponse = {
+                _id: user._id,
+                username: user.username
+            };
+            
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
-                user: restParams,
+                user: userResponse,
                 token
             })
         } else {
