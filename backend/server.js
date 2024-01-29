@@ -4,6 +4,7 @@ const express = require('express');
 const rateLimit = require("express-rate-limit");
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const corsOption = require("../config/corsOption");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
@@ -32,11 +33,7 @@ app.use(bodyParser.urlencoded({
     limit: "5mb",
     extended: true 
 }));
-app.use(cors({
-    credentials: true,
-    origin: ["http://localhost:3000", "https://www.work-orders.online", "https://workorder-client.onrender.com"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+app.use(cors(corsOption));
 app.use(cookieParser());
 app.use(express.json()); // To parse JSON data in the request body
 app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
