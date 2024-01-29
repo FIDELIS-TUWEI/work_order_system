@@ -63,7 +63,7 @@ const signupUser = asyncHandler (async (req, res) => {
 const login = asyncHandler (async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username }).select("-password");
 
         if (!user?.active) {
             return next(new ErrorResponse("Invalid Credentials", 401));
@@ -90,17 +90,13 @@ const login = asyncHandler (async (req, res, next) => {
             expires: cookieExpiry,
         });
 
-        if (user && passwordIsMatch) {
-            const { password, ...restParams } = user._doc
-            res.status(200).json({
-                success: true,
-                message: "User logged in successfully",
-                user: restParams,
-                token
-            })
-        } else {
-            return next(new ErrorResponse("Invalid Credentials", 401));
-        }
+        const userData = { username, firstName, lastName, role }
+        res.status(200).json({
+            success: true,
+            message: "User logged in successfully",
+            userData,
+            token
+        });
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
