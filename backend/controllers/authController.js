@@ -63,7 +63,7 @@ const signupUser = asyncHandler (async (req, res) => {
 const login = asyncHandler (async (req, res, next) => {
     try {
         const { username, password } = req.body;
-        const user = await User.findOne({ username }).select("-password");
+        const user = await User.findOne({ username });
 
         if (!user?.active) {
             return next(new ErrorResponse("Invalid Credentials", 401));
