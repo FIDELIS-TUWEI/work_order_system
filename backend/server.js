@@ -15,6 +15,9 @@ dotenv.config();
 let app = express();
 connectDB();
 
+//Enable trust proxy settings
+app.enable("trust-proxy")
+
 // Middleware
 app.use(helmet());
 
@@ -53,27 +56,20 @@ app.use(mongoSanitize());
 app.use(errorHandler);
 
 // Import Routes
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const workOrderRoutes = require("./routes/workOrderRoutes");
-const locationRoutes = require("./routes/locationRoutes");
-const reportsRoutes = require("./routes/reportRoutes");
-const categoryRoutes = require("./routes/categoryRoutes");
-const departmentRoutes = require("./routes/departmentRoutes");
-const designationRoutes = require("./routes/designationRoutes");
-const employeeRoutes = require("./routes/employeeRoutes");
-
+const routes = {
+    authRoutes: require("./routes/authRoutes"),
+    userRoutes: require("./routes/userRoutes"),
+    workOrderRoutes: require("./routes/workOrderRoutes"),
+    locationRoutes: require("./routes/locationRoutes"),
+    reportsRoutes: require("./routes/reportsRoutes"),
+    categoryRoutes: require("./routes/categoryRoutes"),
+    departmentRoutes: require("./routes/departmentRoutes"),
+    designationRoutes: require("./routes/designationRoutes"),
+    employeeRoutes: require("./routes/employeeRoutes"),
+}
 
 // Routes Middleware
-app.use("/hin", authRoutes);
-app.use("/hin", userRoutes);
-app.use("/hin", workOrderRoutes);
-app.use("/hin", locationRoutes);
-app.use("/hin", reportsRoutes);
-app.use("/hin", categoryRoutes);
-app.use("/hin", departmentRoutes);
-app.use("/hin", designationRoutes);
-app.use("/hin", employeeRoutes);
+Object.values(routes).forEach((route) => app.use("/hin", route));
 
 // Server Setup
 const PORT = process.env.PORT || 5000
