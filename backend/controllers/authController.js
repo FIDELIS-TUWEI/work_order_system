@@ -90,13 +90,17 @@ const login = asyncHandler (async (req, res, next) => {
             expires: cookieExpiry,
         });
 
-        const userData = { username, firstName, lastName, role }
-        res.status(200).json({
-            success: true,
-            message: "User logged in successfully",
-            userData,
-            token
-        });
+        if (user && passwordIsMatch) {
+            const { password, ...restParams } = user._doc
+            res.status(200).json({
+                success: true,
+                message: "User logged in successfully",
+                user: restParams,
+                token
+            })
+        } else {
+            return next(new ErrorResponse("Invalid Credentials", 401));
+        }
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
