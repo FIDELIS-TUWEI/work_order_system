@@ -38,8 +38,8 @@ const LogIn = () => {
                     message.error("Failed to Login, try again later!")
                 }
             } else {
-                const { token, user } = data;
-                dispatch(setCredentials({ token, user }));
+                const { user } = data;
+                dispatch(setCredentials({ user }));
                 message.success("Login Succesful");
                 navigate('/private');
             };
