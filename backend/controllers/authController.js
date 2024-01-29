@@ -86,7 +86,7 @@ const login = asyncHandler (async (req, res, next) => {
             httpOnly: true,
             secure: true,
             signed: false,
-            sameSite: 'None',
+            sameSite: 'Strict',
             expires: cookieExpiry,
         });
 
