@@ -43,7 +43,7 @@ const LogIn = () => {
                 navigate('/private');
             };
         } catch (error) {
-            message.error(error?.data.message);
+            message.error(error.message);
         }
     }
 
