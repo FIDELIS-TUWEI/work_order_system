@@ -61,7 +61,7 @@ const routes = {
     userRoutes: require("./routes/userRoutes"),
     workOrderRoutes: require("./routes/workOrderRoutes"),
     locationRoutes: require("./routes/locationRoutes"),
-    reportsRoutes: require("./routes/reportsRoutes"),
+    reportRoutes: require("./routes/reportRoutes"),
     categoryRoutes: require("./routes/categoryRoutes"),
     departmentRoutes: require("./routes/departmentRoutes"),
     designationRoutes: require("./routes/designationRoutes"),
