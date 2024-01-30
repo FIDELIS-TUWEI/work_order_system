@@ -19,7 +19,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/hin': { 
-        target: 'http://localhost:5000',
+        target: ['https://workorder-server-g99d.onrender.com','http://localhost:5000'],
         changeOrigin: true
       }
     }
