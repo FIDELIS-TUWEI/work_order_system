@@ -8,17 +8,19 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor': ['lodash']
+          'vendor': ['lodash'],
+          'react': ['react', 'react-dom']
         }
       }
-    }
+    },
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     port: 3000,
     proxy: {
       '/hin': { 
         target: 'http://localhost:5000',
-        changeOrigin: false
+        changeOrigin: true
       }
     }
   },
