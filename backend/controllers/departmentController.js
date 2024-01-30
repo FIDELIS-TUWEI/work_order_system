@@ -8,19 +8,15 @@ const createDepartment = asyncHandler(async (req, res) => {
     try {
         const duplicate = await Department.findOne({ departmentName: req.body.departmentName });
         if (duplicate) {
-            return res.status(400).json({
-                success: false,
-                message: "Department already exists",
-            });
+            res.status(400);
+            throw new Error("Department already exists");
         };
 
         // create new department
         const newDepartment = new Department(req.body);
         if (!newDepartment) {
-            return res.status(400).json({
-                success: false,
-                message: "Department not created",
-            });
+            res.status(400);
+            throw new Error("Department not created");
         };
 
         // Save the created department
@@ -30,10 +26,8 @@ const createDepartment = asyncHandler(async (req, res) => {
             data: newDepartment
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -52,7 +46,8 @@ const getAllDepartments = asyncHandler(async (req, res) => {
             .exec();
         
         if (!departments) {
-            return res.status(400).json({ message: "No departments found" });
+            res.status(404);
+            throw new Error("No departments found");
         };
 
         res.status(200).json({
@@ -63,10 +58,8 @@ const getAllDepartments = asyncHandler(async (req, res) => {
             count
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -76,7 +69,8 @@ const queryAllDepartments = asyncHandler(async (req, res) => {
     const departments = await Department.find({});
 
     if (!departments) {
-      return res.status(400).json({ message: "No departments found" });
+      res.status(404);
+      throw new Error("No departments found")
     };
     
     res.status(200).json({
@@ -84,10 +78,8 @@ const queryAllDepartments = asyncHandler(async (req, res) => {
       data: departments
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+    res.status(500);
+    throw new Error(error.message)
   }
 });
 
@@ -99,7 +91,8 @@ const deleteDepartment = asyncHandler(async (req, res) => {
         const departmentId = req.params.id;
         const deleteDepartment = await Department.findByIdAndDelete(departmentId);
         if (!deleteDepartment) {
-            return res.status(404).json({ message: "Department not found" });
+            res.status(404);
+            throw new Error("Department not found");
         }
 
         return res.status(200).json({
@@ -107,10 +100,8 @@ const deleteDepartment = asyncHandler(async (req, res) => {
             message: "Department deleted successfully"
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500)
+        throw new Error(error.message);
     }
 })
 
