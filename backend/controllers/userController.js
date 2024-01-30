@@ -5,7 +5,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 
 // Controller function to get all users
-const getAllUsers = asyncHandler (async (req, res, next) => {
+const getAllUsers = asyncHandler (async (req, res) => {
     // Enable Pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -16,7 +16,13 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
             .populate("workOrders")
             .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
-            .limit(pageSize)
+            .limit(pageSize);
+        
+        if (!users) {
+            res.status(404);
+            throw new Error("No users found");
+        }
+
         res.status(200).json({
             success: true,
             data: users,
@@ -24,9 +30,10 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
             pages: Math.ceil(count / pageSize),
             count
         });
-        next();
+
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -37,7 +44,8 @@ const singleUser = asyncHandler (async (req, res, next) => {
         const userExists = await User.exists({ _id: req.params.id });
 
         if (!userExists) {
-            return next(new ErrorResponse("User not found", 404));
+            res.status(404);
+            throw new Error("User not found");
         };
         
         // find user by ID
@@ -52,17 +60,20 @@ const singleUser = asyncHandler (async (req, res, next) => {
             data: user
         })
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
 // Controller function to edit user
-const editUser = asyncHandler (async (req, res, next) => {
+const editUser = asyncHandler (async (req, res) => {
     try {
         // update user
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            res.status(404);
+            throw new Error("User not found");
         }
 
         res.status(200).json({ 
@@ -70,18 +81,20 @@ const editUser = asyncHandler (async (req, res, next) => {
             message: `User updated succesfully` 
         });
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
 // Controller function to Delete User
-const deleteUser = asyncHandler (async (req, res, next) => {
+const deleteUser = asyncHandler (async (req, res) => {
     try {
         const userId = req.params.id;
         const user = await User.findByIdAndRemove(userId);
 
         if (!user) {
-            return res.status(500).json({ message: "User not found" });
+            res.status(404);
+            throw new Error("User not found");
         }
 
         // Check for work requested
@@ -113,36 +126,43 @@ const deleteUser = asyncHandler (async (req, res, next) => {
             success: true,
             message: `User with username ${user.username} deleted`
         });
-        next();
+
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
     
 });
 
 // Controller function to count all users
-const countAllUsers = asyncHandler (async (req, res, next) => {
+const countAllUsers = asyncHandler (async (req, res) => {
     try {
         const totalUsers = await User.countDocuments();
+        
         res.status(200).json({ 
             success: true,
             data: totalUsers 
         });
+
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
 // Controller function to count all users active
-const countActiveUsers = asyncHandler (async (req, res, next) => {
+const countActiveUsers = asyncHandler (async (req, res) => {
     try {
         const activeUsersCount = await User.countDocuments({ active: true });
+        
         res.status(200).json({ 
             success: true,
             data: activeUsersCount 
         });
+
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
