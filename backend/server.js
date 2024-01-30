@@ -1,4 +1,5 @@
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
+const path = require("path");
 const connectDB = require("../config/connectDB");
 const express = require('express');
 const rateLimit = require("express-rate-limit");
@@ -7,13 +8,14 @@ const cors = require('cors');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const errorHandler = require("./middleware/error");
+const { notFound, errorHandler } = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 
-dotenv.config();
-let app = express();
 connectDB();
+dotenv.config();
+
+let app = express();
 
 // Middleware
 app.use(helmet());
@@ -52,9 +54,6 @@ app.use(helmet.contentSecurityPolicy());
 // Prevent SQL Injection
 app.use(mongoSanitize());
 
-// Error Middleware
-app.use(errorHandler);
-
 // Import Routes
 const routes = {
     authRoutes: require("./routes/authRoutes"),
@@ -70,6 +69,19 @@ const routes = {
 
 // Routes Middleware
 Object.values(routes).forEach((route) => app.use("/hin", route));
+
+if (process.env.NODE_ENV === 'production') {
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+    app.get('*', (req, res) => res.sendFile(path.reolve(__dirname, 'frontend', 'dist', 'index.html')));
+} else {
+    app.get('/', (req, res) => res.send("Server is ready"))
+};
+
+// Error Middleware
+app.use(notFound);
+app.use(errorHandler);
 
 // Server Setup
 const PORT = process.env.PORT || 5000
