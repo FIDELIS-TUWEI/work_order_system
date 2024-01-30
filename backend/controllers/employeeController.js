@@ -1,7 +1,6 @@
 const Employee = require("../model/employee");
 const Work = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/email");
 
 // Create New Employee
