@@ -376,7 +376,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 cron.schedule("00 10 * * *", async (next) => {
     try {
 
-        // Find all work orders with due date less than or equal to the current date
+        // Find all work orders with status and tracker
         const workOrderStatus = await WorkOrder.find({ 
             status: { $in: ["Pending", "In_Progress"] },
             tracker: { $in: ["Not_Attended", "In_Attendance"]},
