@@ -8,19 +8,15 @@ const createDesignation = asyncHandler(async (req, res) => {
     try {
         const duplicate = await Designation.findOne({ designationName: req.body.designationName });
         if (duplicate) {
-            return res.status(400).json({
-                success: false,
-                message: "Designation already exists",
-            });
+            res.status(400);
+            throw new Error("Designation already exists");
         };
 
         // create new designation
         const newDesignation = new Designation(req.body);
         if (!newDesignation) {
-            return res.status(400).json({
-                success: false,
-                message: "Designation not created",
-            });
+            res.status(400);
+            throw new Error("Designation not created");
         }
 
         // Save the created designation
@@ -30,10 +26,8 @@ const createDesignation = asyncHandler(async (req, res) => {
             data: newDesignation
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message)
     }
 });
 
@@ -52,7 +46,8 @@ const getAllDesignations = asyncHandler(async (req, res) => {
             .exec();
 
         if (!designations) {
-            return res.status(400).json({ message: "No designations found" });
+            res.status(404);
+            throw new Error("No designations found");
         };
 
         res.status(200).json({
@@ -63,10 +58,8 @@ const getAllDesignations = asyncHandler(async (req, res) => {
             count
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -76,15 +69,18 @@ const getAllDesignations = asyncHandler(async (req, res) => {
 const queryAllDesignations = asyncHandler(async (req, res) => {
     try {
         const designations = await Designation.find({});
+
+        if (!designations) {
+            res.status(404);
+            throw new Error("Designations not found")
+        }
         res.status(200).json({
             success: true,
             data: designations
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -95,11 +91,10 @@ const deleteDesignation = asyncHandler(async (req, res) => {
     try {
         const designationId = req.params.id;
         const designation = await Designation.findByIdAndDelete(designationId);
+
         if (!designation) {
-            return res.status(400).json({
-                success: false,
-                message: "Designation not found",
-            });
+            res.status(404);
+            throw new Error("Designation not found");
         };
 
         res.status(200).json({
@@ -107,10 +102,8 @@ const deleteDesignation = asyncHandler(async (req, res) => {
             message: "Designation deleted successfully",
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message)
     }
 })
 
