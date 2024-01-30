@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-const baseUrl = `${import.meta.env.VITE_SERVER_URL}/hin`
+const baseUrl = `${import.meta.env.VITE_SERVER_URL}`
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
