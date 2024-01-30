@@ -1,18 +1,18 @@
 import { apiSlice } from "../api/apiSlice";
-const baseUrl = `${import.meta.env.VITE_SERVER_URL}/hin`
+const SERVER_URL = '/hin';
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data) => ({
-                url: `${ baseUrl }/login`,
+                url: `${ SERVER_URL }/login`,
                 method: "POST",
                 body: data,
             }),
         }),
         logout: builder.mutation({
             query: () => ({
-                url: `${ baseUrl }/logout`,
+                url: `${ SERVER_URL }/logout`,
                 method: "POST",
             }),
         }),
