@@ -7,7 +7,8 @@ import Logo from "@/assets/images/logo.png";
 import moment from "moment";
 import { message } from "antd";
 
-const SERVER_URL = '/hin';
+const SERVER_URL = process.env.SERVER_URL || '/hin';
+
 
 const DailyWork = () => {
     const [selectedDate, setSelectedDate] = useState(null);
