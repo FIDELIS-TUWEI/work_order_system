@@ -1,6 +1,5 @@
 const WorkOrder = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
 
 // Filter Work Orders
 const filterWorkStatus = asyncHandler (async (req, res) => {
@@ -118,11 +117,6 @@ const countReviewed = asyncHandler (async (req, res) => {
     try {
         const totalReviewed = await WorkOrder.countDocuments({ reviewed: true });
 
-        if (!totalReviewed) {
-            res.status(404);
-            throw new Error("No total reviewed work count found");
-        }
-
         res.status(200).json({
             success: true,
             data: totalReviewed
@@ -139,11 +133,6 @@ const countTotalWork = asyncHandler (async (req, res) => {
     try {
         const totalWorkCount = await WorkOrder.countDocuments();
 
-        if (!totalWorkCount) {
-            res.status(404);
-            throw new Error("No total work count found");
-        }
-
         res.status(200).json({
             success: true, 
             data: totalWorkCount
@@ -154,8 +143,6 @@ const countTotalWork = asyncHandler (async (req, res) => {
         throw new Error(error.message)
     }
 });
-
-
 
 module.exports = {
     filterWorkStatus,
