@@ -8,19 +8,15 @@ const createCategory = asyncHandler(async (req, res) => {
     try {
         const duplicate = await Category.findOne({ categoryTitle: req.body.categoryTitle });
         if (duplicate) {
-            return res.status(400).json({
-                success: false,
-                message: "Category already exists",
-            });
+            res.status(400);
+            throw new Error("Category already exists");
         }
 
         // create new category
         const newCategory = new Category(req.body);
         if (!newCategory) {
-            return res.status(400).json({
-                success: false,
-                message: "Category not created",
-            });
+            res.status(400);
+            throw new Error("Category not created")
         }
 
         // Save the created category
@@ -30,10 +26,8 @@ const createCategory = asyncHandler(async (req, res) => {
             data: newCategory
         })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -49,7 +43,8 @@ const getAllCategories = asyncHandler(async (req, res) => {
             .limit(pageSize)
 
         if (!categories) {
-            return res.status(400).json({ message: "No categories found" });
+            res.status(400);
+            throw new Error("No categories found");
         }
         
         res.status(200).json({
@@ -60,10 +55,8 @@ const getAllCategories = asyncHandler(async (req, res) => {
             count
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -73,7 +66,8 @@ const queryAllCategories = asyncHandler(async (req, res) => {
         const categories = await Category.find({});
 
         if (!categories) {
-            return res.status(400).json({ message: "No categories found" });
+            res.status(400);
+            throw new Error("No categories found");
         }
 
         res.status(200).json({
@@ -81,10 +75,8 @@ const queryAllCategories = asyncHandler(async (req, res) => {
             data: categories
         })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        res.status(500);
+        throw new Error(error.message);
     }
 })
 
@@ -96,7 +88,8 @@ const updateCategory = asyncHandler(async (req, res, next) => {
         const updatedCategory = await Category.findById(catId, updates, { new: true, runValidators: true });
 
         if (!updatedCategory) {
-            return res.status(404).json({ message: "Category not found" });
+            res.status(404);
+            throw new Error("Category not found")
         };
 
         res.status(200).json({
@@ -104,7 +97,8 @@ const updateCategory = asyncHandler(async (req, res, next) => {
             data: updatedCategory
         })
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -115,7 +109,8 @@ const deleteCategory = asyncHandler(async (req, res) => {
         const deletedCategory = await Category.findByIdAndDelete(catId);
 
         if (!deletedCategory) {
-            return res.status(404).json({ message: "Category not found" });
+            res.status(404);
+            throw new Error("Category not found");
         };
 
         return res.status(200).json({
@@ -123,7 +118,8 @@ const deleteCategory = asyncHandler(async (req, res) => {
             message: "Category deleted"
         });
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message)
     }
 })
 
