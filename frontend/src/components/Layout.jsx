@@ -88,7 +88,13 @@ const Layout = ({ children }) => {
                 </div>
               );
             })}
-              <div className={`menu-item`} onClick={handleLogout} tabIndex={0} onKeyDown={handleKeyDown}>
+              <div 
+                className={`menu-item`} 
+                onClick={handleLogout} 
+                tabIndex={0} 
+                onKeyDown={handleKeyDown} 
+                role="button"
+              >
                 <Link to="/">
                   <Tooltip title="Logout">
                     <i><RiLogoutCircleFill/></i>
