@@ -9,7 +9,8 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
         const token = req.cookies.token;
         if (!token) {
-            return next(new ErrorResponse("Not authorized to access this route", 401));
+            res.status(401);
+            throw new Error("Not authorized to access this route");
         }
 
         // Verify token
@@ -19,13 +20,15 @@ const protect = asyncHandler(async (req, res, next) => {
         const user = await User.findById(verified.id);
 
         if (!user) {
-            return next(new ErrorResponse("User not found, please login", 401));
+            res.status(404);
+            throw new Error("User not found, please login");
         }
         req.user = user;
 
         next();
     } catch (error) {
-        return next(new ErrorResponse("Not authorized, please login", 401));
+        res.status(500);
+        throw new ErrorResponse("Not authorized, please login");
     }
 
 });
@@ -35,7 +38,8 @@ const restrict = (role) => {
     return async (req, res, next) => {
         const user = await User.findOne({ _id: req.user.id });
         if (!user || !role.includes(user.role)) {
-            return next(new ErrorResponse("You are not authorized to access this route", 403));
+            res.status(403);
+            throw new Error("You are not authorized to access this route");
         }
 
         // User has the required role, ptoceed to the next middleware or route
@@ -47,7 +51,8 @@ const restrict = (role) => {
 const isAdmin = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({ _id: req.user.id });
     if (!user?.isAdmin) {
-        return next(new ErrorResponse("You are not authorized to access this route", 401));
+        res.status(401);
+        throw new Error("You are not authorized to access this route");
     }
     next();
 });
