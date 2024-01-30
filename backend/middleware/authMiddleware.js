@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const ErrorResponse = require("../utils/errorResponse");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const cache = require("memory-cache");
