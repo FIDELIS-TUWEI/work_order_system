@@ -18,41 +18,43 @@ const signupUser = asyncHandler (async (req, res) => {
         // check for existing user
         const existingUser = await User.findOne({ username: req.body.username });
         if (existingUser) {
-            return res.status(400).json({
-                success: false,
-                message: "User already exists",
-            });
+            res.status(400);
+            throw new Error("User Already Exists")
         }
 
         // create new user
         const user = await User.create(req.body);
-        res.status(201).json({
-            success: true,
-            message: "User created successfully"
-        });
 
-        // Send email notification
-        const recepients = ["fideliofidel9@gmail.com"]
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+        if (user) {
+            res.status(201).json({
+                success: true,
+                message: "User created successfully"
+            });
 
-        const emailSubject = `New User successfully Created`;
-        const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
+            // Send email notification
+            const recepients = ["fideliofidel9@gmail.com"]
+            const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
 
-        const emailOptions = {
-            email: recepients,
-            cc: ccEmails,
-            subject: emailSubject,
-            text: emailText
-        };
+            const emailSubject = `New User successfully Created`;
+            const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
 
-        // Send Email
-        sendEmail(emailOptions);
+            const emailOptions = {
+                email: recepients,
+                cc: ccEmails,
+                subject: emailSubject,
+                text: emailText
+            };
+
+            // Send Email
+            sendEmail(emailOptions);
+
+        } else {
+            throw new Error("Invalid user data")
+        }
 
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        res.status(500)
+        throw new Error(error.message)
     }
 });
 
@@ -66,12 +68,14 @@ const login = asyncHandler (async (req, res, next) => {
         const user = await User.findOne({ username });
 
         if (!user?.active) {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            res.status(401);
+            throw new Error("Invalid Credentials");
         }
         const passwordIsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordIsMatch) {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            res.status(401);
+            throw new Error("Invalid Credentials");
         }
 
         // Generate Token
@@ -99,10 +103,12 @@ const login = asyncHandler (async (req, res, next) => {
                 token
             })
         } else {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            res.status(401);
+            throw new Error("Invalid Credentials");
         }
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -131,7 +137,8 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
             .populate("designation", "designationName")
 
         if (!user) {
-            return next(new ErrorResponse("User not found", 404));
+            res.status(404);
+            throw new Error("User not found");
         }
 
         res.status(200).json({
@@ -139,7 +146,8 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
             user
         })
     } catch (error) {
-        next(error);
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -178,7 +186,8 @@ const changePassword = asyncHandler(async (req, res, next) => {
             updateUser
         })
     } catch (error) {
-        next(error);
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
