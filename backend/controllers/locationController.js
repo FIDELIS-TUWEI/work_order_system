@@ -10,19 +10,15 @@ const createLocation = asyncHandler(async (req, res) => {
         // Check duplicate location
         const duplicate = await Location.findOne({ locationTitle: req.body.locationTitle });
         if (duplicate) {
-            return res.status(400).json({
-                success: false,
-                message: "Location already exists",
-            });
+            res.status(400);
+            throw new Error("Location already exists");
         };
         
         // Create new location
         const newWorkLocation = new Location(req.body);
         if (!newWorkLocation) {
-            return res.status(400).json({
-                success: false,
-                message: "Location not created",
-            });
+            res.status(400);
+            throw new Error("Location not created");
         };
 
         // Save the created location
@@ -32,11 +28,8 @@ const createLocation = asyncHandler(async (req, res) => {
             data: newWorkLocation
         })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-        
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -54,8 +47,10 @@ const getAllLocations = asyncHandler(async (req, res) => {
             .limit(pageSize)
 
         if (!locations) {
-            return res.status(400).json({ message: "No locations found" });
-        }
+            res.status(404);
+            throw new Error("No locations found");
+        };
+
         res.status(200).json({
             success: true,
             data: locations,
@@ -63,11 +58,10 @@ const getAllLocations = asyncHandler(async (req, res) => {
             pages: Math.ceil(count / pageSize),
             count
         });
+
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
     }
 });
 
@@ -75,15 +69,18 @@ const getAllLocations = asyncHandler(async (req, res) => {
 const queryAllLocations = asyncHandler(async (req, res) => {
     try {
         const locations = await Location.find({});
+
+        if (!locations) {
+            res.status(404);
+            throw new Error("No Locations found")
+        }
         res.status(200).json({
             success: true,
             data: locations
         })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+        res.status(500);
+        throw new Error(error.message);
         
     }
 })
@@ -97,7 +94,8 @@ const deleteLocation = asyncHandler(async (req, res) => {
         const deleteLocation = await Location.findByIdAndDelete(locationId);
 
         if (!deleteLocation) {
-            return res.status(404).json({ message: "Location not found" });
+            res.status(404);
+            throw new Error("Location not found");
         };
 
         return res.status(200).json({
@@ -105,11 +103,8 @@ const deleteLocation = asyncHandler(async (req, res) => {
             message: "Location deleted successfully"
         })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-        
+        res.status(500);
+        throw new Error(error.message);
     }
 })
 
