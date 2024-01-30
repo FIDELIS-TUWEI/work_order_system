@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const SERVER_URL = import.meta.env.SERVER_URL || '/hin';
+const SERVER_URL = '/hin';
 
 
 

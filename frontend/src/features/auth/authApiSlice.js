@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-const SERVER_URL = import.meta.env.SERVER_URL || '/hin';
+const SERVER_URL = '/hin';
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({

@@ -7,7 +7,7 @@ import Logo from "@/assets/images/logo.png";
 import moment from "moment";
 import { message } from "antd";
 
-const SERVER_URL = import.meta.env.SERVER_URL || '/hin';
+const SERVER_URL = '/hin';
 
 
 const DailyWork = () => {
