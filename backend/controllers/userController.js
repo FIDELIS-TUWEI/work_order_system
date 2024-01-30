@@ -1,7 +1,6 @@
 const User = require("../model/user");
 const Work = require("../model/workOrder");
 const sendEmail = require("../utils/email");
-const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 
 // Controller function to get all users
