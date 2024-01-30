@@ -15,11 +15,11 @@ dotenv.config();
 let app = express();
 connectDB();
 
-//Enable trust proxy settings
-app.enable("trust-proxy")
-
 // Middleware
 app.use(helmet());
+
+//Enable trust proxy settings
+app.set("trust-proxy", true);
 
 let limiter = rateLimit({
     max: 1000,
