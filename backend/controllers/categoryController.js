@@ -1,6 +1,5 @@
 const Category = require("../model/category");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
 
 
 // Create category
