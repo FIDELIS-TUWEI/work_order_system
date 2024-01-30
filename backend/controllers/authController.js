@@ -1,7 +1,6 @@
 require("dotenv").config();
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
@@ -96,7 +95,7 @@ const login = asyncHandler (async (req, res, next) => {
 
         if (user && passwordIsMatch) {
             const { password, ...restParams } = user._doc
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,
@@ -105,7 +104,8 @@ const login = asyncHandler (async (req, res, next) => {
         } else {
             res.status(401);
             throw new Error("Invalid Credentials");
-        }
+        };
+
     } catch (error) {
         res.status(500);
         throw new Error(error.message);
@@ -115,14 +115,15 @@ const login = asyncHandler (async (req, res, next) => {
 // @desc Logout user
 // @route POST /hin/logout
 // @access Private
-const logout = (req, res, next) => {
+const logout = (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.token) return res.status(204);
     res.clearCookie("token", "", { path: "/", httpOnly: true, expires: new Date(0), sameSite: 'None', secure: true });
     
-    res.status(200).json({ success: true, message: "Logged Out successfully" });
-
-    next();
+    res.status(200).json({ 
+        success: true, 
+        message: "Logged Out successfully" 
+    });
 };
 
 // @desc Get user info
