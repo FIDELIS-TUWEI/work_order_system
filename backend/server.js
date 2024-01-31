@@ -74,6 +74,16 @@ Object.values(routes).forEach((route) => app.use("/hin", route));
 
 
 app.get('/', (req, res) => res.send("Server is ready"));
+app.use("*", (req, res) => {
+    res.status(404).json({
+        success: false,
+        errors: [
+            {
+                message: "Route not found",
+            },
+        ],
+    })
+})
 
 // Error Middleware
 app.use(notFound);
