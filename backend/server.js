@@ -24,9 +24,11 @@ app.set("trust-proxy", true);
 app.use(helmet());
 
 let limiter = rateLimit({
-    max: 1000,
-    windowMs: 60 * 60 * 1000,
-    message: "Too many requests from this IP. Please try again later."
+    max: 100,
+    windowMs: 24 * 60 * 60 * 1000,
+    message: "Too many requests from this IP. Please try again later.",
+    standardHeader: true,
+    legacyHeaders: false,
 });
 
 app.use('/hin', limiter);
