@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://www.work-orders.online"],
+    origin: ["http://localhost:3000", "https://www.work-orders.online", "http://localhost:5000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 app.use(cookieParser());
