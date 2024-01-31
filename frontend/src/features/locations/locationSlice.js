@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const SERVER_URL = '/hin';
 
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: SERVER_URL,
+    baseUrl: "http://localhost:5000/hin",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;

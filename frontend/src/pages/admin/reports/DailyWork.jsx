@@ -7,7 +7,7 @@ import Logo from "@/assets/images/logo.png";
 import moment from "moment";
 import { message } from "antd";
 
-const SERVER_URL = '/hin';
+const baseUrl = "http://localhost:5000/hin"
 
 
 const DailyWork = () => {
@@ -20,7 +20,7 @@ const DailyWork = () => {
         const formattedDate = value.format("YYYY-MM-DD")
 
         try {
-            const res = await axios.get(`${SERVER_URL}/work/created/date/${formattedDate}`);
+            const res = await axios.get(`${baseUrl}/work/created/date/${formattedDate}`);
             setWorkOrders(res.data);
         } catch (error) {
             console.error(error.message);
