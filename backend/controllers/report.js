@@ -1,8 +1,9 @@
 const WorkOrder = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
+const ErrorResponse = require("../utils/errorRespone");
 
 // Filter Work Orders
-const filterWorkStatus = asyncHandler (async (req, res) => {
+const filterWorkStatus = asyncHandler (async (req, res, next) => {
     // Enable Pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -28,8 +29,7 @@ const filterWorkStatus = asyncHandler (async (req, res) => {
             .exec();
 
         if (!workOrders) {
-            res.status(404);
-            throw new Error("Work orders not found");
+            return res.status(404).json({ message: "Work Orders not found" });
         };
 
         res.status(200).json({
@@ -41,13 +41,12 @@ const filterWorkStatus = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Logic to get work orders created in a day
-const workCreatedByDate = asyncHandler (async (req, res) => {
+const workCreatedByDate = asyncHandler (async (req, res, next) => {
     // pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber || 1);
@@ -72,13 +71,12 @@ const workCreatedByDate = asyncHandler (async (req, res) => {
             count
         });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 })
 
 // Count Work Orders with status using mongoDB aggregation pipeline
-const countWorkStatus = asyncHandler (async (req, res) => {
+const countWorkStatus = asyncHandler (async (req, res, next) => {
     try {
         const result = await WorkOrder.aggregate([
             {
@@ -107,13 +105,12 @@ const countWorkStatus = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Count reviewed work
-const countReviewed = asyncHandler (async (req, res) => {
+const countReviewed = asyncHandler (async (req, res, next) => {
     try {
         const totalReviewed = await WorkOrder.countDocuments({ reviewed: true });
 
@@ -123,13 +120,12 @@ const countReviewed = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500))
     }
 })
 
 // Count Total work orders
-const countTotalWork = asyncHandler (async (req, res) => {
+const countTotalWork = asyncHandler (async (req, res, next) => {
     try {
         const totalWorkCount = await WorkOrder.countDocuments();
 
@@ -139,8 +135,7 @@ const countTotalWork = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message)
+        return next(new ErrorResponse(error.message, 500))
     }
 });
 
