@@ -92,6 +92,7 @@ const login = asyncHandler (async (req, res, next) => {
         // Send Http-Only cookie
         res.cookie("token", token, {
             path: "/",
+            domain: "3.82.220.3",
             httpOnly: true,
             secure: false,
             signed: false,
