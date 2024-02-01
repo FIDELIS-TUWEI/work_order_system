@@ -2,14 +2,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const cache = require("memory-cache");
+const ErrorResponse = require("../utils/errorRespone");
 
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {
     try {
         const token = req.cookies.token;
         if (!token) {
-            res.status(401);
-            throw new Error("Not authorized to access this route");
+            return next(new ErrorResponse("Not authorized to access this route", 401));
         }
 
         // Verify token
@@ -19,15 +19,13 @@ const protect = asyncHandler(async (req, res, next) => {
         const user = await User.findById(verified.id);
 
         if (!user) {
-            res.status(404);
-            throw new Error("User not found, please login");
+            return next(new ErrorResponse("User not found, please login", 401));
         }
         req.user = user;
 
         next();
     } catch (error) {
-        res.status(500);
-        throw new ErrorResponse("Not authorized, please login");
+        return next(new ErrorResponse("Not authorized, please login", 401));
     }
 
 });
@@ -37,8 +35,7 @@ const restrict = (role) => {
     return async (req, res, next) => {
         const user = await User.findOne({ _id: req.user.id });
         if (!user || !role.includes(user.role)) {
-            res.status(403);
-            throw new Error("You are not authorized to access this route");
+            return next(new ErrorResponse("You are not authorized to access this route", 403));
         }
 
         // User has the required role, ptoceed to the next middleware or route
@@ -50,8 +47,7 @@ const restrict = (role) => {
 const isAdmin = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({ _id: req.user.id });
     if (!user?.isAdmin) {
-        res.status(401);
-        throw new Error("You are not authorized to access this route");
+        return next(new ErrorResponse("You are not authorized to access this route", 401));
     }
     next();
 });
@@ -75,8 +71,9 @@ const cacheMiddleware = (req, res, next) => {
             cache.put(key, body, 10000);
             res.sendResponse(body);
         };
-        next();
     }
+
+    next();
 }
 
 module.exports = {
