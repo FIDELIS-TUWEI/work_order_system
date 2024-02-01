@@ -8,9 +8,9 @@ const bodyParser = require('body-parser');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const { notFound, errorHandler } = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
+const errorHandler = require("./middleware/error");
 
 require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
@@ -88,11 +88,11 @@ app.use("*", (req, res) => {
 })
 
 // Error Middleware
-app.use(notFound);
+//app.use(notFound);
 app.use(errorHandler);
 
 // Server Setup
-const PORT = process.env.PORT;
+const PORT = 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
