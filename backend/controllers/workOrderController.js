@@ -5,14 +5,15 @@ const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
 const moment = require("moment");
+const ErrorResponse = require("../utils/errorRespone");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
     const requestedUser = await User.findById(WorkOrder.requestedBy).select("email");
 
     if (!requestedUser) {
-        res.status(404);
-        throw new Error("Requested User not found")
+        console.error("Requested User not found");
+        return;
     }
     const engineerEmail = ["solomon.ouma@holidayinnnairobi.com"];
     const ccList = [
@@ -32,13 +33,12 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
 };
 
 // Create Work Order
-const createWorkOrder = asyncHandler (async (req, res) => {
+const createWorkOrder = asyncHandler (async (req, res, next) => {
     const userId = req.user._id;
     const user = await User.findById(userId).select("-password");
 
     if (!user) {
-        res.status(404);
-        throw new Error("User not found");
+        return next(new ErrorResponse("User not found", 404));
     }
 
     const { priority, description, location, serviceType, category } = req.body;
@@ -83,20 +83,18 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             }
         });  
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Update Work Order
-const updateWorkOrder = asyncHandler (async (req, res) => {
+const updateWorkOrder = asyncHandler (async (req, res, next) => {
     const { id } = req.params;
     const  userId = req.user._id;
     const user = await User.findById(userId).select("-password");
 
     if (!user) {
-        res.status(404);
-        throw new Error("User not found");
+        return next(new ErrorResponse("User not found", 404));
     };
 
     try {
@@ -111,8 +109,7 @@ const updateWorkOrder = asyncHandler (async (req, res) => {
 
         // check if work order exists
         if (!updatedWorkOrder) {
-            res.status(404);
-            throw new Error("Work Order not found");
+            return next(new ErrorResponse("Work Order not found", 404));
         };
 
         // Check work order tracker
@@ -140,8 +137,7 @@ const updateWorkOrder = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
@@ -272,7 +268,7 @@ async function sendUpdateEmailNotification (updatedWorkOrder) {
 };
 
 // Get all Work Orders
-const getAllWorkOrders = asyncHandler (async (req, res) => {
+const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     // Enable Pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -288,8 +284,7 @@ const getAllWorkOrders = asyncHandler (async (req, res) => {
             .limit(pageSize);
 
         if (!workOrders) {
-            res.status(404);
-            throw new Error("Work Orders not found");
+            return next(new ErrorResponse("Work Orders not found", 404));
         };
 
         return res.status(200).json({
@@ -300,13 +295,12 @@ const getAllWorkOrders = asyncHandler (async (req, res) => {
             count
         })
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message)
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Query All work orders for line graph frontend
-const queryAllWork = asyncHandler (async (req, res) => {
+const queryAllWork = asyncHandler (async (req, res, next) => {
     try {
         const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
             .populate("requestedBy", "firstName")
@@ -316,8 +310,7 @@ const queryAllWork = asyncHandler (async (req, res) => {
             .sort({ Date_Created: -1 });
 
         if (!workOrders) {
-            res.status(404);
-            throw new Error("Work Orders not found");
+            return next(new ErrorResponse("Work Orders not found", 404));
         };
 
         return res.status(200).json({
@@ -330,7 +323,7 @@ const queryAllWork = asyncHandler (async (req, res) => {
 });
 
 // Get single Work Order
-const getSingleWorkOrder = asyncHandler (async (req, res) => {
+const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
         const work = await WorkOrder.findById(workOrderId)
@@ -342,8 +335,7 @@ const getSingleWorkOrder = asyncHandler (async (req, res) => {
             .exec();
 
         if (!work) {
-            res.status(404);
-            throw new Error("Work not found")
+            return next(new ErrorResponse("Work Order not found", 404));
         }
 
         return res.status(200).json({
@@ -352,19 +344,17 @@ const getSingleWorkOrder = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Delete Work Order
-const deleteWorkOrder = asyncHandler (async (req, res) => {
+const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     try {
         const workOrderId = req.params.id;
         const workOrder = await WorkOrder.findByIdAndDelete(workOrderId).populate("requestedBy", "username");
         if (!workOrder) {
-            res.status(404);
-            throw new Error("Work Order not found");
+            return next(new ErrorResponse("Work Order not found", 404));
         }
 
         // user who deleted the work
@@ -385,13 +375,12 @@ const deleteWorkOrder = asyncHandler (async (req, res) => {
         });
         
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message)
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Check Work Orders status and send an email notification everyday at 10 am
-cron.schedule("00 10 * * *", async () => {
+cron.schedule("00 10 * * *", async (next) => {
     try {
 
         // Find all work orders with status and tracker
@@ -425,12 +414,12 @@ cron.schedule("00 10 * * *", async () => {
 
         }
     } catch (error) {
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Check due date for work orders and send an email notification everyday at 3 pm
-cron.schedule("00 15 * * *", async () => {
+cron.schedule("00 15 * * *", async (next) => {
     try {
         const currentDate = moment();
     
@@ -465,7 +454,7 @@ cron.schedule("00 15 * * *", async () => {
             });
         }
     } catch (error) {
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
