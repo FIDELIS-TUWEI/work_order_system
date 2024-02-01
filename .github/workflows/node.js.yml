@@ -26,3 +26,20 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build --if-present
+    - name: Use environment variables
+      run: |
+        echo "MONGO_URI=$MONGO_URI"
+        echo "PORT=$PORT"
+        echo "NODE_ENV=$NODE_ENV"
+        echo "JWT_SECRET=$JWT_SECRET"
+        echo "LOGIN_EXPIRES=$LOGIN_EXPIRES"
+        echo "USER=$USER"
+        echo "PASS=$PASS"
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        PORT: ${{ secrets.PORT }}
+        NODE_ENV: ${{ secrets.NODE_ENV }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        LOGIN_EXPIRES: ${{ secrets.LOGIN_EXPIRES }}
+        USER: ${{ secrets.USER }}
+        PASS: ${{ secrets.PASS }}
