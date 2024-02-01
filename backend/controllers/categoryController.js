@@ -1,5 +1,6 @@
 const Category = require("../model/category");
 const asyncHandler = require("express-async-handler");
+const ErrorResponse = require("../utils/errorRespone");
 
 
 // Create category
@@ -25,8 +26,10 @@ const createCategory = asyncHandler(async (req, res) => {
             data: newCategory
         })
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
@@ -42,8 +45,7 @@ const getAllCategories = asyncHandler(async (req, res) => {
             .limit(pageSize)
 
         if (!categories) {
-            res.status(400);
-            throw new Error("No categories found");
+            return res.status(400).json({ message: "No categories found" });
         }
         
         res.status(200).json({
@@ -54,8 +56,10 @@ const getAllCategories = asyncHandler(async (req, res) => {
             count
         });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
@@ -65,8 +69,7 @@ const queryAllCategories = asyncHandler(async (req, res) => {
         const categories = await Category.find({});
 
         if (!categories) {
-            res.status(400);
-            throw new Error("No categories found");
+            return res.status(400).json({ message: "No categories found" });
         }
 
         res.status(200).json({
@@ -74,8 +77,10 @@ const queryAllCategories = asyncHandler(async (req, res) => {
             data: categories
         })
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
     }
 })
 
@@ -87,8 +92,7 @@ const updateCategory = asyncHandler(async (req, res, next) => {
         const updatedCategory = await Category.findById(catId, updates, { new: true, runValidators: true });
 
         if (!updatedCategory) {
-            res.status(404);
-            throw new Error("Category not found")
+            return res.status(404).json({ message: "Category not found" });
         };
 
         res.status(200).json({
@@ -96,20 +100,18 @@ const updateCategory = asyncHandler(async (req, res, next) => {
             data: updatedCategory
         })
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
 // Delete Category
-const deleteCategory = asyncHandler(async (req, res) => {
+const deleteCategory = asyncHandler(async (req, res, next) => {
     try {
         const catId = req.params.id;
         const deletedCategory = await Category.findByIdAndDelete(catId);
 
         if (!deletedCategory) {
-            res.status(404);
-            throw new Error("Category not found");
+            return res.status(404).json({ message: "Category not found" });
         };
 
         return res.status(200).json({
@@ -117,8 +119,7 @@ const deleteCategory = asyncHandler(async (req, res) => {
             message: "Category deleted"
         });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message)
+        return next(new ErrorResponse(error.message, 500));
     }
 })
 
