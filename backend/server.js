@@ -2,7 +2,6 @@ const dotenv = require("dotenv");
 const path = require("path");
 const connectDB = require("../config/connectDB");
 const express = require('express');
-//const rateLimit = require("express-rate-limit");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require("helmet");
@@ -19,21 +18,9 @@ dotenv.config();
 
 let app = express();
 
-//Enable trust proxy settings
-//app.set("trust-proxy", true);
-
 // Middleware
 app.use(helmet());
 
-//let limiter = rateLimit({
-//    max: 100,
-//    windowMs: 24 * 60 * 60 * 1000,
-//    message: "Too many requests from this IP. Please try again later.",
-//    standardHeader: true,
-//    legacyHeaders: false,
-//});
-
-//app.use('/hin', limiter);
 app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
 app.use(morgan('combined'));
 app.use(bodyParser.json({ limit: "5mb" }));
