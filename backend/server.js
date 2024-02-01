@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-//const path = require("path");
+const path = require("path");
 const connectDB = require("../config/connectDB");
 const express = require('express');
 //const rateLimit = require("express-rate-limit");
@@ -11,6 +11,8 @@ const cookieParser = require("cookie-parser");
 const { notFound, errorHandler } = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
+
+require('dotenv').config({ path: path.resolve(__dirname, './.env') });
 
 connectDB();
 dotenv.config();
