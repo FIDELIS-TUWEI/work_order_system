@@ -33,7 +33,7 @@ app.use(helmet());
 //    legacyHeaders: false,
 //});
 
-app.use('/hin', limiter);
+//app.use('/hin', limiter);
 app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
 app.use(morgan('dev'));
 app.use(bodyParser.json({ limit: "5mb" }));
