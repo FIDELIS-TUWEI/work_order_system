@@ -58,6 +58,9 @@ app.use(helmet.contentSecurityPolicy());
 // Prevent SQL Injection
 app.use(mongoSanitize());
 
+// Error Middleware
+app.use(errorHandler);
+
 // Import Routes
 const routes = {
     authRoutes: require("./routes/authRoutes"),
@@ -85,11 +88,7 @@ app.use("*", (req, res) => {
             },
         ],
     })
-})
-
-// Error Middleware
-//app.use(notFound);
-app.use(errorHandler);
+});
 
 // Server Setup
 const PORT = 5000;
