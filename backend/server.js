@@ -35,7 +35,7 @@ app.use(helmet());
 
 //app.use('/hin', limiter);
 app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
-app.use(morgan('dev'));
+app.use(morgan('combined'));
 app.use(bodyParser.json({ limit: "5mb" }));
 app.use(bodyParser.urlencoded({ 
     limit: "5mb",
