@@ -12,7 +12,7 @@ const protect = asyncHandler(async (req, res, next) => {
         }
 
         // Verify token
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        const verified = jwt.verify(token, 'Holiday-inn@-2023_$$');
 
         // Get user id from the token
         const user = await User.findById(verified.id);
