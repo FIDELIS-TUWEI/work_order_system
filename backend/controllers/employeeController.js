@@ -10,8 +10,10 @@ const newEmployee = asyncHandler ( async (req, res) => {
         const duplicate = await Employee.findOne({ employeeName: req.body.username });
 
         if (duplicate) {
-            res.status(400);
-            throw new Error("Employee already exists");
+            return res.status(400).json({
+                success: false,
+                message: "Employee already exists",
+            });
         };
 
         // create new employee
@@ -42,8 +44,7 @@ const newEmployee = asyncHandler ( async (req, res) => {
             sendEmail(emailOptions);
 
         } else {
-            res.status(400);
-            throw new Error("Employee not created")
+            return res.status(400).json({ message: "Employee not created" });
         };
 
         res.status(201).json({
@@ -52,8 +53,10 @@ const newEmployee = asyncHandler ( async (req, res) => {
         });
         
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
@@ -84,8 +87,10 @@ const getAllEmployees = asyncHandler(async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
@@ -95,8 +100,7 @@ const queryAllEmployees = asyncHandler(async (req, res) => {
         const allEmployees = await Employee.find({});
 
         if (!allEmployees) {
-            res.status(400);
-            throw new Error("No employees found");
+            return res.status(400).json({ message: "No employees found" });
         };
         
         res.status(200).json({
@@ -105,8 +109,10 @@ const queryAllEmployees = asyncHandler(async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message)
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 })
 
@@ -116,8 +122,7 @@ const singleEmployee = asyncHandler (async (req, res) => {
         const employee = await Employee.findById(req.params.id).populate("assignedWork");
 
         if (!employee) {
-            res.status(404);
-            throw new Error("Employee not found");
+            return res.status(404).json({ message: "Employee not found" });
         }
 
         // Get the total number of workorders assigned to the employee
@@ -141,8 +146,10 @@ const singleEmployee = asyncHandler (async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
     }
 });
 
@@ -152,8 +159,8 @@ const countWorkAssigned = asyncHandler (async (req, res) => {
         const employee = await Employee.findById(req.params.id).populate("assignedWork");
         
         if (!employee) {
-            res.status(404);
-            throw new Error("Employee not found");
+            return res.status(404).json({ message: "Employee not found" });
+
         };
 
         // Get the total number of workorders assigned to the employee
@@ -176,8 +183,10 @@ const countWorkAssigned = asyncHandler (async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
     }
 });
 
@@ -187,8 +196,7 @@ const countEmployees = asyncHandler (async (req, res) => {
         const employeeCount = await Employee.countDocuments();
 
         if (!employeeCount) {
-            res.status(404);
-            throw new Error("No employees found");
+            return res.status(404).json({ message: "No employees found" });
         };
 
         res.status(200).json({
@@ -196,9 +204,10 @@ const countEmployees = asyncHandler (async (req, res) => {
             data: employeeCount
         })
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
-        
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
@@ -209,8 +218,7 @@ const getEmployeeInfo = asyncHandler(async (req, res) => {
         const employee = await Employee.findById(employeeId).populate("assignedWork");
 
         if (!employee) {
-            res.status(404);
-            throw new Error("Employee not found");
+            return res.status(404).json({ message: "Employee not found" });
         }
 
         res.status(200).json({
@@ -219,8 +227,10 @@ const getEmployeeInfo = asyncHandler(async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
@@ -232,8 +242,7 @@ const editEmployee = asyncHandler(async (req, res) => {
         const updateEmployee = await Employee.findByIdAndUpdate(employeeId, updateFields, { new: true });
 
         if (!updateEmployee) {
-            res.status(404);
-            throw new Error("Employee not found");
+            return res.status(404).json({ message: "Employee not found" });
         }
 
 
@@ -242,8 +251,10 @@ const editEmployee = asyncHandler(async (req, res) => {
             message: "Employee updated successfully",
         });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
@@ -254,8 +265,7 @@ const deleteEmployee = asyncHandler(async (req, res) => {
         const deletedEmployee = await Employee.findByIdAndDelete(employeeId).populate("firstName lastName");
 
         if (!deletedEmployee) {
-            res.status(404);
-            throw new Error("Employee not found");
+            return res.status(404).json({ message: "Employee not found" });
         }
 
         // Check if there was work assigned to the employee
@@ -291,8 +301,10 @@ const deleteEmployee = asyncHandler(async (req, res) => {
             message: "Employee deleted successfully"
         });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 });
 
