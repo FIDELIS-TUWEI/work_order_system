@@ -6,7 +6,7 @@ dotenv.config();
 const connectDB = async () => {
     try {
         // Database connection
-        const mongoURI = `mongodb+srv://holidayinn:RowAr9iBpkjZfmbS@workorderhin.opfay3d.mongodb.net/Work-Order?retryWrites=true&w=majority`
+        const mongoURI = process.env.MONGO_URI;
         const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
