@@ -41,11 +41,7 @@ app.use(bodyParser.urlencoded({
     limit: "5mb",
     extended: true 
 }));
-app.use(cors({
-    credentials: true,
-    origin: ["http://localhost:3000", "https://www.work-orders.online", "http://54.227.144.85"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json()); // To parse JSON data in the request body
 app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
