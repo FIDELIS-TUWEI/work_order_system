@@ -1,7 +1,7 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
+const path = require("path");
 const connectDB = require("../config/connectDB");
 const express = require('express');
-const path = require("path");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require("helmet");
@@ -14,7 +14,7 @@ const hpp = require("hpp");
 require("dotenv").config({ path: path.resolve(__dirname, './.env') });
 
 connectDB();
-configDotenv.config();
+dotenv.config();
 
 let app = express()
 
@@ -59,6 +59,8 @@ const departmentRoutes = require("./routes/departmentRoutes");
 const designationRoutes = require("./routes/designationRoutes");
 const employeeRoutes = require("./routes/employeeRoutes");
 
+app.get('/', (req, res) => res.send("Server is ready"));
+
 
 // Routes Middleware
 app.use("/hin", authRoutes);
@@ -70,6 +72,7 @@ app.use("/hin", categoryRoutes);
 app.use("/hin", departmentRoutes);
 app.use("/hin", designationRoutes);
 app.use("/hin", employeeRoutes);
+
 
 // Server Setup
 const PORT = 5000;
