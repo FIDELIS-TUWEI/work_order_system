@@ -21,7 +21,7 @@ const LogIn = () => {
 
     useEffect(() => {
         if (!userInfo && !token) {
-            navigate('/login');
+            navigate('/');
         }
     }, [userInfo, navigate, token]);
 
@@ -32,7 +32,7 @@ const LogIn = () => {
             const res = await login(values).unwrap();
 
             if (error) {
-                if (error === 400 && error.data && error.data.message) {
+                if (error === 400 && error?.data?.message) {
                     message.error(error.data.message);
                 } else {
                     message.error("Failed to Login, try again later!")
