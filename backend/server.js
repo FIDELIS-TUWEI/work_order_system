@@ -1,26 +1,27 @@
-const dotenv = require("dotenv");
-const path = require("path");
-const connectDB = require("../config/connectDB");
+require("dotenv").config();
+require("../config/connectDB");
 const express = require('express');
+let app = express();
+const rateLimit = require("express-rate-limit");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const errorHandler = require("./middleware/error");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
-const errorHandler = require("./middleware/error");
-
-require('dotenv').config({ path: path.resolve(__dirname, './.env') });
-
-connectDB();
-dotenv.config();
-
-let app = express();
 
 // Middleware
 app.use(helmet());
 
+let limiter = rateLimit({
+    max: 1000,
+    windowMs: 60 * 60 * 1000,
+    message: "Too many requests from this IP. Please try again later."
+});
+
+app.use('/hin', limiter);
 app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
 app.use(morgan('combined'));
 app.use(bodyParser.json({ limit: "5mb" }));
@@ -49,33 +50,27 @@ app.use(mongoSanitize());
 app.use(errorHandler);
 
 // Import Routes
-const routes = {
-    authRoutes: require("./routes/authRoutes"),
-    userRoutes: require("./routes/userRoutes"),
-    workOrderRoutes: require("./routes/workOrderRoutes"),
-    locationRoutes: require("./routes/locationRoutes"),
-    reportRoutes: require("./routes/reportRoutes"),
-    categoryRoutes: require("./routes/categoryRoutes"),
-    departmentRoutes: require("./routes/departmentRoutes"),
-    designationRoutes: require("./routes/designationRoutes"),
-    employeeRoutes: require("./routes/employeeRoutes"),
-}
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const workOrderRoutes = require("./routes/workOrderRoutes");
+const locationRoutes = require("./routes/locationRoutes");
+const reportsRoutes = require("./routes/reportRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const departmentRoutes = require("./routes/departmentRoutes");
+const designationRoutes = require("./routes/designationRoutes");
+const employeeRoutes = require("./routes/employeeRoutes");
+
 
 // Routes Middleware
-Object.values(routes).forEach((route) => app.use("/hin", route));
-
-
-app.get('/', (req, res) => res.send("Server is ready"));
-app.use("*", (req, res) => {
-    res.status(404).json({
-        success: false,
-        errors: [
-            {
-                message: "Route not found",
-            },
-        ],
-    })
-});
+app.use("/hin", authRoutes);
+app.use("/hin", userRoutes);
+app.use("/hin", workOrderRoutes);
+app.use("/hin", locationRoutes);
+app.use("/hin", reportsRoutes);
+app.use("/hin", categoryRoutes);
+app.use("/hin", departmentRoutes);
+app.use("/hin", designationRoutes);
+app.use("/hin", employeeRoutes);
 
 // Server Setup
 const PORT = 5000;
