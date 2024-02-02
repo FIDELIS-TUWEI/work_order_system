@@ -8,23 +8,29 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
         const token = req.cookies.token;
         if (!token) {
-            return next(new ErrorResponse("Not authorized to access this route", 401));
+            return next(new ErrorResponse("Token is missing", 401));
         }
 
-        // Verify token
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-
-        // Get user id from the token
-        const user = await User.findById(verified.id);
-
-        if (!user) {
-            return next(new ErrorResponse("User not found, please login", 401));
-        }
-        req.user = user;
-
-        next();
+         // Verify token
+         let verified;
+         try {
+             verified = jwt.verify(token, process.env.JWT_SECRET);
+             console.log("Verified:", verified);
+         } catch (err) {
+             return next(new ErrorResponse("Invalid token", 401));
+         }
+ 
+         // Get user id from the token
+         const user = await User.findById(verified.id);
+ 
+         if (!user) {
+             return next(new ErrorResponse("User not found, please login", 401));
+         }
+         req.user = user;
+ 
+         next();
     } catch (error) {
-        return next(new ErrorResponse("Not authorized, please login", 401));
+        return next(new ErrorResponse(`Unexpected error: ${error.message}`, 500));
     }
 
 });
