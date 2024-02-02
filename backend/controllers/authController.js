@@ -75,7 +75,7 @@ const login = asyncHandler (async (req, res, next) => {
         const user = await User.findOne({ username });
 
         if (!user?.active) {
-            return next(new ErrorResponse("Invalid Credentials", 401));;
+            return next(new ErrorResponse("Invalid Credentials", 401));
         }
         const passwordIsMatch = await bcrypt.compare(password, user.password);
 
@@ -101,7 +101,7 @@ const login = asyncHandler (async (req, res, next) => {
 
         if (user && passwordIsMatch) {
             const { password, ...restParams } = user._doc
-            return res.status(200).json({
+            res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,
@@ -109,8 +109,7 @@ const login = asyncHandler (async (req, res, next) => {
             })
         } else {
             return next(new ErrorResponse("Invalid Credentials", 401));
-        };
-
+        }
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
