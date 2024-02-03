@@ -1,19 +1,24 @@
 module.exports = (app) => {
+    const express = require('express');
     const cors = require('cors');
     const rateLimit = require("express-rate-limit");
     const bodyParser = require('body-parser');
     const helmet = require("helmet");
     const morgan = require("morgan");
     const cookieParser = require("cookie-parser");
-    const errorHandler = require("./middleware/error");
+    const errorHandler = require("../middleware/error");
     const mongoSanitize = require("express-mongo-sanitize");
     const hpp = require("hpp");
+    const addKey = require("./addKey");
 
     // Express trust proxy settings
     app.set('trust proxy', 1)
     app.get('/ip', (request, response) => response.send(request.ip))
     app.get('/x-forwarded-for', (request, response) => response.send(request.headers['x-forwarded-for']));
     app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']) // specify multiple subnets as an array
+
+    // Add Key Generator Middleware
+    app.use(addKey);
 
     // Middleware
     let limiter = rateLimit({
