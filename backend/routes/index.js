@@ -21,4 +21,4 @@ module.exports = (app) => {
     app.use("/hin", departmentRoutes);
     app.use("/hin", designationRoutes);
     app.use("/hin", employeeRoutes);
-}
+};
