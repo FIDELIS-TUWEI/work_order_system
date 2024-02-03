@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5500;
 require("./middleware")(app);
 
 //Routes
-require("./routes")(app);
+require("./routes/index")(app);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
