@@ -30,7 +30,7 @@ module.exports = (app) => {
     app.use('/hin', limiter);
     app.use(helmet());
     app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
-    app.use(morgan('combined'));
+    app.use(morgan('dev'));
     app.use(bodyParser.json({ limit: "5mb" }));
     app.use(bodyParser.urlencoded({ 
         limit: "5mb",
