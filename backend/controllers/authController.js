@@ -95,7 +95,7 @@ const login = asyncHandler (async (req, res, next) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             signed: false,
-            sameSite: 'None',
+            sameSite: 'lax',
             expires: cookieExpiry,
         });
 
