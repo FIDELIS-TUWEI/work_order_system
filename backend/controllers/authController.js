@@ -93,7 +93,7 @@ const login = asyncHandler (async (req, res, next) => {
         res.cookie("token", token, {
             path: "/",
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: process.env.NODE_ENV !== 'production',
             signed: false,
             sameSite: 'lax',
             expires: cookieExpiry,
