@@ -30,7 +30,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors({
     credentials: true,
+<<<<<<< HEAD
     origin: ["http://localhost:3000", "https://www.work-orders.online"],
+=======
+    origin: ["http://localhost:3000", "https://work-orders.online", "https://www.work-orders.online"],
+>>>>>>> date
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 app.use(cookieParser());
@@ -75,7 +79,7 @@ app.use("/hin", employeeRoutes);
 
 
 // Server Setup
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
