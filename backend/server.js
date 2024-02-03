@@ -15,3 +15,7 @@ require("./routes/index")(app);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
+
+process.on('unhandledRejection', error => {
+    console.error('unhandledRejection', error)
+});
