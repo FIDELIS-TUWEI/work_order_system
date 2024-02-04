@@ -102,13 +102,15 @@ const login = asyncHandler (async (req, res) => {
                 secure: true,
                 signed: false,
                 sameSite: 'None',
-            }
-            const { password, ...restParams } = user._doc;
+            };
+
+            res.cookie("token", token, options)
+            //const { password, ...restParams } = user._doc;
 
             return res.status(200).cookie("token", token, options).json({
                 success: true,
                 message: "User logged in successfully",
-                user: restParams,
+                user,
                 token
             })
         } else {
