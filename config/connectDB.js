@@ -9,23 +9,16 @@ const connectDB = async () => {
         const mongoURI = process.env.MONGO_URI;
         const options = {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useUnifiedTopology: true
         };
 
-        await mongoose.connect(mongoURI, options)
-        console.log(`MongoDB Database is connected Succesfully.`);
+         await mongoose.connect(mongoURI, options)
+        console.log(`MongoDB Database is connected successfully.`);
+            
     } catch (error) {
         console.log(`Error connecting to MongoDB, ${error.message}`);
-        process.exit(1);
-    }
-};
-
-mongoose
-    .connect(mongoURI, options)
-    .then(() => {
-        console.log('Database connected successfully!');
-    })
-    .catch((error) => {
-        console.log("Error connecting to MongoDB", error);
         process.exit(1)
-    });
+    }
+}
+
+module.exports = connectDB;
