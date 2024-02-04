@@ -93,24 +93,24 @@ const login = asyncHandler (async (req, res) => {
             // Generate Token
             const token = signToken(user._id);
             user.password = undefined;
-            user.token = token;
 
             const options = {
-                path: "/",
+                path: "/hin",
                 expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
                 httpOnly: true,
                 secure: true,
-                signed: false,
+                signed: true,
                 sameSite: 'None',
             };
 
             res.cookie("token", token, options)
-            //const { password, ...restParams } = user._doc;
+            const { ...restParams } = user._doc;
+            user.token = token;
 
             return res.status(200).cookie("token", token, options).json({
                 success: true,
                 message: "User logged in successfully",
-                user,
+                user: restParams,
                 token
             })
         } else {
