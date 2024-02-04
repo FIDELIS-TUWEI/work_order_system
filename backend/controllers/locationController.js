@@ -36,7 +36,6 @@ const createLocation = asyncHandler(async (req, res) => {
             success: false,
             message: error.message
         });
-        
     }
 });
 
@@ -55,7 +54,8 @@ const getAllLocations = asyncHandler(async (req, res) => {
 
         if (!locations) {
             return res.status(400).json({ message: "No locations found" });
-        }
+        };
+
         res.status(200).json({
             success: true,
             data: locations,
@@ -63,6 +63,7 @@ const getAllLocations = asyncHandler(async (req, res) => {
             pages: Math.ceil(count / pageSize),
             count
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -75,6 +76,10 @@ const getAllLocations = asyncHandler(async (req, res) => {
 const queryAllLocations = asyncHandler(async (req, res) => {
     try {
         const locations = await Location.find({});
+
+        if (!locations) {
+            return res.status(400).json({ message: "No locations found" });
+        }
         res.status(200).json({
             success: true,
             data: locations
@@ -84,7 +89,6 @@ const queryAllLocations = asyncHandler(async (req, res) => {
             success: false,
             message: error.message
         });
-        
     }
 })
 
@@ -109,7 +113,6 @@ const deleteLocation = asyncHandler(async (req, res) => {
             success: false,
             message: error.message
         });
-        
     }
 })
 

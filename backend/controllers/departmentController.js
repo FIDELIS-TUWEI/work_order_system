@@ -16,6 +16,7 @@ const createDepartment = asyncHandler(async (req, res) => {
 
         // create new department
         const newDepartment = new Department(req.body);
+        
         if (!newDepartment) {
             return res.status(400).json({
                 success: false,
@@ -29,6 +30,7 @@ const createDepartment = asyncHandler(async (req, res) => {
             success: true,
             data: newDepartment
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -62,6 +64,7 @@ const getAllDepartments = asyncHandler(async (req, res) => {
             pages: Math.ceil(count / pageSize),
             count
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -76,17 +79,18 @@ const queryAllDepartments = asyncHandler(async (req, res) => {
     const departments = await Department.find({});
 
     if (!departments) {
-      return res.status(400).json({ message: "No departments found" });
+        return res.status(400).json({ message: "No departments found" });
     };
     
     res.status(200).json({
       success: true,
       data: departments
     });
+
   } catch (error) {
     res.status(500).json({
-      success: false,
-      message: error.message
+        success: false,
+        message: error.message
     });
   }
 });
@@ -98,19 +102,21 @@ const deleteDepartment = asyncHandler(async (req, res) => {
     try {
         const departmentId = req.params.id;
         const deleteDepartment = await Department.findByIdAndDelete(departmentId);
+
         if (!deleteDepartment) {
-            return res.status(404).json({ message: "Department not found" });
+            return res.status(404).json({ message: "Department not found" });;
         }
 
         return res.status(200).json({
             success: true,
             message: "Department deleted successfully"
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,
             message: error.message
-        });
+        });;
     }
 })
 

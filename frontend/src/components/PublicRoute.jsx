@@ -1,10 +1,15 @@
+import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 
 const PublicRoute = ({ children }) => {
-    if (localStorage.getItem('userInfo')) {
-        return <Navigate to="/login" />;
+    const userInfo = useSelector(selectUserInfo);
+    const token = useSelector(selectToken);
+
+    if (!userInfo && token) {
+        return <Navigate to="/" />;
     } else {
         return children;
     }
