@@ -2,10 +2,10 @@ const WorkOrder = require("../model/workOrder");
 const User = require("../model/user");
 const Employee = require("../model/employee");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
 const moment = require("moment");
+const ErrorResponse = require("../utils/errorRespone");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
@@ -83,7 +83,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             }
         });  
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
@@ -282,6 +282,11 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
             .sort({ Date_Created: -1 })
             .skip(pageSize * (page -1))
             .limit(pageSize);
+
+        if (!workOrders) {
+            return next(new ErrorResponse("Work Orders not found", 404));
+        };
+
         return res.status(200).json({
             success: true,
             data: workOrders,
@@ -328,6 +333,7 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
             .populate("assignedTo", "firstName lastName")
             .populate("verifiedBy", "username")
             .exec();
+
         if (!work) {
             return next(new ErrorResponse("Work Order not found", 404));
         }
@@ -335,7 +341,8 @@ const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
         return res.status(200).json({
             success: true,
             data: work
-        })
+        });
+
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
     }
@@ -376,7 +383,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 cron.schedule("00 10 * * *", async (next) => {
     try {
 
-        // Find all work orders with due date less than or equal to the current date
+        // Find all work orders with status and tracker
         const workOrderStatus = await WorkOrder.find({ 
             status: { $in: ["Pending", "In_Progress"] },
             tracker: { $in: ["Not_Attended", "In_Attendance"]},
@@ -407,7 +414,7 @@ cron.schedule("00 10 * * *", async (next) => {
 
         }
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
@@ -447,9 +454,9 @@ cron.schedule("00 15 * * *", async (next) => {
             });
         }
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500));
     }
-})
+});
 
 module.exports = {
     createWorkOrder,
