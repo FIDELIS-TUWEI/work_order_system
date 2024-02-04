@@ -19,6 +19,11 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
 
+// Create route
+app.get("/", (req, res) => {
+    res.send("Server is running");
+})
+
 process.on('unhandledRejection', error => {
     console.error('unhandledRejection', error)
 });

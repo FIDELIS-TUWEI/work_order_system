@@ -20,4 +20,12 @@ const connectDB = async () => {
     }
 };
 
-module.exports = connectDB;
+mongoose
+    .connect(mongoURI, options)
+    .then(() => {
+        console.log('Database connected successfully!');
+    })
+    .catch((error) => {
+        console.log("Error connecting to MongoDB", error);
+        process.exit(1)
+    });
