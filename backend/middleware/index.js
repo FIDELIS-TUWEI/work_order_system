@@ -40,6 +40,7 @@ module.exports = (app) => {
         credentials: true,
         origin: ["http://localhost:3000", "https://work-orders.online", "https://www.work-orders.online", "http://3.82.220.3"],
         methods: ["GET", "POST", "PUT", "DELETE"],
+        optionsSuccessStatus: 200,
     }));
     app.use(cookieParser());
     app.use(express.json()); // To parse JSON data in the request body
