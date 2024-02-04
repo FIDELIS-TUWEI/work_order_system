@@ -92,7 +92,6 @@ const login = asyncHandler (async (req, res) => {
         if (user && passwordIsMatch) {
             // Generate Token
             const token = signToken(user._id);
-            user.password = undefined;
 
             const options = {
                 path: "/",
@@ -106,8 +105,9 @@ const login = asyncHandler (async (req, res) => {
             res.cookie("token", token, options)
             const { ...restParams } = user._doc;
             user.token = token;
+            user.password = undefined;
 
-            return res.status(200).cookie("token", token, options).json({
+            return res.status(201).cookie("token", token, options).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,

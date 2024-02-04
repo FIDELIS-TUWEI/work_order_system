@@ -6,9 +6,11 @@ const ErrorResponse = require("../utils/errorRespone");
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        const token = req.header('token') || req.cookies.token;
         if (!token) {
-            return next(new ErrorResponse("Not authorized to access this route", 401));
+            return res.status(401).json({
+                message: "Not authorized to access this route"
+            })
         }
 
         // Verify token
