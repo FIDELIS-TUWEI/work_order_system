@@ -94,10 +94,12 @@ const login = asyncHandler (async (req, res, next) => {
             path: "/",
             httpOnly: true,
             secure: true,
-            signed: false,
-            sameSite: 'None',
+            signed: true,
+            sameSite: 'none',
+            domain: "work-orders.online",
             expires: cookieExpiry,
         });
+        res.send();
 
         if (user && passwordIsMatch) {
             const { password, ...restParams } = user._doc
