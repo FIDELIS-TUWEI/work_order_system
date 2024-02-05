@@ -94,7 +94,6 @@ const login = asyncHandler (async (req, res, next) => {
             path: "/",
             httpOnly: true,
             secure: true,
-            signed: true,
             sameSite: 'None',
             domain: "work-orders.online",
             expires: cookieExpiry,
@@ -108,7 +107,6 @@ const login = asyncHandler (async (req, res, next) => {
                 message: "User logged in successfully",
                 user: restParams,
                 token,
-                secret: 'eyrffvendbjf'
             })
         } else {
             return next(new ErrorResponse("Invalid Credentials", 401));
