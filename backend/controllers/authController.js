@@ -69,58 +69,56 @@ const signupUser = asyncHandler (async (req, res) => {
 // @route POST /hin/login
 // @access Public
 
-const login = asyncHandler (async (req, res, next) => {
+const login = asyncHandler (async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
 
         if (!user?.active) {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            return res.status(401).send({
+                success: false,
+                message: "User not found"
+            });
         }
         const passwordIsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordIsMatch) {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            return res.status(401).json({
+                success: false,
+                message: "Invalid Password!"
+            });
         }
 
-        // Generate Token
-        const token = signToken(user._id);
-
-        // Set cookie expiration to 7 days
-        const cookieExpiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
-        // Send Http-Only cookie
-        res.cookie("token", token, {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            signed: false,
-            sameSite: 'None',
-            expires: cookieExpiry,
-        });
-
-        // Save the cookie expiration in browser's cookies using js-cookie
-        Cookies.set("cookieExpiry", cookieExpiry.toISOString(), {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            expires: cookieExpiry
-        })
-
         if (user && passwordIsMatch) {
-            const { password, ...restParams } = user._doc
-            res.status(200).json({
+            // Generate Token
+            const token = signToken(user._id);
+            user.password = undefined;
+            user.token = token;
+
+            const options = {
+                path: "/",
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+                secure: true,
+                signed: false,
+                sameSite: 'None',
+            }
+            const { password, ...restParams } = user._doc;
+
+            return res.status(200).cookie("token", token, options).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,
                 token
             })
         } else {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            return res.status(401).json({
+                success: false,
+                message: "Invalid Credentials",
+            })
         }
     } catch (error) {
-        next(error);
+        return res.status(401).send("Bad Request");
     }
 });
 
