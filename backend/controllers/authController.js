@@ -108,7 +108,7 @@ const login = asyncHandler (async (req, res) => {
             user.token = token;
             user.password = undefined;
 
-            return res.status(201).json({
+            return res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,
