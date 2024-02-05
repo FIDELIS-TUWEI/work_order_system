@@ -104,7 +104,7 @@ const login = asyncHandler (async (req, res) => {
                 expires: cookieExpiry
             });
 
-            const { ...restParams } = user._doc;
+            const { password, ...restParams } = user._doc;
             user.token = token;
             user.password = undefined;
 
