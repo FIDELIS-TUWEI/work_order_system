@@ -95,17 +95,18 @@ const login = asyncHandler (async (req, res) => {
             user.password = undefined;
             user.token = token;
 
-            const options = {
+            res.cookie("token", token, {
                 path: "/",
                 expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
                 httpOnly: true,
                 secure: true,
                 signed: false,
                 sameSite: 'None',
-            }
+            });
+            
             const { password, ...restParams } = user._doc;
 
-            return res.status(200).cookie("token", token, options).json({
+            return res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,

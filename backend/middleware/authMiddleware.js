@@ -8,7 +8,7 @@ const protect = asyncHandler(async (req, res, next) => {
     try {
         const token = req.cookies.token;
         if (!token) {
-            return next(new ErrorResponse("Not authorized to access this route", 401));
+            return next(new ErrorResponse("Not authorized to access this route, invalid token", 401));
         }
 
         // Verify token
@@ -24,7 +24,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
         next();
     } catch (error) {
-        return next(new ErrorResponse("Not authorized, please login", 401));
+        return next(new ErrorResponse("Not authorized, no token", 401));
     }
 
 });
