@@ -38,7 +38,7 @@ module.exports = (app) => {
     }));
     app.use(cors({
         credentials: true,
-        origin: ["http://localhost:3000", "https://www.work-orders.online"],
+        origin: ["http://localhost:3000", "https://www.work-orders.online", "https://work-orders.online"],
         methods: ["GET", "POST", "PUT", "DELETE"],
     }));
     app.use(cookieParser());
