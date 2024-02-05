@@ -95,7 +95,6 @@ const login = asyncHandler (async (req, res, next) => {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            domain: "work-orders.online",
             expires: cookieExpiry,
         });
         res.send();
