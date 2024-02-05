@@ -5,7 +5,6 @@ module.exports = (app) => {
     const bodyParser = require('body-parser');
     const helmet = require("helmet");
     const morgan = require("morgan");
-    const cookieParser = require("cookie-parser");
     const errorHandler = require("../middleware/error");
     const mongoSanitize = require("express-mongo-sanitize");
     const hpp = require("hpp");
@@ -42,7 +41,6 @@ module.exports = (app) => {
         methods: ["GET", "POST", "PUT", "DELETE"],
         optionsSuccessStatus: 200,
     }));
-    app.use(cookieParser());
     app.use(express.json()); // To parse JSON data in the request body
     app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
     // Prevent HTTP Parameter pollution

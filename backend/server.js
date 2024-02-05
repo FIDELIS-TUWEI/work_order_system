@@ -2,9 +2,13 @@ const dotenv = require("dotenv");
 const path = require("path");
 const connectDB = require("../config/connectDB");
 const express = require('express');
+const cookieParser = require("cookie-parser");
+
 let app = express();
 
 connectDB();
+
+app.use(cookieParser());
 
 // Server Setup
 const PORT = process.env.PORT || 5500;
