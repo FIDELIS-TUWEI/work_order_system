@@ -93,9 +93,9 @@ const login = asyncHandler (async (req, res, next) => {
         res.cookie("token", token, {
             path: "/",
             httpOnly: true,
-            secure: true,
+            secure: false,
             signed: false,
-            sameSite: 'None',
+            sameSite: 'lax',
             expires: cookieExpiry,
         });
 
