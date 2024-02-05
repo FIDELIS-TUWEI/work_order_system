@@ -31,7 +31,7 @@ const store = configureStore({
             categoriesApi.middleware, usersApi.middleware,
             reportsApi.middleware,
         ),
-    devTools: false
+    devTools: true
 });
 
 export default store;
