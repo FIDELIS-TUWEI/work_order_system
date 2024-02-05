@@ -1,5 +1,6 @@
-// utils/keyGenerator
-module.exports = function keyGenerator (request, _response) {
+// utils/keyGenerator.ts
+
+module.exports =  function keyGenerator(request, _response){
     if (!request.ip) {
         console.error('Warning: request.ip is missing!')
         return request.socket.remoteAddress
@@ -7,4 +8,3 @@ module.exports = function keyGenerator (request, _response) {
 
     return request.ip.replace(/:\d+[^:]*$/, '')
 }
-

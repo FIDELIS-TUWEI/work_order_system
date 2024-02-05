@@ -1,6 +1,6 @@
 const Category = require("../model/category");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
+const ErrorResponse = require("../utils/errorRespone");
 
 
 // Create category
@@ -8,19 +8,15 @@ const createCategory = asyncHandler(async (req, res) => {
     try {
         const duplicate = await Category.findOne({ categoryTitle: req.body.categoryTitle });
         if (duplicate) {
-            return res.status(400).json({
-                success: false,
-                message: "Category already exists",
-            });
+            res.status(400);
+            throw new Error("Category already exists");
         }
 
         // create new category
         const newCategory = new Category(req.body);
         if (!newCategory) {
-            return res.status(400).json({
-                success: false,
-                message: "Category not created",
-            });
+            res.status(400);
+            throw new Error("Category not created")
         }
 
         // Save the created category
@@ -109,7 +105,7 @@ const updateCategory = asyncHandler(async (req, res, next) => {
 });
 
 // Delete Category
-const deleteCategory = asyncHandler(async (req, res) => {
+const deleteCategory = asyncHandler(async (req, res, next) => {
     try {
         const catId = req.params.id;
         const deletedCategory = await Category.findByIdAndDelete(catId);

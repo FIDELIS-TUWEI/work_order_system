@@ -1,10 +1,10 @@
+require("dotenv").config();
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
+const ErrorResponse = require("../utils/errorRespone");
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -26,27 +26,36 @@ const signupUser = asyncHandler (async (req, res) => {
 
         // create new user
         const user = await User.create(req.body);
-        res.status(201).json({
-            success: true,
-            message: "User created successfully"
-        });
 
-        // Send email notification
-        const recepients = ["fideliofidel9@gmail.com"]
-        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+        if (user) {
+            res.status(201).json({
+                success: true,
+                message: "User created successfully"
+            });
 
-        const emailSubject = `New User successfully Created`;
-        const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
+            // Send email notification
+            const recepients = ["fideliofidel9@gmail.com"]
+            const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
 
-        const emailOptions = {
-            email: recepients,
-            cc: ccEmails,
-            subject: emailSubject,
-            text: emailText
-        };
+            const emailSubject = `New User successfully Created`;
+            const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
 
-        // Send Email
-        sendEmail(emailOptions);
+            const emailOptions = {
+                email: recepients,
+                cc: ccEmails,
+                subject: emailSubject,
+                text: emailText
+            };
+
+            // Send Email
+            sendEmail(emailOptions);
+
+        } else {
+            res.status(500).json({
+                success: false,
+                message: error.message
+            })
+        }
 
     } catch (error) {
         res.status(500).json({
@@ -60,49 +69,56 @@ const signupUser = asyncHandler (async (req, res) => {
 // @route POST /hin/login
 // @access Public
 
-const login = asyncHandler (async (req, res, next) => {
+const login = asyncHandler (async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username });
 
         if (!user?.active) {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            return res.status(401).send({
+                success: false,
+                message: "User not found"
+            });
         }
         const passwordIsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordIsMatch) {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            return res.status(401).json({
+                success: false,
+                message: "Invalid Password!"
+            });
         }
 
-        // Generate Token
-        const token = signToken(user._id);
-
-        // Set cookie expiration to 7 days
-        const cookieExpiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-
-        // Send Http-Only cookie
-        res.cookie("token", token, {
-            path: "/",
-            httpOnly: true,
-            secure: true,
-            signed: false,
-            sameSite: 'None',
-            expires: cookieExpiry,
-        });
-
         if (user && passwordIsMatch) {
-            const { password, ...restParams } = user._doc
-            res.status(200).json({
+            // Generate Token
+            const token = signToken(user._id);
+            user.password = undefined;
+            user.token = token;
+
+            const options = {
+                path: "/",
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                httpOnly: true,
+                secure: true,
+                signed: false,
+                sameSite: 'None',
+            }
+            const { password, ...restParams } = user._doc;
+
+            return res.status(200).cookie("token", token, options).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,
                 token
             })
         } else {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            return res.status(401).json({
+                success: false,
+                message: "Invalid Credentials",
+            })
         }
     } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
+        return res.status(401).send("Bad Request");
     }
 });
 
@@ -114,7 +130,10 @@ const logout = (req, res, next) => {
     if (!cookies?.token) return res.status(204);
     res.clearCookie("token", "", { path: "/", httpOnly: true, expires: new Date(0), sameSite: 'None', secure: true });
     
-    res.status(200).json({ success: true, message: "Logged Out successfully" });
+    res.status(200).json({ 
+        success: true, 
+        message: "Logged Out successfully" 
+    });
 
     next();
 };
@@ -139,7 +158,7 @@ const getUserInfo = asyncHandler (async (req, res, next) => {
             user
         })
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500))
     }
 });
 
@@ -178,7 +197,7 @@ const changePassword = asyncHandler(async (req, res, next) => {
             updateUser
         })
     } catch (error) {
-        next(error);
+        return next(new ErrorResponse(error.message, 500))
     }
 });
 

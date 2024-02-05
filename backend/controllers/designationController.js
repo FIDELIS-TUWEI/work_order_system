@@ -76,6 +76,11 @@ const getAllDesignations = asyncHandler(async (req, res) => {
 const queryAllDesignations = asyncHandler(async (req, res) => {
     try {
         const designations = await Designation.find({});
+
+        if (!designations) {
+            return res.status(404).json({ message: "No Designstions Found" });
+        }
+
         res.status(200).json({
             success: true,
             data: designations
@@ -95,6 +100,7 @@ const deleteDesignation = asyncHandler(async (req, res) => {
     try {
         const designationId = req.params.id;
         const designation = await Designation.findByIdAndDelete(designationId);
+
         if (!designation) {
             return res.status(400).json({
                 success: false,

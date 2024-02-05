@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { createWorkOrder, updateWorkOrder, getAllWorkOrders, getSingleWorkOrder, deleteWorkOrder, queryAllWork } = require('../controllers/workOrderController');
-const { protect,  restrict, cacheMiddleware, setVerifiedBy} = require('../middleware/authMiddleware');
+const { protect, restrict, cacheMiddleware, setVerifiedBy} = require('../middleware/authMiddleware');
 
 
 router.post("/create/work", protect, restrict(["admin", "hod", "user", "supervisor", "superadmin", "reviewer", "engineer"]), createWorkOrder);

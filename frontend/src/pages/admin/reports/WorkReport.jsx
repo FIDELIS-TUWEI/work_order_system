@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Button, Card, Input, Space, Table } from "antd";
+import { Button, Card, Input, Space, Table, Tooltip } from "antd";
 import {GrSearch} from "react-icons/gr";
 import Highlighter from 'react-highlight-words';
 
@@ -218,15 +218,18 @@ const WorkReport = ({ workOrdersData, loading, handleStatusChange, exportPDF }) 
             Generate Report
           </Button>
           
-          <Button style={{ 
-            color: 'white', 
-            backgroundColor: 'darkgreen', 
-            border: 'none', 
-            marginLeft: '30px'
-            }} 
-            onClick={() => navigate("/workOrders/daily")}>
-            Daily Work
-          </Button>
+          <Tooltip title="This Feature is coming soon!">
+            <Button style={{ 
+              color: 'white', 
+              backgroundColor: 'darkgreen', 
+              border: 'none', 
+              marginLeft: '30px'
+              }} 
+              onClick={() => navigate("/workOrders/daily")}
+              disabled>
+              Daily Work
+            </Button>
+          </Tooltip>
         </div>
         
         <Card>

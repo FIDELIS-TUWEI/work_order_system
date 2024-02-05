@@ -21,7 +21,7 @@ const LogIn = () => {
 
     useEffect(() => {
         if (!userInfo && !token) {
-            navigate('/');
+            navigate('/login');
         }
     }, [userInfo, navigate, token]);
 
@@ -32,10 +32,15 @@ const LogIn = () => {
             const res = await login(values).unwrap();
 
             if (error) {
-                if (error === 400 && error?.data?.message) {
-                    message.error(error.data.message);
-                } else {
-                    message.error("Failed to Login, try again later!")
+                switch (error.statusCode) {
+                    case 401:
+                        message.error("Invalid Credentials");
+                        break;
+                    case 500:
+                        message.error("Server Error, Please try again later!");
+                        break;
+                    default:
+                        message.error("An Unknown error occured");
                 }
             } else {
                 dispatch(setCredentials({ ...res }));
@@ -43,7 +48,7 @@ const LogIn = () => {
                 navigate('/private');
             };
         } catch (error) {
-            message.error("Invalid Credentials");
+            message.error(error.message);
         }
     }
 

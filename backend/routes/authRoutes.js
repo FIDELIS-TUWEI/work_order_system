@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { signupUser, login, logout, getUserInfo, forgotPassword, resetPassword, changePassword } = require("../controllers/authController");
+const { signupUser, login, logout, getUserInfo, changePassword } = require("../controllers/authController");
 const { protect, restrict } = require("../middleware/authMiddleware");
 
 router.post("/register", protect, restrict(["admin", "superadmin"]), signupUser);

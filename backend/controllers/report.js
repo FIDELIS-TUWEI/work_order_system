@@ -1,6 +1,6 @@
 const WorkOrder = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorResponse");
+const ErrorResponse = require("../utils/errorRespone");
 
 // Filter Work Orders
 const filterWorkStatus = asyncHandler (async (req, res, next) => {
@@ -27,6 +27,11 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
             .skip(pageSize * (page -1))
             .limit(pageSize)
             .exec();
+
+        if (!workOrders) {
+            return res.status(404).json({ message: "Work Orders not found" });
+        };
+
         res.status(200).json({
             success: true, 
             data: workOrders, 
@@ -34,8 +39,9 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
             pages: Math.ceil(count / pageSize),
             count
         });
+
     } catch (error) {
-        next(error.message, 500);
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
@@ -126,13 +132,12 @@ const countTotalWork = asyncHandler (async (req, res, next) => {
         res.status(200).json({
             success: true, 
             data: totalWorkCount
-        })
+        });
+
     } catch (error) {
         return next(new ErrorResponse(error.message, 500))
     }
 });
-
-
 
 module.exports = {
     filterWorkStatus,
