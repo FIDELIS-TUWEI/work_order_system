@@ -95,8 +95,7 @@ const login = asyncHandler (async (req, res, next) => {
             // Send and store the token as HTTP-Only cookie
             res.cookie("token", token, {
                 withCredentials: true,
-                httpOnly: true,
-                secure: true
+                httpOnly: false,
             });
 
             const { ...restParams } = user._doc
