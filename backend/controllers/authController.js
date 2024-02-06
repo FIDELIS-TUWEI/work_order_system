@@ -91,13 +91,12 @@ const login = asyncHandler (async (req, res, next) => {
 
         // Send Http-Only cookie
         res.cookie("token", token, {
-            path: "/",
+            path: "/hin",
             httpOnly: true,
             secure: true,
             sameSite: 'None',
             expires: cookieExpiry,
         });
-        res.send();
 
         if (user && passwordIsMatch) {
             const { password, ...restParams } = user._doc
