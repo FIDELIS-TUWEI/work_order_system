@@ -92,14 +92,6 @@ const login = asyncHandler (async (req, res, next) => {
             user.token = token;
             user.password = undefined;
 
-            // Send and store the token as HTTP-Only cookie
-            res.cookie("token", token, {
-                withCredentials: true,
-                httpOnly: true,
-                sameSite: 'none',
-                secure: process.env.NODE_ENV === 'production'
-            });
-
             const { ...restParams } = user._doc
             res.status(200).json({
                 success: true,
@@ -121,9 +113,12 @@ const login = asyncHandler (async (req, res, next) => {
 // @route POST /hin/logout
 // @access Private
 const logout = (req, res, next) => {
-    const cookies = req.cookies;
-    if (!cookies?.token) return res.status(204);
-    res.clearCookie("token", "", { path: "/", httpOnly: true, expires: new Date(0), sameSite: 'None', secure: true });
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+    }
     
     res.status(200).json({ 
         success: true, 
