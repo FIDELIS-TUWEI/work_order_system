@@ -1,17 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const serverUrl = import.meta.env.VITE_SERVER_URL;
+const serverUrl = "/hin";
 
 
 const baseQuery = fetchBaseQuery({
     baseUrl: serverUrl,
     credentials: "include",
-    prepareHeaders: (headers, { getState }) => {
-        const token = getState().auth.token;
+    prepareHeaders: (headers) => {
+        const token = JSON.parse(localStorage.getItem("token"));
         if (token) {
             headers.set("authorization", `Bearer ${token}`);
         }
         return headers;
-    },
+    } 
 });
 
 export const usersApi = createApi({
