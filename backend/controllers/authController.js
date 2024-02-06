@@ -1,16 +1,9 @@
-require("dotenv").config();
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
 const ErrorResponse = require("../utils/errorRespone");
-
-const signToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.LOGIN_EXPIRES,
-    });
-}
+const createSecretToken = require("../utils/secretToken");
 
 // @desc Register User
 const signupUser = asyncHandler (async (req, res) => {
@@ -69,56 +62,58 @@ const signupUser = asyncHandler (async (req, res) => {
 // @route POST /hin/login
 // @access Public
 
-const login = asyncHandler (async (req, res) => {
+const login = asyncHandler (async (req, res, next) => {
     try {
         const { username, password } = req.body;
+
+        // Check user input
+        if (!username || !password) {
+            return res.json({ message: "All fields are required!" })
+        };
+
+        // Find user using their username in DB
         const user = await User.findOne({ username });
 
-        if (!user?.active) {
-            return res.status(401).send({
-                success: false,
-                message: "User not found"
-            });
-        }
+        if (!user) {
+            return res.status(401).json({ message: "Incorrect username or password!" })
+        };
+
+        // check if password matches in DB
         const passwordIsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordIsMatch) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid Password!"
-            });
+            return res.status(401).json({ message: "Incorrect Password or username!" })
         }
 
+        // send token if username and password match DB
         if (user && passwordIsMatch) {
-            // Generate Token
-            const token = signToken(user._id);
-            user.password = undefined;
+            //Generate Token
+            const token = createSecretToken(user._id);
             user.token = token;
+            user.password = undefined;
 
-            const options = {
-                path: "/",
-                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            // Send and store the token as HTTP-Only cookie
+            res.cookie("token", token, {
+                withCredentials: true,
                 httpOnly: true,
-                secure: true,
-                signed: false,
-                sameSite: 'None',
-            }
-            const { password, ...restParams } = user._doc;
+                sameSite: 'none',
+                secure: process.env.NODE_ENV === 'production'
+            });
 
-            return res.status(200).cookie("token", token, options).json({
+            const { ...restParams } = user._doc
+            res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
                 user: restParams,
                 token
-            })
+            });
+
+            next();
         } else {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid Credentials",
-            })
+            return next(new ErrorResponse("Invalid Credentials", 401));
         }
     } catch (error) {
-        return res.status(401).send("Bad Request");
+        return next(new ErrorResponse(error.message, 500));
     }
 });
 
