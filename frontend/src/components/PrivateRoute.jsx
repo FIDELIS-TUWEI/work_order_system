@@ -5,8 +5,7 @@ import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
 
 const PrivateRoute = ({ children }) => {
     const userInfo = useSelector(selectUserInfo);
-    const token = useSelector(selectToken);
-    if (userInfo && token) {
+    if (userInfo) {
         return children;
     } else {
         return <Navigate to="/" />

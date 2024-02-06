@@ -6,9 +6,8 @@ import { Navigate } from "react-router-dom";
 
 const PublicRoute = ({ children }) => {
     const userInfo = useSelector(selectUserInfo);
-    const token = useSelector(selectToken);
 
-    if (!userInfo && token) {
+    if (!userInfo) {
         return <Navigate to="/" />;
     } else {
         return children;
