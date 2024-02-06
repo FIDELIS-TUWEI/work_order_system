@@ -398,9 +398,10 @@ cron.schedule("00 10 * * *", async (next) => {
             });
 
             // Email addresses
-            const engineerEmail = "fidel.tuwei@holidayinnnairobi.com"
+            const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
             const ccEmails = [
-                 "fideliofidel9@gmail.com"
+                 "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
+                 "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
             ];
 
             // Send email
