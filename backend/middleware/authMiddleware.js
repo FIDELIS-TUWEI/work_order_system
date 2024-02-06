@@ -19,14 +19,10 @@ const protect = asyncHandler(async (req, res, next) => {
             return res.status(401).json({ success: false, message: "Not authorized!" })
         } else {
             const user = await User.findById(data.id);
-            if (user) {
-                req.user = user
-                //return res.json({ success: true, message: "You are Verified!" })
-            }
-            else return res.status(401).json({ success: false, message: "Please Login!" })
+            req.user = user;
+            next()
         }
     })
-    next()
 });
 
 // Restrict users middleware
