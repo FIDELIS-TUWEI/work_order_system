@@ -4,7 +4,7 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 const baseQuery = fetchBaseQuery({
     baseUrl: serverUrl,
-    credentials: "include",
+    credentials: "same-origin",
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.token;
         if (token) {
