@@ -380,7 +380,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 });
 
 // Check Work Orders status and send an email notification everyday at 10 am
-cron.schedule("00 06 24 * *", async (next) => {
+cron.schedule("00 10 * * *", async (next) => {
     try {
 
         // Find all work orders with status and tracker
@@ -398,10 +398,9 @@ cron.schedule("00 06 24 * *", async (next) => {
             });
 
             // Email addresses
-            const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
+            const engineerEmail = "fidel.tuwei@holidayinnnairobi.com"
             const ccEmails = [
-                 "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-                 "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
+                 "fideliofidel9@gmail.com"
             ];
 
             // Send email
