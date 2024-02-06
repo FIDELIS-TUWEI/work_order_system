@@ -37,7 +37,7 @@ module.exports = (app) => {
     }));
     app.use(cors({
         credentials: true,
-        origin: ["http://localhost:3000", "https://work-orders.online", "https://www.work-orders.online", "http://3.82.220.3"],
+        origin: ["http://localhost:3000", "https://work-orders.online", "https://www.work-orders.online"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         optionsSuccessStatus: 200,
     }));
