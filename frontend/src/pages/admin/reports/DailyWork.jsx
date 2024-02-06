@@ -19,7 +19,9 @@ const DailyWork = () => {
         const formattedDate = value.format("YYYY-MM-DD")
 
         try {
-            const res = await axios.get(`${serverUrl}/work/created/date/${formattedDate}`);
+            const res = await axios.get(`${serverUrl}/work/created/date/${formattedDate}`, {
+              withCredentials: true
+            });
             setWorkOrders(res.data);
         } catch (error) {
             console.error(error.message);

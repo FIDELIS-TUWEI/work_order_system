@@ -394,7 +394,7 @@ cron.schedule("00 10 * * *", async (next) => {
             let emailText = `The following work orders need your immediate attention:\n`
 
             workOrderStatus.forEach((workOrder) => {
-                emailText += `\nWork Order Description: ${workOrder.description}`
+                emailText += `\n-Work Order Description: ${workOrder.description}`
             });
 
             // Email addresses
