@@ -1,3 +1,5 @@
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const cache = require("memory-cache");
@@ -5,28 +7,26 @@ const ErrorResponse = require("../utils/errorRespone");
 
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {
-    try {
-        const token = req.cookies.token;
-        if (!token) {
-            return next(new ErrorResponse("Not authorized, Invalid token", 401));
+    const authToken = req.cookies.token;
+
+    if (!authToken) {
+        return res.status(401).json({ success: false, message: "No token found!" })
+    } 
+
+    // Verify token
+    jwt.verify(authToken, process.env.JWT_SECRET, async (err, data) => {
+        if (err) {
+            return res.status(401).json({ success: false, message: "Not authorized!" })
+        } else {
+            const user = await User.findById(data.id);
+            if (user) {
+                req.user = user
+                //return res.json({ success: true, message: "You are Verified!" })
+            }
+            else return res.status(401).json({ success: false, message: "Please Login!" })
         }
-
-        // Verify token
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-
-        // Get user id from the token
-        const user = await User.findById(verified.id);
-
-        if (!user) {
-            return next(new ErrorResponse("User not found, please login", 401));
-        }
-        req.user = user;
-
-        next();
-    } catch (error) {
-        return next(new ErrorResponse("Not authorized, please login", 401));
-    }
-
+    })
+    next()
 });
 
 // Restrict users middleware
