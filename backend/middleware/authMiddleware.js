@@ -7,7 +7,7 @@ const ErrorResponse = require("../utils/errorRespone");
 
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {
-    const authToken = req.cookies.token;
+    const authToken = req.cookies.token || req.headers.authorization
 
     if (!authToken) {
         return res.status(401).json({ success: false, message: "No token found!" })
