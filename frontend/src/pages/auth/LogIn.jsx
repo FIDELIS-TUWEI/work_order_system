@@ -4,7 +4,7 @@ import { Button, Card, Form, Input, message } from 'antd';
 
 
 import { useLoginMutation } from "@/features/auth/authApiSlice";
-import { selectToken, selectUserInfo, setCredentials } from "@/features/auth/authSlice";
+import { selectUserInfo, setCredentials } from "@/features/auth/authSlice";
 import LoadingBox from "@/components/LoadingBox";
 import { useEffect } from "react";
 
@@ -14,16 +14,15 @@ const LogIn = () => {
     const navigate = useNavigate();
     
     const userInfo = useSelector(selectUserInfo);
-    const token = useSelector(selectToken);
 
     const [login, { isLoading, error }] = useLoginMutation();
 
 
     useEffect(() => {
-        if (!userInfo && !token) {
-            navigate('/');
+        if (!userInfo) {
+            navigate('/login');
         }
-    }, [userInfo, navigate, token]);
+    }, [userInfo, navigate]);
 
     
 
@@ -43,6 +42,7 @@ const LogIn = () => {
                         message.error("An Unknown error occured");
                 }
             } else {
+                localStorage.setItem("token", JSON.stringify(res.token))
                 dispatch(setCredentials({ ...res }));
                 message.success("Login Succesful");
                 navigate('/private');
