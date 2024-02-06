@@ -1,6 +1,5 @@
 require("dotenv").config();
 const nodeMailer = require("nodemailer");
-//const { USER, PASS } = require("./env");
 
 const sendEmail = (option) => {
     // create reusable transporter object using the default SMTP transport
@@ -10,8 +9,8 @@ const sendEmail = (option) => {
         service: "gmail",
         requireTLS: true,
         auth: {
-            user: USER || process.env.USER,
-            pass: PASS || process.env.PASS
+            user: 'workorder.holidayinnnairobi@gmail.com',
+            pass: 'mbtgfyslfrhefmxr'
         }
     });
     
