@@ -30,9 +30,7 @@ module.exports = (app) => {
     app.use(helmet());
     app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
     
-    if (process.env.NODE_ENV !== 'production') {
-        app.use(morgan('dev'));
-    }
+    app.use(morgan('dev'));
     app.use(bodyParser.json({ limit: "5mb" }));
     app.use(bodyParser.urlencoded({ 
         limit: "5mb",
