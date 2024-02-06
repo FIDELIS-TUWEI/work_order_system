@@ -179,7 +179,7 @@ const DashboardComponent = ({ user, pendingCount,
     const renderUsersCard = () => (
         <div>
             <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: '400', margin: '2rem' }}>
-                The Ultimate Work Order Management System for the Holiday Inn.
+                Welcome to Holiday Inn Work Order Management System.
             </Typography>
         </div>  
     )
@@ -197,7 +197,7 @@ const DashboardComponent = ({ user, pendingCount,
     } 
   return (
     <Space direction="vertical" size={24}>
-        <Typography.Title level={4} style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard Analytics</Typography.Title>
+        <Typography.Title level={4} style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard</Typography.Title>
             {renderCustomCard()}
     </Space>
   )

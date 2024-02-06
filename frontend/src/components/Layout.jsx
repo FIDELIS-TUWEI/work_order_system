@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { AdminMenu, HodMenu, UserMenu, EngineerMenu } from "@/menu/Menu"
 import { useDispatch, useSelector } from "react-redux";
 import {CgProfile} from "react-icons/cg";
@@ -13,7 +13,6 @@ const Layout = ({ children }) => {
   const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const [logoutApiCall] = useLogoutMutation();
 
@@ -24,7 +23,7 @@ const Layout = ({ children }) => {
       dispatch(logout());
       localStorage.removeItem('token');
       message.success("Logout Succesful");
-      navigate("/login");
+      window.location.href = '/';
     } catch (error) {
       message.error(error.data.error);
       console.log(error);
