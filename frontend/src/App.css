@@ -31,7 +31,7 @@
 .body {
     min-height: 90vh;
     box-shadow: 0 0  2px gray;
-    background-color: #F4F4F4;
+    background-color: #f1f0f0;
     padding: 1rem;
 }
 
@@ -89,7 +89,7 @@
     width: 90px;
     border-radius: 5px;
     box-shadow: 0 0  2px gray;
-    background-color: #F4F4F4;
+    background-color: #f1f0f0;
     color: #FFFFFF;
     overflow-y: auto;
 }
