@@ -72,7 +72,7 @@ const login = asyncHandler (async (req, res, next) => {
         };
 
         // Find user using their username in DB
-        const user = await User.findOne({ username }).select("-password");
+        const user = await User.findOne({ username });
 
         if (!user) {
             return res.status(401).json({ message: "Incorrect username or password!" })
