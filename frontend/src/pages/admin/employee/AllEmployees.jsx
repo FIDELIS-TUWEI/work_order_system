@@ -62,6 +62,11 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
     }
   };
 
+  // Function to disable add employee button
+  const isAllowed = [
+    "admin", "superadmin", "engineer"
+  ].includes(user?.role);
+
   // Antd table columns
   const columns = [
     {
@@ -137,12 +142,15 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
       </Typography>
 
       <div className="add-btn">
-        <Button
-        style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
-          onClick={() => navigate("/new/employee")}
-        >
-          Add Employee
-        </Button>
+        <Tooltip title={isAllowed ? "Add Employee" : "Operation Unauthorised"}>
+          <Button
+          style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+            onClick={() => navigate("/new/employee")}
+            disabled={!isAllowed}
+          >
+            Add Employee
+          </Button>
+        </Tooltip>
       </div>
 
       <Card>
