@@ -208,16 +208,6 @@ const DashboardComponent = ({ user, pendingCount,
                         }
                     />
                 </Col>
-
-                <Col span={8}>
-                    <DashboardCard 
-                        title={"Completed Work"}
-                        value={completedCount}
-                        icon={
-                            <FaCheckCircle size={24} color="green" />
-                        }
-                    />
-                </Col>
             </Row>
         </Space>  
     )
