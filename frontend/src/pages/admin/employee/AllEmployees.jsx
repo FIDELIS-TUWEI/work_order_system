@@ -29,7 +29,7 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
           const { error } = await deleteEmployee(selectedEmployeeToDelete._id).unwrap();
 
           if (error) {
-            if (error === 400 && error.data && error.data.message) {
+            if (error === 400 && error?.data?.message) {
               message.error(error.data.message);
             } else {
               message.error("Failed to delete employee")
