@@ -27,8 +27,8 @@ const DashboardComponent = ({ user, pendingCount,
 }) => {
 
     // Conditional render for admin or superadmin
-    const isAdmin = user &&(user.role === "admin" || user.role === "superadmin" || user.role === "supervisor");
-    const isManager = user && (user.role === "hod" || user.role === "reviewer" || user.role === "engineer");
+    const isAdmin = user &&(user.role === "admin" || user.role === "superadmin");
+    const isManager = user && (user.role === "hod" || user.role === "reviewer" || user.role === "engineer" || user.role === "supervisor");
 
     // Render admin or superadmin card
     const renderAdminsCard = () => (
@@ -177,11 +177,49 @@ const DashboardComponent = ({ user, pendingCount,
 
     // Render Users card
     const renderUsersCard = () => (
-        <div>
-            <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: '400', margin: '2rem' }}>
-                Welcome to Holiday Inn Work Order Management System.
-            </Typography>
-        </div>  
+        <Space direction="horizontal">
+            <Row gutter={16}>
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Total Work"} 
+                        value={workCountData} 
+                        icon={
+                            <MdOutlineWork size={24} color="grey" />
+                        }
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard
+                        title={"Pending Work"}
+                        value={pendingCount}
+                        icon={
+                            <MdOutlinePendingActions size={24} color="orange" />
+                        } 
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Progress Work"}
+                        value={inProgressCount}
+                        icon={
+                            <FaHourglassHalf size={24} color="blue" />
+                        }
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Completed Work"}
+                        value={completedCount}
+                        icon={
+                            <FaCheckCircle size={24} color="green" />
+                        }
+                    />
+                </Col>
+            </Row>
+        </Space>  
     )
 
     // Conditionally render custom card using switch case and user roles
