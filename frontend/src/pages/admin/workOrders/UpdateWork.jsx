@@ -28,7 +28,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
     const statusOptions = [
       { value: 'Pending', label: 'Pending' },
       { value: 'Complete', label: 'Complete' },
-      { value: 'Reviewed', label: 'Reviewed' },
     ];
 
     const currentIndex = statusOptions.findIndex(option => option.value === singleWorkArray?.status);
@@ -222,15 +221,16 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
     switch (true) {
       case isNotAttended && isWorkPending:
         return renderAssignFields();
-      case isInAttendance:
+      case isInAttendance && isWorkPending:
         return renderTrackerFields();
-      case isAttended:
+      case isAttended && isWorkPending:
         return renderCompleteFormFields();
+      case isWorkCompleted && isRoleAuthorized: 
+        return renderReviewFormFields();
       case isInComplete:
         redirectToWorkList();
         break;
-      case isWorkCompleted && isRoleAuthorized: 
-        return renderReviewFormFields();
+      
       default:
         return renderLoader();
     }
