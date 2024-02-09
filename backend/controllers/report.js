@@ -89,13 +89,11 @@ const countWorkStatus = asyncHandler (async (req, res, next) => {
 
         const counts = {
             pending: 0,
-            inProgress: 0,
             completed: 0
         };
 
         result.forEach((item) => {
             if (item._id === 'Pending') counts.pending = item.count;
-            else if (item._id === 'In_Progress') counts.inProgress = item.count;
             else if (item._id === 'Complete') counts.completed = item.count;
         });
 
