@@ -15,10 +15,12 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
         console.error("Requested User not found");
         return;
     }
-    const engineerEmail = ["fideliofidel9@gmail.com"];
+    const engineerEmail = ["solomon.ouma@holidayinnnairobi.com"];
     const ccList = [
-        ...engineerEmail, "fidel.tuwei@holidayinnnairobi.com"
-    ]
+        ...engineerEmail, "fidel.tuwei@holidayinnnairobi.com", "ms@holidayinnnairobi.com",
+        "allan.kimani@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
+        "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
+    ];
     
     const emailOptions = {
         email: requestedUser.email,
@@ -378,12 +380,12 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 });
 
 // Check Work Orders status and send an email notification everyday at 10 am
-cron.schedule("00 10 * * *", async (next) => {
+cron.schedule("00 7 * * *", async (next) => {
     try {
 
         // Find all work orders with status and tracker
         const workOrderStatus = await WorkOrder.find({ 
-            status: { $in: ["Pending", "In_Progress"] },
+            status: { $in: ["Pending"] },
             tracker: { $in: ["Not_Attended", "In_Attendance"]},
         }).populate("requestedBy", "username");
 
@@ -392,7 +394,7 @@ cron.schedule("00 10 * * *", async (next) => {
             let emailText = `The following work orders need your immediate attention:\n`
 
             workOrderStatus.forEach((workOrder) => {
-                emailText += `\n-Work Order Description: ${workOrder.description}`
+                emailText += `\n-Work Order Description: ${workOrder.description}\n-`
             });
 
             // Email addresses
@@ -417,14 +419,14 @@ cron.schedule("00 10 * * *", async (next) => {
 });
 
 // Check due date for work orders and send an email notification everyday at 3 pm
-cron.schedule("00 15 * * *", async (next) => {
+cron.schedule("00 10 * * *", async (next) => {
     try {
         const currentDate = moment();
     
         // Find all overDue dates
         const dueWorkDate = await WorkOrder.find({
             dueDate: { $lte: currentDate.toDate() },
-            status: "In_Progress",
+            status: "Pending",
             tracker: { $in: ["In_Attendance, In_Complete"] },
         }). populate("requestedBy", "username");
     
