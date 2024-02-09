@@ -15,11 +15,9 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
         console.error("Requested User not found");
         return;
     }
-    const engineerEmail = ["solomon.ouma@holidayinnnairobi.com"];
+    const engineerEmail = ["fideliofidel9@gmail.com"];
     const ccList = [
-        ...engineerEmail, "fidel.tuwei@holidayinnnairobi.com", "ms@holidayinnnairobi.com",
-        "workshop@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com", 
-        "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"
+        ...engineerEmail, "fidel.tuwei@holidayinnnairobi.com"
     ]
     
     const emailOptions = {
@@ -177,7 +175,7 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
         employee.assignedWork.push(updatedWorkOrder._id);
         await employee.save();
     } else {
-        throw new Error("Employee not found");
+        return res.json({ message: "Employee not found" });
     }
 };
 
