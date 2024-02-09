@@ -227,7 +227,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
             okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
             cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
         >
-            <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.title}?</p>
+            <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.description}?</p>
         </Modal>
             
         <div className="add-btn">
