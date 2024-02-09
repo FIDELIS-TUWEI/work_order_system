@@ -27,7 +27,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
           const { error } = await deleteWork(selectedWorkToDelete._id).unwrap();
 
           if (error) {
-              if (error.status === 400 && error.data && error.data.message) {
+              if (error.status === 400 && error?.data?.message) {
                   message.error(error.data.message);
               } else {
                   message.error("Failed to delete work order");
@@ -57,8 +57,6 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
     switch (status) {
       case "Pending":
         return "red";
-      case "In_Progress":
-        return "yellow";
       case "Complete":
         return "green";
       default:
