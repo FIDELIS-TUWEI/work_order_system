@@ -51,7 +51,6 @@ const BarGraph = ({ workDataArray, loading, error }) => {
     // Map status to colors
     const statusColors = new Map([
       ["Pending", "red"],
-      ["In_Progress", "orange"],
       ["Complete", "green"],
     ])
     // Convert the workStatusCounts object to an array of objects
