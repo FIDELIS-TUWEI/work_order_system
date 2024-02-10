@@ -8,11 +8,6 @@ const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
     ? employeeDetails.pendingWorkCount
     : 0;
 
-  // display In Progress work count summary
-  const totalInProgressWork = employeeDetails
-    ? employeeDetails.inProgressWorkCount
-    : 0;
-
   // display completed work count summary
   const totalCompletedWork = employeeDetails
     ? employeeDetails.completedWorkCount
@@ -36,11 +31,6 @@ const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
         dataIndex: "totalPendingWork",
       },
       {
-        title: "In-progress Work",
-        align: "center",
-        dataIndex: "totalInProgressWork",
-      },
-      {
         title: "Completed Work",
         align: "center",
         dataIndex: "totalCompletedWork",
@@ -61,7 +51,6 @@ const ViewEmployee = ({ employeeDetails, loading, navigate }) => {
       {
         key: "1",
         totalPendingWork,
-        totalInProgressWork,
         totalCompletedWork,
         reviewedWork,
         totalWork
