@@ -57,7 +57,7 @@ const Reports = () => {
     const initialTableY = 50;
 
     doc.setFontSize(12);
-    doc.text("Work Orders Report", 15, initialTableY - 10);
+    doc.text(`Work Orders Report by ${filterStatus || "All"}status`, 15, initialTableY - 10);
 
     const columns = [
       {
