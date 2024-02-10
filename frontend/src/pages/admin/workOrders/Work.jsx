@@ -27,7 +27,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
           const { error } = await deleteWork(selectedWorkToDelete._id).unwrap();
 
           if (error) {
-              if (error.status === 400 && error.data && error.data.message) {
+              if (error.status === 400 && error?.data?.message) {
                   message.error(error.data.message);
               } else {
                   message.error("Failed to delete work order");
@@ -229,7 +229,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
             okButtonProps={{ style: { backgroundColor: 'green', border: 'none' } }}
             cancelButtonProps={{ style: { backgroundColor: 'red', border: 'none', color: 'white' } }}
         >
-            <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.title}?</p>
+            <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.description}?</p>
         </Modal>
             
         <div className="add-btn">
