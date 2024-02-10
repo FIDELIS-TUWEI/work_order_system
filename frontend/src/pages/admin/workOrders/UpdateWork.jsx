@@ -13,7 +13,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
   }
   // to render edit columns based on work status and user role
   const isWorkPending = singleWorkArray?.status === 'Pending';
-  const isWorkInProgress = singleWorkArray?.status === 'In_Progress';
   const isWorkCompleted = singleWorkArray?.status === 'Complete';
   const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor", "hod", "engineer"].includes(user?.role);
 
@@ -28,9 +27,7 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
   const getStatusOptions = () => {
     const statusOptions = [
       { value: 'Pending', label: 'Pending' },
-      { value: 'In_Progress', label: 'In-progress' },
       { value: 'Complete', label: 'Complete' },
-      { value: 'Reviewed', label: 'Reviewed' },
     ];
 
     const currentIndex = statusOptions.findIndex(option => option.value === singleWorkArray?.status);
@@ -94,8 +91,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
             style={{ width: '100%' }}
             options={[
               { value: 'In_Attendance', label: 'In-attendance' },
-              { value: 'Attended', label: 'Attended' },
-              { value: 'In_Complete', label: 'In-complete' },
             ]}
           />
         </Form.Item>
@@ -125,7 +120,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
               allowClear
               style={{ width: '100%' }}
               options={[
-                { value: 'In_Attendance', label: 'In-attendance' },
                 { value: 'Attended', label: 'Attended' },
                 { value: 'In_Complete', label: 'In-complete' },
               ]}
@@ -241,15 +235,15 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
     switch (true) {
       case isNotAttended && isWorkPending:
         return renderAssignFields();
-      case isInAttendance && isWorkInProgress:
+      case isInAttendance && isWorkPending:
         return renderTrackerFields();
       case isAttended && isWorkInProgress:
         return renderCompleteFormFields();
+      case isWorkCompleted && isRoleAuthorized: 
+        return renderReviewFormFields();
       case isInComplete && isWorkInProgress:
         redirectToWorkList();
         break;
-      case isWorkCompleted && isRoleAuthorized: 
-        return renderReviewFormFields();
       default:
         return renderLoader();
     }
