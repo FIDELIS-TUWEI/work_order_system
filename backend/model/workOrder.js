@@ -35,7 +35,7 @@ const workOrderSchema = new mongoose.Schema({
         // Pending, Complete, Inspected
         type: String,
         required: true,
-        enum: ["Pending", "Complete", "Reviewed"],
+        enum: ["Pending", "Complete"],
         default: "Pending",
         index: true,
     },
