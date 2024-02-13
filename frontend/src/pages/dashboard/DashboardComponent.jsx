@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Card, Col, Row, Space, Statistic, Typography } from "antd";
 import { MdGroups, MdOutlinePendingActions, MdOutlinePreview, MdOutlineWork } from "react-icons/md";
-import { FaCheckCircle, FaHourglassHalf,  } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6";
 import { BiSolidUserCheck } from "react-icons/bi";
 
@@ -51,16 +51,6 @@ const DashboardComponent = ({ user, pendingCount,
                     value={pendingCount}
                     icon={
                         <MdOutlinePendingActions size={24} color="orange" />
-                    }
-                />
-            </Col>
-
-            <Col span={8}>
-                <DashboardCard 
-                    title={"Progress Work"}
-                    value={inProgressCount}
-                    icon={
-                        <FaHourglassHalf size={24} color="blue" />
                     }
                 />
             </Col>
@@ -144,16 +134,6 @@ const DashboardComponent = ({ user, pendingCount,
 
                 <Col span={8}>
                     <DashboardCard 
-                        title={"Progress Work"}
-                        value={inProgressCount}
-                        icon={
-                            <FaHourglassHalf size={24} color="blue" />
-                        }
-                    />
-                </Col>
-
-                <Col span={8}>
-                    <DashboardCard 
                         title={"Completed Work"}
                         value={completedCount}
                         icon={
@@ -201,15 +181,15 @@ const DashboardComponent = ({ user, pendingCount,
 
                 <Col span={8}>
                     <DashboardCard 
-                        title={"Progress Work"}
-                        value={inProgressCount}
+                        title={"Completed Work"}
+                        value={completedCount}
                         icon={
-                            <FaHourglassHalf size={24} color="blue" />
+                            <FaCheckCircle size={24} color="green" />
                         }
                     />
                 </Col>
             </Row>
-        </Space>  
+        </Space> 
     )
 
     // Conditionally render custom card using switch case and user roles

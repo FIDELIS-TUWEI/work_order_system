@@ -48,7 +48,7 @@ const LogIn = () => {
                 navigate('/private');
             };
         } catch (error) {
-            message.error(error.message);
+            message.error("Invalid Credentials");
         }
     }
 

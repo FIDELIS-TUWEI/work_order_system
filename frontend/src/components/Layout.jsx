@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
       dispatch(logout());
       localStorage.removeItem('token');
       message.success("Logout Succesful");
-      window.location.href = '/';
+      window.location.href="/"
     } catch (error) {
       message.error(error.data.error);
       console.log(error);

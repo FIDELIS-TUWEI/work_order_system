@@ -142,9 +142,9 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
       </Typography>
 
       <div className="add-btn">
-        <Tooltip title={isAllowed ? "Add Employee" : "Operation Unauthorised"}>
+        <Tooltip title={isAllowed ? "Add Employee" : "Operation disabled"}>
           <Button
-          style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
             onClick={() => navigate("/new/employee")}
             disabled={!isAllowed}
           >
@@ -176,9 +176,11 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
       </Modal>
 
       <div className="add-btn">
-        <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate(-1)}>
-          Go Back
-        </Button>
+        <Tooltip title="Go Back">
+          <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={() => navigate(-1)}>
+            Go Back
+          </Button>
+        </Tooltip>
       </div>
     </div>
   )

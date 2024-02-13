@@ -57,8 +57,6 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
     switch (status) {
       case "Pending":
         return "red";
-      case "In_Progress":
-        return "yellow";
       case "Complete":
         return "green";
       default:

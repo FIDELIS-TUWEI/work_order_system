@@ -67,20 +67,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
         </Form.Item>
       </Col>
       <Col xs={24} md={24} lg={8}>
-        <Form.Item
-          label="Status"
-          name="status"
-          rules={[{ required: true, message: 'Please Select Work Status!' }]}
-        >
-          <Select 
-            placeholder='Select Status'
-            allowClear
-            style={{ width: '100%' }}
-            options={getStatusOptions()}
-          />
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={24} lg={8}>
         <Form.Item 
           name="tracker" 
           label="Tracker" 
@@ -90,7 +76,7 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
             allowClear
             style={{ width: '100%' }}
             options={[
-              { value: 'In_Attendance', label: 'In-attendance' },
+              { value: 'In_Attendance', label: 'In-attendance' }
             ]}
           />
         </Form.Item>
@@ -237,13 +223,14 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
         return renderAssignFields();
       case isInAttendance && isWorkPending:
         return renderTrackerFields();
-      case isAttended && isWorkInProgress:
+      case isAttended && isWorkPending:
         return renderCompleteFormFields();
       case isWorkCompleted && isRoleAuthorized: 
         return renderReviewFormFields();
-      case isInComplete && isWorkInProgress:
+      case isInComplete:
         redirectToWorkList();
         break;
+      
       default:
         return renderLoader();
     }
