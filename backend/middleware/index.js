@@ -38,7 +38,7 @@ module.exports = (app) => {
     }));
     app.use(cors({
         credentials: true,
-        origin: ["http://localhost:3000", "http://52.73.143.160:3000"],
+        origin: ["http://localhost:3000", "http://52.73.143.160"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         optionsSuccessStatus: 200,
     }));
