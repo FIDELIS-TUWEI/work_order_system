@@ -14,15 +14,16 @@ const LogIn = () => {
     const navigate = useNavigate();
     
     const userInfo = useSelector(selectUserInfo);
+    const token = useSelector(selectToken);
 
     const [login, { isLoading, error }] = useLoginMutation();
 
 
     useEffect(() => {
-        if (!userInfo) {
-            navigate('/login');
+        if (!userInfo && !token) {
+            navigate('/');
         }
-    }, [userInfo, navigate]);
+    }, [userInfo, navigate, token]);
 
     
 
@@ -42,7 +43,6 @@ const LogIn = () => {
                         message.error("An Unknown error occured");
                 }
             } else {
-                localStorage.setItem("token", JSON.stringify(res.token))
                 dispatch(setCredentials({ ...res }));
                 message.success("Login Succesful");
                 navigate('/private');
