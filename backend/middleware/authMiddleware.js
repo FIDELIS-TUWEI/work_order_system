@@ -7,15 +7,14 @@ const ErrorResponse = require("../utils/errorRespone");
 
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {
-    const authToken = req.headers.authorization || req.headers.Authorization;
+    const authToken = req.cookies.token || req.headers.authorization
 
-    if (!authToken?.startsWith("Bearer ")) {
+    if (!authToken) {
         return res.status(401).json({ success: false, message: "No token found!" })
     } 
-    const token = authToken.split(' ')[1];
 
     // Verify token
-    jwt.verify(token, process.env.JWT_SECRET, async (err, data) => {
+    jwt.verify(authToken, process.env.JWT_SECRET, async (err, data) => {
         if (err) {
             return res.status(401).json({ success: false, message: "Not authorized!" })
         } else {
