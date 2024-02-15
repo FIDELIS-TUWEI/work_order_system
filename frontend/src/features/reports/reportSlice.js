@@ -4,13 +4,13 @@ const serverUrl = import.meta.env.VITE_SERVER_API_URL;
 const baseQuery = fetchBaseQuery({
     baseUrl: serverUrl,
     credentials: "include",
-    prepareHeaders: (headers) => {
-        const token = JSON.parse(localStorage.getItem("token"));
+    prepareHeaders: (headers, { getState }) => {
+        const token = getState().auth.token;
         if (token) {
             headers.set("authorization", `Bearer ${token}`);
         }
         return headers;
-    } 
+    }  
 });
 
 export const reportsApi = createApi({
