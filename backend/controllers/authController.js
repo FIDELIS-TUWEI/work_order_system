@@ -90,13 +90,14 @@ const login = asyncHandler (async (req, res, next) => {
             //Generate Token
             const token = createSecretToken(user._id);
             user.token = token;
-            user.password = undefined;
 
-            const { ...restParams } = user._doc
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
-                user: restParams,
+                user: {
+                    ...user._doc,
+                    password: undefined
+                },
                 token
             });
 
