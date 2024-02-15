@@ -90,7 +90,6 @@ const login = asyncHandler (async (req, res, next) => {
             //Generate Token
             const token = createSecretToken(user._id);
             user.token = token;
-            user.password = undefined;
 
             // Send and store the token as HTTP-Only cookie
             res.cookie("token", token, {
@@ -100,11 +99,13 @@ const login = asyncHandler (async (req, res, next) => {
                 secure: process.env.NODE_ENV === 'production'
             });
 
-            const { ...restParams } = user._doc
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
-                user: restParams,
+                user: {
+                    ...user._doc,
+                    password: undefined
+                },
                 token
             });
 
