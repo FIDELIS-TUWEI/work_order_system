@@ -4,7 +4,7 @@ import { Button, Card, Form, Input, message } from 'antd';
 
 
 import { useLoginMutation } from "@/features/auth/authApiSlice";
-import { selectUserInfo, setCredentials } from "@/features/auth/authSlice";
+import { selectToken, selectUserInfo, setCredentials } from "@/features/auth/authSlice";
 import LoadingBox from "@/components/LoadingBox";
 import { useEffect } from "react";
 
