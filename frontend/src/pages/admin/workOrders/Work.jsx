@@ -52,6 +52,10 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
     "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
   ].includes(user?.role);
 
+  const isAllowedEdit = [
+    "admin", "engineer", "reviewer", "superadmin"
+  ].includes(user?.role);
+
   // Status badge colors
   const getStatusColor = (status) => {
     switch (status) {
@@ -111,10 +115,11 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
           </Button>
         </Tooltip>
       ) : (
-        <Tooltip title="Edit Work">
+        <Tooltip title={ isAllowedEdit ? "Edit Work" : "Operation disabled!"}>
             <Button
                 style={{ color: 'green', border: 'none', margin: '0 5px' }}
                 onClick={() => navigate(`/edit/work/${work._id}`)}
+                disabled={!isAllowedEdit}
             >
                 <BiSolidEditAlt />
             </Button>
