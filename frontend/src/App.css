@@ -218,6 +218,9 @@
     cursor: pointer;
     transition: all .3s ease;
     margin-top: 20px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
 }
 
 
