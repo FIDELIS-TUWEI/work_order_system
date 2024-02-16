@@ -49,11 +49,11 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
 
   // Function to check if user is authorised to view, edit or delete work
   const isAuthorised = [
-    "admin", "superadmin", "supervisor", "hod", "engineer", "reviewer"
+    "admin", "superadmin"
   ].includes(user?.role);
 
   const isAllowedEdit = [
-    "admin", "engineer", "reviewer", "superadmin", "hod"
+    "admin", "engineer", "reviewer", "superadmin", "hod", "supervisor"
   ].includes(user?.role);
 
   // Status badge colors
@@ -127,7 +127,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
       )}
 
       {isAuthorised && (
-        <Tooltip title={isAuthorised ? "Delete Work" : "You are not authorised to delete this work"}>
+        <Tooltip title={isAuthorised ? "Delete Work" : "Operation disabled!"}>
             <Button
                 style={{ color: 'red', border: 'none', margin: '0 5px' }}
                 onClick={() => showModal(work)}
