@@ -1,4 +1,4 @@
-import { selectToken, selectUserInfo } from "@/features/auth/authSlice";
+import { selectUserInfo } from "@/features/auth/authSlice";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -6,10 +6,9 @@ import { Navigate } from "react-router-dom";
 
 const PublicRoute = ({ children }) => {
     const userInfo = useSelector(selectUserInfo);
-    const token = useSelector(selectToken);
 
-    if (!userInfo && token) {
-        return <Navigate to="/" />;
+    if (!userInfo) {
+        return <Navigate to="/login" />;
     } else {
         return children;
     }

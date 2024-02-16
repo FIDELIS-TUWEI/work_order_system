@@ -205,7 +205,7 @@ const DashboardComponent = ({ user, pendingCount,
     } 
   return (
     <Space direction="vertical" size={24}>
-        <Typography.Title level={4} style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard Analytics</Typography.Title>
+        <Typography.Title level={4} style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard</Typography.Title>
             {renderCustomCard()}
     </Space>
   )
