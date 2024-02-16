@@ -380,7 +380,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 });
 
 // Check Work Orders status and send an email notification everyday at 10 am
-cron.schedule("00 7 * * *", async (next) => {
+cron.schedule("00 07 * * *", async (next) => {
     try {
 
         // Find all work orders with status and tracker
@@ -419,7 +419,7 @@ cron.schedule("00 7 * * *", async (next) => {
 });
 
 // Check due date for work orders and send an email notification everyday at 3 pm
-cron.schedule("00 10 * * *", async (next) => {
+cron.schedule("00 07 * * *", async (next) => {
     try {
         const currentDate = moment();
     
@@ -435,7 +435,7 @@ cron.schedule("00 10 * * *", async (next) => {
             let emailText = `The following work orders need your immediate attention:\n`;
 
             dueWorkDate.forEach((workOrder) => {
-                emailText += `\nWork Order with description: ${workOrder.description} and due date: ${moment(workOrder.dueDate).format("DD-MM-YYYY, hh:mm a")}\n`
+                emailText += `\n-Work Order with description: ${workOrder.description} and due date: ${moment(workOrder.dueDate).format("DD-MM-YYYY, hh:mm a")}\n-`
             });
 
             // Email Addresses
