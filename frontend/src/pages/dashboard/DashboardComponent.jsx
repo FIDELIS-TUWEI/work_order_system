@@ -22,7 +22,7 @@ DashboardCard.propTypes = {
 }
 
 const DashboardComponent = ({ user, pendingCount, 
-    inProgressCount, completedCount, workCountData, reviewedCount, 
+    completedCount, workCountData, reviewedCount, 
     usersData, countActiveUsers, countEmployees 
 }) => {
 
@@ -204,17 +204,19 @@ const DashboardComponent = ({ user, pendingCount,
         }
     } 
   return (
-    <Space direction="vertical" size={24}>
-        <Typography.Title level={4} style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard Analytics</Typography.Title>
+    <>
+        <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard Analytics</Typography>
+        <Space direction="vertical" size={24}>
             {renderCustomCard()}
-    </Space>
+        </Space>
+    </>
+    
   )
 };
 
 DashboardComponent.propTypes = {
     user: PropTypes.object,
     pendingCount: PropTypes.number,
-    inProgressCount: PropTypes.number,
     completedCount: PropTypes.number,
     workCountData: PropTypes.number,
     reviewedCount: PropTypes.number,
