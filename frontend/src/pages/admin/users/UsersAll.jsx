@@ -4,9 +4,12 @@ import AllUsers from "@/pages/admin/users/AllUsers";
 import { Button, Typography, message } from "antd";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import { useGetAllUsersQuery } from "@/features/users/userSlice";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "@/features/auth/authSlice";
 
 
 const UsersAll = () => {
+  const user = useSelector(selectUserInfo);
   const [page, setPage] = useState(1);
   const { data, isLoading: loading, error, refetch } = useGetAllUsersQuery(page);
 
@@ -34,6 +37,7 @@ const handlePageChange = (newPage) => {
         loading={loading}
         handlePageChange={handlePageChange}
         refetch={refetch}
+        user={user}
       />
 
       <div className="pagination">
