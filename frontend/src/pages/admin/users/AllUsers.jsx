@@ -99,16 +99,16 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
       responsive: ["md", "lg"],
       render: (_, user) => (
         <>
-          <Tooltip title="View User Details">
-            <Button
-              style={{ color: "grey", border: "none", margin: "0 5px" }}
-              onClick={() => navigate(`/user/details/${user._id}`)}
-            >
-              <AiFillEye />
-            </Button>
-          </Tooltip>
           {(currentUserRole === "admin" || user.role !== "superadmin") ? (
             <>
+              <Tooltip title="View User Details">
+                <Button
+                  style={{ color: "grey", border: "none", margin: "0 5px" }}
+                  onClick={() => navigate(`/user/details/${user._id}`)}
+                >
+                  <AiFillEye />
+                </Button>
+              </Tooltip>
               <Tooltip title="Edit User">
                 <Button
                   style={{ color: "green", border: "none", margin: "0 5px" }}
@@ -129,6 +129,15 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
             </>
           ) : (
             <>
+              <Tooltip title={ isAuthorised ? "View User Details" : "Operation disabled!" }>
+                <Button
+                  style={{ color: "grey", border: "none", margin: "0 5px" }}
+                  onClick={() => navigate(`/user/details/${user._id}`)}
+                  disabled={ !isAuthorised }
+                >
+                  <AiFillEye />
+                </Button>
+              </Tooltip>
               <Tooltip title={ isAuthorised ? "Edit User" : "Operation disabled!" }>
                 <Button
                   style={{ color: "green", border: "none", margin: "0 5px" }}
