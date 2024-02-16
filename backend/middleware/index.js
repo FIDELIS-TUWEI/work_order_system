@@ -36,12 +36,7 @@ module.exports = (app) => {
         limit: "5mb",
         extended: true 
     }));
-    app.use(cors({
-        credentials: true,
-        origin: ["http://localhost:3000", "https://work-orders.online", "https://www.work-orders.online", "https://workorder-client.onrender.com"],
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        optionsSuccessStatus: 200,
-    }));
+    app.use(cors())
     app.use(express.json()); // To parse JSON data in the request body
     app.use(express.urlencoded({ extended: true })); // To parse form data in the request body
     // Prevent HTTP Parameter pollution
