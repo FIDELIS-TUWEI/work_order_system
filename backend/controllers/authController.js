@@ -91,6 +91,16 @@ const login = asyncHandler (async (req, res, next) => {
             const token = createSecretToken(user._id);
             user.token = token;
 
+            // Send and store the token as HTTP-Only cookie
+            res.cookie("token", token, {
+                withCredentials: true,
+                path: '/',
+                httpOnly: true,
+                sameSite: 'none',
+                secure: process.env.NODE_ENV === 'production',
+                expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
+            });
+
             res.status(200).json({
                 success: true,
                 message: "User logged in successfully",
