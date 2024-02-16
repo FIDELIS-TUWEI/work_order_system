@@ -53,7 +53,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
   ].includes(user?.role);
 
   const isAllowedEdit = [
-    "admin", "engineer", "reviewer", "superadmin"
+    "admin", "engineer", "reviewer", "superadmin", "hod"
   ].includes(user?.role);
 
   // Status badge colors
