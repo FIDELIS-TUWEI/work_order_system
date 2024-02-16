@@ -5,6 +5,10 @@ import LoadingBox from "@/components/LoadingBox";
 
 
 const UserData = ({ userInfoArray, navigate, user, loading, error }) => {
+  //Roles authorised to edit user password
+  const isAuthorised = [
+    "admin", "superadmin"
+  ].includes(user?.role)
   // Conditional statement to display loading and error messages
   if (loading) {
     return <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
@@ -73,10 +77,10 @@ const UserData = ({ userInfoArray, navigate, user, loading, error }) => {
               Back
             </Button>
           </Tooltip>
-          <Tooltip title={user?.role !== "superadmin" ? "Only System admin can change password" : "Edit Password"}>
+          <Tooltip title={!isAuthorised ? "Operation disabled!" : "Edit Password"}>
             <Button 
               onClick={() => {navigate(`/updatePassword/${userInfoArray?._id}`)}} 
-              disabled={user?.role !== "superadmin"}
+              disabled={!isAuthorised}
               style={{ color: 'black', backgroundColor: 'white', border: '1px solid black', marginLeft: '10px' }}
             >
               Change Password
