@@ -11,7 +11,7 @@ const baseQuery = fetchBaseQuery({
             headers.set("authorization", `Bearer ${token}`);
         }
         return headers;
-    },
+    } 
 });
 
 export const designationsApi = createApi({

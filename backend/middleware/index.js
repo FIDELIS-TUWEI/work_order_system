@@ -21,14 +21,15 @@ module.exports = (app) => {
 
     // Middleware
     let limiter = rateLimit({
-        max: 1000,
-        windowMs: 60 * 60 * 1000,
+        max: 200,
+        windowMs: 10 * 60 * 1000,
         message: "Too many requests from this IP. Please try again later."
     });
     
     app.use('/hin', limiter);
     app.use(helmet());
     app.use(helmet.crossOriginResourcePolicy({ policy: "same-origin" }));
+    
     app.use(morgan('dev'));
     app.use(bodyParser.json({ limit: "5mb" }));
     app.use(bodyParser.urlencoded({ 
@@ -37,7 +38,7 @@ module.exports = (app) => {
     }));
     app.use(cors({
         credentials: true,
-        origin: ["http://localhost:3001", "https://work-orders.online", "https://www.work-orders.online", "https://workorder-client.onrender.com"],
+        origin: ["https://work-orders.online", "https://www.work-orders.online"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         optionsSuccessStatus: 200,
     }));
