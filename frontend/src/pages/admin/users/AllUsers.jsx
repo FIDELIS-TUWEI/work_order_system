@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDeleteUserMutation } from "@/features/users/userSlice";
 
 
-const AllUsers = ({ allUsersArray, loading, refetch}) => {
+const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [deleteUser] = useDeleteUserMutation(id);
@@ -20,6 +20,9 @@ const AllUsers = ({ allUsersArray, loading, refetch}) => {
 
   // determine whether edit or delete button should be disabled for none admin or superadmin roles
   const currentUserRole = token.role;
+  const isAuthorised = [
+     "superadmin"
+  ].includes(user?.role);
 
   // Fucntion to show modal to delete user
   const showModal = async (user) => {
@@ -33,7 +36,7 @@ const AllUsers = ({ allUsersArray, loading, refetch}) => {
          const { error } = await deleteUser(selectedUserToDelete._id).unwrap();
 
          if (error) {
-          if (error.status === 400 && error.data && error.data.message) {
+          if (error.status === 400 && error?.data?.message) {
             message.error(error.data.message);
           } else {
             message("Failed to delete the User")
@@ -126,7 +129,7 @@ const AllUsers = ({ allUsersArray, loading, refetch}) => {
             </>
           ) : (
             <>
-              <Tooltip title="Edit User">
+              <Tooltip title={ isAuthorised ? "Edit User" : "Operation disabled!" }>
                 <Button
                   style={{ color: "green", border: "none", margin: "0 5px" }}
                   onClick={() => navigate(`/edit/user/${user._id}`)}
@@ -136,7 +139,7 @@ const AllUsers = ({ allUsersArray, loading, refetch}) => {
                 </Button>
               </Tooltip>
         
-              <Tooltip title="Delete User">
+              <Tooltip title={ isAuthorised ? "Delete User" : "Operation disabled!" }>
                 <Button
                   style={{ color: "red", border: "none", margin: "0 5px" }}
                   onClick={() => showModal(user)}
@@ -203,7 +206,8 @@ const AllUsers = ({ allUsersArray, loading, refetch}) => {
 AllUsers.propTypes = {
   loading: PropTypes.bool,
   allUsersArray: PropTypes.array,
-  refetch: PropTypes.func
+  refetch: PropTypes.func,
+  user: PropTypes.object
 }
 
 export default AllUsers;
