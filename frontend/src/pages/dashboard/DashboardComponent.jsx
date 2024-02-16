@@ -204,7 +204,7 @@ const DashboardComponent = ({ user, pendingCount,
         }
     } 
   return (
-    <>
+   <>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>Dashboard Analytics</Typography>
         <Space direction="vertical" size={24}>
             {renderCustomCard()}

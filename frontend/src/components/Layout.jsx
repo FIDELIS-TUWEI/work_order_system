@@ -21,6 +21,7 @@ const Layout = ({ children }) => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
+      localStorage.removeItem('token');
       message.success("Logout Succesful");
       window.location.href="/"
     } catch (error) {
