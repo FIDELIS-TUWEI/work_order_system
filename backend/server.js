@@ -9,7 +9,7 @@ connectDB();
 app.use(cookieParser());
 
 // Server Setup
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 require("./middleware")(app);
