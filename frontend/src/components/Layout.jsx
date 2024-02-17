@@ -21,7 +21,6 @@ const Layout = ({ children }) => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
-      localStorage.removeItem('token');
       message.success("Logout Succesful");
       window.location.href="/"
     } catch (error) {
@@ -46,7 +45,7 @@ const Layout = ({ children }) => {
       return AdminMenu;
     } else if (userInfo?.role === "hod" || userInfo?.role === "supervisor") {
       return HodMenu;
-    } else if (userInfo?.role === "engineer" || userInfo?.role === "reviewer") {
+    } else if (userInfo?.role === "engineer" || userInfo?.role === "reviewer" || userInfo?.role === "maintenance") {
       return EngineerMenu;
     } else {
       return UserMenu;
