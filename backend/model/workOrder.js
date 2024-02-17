@@ -33,7 +33,7 @@ const workOrderSchema = new mongoose.Schema({
     },
     notes: {
         type: String,
-        required: true,
+        //required: true,
         min: [10, "Notes description must be at least 10 characters"],
         max: 20
     },
