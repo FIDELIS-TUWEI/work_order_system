@@ -68,6 +68,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             - Description: ${description}
             - Priority: ${priority}
             - Service Type: ${serviceType}
+            - Notes: ${notes}
 
             Thank you for using Holiday Inn Work Order System.
 
