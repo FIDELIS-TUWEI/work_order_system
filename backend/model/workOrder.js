@@ -31,6 +31,12 @@ const workOrderSchema = new mongoose.Schema({
         ref: "Category",
         required: true
     },
+    notes: {
+        type: String,
+        required: true,
+        min: [10, "Notes description must be at least 10 characters"],
+        max: 20
+    },
     status: {
         // Pending, Complete
         type: String,
