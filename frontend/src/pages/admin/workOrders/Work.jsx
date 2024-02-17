@@ -50,7 +50,7 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
   // Function to determine if the edit button should be disabled if the work status is not complete
   const isAllowedEdit = (work) => {
     return [
-      "admin", "engineer", "superadmin"
+      "admin", "engineer", "superadmin", "maintenance"
     ].includes(user?.role) 
     || (
       ["hod", "user", "supervisor", "reviewer"].includes(user?.role) && work.status === "Complete"
