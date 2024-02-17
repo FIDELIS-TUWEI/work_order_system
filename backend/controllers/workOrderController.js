@@ -379,8 +379,8 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Check Work Orders status and send an email notification everyday at 10 am
-cron.schedule("00 11 * * *", async (next) => {
+// Check Work Orders status and send an email notification everyday at 11 am
+cron.schedule("00 08 * * *", async (next) => {
     try {
 
         // Find all work orders with status and tracker
@@ -401,7 +401,8 @@ cron.schedule("00 11 * * *", async (next) => {
             const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
             const ccEmails = [
                  "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-                 "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
+                 "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
+                 "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
             ];
 
             // Send email
@@ -418,8 +419,8 @@ cron.schedule("00 11 * * *", async (next) => {
     }
 });
 
-// Check due date for work orders and send an email notification everyday at 3 pm
-cron.schedule("00 02 * * *", async (next) => {
+// Check due date for work orders and send an email notification everyday at 1 pm
+cron.schedule("00 10 * * *", async (next) => {
     try {
         const currentDate = moment();
     
@@ -442,7 +443,8 @@ cron.schedule("00 02 * * *", async (next) => {
             const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
             const ccEmails = [
                 "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-                "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
+                "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com",
+                "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
             ];
 
             // Send email
