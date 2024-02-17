@@ -87,7 +87,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
         <div style={{ margin: "15px 2px" }}>
             <Row gutter={16}>
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Assigned" style={{ margin: "6px" }}>
+            <Card title="Work Assigned" style={{ margin: "auto" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie 
