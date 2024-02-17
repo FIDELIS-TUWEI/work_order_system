@@ -141,6 +141,10 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
                     <span>Date Verified:</span>
                     <span>{workDetailsArray?.dateVerified ? moment(workDetailsArray.dateVerified).format("DD-MM-YYYY, hh:mm a") : "Not Reviewed"}</span>
                 </div>
+
+                <div className="details">
+                    <span>Checked By:</span>
+                </div>
             </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
