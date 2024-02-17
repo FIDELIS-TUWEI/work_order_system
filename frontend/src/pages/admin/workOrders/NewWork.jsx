@@ -106,6 +106,19 @@ const NewWork = ({
                 />
             </Form.Item>
           </Col>
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item
+              name="notes"
+              label="Notes"
+              required
+              rules={[
+                { required: true, message: 'Please Leave some notes description!' },
+                { min: 10, message: 'Notes Description must be at least 10 characters' }
+              ]}
+            >
+              <Input type="text" placeholder="Leave some notes for the technician..." />
+            </Form.Item>
+          </Col>
         </Row>
         <div>
           <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
