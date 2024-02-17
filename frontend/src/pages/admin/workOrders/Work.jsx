@@ -155,7 +155,6 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
     {
       title: "Service Type",
       width: 100,
-      fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "serviceType",
