@@ -41,7 +41,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     }
 
-    const { priority, description, location, serviceType, category } = req.body;
+    const { priority, description, location, serviceType, category, notes } = req.body;
 
     try {
         
@@ -53,6 +53,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             location,
             serviceType,
             category,
+            notes
         });
 
         // Save Work Order
