@@ -110,7 +110,6 @@ const NewWork = ({
             <Form.Item
               name="notes"
               label="Notes"
-              required
               rules={[
                 { required: true, message: 'Please Leave some notes description!' },
                 { min: 10, message: 'Notes Description must be at least 10 characters' }
