@@ -107,6 +107,10 @@ const workOrderSchema = new mongoose.Schema({
         type: Date,
         index: true
     },
+    checkedBy: {
+        type: String,
+        default: "Not Checked"
+    },
 },
 
 { 
