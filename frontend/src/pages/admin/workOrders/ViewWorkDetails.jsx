@@ -144,6 +144,7 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
 
                 <div className="details">
                     <span>Checked By:</span>
+                    <span>{workDetailsArray?.checkedBy}</span>
                 </div>
             </div>
         </div>
