@@ -168,10 +168,6 @@ async function updateWorkOrderDetails (id, updatedFields) {
 
 // Handle Assigned Work Orders
 async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
-    // Find the user who assigned the work
-    const userId = req.user._id;
-    const user = await User.findById(userId).populate("username").select("-password");
-
     // update the assignedTo field
     updatedWorkOrder.assignedTo = assignedTo;
     updatedWorkOrder.dateAssigned = new Date();
@@ -183,7 +179,6 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
     const text = `The work order with title: ${updateWorkOrder.description} has been assigned with the following details:
         - Employee Assigned: ${employee.firstName}, ${employee.lastName}
         - Date Assigned: ${updateWorkOrder.dateAssigned}
-        - Assigned By: ${user.username}
         - Due Date: ${updateWorkOrder.dueDate}
 
         Thank you for using Holiday Inn Work Order Systen.
