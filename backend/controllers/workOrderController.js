@@ -182,10 +182,10 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
 
         // Send email with details of the assigned employee
         const subject = `Work Order was Assigned`
-        const text = `The work order with title: ${updateWorkOrder.description} has been assigned with the following details:
+        const text = `The work order with title: ${updatedWorkOrder.description} has been assigned with the following details:
             - Employee Assigned: ${employee.firstName}, ${employee.lastName}
-            - Date Assigned: ${updateWorkOrder.dateAssigned}
-            - Due Date: ${updateWorkOrder.dueDate}
+            - Date Assigned: ${updatedWorkOrder.dateAssigned}
+            - Due Date: ${updatedWorkOrder.dueDate}
 
             Thank you for using Holiday Inn Work Order Systen.
         `;
