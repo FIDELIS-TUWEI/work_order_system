@@ -179,20 +179,8 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
     if (employee) {
         employee.assignedWork.push(updatedWorkOrder._id);
         await employee.save();
-
-        // Send email with details of the assigned employee
-        const subject = `Work Order was Assigned`
-        const text = `The work order with title: ${updatedWorkOrder.description} has been assigned with the following details:
-            - Employee Assigned: ${employee.firstName}, ${employee.lastName}
-            - Date Assigned: ${updatedWorkOrder.dateAssigned}
-            - Due Date: ${updatedWorkOrder.dueDate}
-
-            Thank you for using Holiday Inn Work Order Systen.
-        `;
-
-        await sendEmailNotification(updateWorkOrder, subject, text);
     } else {
-        return res.json({ message: "Employee not found" });
+        throw new Error("Employee not found");
     }
 };
 
