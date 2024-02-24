@@ -1,10 +1,11 @@
 const Category = require("../model/category");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/errorRespone");
+const ErrorResponse = require("../utils/CustomError");
+const CustomError = require("../utils/CustomError");
 
 
 // Create category
-const createCategory = asyncHandler(async (req, res) => {
+const createCategory = asyncHandler(async (req, res, next) => {
     try {
         const duplicate = await Category.findOne({ categoryTitle: req.body.categoryTitle });
         if (duplicate) {
@@ -15,8 +16,8 @@ const createCategory = asyncHandler(async (req, res) => {
         // create new category
         const newCategory = new Category(req.body);
         if (!newCategory) {
-            res.status(400);
-            throw new Error("Category not created")
+            const error = new CustomError("Failed to create new category!", 400)
+            return next(error);
         }
 
         // Save the created category
