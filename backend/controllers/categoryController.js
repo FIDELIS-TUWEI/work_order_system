@@ -1,128 +1,107 @@
 const Category = require("../model/category");
 const asyncHandler = require("express-async-handler");
-const ErrorResponse = require("../utils/CustomError");
 const CustomError = require("../utils/CustomError");
+const asyncErrorHandler = require("../utils/asyncErrorHandler");
 
 
 // Create category
-const createCategory = asyncHandler(async (req, res, next) => {
-    try {
-        const duplicate = await Category.findOne({ categoryTitle: req.body.categoryTitle });
-        if (duplicate) {
-            res.status(400);
-            throw new Error("Category already exists");
-        }
-
-        // create new category
-        const newCategory = new Category(req.body);
-        if (!newCategory) {
-            const error = new CustomError("Failed to create new category!", 400)
-            return next(error);
-        }
-
-        // Save the created category
-        await newCategory.save();
-        res.status(201).json({
-            success: true,
-            data: newCategory
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+const createCategory = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    // Check for duplicate category
+    const duplicate = await Category.findOne({ categoryTitle: req.body.categoryTitle });
+    if (duplicate) {
+        const error = new CustomError("Category already exists!", 400);
+        return next(error);
     }
-});
+
+    // create new category
+    const newCategory = new Category(req.body);
+    if (!newCategory) {
+        const error = new CustomError("Failed to create new category!", 400)
+        return next(error);
+    }
+
+    // Save the created category
+    await newCategory.save();
+    res.status(201).json({
+        success: true,
+        data: newCategory
+    });
+}));
 
 // Get all categories
-const getAllCategories = asyncHandler(async (req, res) => {
+const getAllCategories = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Category.find({}).estimatedDocumentCount();
-    try {
-        const categories = await Category.find({})
-            .skip(pageSize * (page - 1))
-            .limit(pageSize)
 
-        if (!categories) {
-            return res.status(400).json({ message: "No categories found" });
-        }
-        
-        res.status(200).json({
-            success: true,
-            data: categories,
-            page,
-            pages: Math.ceil(count / pageSize),
-            count
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+    // Find categories in the DB
+    const categories = await Category.find({})
+        .skip(pageSize * (page - 1))
+        .limit(pageSize)
+
+    if (!categories) {
+        const error = new CustomError("No categories found!", 404);
+        return next(error);
     }
-});
+    
+    res.status(200).json({
+        success: true,
+        data: categories,
+        page,
+        pages: Math.ceil(count / pageSize),
+        count
+    });
+}));
 
 // Query all categories without pagination
-const queryAllCategories = asyncHandler(async (req, res) => {
-    try {
-        const categories = await Category.find({});
+const queryAllCategories = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    // Find categories in DB
+    const categories = await Category.find({});
 
-        if (!categories) {
-            return res.status(400).json({ message: "No categories found" });
-        }
-
-        res.status(200).json({
-            success: true,
-            data: categories
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        })
+    if (!categories) {
+        const error = new CustomError("No categories found!", 404);
+        return next(error);
     }
-})
+
+    res.status(200).json({
+        success: true,
+        data: categories
+    });
+}));
 
 // Update category
-const updateCategory = asyncHandler(async (req, res, next) => {
-    try {
-        const catId = req.params.id;
-        const updates = req.body;
-        const updatedCategory = await Category.findById(catId, updates, { new: true, runValidators: true });
+const updateCategory = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    const catId = req.params.id;
+    const updates = req.body;
+    const updatedCategory = await Category.findById(catId, updates, { new: true, runValidators: true });
 
-        if (!updatedCategory) {
-            return res.status(404).json({ message: "Category not found" });
-        };
+    if (!updatedCategory) {
+        const error = new CustomError("Category not found!", 404);
+        return next(error);
+    };
 
-        res.status(200).json({
-            success: true,
-            data: updatedCategory
-        })
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-});
+    res.status(200).json({
+        success: true,
+        data: updatedCategory
+    });
+}));
 
 // Delete Category
-const deleteCategory = asyncHandler(async (req, res, next) => {
-    try {
-        const catId = req.params.id;
-        const deletedCategory = await Category.findByIdAndDelete(catId);
+const deleteCategory = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    const catId = req.params.id;
+    const deletedCategory = await Category.findByIdAndDelete(catId);
 
-        if (!deletedCategory) {
-            return res.status(404).json({ message: "Category not found" });
-        };
+    if (!deletedCategory) {
+        const error = new CustomError("Category not found!", 404);
+        return next(error);
+    };
 
-        return res.status(200).json({
-            success: true,
-            message: "Category deleted"
-        });
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-})
+    return res.status(200).json({
+        success: true,
+        message: "Category deleted"
+    });
+}))
 
 module.exports = {
     createCategory,
