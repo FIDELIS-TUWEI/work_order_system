@@ -11,11 +11,11 @@ import { selectUserInfo } from "@/features/auth/authSlice";
 
 const AllWorkOrders = () => {
   const user = useSelector(selectUserInfo);
+  const [filterStatus, setFilterStatus] = useState("");
   const [page, setPage] = useState(1);
-  const { data, isLoading: loading, error, refetch } = useWorkOrdersQuery(page);
+  const { data, isLoading: loading, error, refetch } = useWorkOrdersQuery({ page, status: filterStatus });
 
   const { data: workOrdersArray, pages } = data || {};
-
 
  // Handle errors
  useEffect(() => {
@@ -23,6 +23,13 @@ const AllWorkOrders = () => {
       message.error(error.message);
     };
  }, [error]);
+
+ // Function to handle status change
+ const handleStatusChange = (event) => {
+  const newStatus = event.target.value
+  setFilterStatus(newStatus);
+  refetch();
+ }
 
  // Handle pagination
  const handlePageChange = (newPage) => {
@@ -39,6 +46,7 @@ const AllWorkOrders = () => {
         user={user} 
         loading={loading}
         refetch={refetch}
+        handleStatusChange={handleStatusChange}
       />
       
       <div className="pagination">
