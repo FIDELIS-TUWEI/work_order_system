@@ -13,12 +13,11 @@ const AllLocations = () => {
     const navigate = useNavigate();
 
     const { data: locationsArray, pages } = data || {};
-    console.log("All Locations: ", locationsArray);
 
     // Handle Errors
     useEffect(() => {
         if (error) {
-            message.error(error.message);
+            message.error("Error occured loading locations data!");
         };
     }, [error]);
 

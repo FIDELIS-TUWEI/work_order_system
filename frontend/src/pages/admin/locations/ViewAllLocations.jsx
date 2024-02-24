@@ -23,10 +23,10 @@ const ViewAllLocations = ({ navigate, loading, locationsArray, refetch }) => {
             const { error } = await deleteLocation(selectedLocationToDelete._id).unwrap();
 
             if (error) {
-                if (error.status === 400 && error.data && error.data.message) {
+                if (error.status === 400 && error?.data?.message) {
                     message.error(error.data.message);
                 } else {
-                    message.error("Failed to delete location");
+                    message.error("Failed to delete location with ID!");
                 }
             } else {
                 message.success("Location deleted successfully");
@@ -34,8 +34,7 @@ const ViewAllLocations = ({ navigate, loading, locationsArray, refetch }) => {
                 refetch();
             }
         } catch (error) {
-            console.error(error);
-            message.error("An error occurred while deleting the location", error);
+            message.error("An error occurred while deleting the location with ID");
         }
     };
 

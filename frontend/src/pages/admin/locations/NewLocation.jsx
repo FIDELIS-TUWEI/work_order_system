@@ -17,11 +17,11 @@ const NewLocation = () => {
         const { error } = await addLocation(values);
 
         if (error) {
-          if (error.status === 400 && error.data && error.data.message) {
+          if (error.status === 400 && error?.data?.message) {
             message.error(error.data.message);
             navigate("/all-locations");
           } else {
-            message.error("Failed to create new location");
+            message.error("Failed to create new location!");
           }
         } else {
           navigate("/all-locations");
@@ -29,7 +29,7 @@ const NewLocation = () => {
           setLoading(false);
         }
       } catch (error) {
-        message.error(error.message);
+        message.error("Failed to create new location!");
       }
     }
 
