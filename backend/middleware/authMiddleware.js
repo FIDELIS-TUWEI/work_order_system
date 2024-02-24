@@ -3,55 +3,65 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const cache = require("memory-cache");
-const ErrorResponse = require("../utils/CustomError");
+const CustomError = require("../utils/CustomError");
+const asyncErrorHandler = require("../utils/asyncErrorHandler");
 
 // check if user is authenticated
-const protect = asyncHandler(async (req, res, next) => {
+const protect = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const authToken = req.cookies.token || req.headers.authorization
 
     if (!authToken) {
-        return res.status(401).json({ success: false, message: "No token found!" })
+        const error = new CustomError("No token found!", 401)
+        return next(error);
     } 
 
     // Verify token
     jwt.verify(authToken, process.env.JWT_SECRET, async (err, data) => {
         if (err) {
-            return res.status(401).json({ success: false, message: "Not authorized!" })
+            const error = new CustomError("Not authorized!", 401)
+            return next(error);
         } else {
             const user = await User.findById(data.id);
+            if (!user) {
+                const error = new CustomError("User not found!", 401)
+                return next(error);
+            };
+
             req.user = user;
             next()
         }
     })
-});
+}));
 
 // Restrict users middleware
 const restrict = (role) => {
-    return async (req, res, next) => {
+    return asyncErrorHandler (async (req, res, next) => {
         const user = await User.findOne({ _id: req.user.id });
         if (!user || !role.includes(user.role)) {
-            return next(new ErrorResponse("Forbidden, not authorized to access this route", 403));
+            const error = new CustomError("Forbidden! You are not authorized to access this route", 401)
+            return next(error);
         }
 
         // User has the required role, ptoceed to the next middleware or route
         next();
-    };
+    });
 };
 
 // Is admin middleware
-const isAdmin = asyncHandler(async (req, res, next) => {
+const isAdmin = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const user = await User.findOne({ _id: req.user.id });
     if (!user?.isAdmin) {
-        return next(new ErrorResponse("You are not authorized to access this route", 401));
+        const error = new CustomError("Forbidden! You are not authorized to access this route", 401)
+        return next(error);
     }
     next();
-});
+}));
 
 // Middleware to set the reviewedBy field
-const setVerifiedBy = asyncHandler(async (req, res, next) => {
+const setVerifiedBy = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     req.body.verifiedBy = req.user._id;
     next();
-});
+}));
 
 // Cache middleware
 const cacheMiddleware = (req, res, next) => {
