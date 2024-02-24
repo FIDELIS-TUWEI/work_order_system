@@ -58,7 +58,7 @@ const countWorkTracker = asyncHandler( async (req, res, next) => {
             },
         ]);
 
-        const counts = {
+        const trackerCounts = {
             not_attended: 0,
             in_attendance: 0,
             in_complete: 0,
@@ -66,15 +66,15 @@ const countWorkTracker = asyncHandler( async (req, res, next) => {
         };
 
         result.forEach((item) => {
-            if (item._id === 'Not_Attended') counts.not_attended = item.count;
-            else if (item._id === 'In_Attendance') counts.in_attendance = item.count;
-            else if (item._id === 'In_Complete') counts.in_complete = item.count;
-            else if (item._id === 'Attended') counts.attended = item.count;
+            if (item._id === 'Not_Attended') trackerCounts.not_attended = item.count;
+            else if (item._id === 'In_Attendance') trackerCounts.in_attendance = item.count;
+            else if (item._id === 'In_Complete') trackerCounts.in_complete = item.count;
+            else if (item._id === 'Attended') trackerCounts.attended = item.count;
         });
 
         res.status(200).json({
             success: true,
-            data: counts
+            data: trackerCounts
         })
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));
