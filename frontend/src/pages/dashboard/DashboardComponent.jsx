@@ -4,10 +4,11 @@ import { MdGroups, MdOutlinePendingActions, MdOutlinePreview, MdOutlineWork } fr
 import { FaCheckCircle } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6";
 import { BiSolidUserCheck } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 // Dashboard card
-const DashboardCard = ({ title, value, icon }) => (
-    <Card className="custom-card" hoverable>
+const DashboardCard = ({ title, value, icon, onClick }) => (
+    <Card className="custom-card" hoverable onClick={onClick}>
         <Space direction="horizontal">
             {icon}
             <Statistic title={title} value={value} />
@@ -18,13 +19,25 @@ const DashboardCard = ({ title, value, icon }) => (
 DashboardCard.propTypes = {
     title: PropTypes.string,
     value: PropTypes.number,
-    icon: PropTypes.element
+    icon: PropTypes.element,
+    onClick: PropTypes.func
 }
 
 const DashboardComponent = ({ user, pendingCount, 
     completedCount, workCountData, reviewedCount, 
     usersData, countActiveUsers, countEmployees 
 }) => {
+    const navigate = useNavigate();
+
+    // Navigate function for Dashboard cards
+    const navigateTotalWork = () => navigate('/work/list');
+    const navigateToPendingWork = () => navigate('/work/list');
+    const navigateToCompleteWork = () => navigate('/work/list');
+    const navigateToReviewWork = () => navigate('/work/list');
+    const navigateToUsers = () => navigate('/users/all');
+    const navigateToActiveUsers = () => navigate('/users/all');
+    const navigateToEmployees = () => navigate('/all/employees');
+
 
     // Conditional render for admin or superadmin
     const isAdmin = user &&(user.role === "admin" || user.role === "superadmin");
@@ -42,6 +55,7 @@ const DashboardComponent = ({ user, pendingCount,
                     icon={
                         <MdOutlineWork size={24} color="grey" />
                     }
+                    onClick={navigateTotalWork}
                 />
             </Col>
 
@@ -52,6 +66,7 @@ const DashboardComponent = ({ user, pendingCount,
                     icon={
                         <MdOutlinePendingActions size={24} color="orange" />
                     }
+                    onClick={navigateToPendingWork}
                 />
             </Col>
 
@@ -62,6 +77,7 @@ const DashboardComponent = ({ user, pendingCount,
                     icon={
                         <FaCheckCircle size={24} color="green" />
                     }
+                    onClick={navigateToCompleteWork}
                 />
             </Col>
 
@@ -72,6 +88,7 @@ const DashboardComponent = ({ user, pendingCount,
                     icon={
                         <MdOutlinePreview size={24} color="purple" />
                     }
+                    onClick={navigateToReviewWork}
                 />
             </Col>
 
@@ -82,6 +99,7 @@ const DashboardComponent = ({ user, pendingCount,
                     icon={
                         <MdGroups size={24} color="brown" />
                     }
+                    onClick={navigateToUsers}
                 />
             </Col>
 
@@ -92,6 +110,7 @@ const DashboardComponent = ({ user, pendingCount,
                 icon={
                     <BiSolidUserCheck size={24} color="violet" />
                 }
+                onClick={navigateToActiveUsers}
             />
             </Col>
 
@@ -102,6 +121,7 @@ const DashboardComponent = ({ user, pendingCount,
                 icon={
                     <FaUsersLine size={24} color="black" />
                 }
+                onClick={navigateToEmployees}
             />
             </Col>
         </Row>
@@ -119,6 +139,7 @@ const DashboardComponent = ({ user, pendingCount,
                         icon={
                             <MdOutlineWork size={24} color="grey" />
                         }
+                        onClick={navigateTotalWork}
                     />
                 </Col>
 
@@ -129,6 +150,7 @@ const DashboardComponent = ({ user, pendingCount,
                         icon={
                             <MdOutlinePendingActions size={24} color="orange" />
                         } 
+                        onClick={navigateToPendingWork}
                     />
                 </Col>
 
@@ -139,6 +161,7 @@ const DashboardComponent = ({ user, pendingCount,
                         icon={
                             <FaCheckCircle size={24} color="green" />
                         }
+                        onClick={navigateToCompleteWork}
                     />
                 </Col>
 
@@ -149,6 +172,7 @@ const DashboardComponent = ({ user, pendingCount,
                         icon={
                             <MdOutlinePreview size={24} color="purple" />
                         }
+                        onClick={navigateToReviewWork}
                     />
                 </Col>
             </Row>
