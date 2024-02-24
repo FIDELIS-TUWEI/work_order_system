@@ -36,25 +36,33 @@ export const reportsApi = createApi({
             }),
             providesTags: ["Reports"],
         }),
+        countWorkTracker: builder.query ({
+            query: () => ({
+                url: `/report/work/count/tracker`,
+                method: "GET",
+            }),
+            providesTags: ["Reports"],
+        }),
         getWorkByDate: builder.query({
             query: (selectedDate) => ({
                 url: `/work/created/date/${selectedDate}`,
                 mehtod: "GET",
             }),
+            providesTags: ["Reports"],
         }),
         totalReviewedWork: builder.query({
             query: () => ({
                 url: `/report/work/total/reviewed`,
                 method: "GET",
             }),
-            providesTags: ["Reports"]
+            providesTags: ["Reports"],
         }),
         totalWorkCount: builder.query({
             query: () => ({
                 url: `/report/total/work/count`,
                 method: "GET",
             }),
-            providesTags: ["Reports"]
+            providesTags: ["Reports"],
         }),
     })
 });
@@ -62,6 +70,7 @@ export const reportsApi = createApi({
 export const {
     useGetFilterStatusQuery,
     useGetWorkCountByStatusQuery,
+    useCountWorkTrackerQuery,
     useGetWorkByDateQuery,
     useTotalReviewedWorkQuery,
     useTotalWorkCountQuery
