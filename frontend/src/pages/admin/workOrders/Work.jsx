@@ -196,7 +196,6 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
     {
       title: "Actions",
       width: 100,
-      fixed: "right",
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "actions",
@@ -215,18 +214,17 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
             >
               New Work
             </Button>
+        </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-            <label htmlFor="filterStatus" style={{ fontWeight: "700", marginLeft: "20px" }}>
-              Filter By Status:
-            </label>
-            <select id="filterStatus" onChange={handleStatusChange} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
-              <option value="">All</option>
-              <option value="Pending">Pending</option>
-              <option value="Complete">Completed</option>
-            </select>
-            </div>
-            
+        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", margin: "20px" }}>
+          <label htmlFor="filterStatus" style={{ fontWeight: "700", marginLeft: "20px" }}>
+            Filter By Status:
+          </label>
+          <select id="filterStatus" onChange={handleStatusChange} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
+            <option value="">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Complete">Completed</option>
+          </select>
         </div>
 
         <Card>
