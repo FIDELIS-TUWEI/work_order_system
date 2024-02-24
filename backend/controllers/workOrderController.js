@@ -218,7 +218,7 @@ async function handleInCompleteWorkOrder (updatedWorkOrder) {
             throw new Error("Failed to revert work order status", error.message);
         }
 
-    }, 1 * 60 * 1000); // 1 minute in milliseconds
+    }, 10 * 60 * 1000); // 1 minute in milliseconds
 
     updatedWorkOrder.timeoutId = timeoutId;
 };
