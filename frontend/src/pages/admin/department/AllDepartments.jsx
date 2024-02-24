@@ -14,7 +14,7 @@ const AllDepartments = () => {
   
   useEffect(() => {
     if (error) {
-      message.error(error.message);
+      message.error("Failed to load all department data!");
     }
   }, [error])
 

@@ -25,10 +25,10 @@ const ViewAllDepartments = ({ departments, loading, refetch }) => {
       const { error } = await deleteDepartment(selectedDepartmentToDelete._id).unwrap();
 
       if (error) {
-        if (error === 400 && error.data && error.data.message) {
+        if (error === 400 && error?.data?.message) {
           message.error(error.data.message);
         } else {
-          message.error("Failed to delete department")
+          message.error("Failed to delete department with ID!")
         }
       } else {
         message.success("Department deleted successfully");
@@ -36,7 +36,7 @@ const ViewAllDepartments = ({ departments, loading, refetch }) => {
         refetch();
       }
     } catch (error) {
-      message.error(error.message);
+      message.error("Failed to delete department with ID!");
     }
   };
 

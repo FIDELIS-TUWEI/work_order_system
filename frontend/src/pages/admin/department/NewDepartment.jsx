@@ -14,18 +14,18 @@ const NewDepartment = () => {
       const { error } = await newDepartment(values).unwrap();
 
       if (error) {
-        if (error === 400 && error.data && error.data.message) {
+        if (error === 400 && error?.data?.message) {
           message.error(error.data.message);
           navigate("/all/departments");
         } else {
-          message.error("Failed to create new department")
+          message.error("Failed to create new department!")
         }
       } else {
         message.success("New Department Created Succesfully");
         navigate("/all/departments");
       }
     } catch (error) {
-      message.error(error.message);
+      message.error("Failed to create new department!");
     }
   };
 
