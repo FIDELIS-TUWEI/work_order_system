@@ -203,7 +203,7 @@ const WorkReport = ({ workOrdersData, loading, handleStatusChange, exportPDF }) 
           <select id="filterStatus" onChange={handleStatusChange} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
             <option value="">All</option>
             <option value="Pending">Pending</option>
-            <option value="Complete">Completed</option>
+            <option value="Complete">Complete</option>
           </select>
 
           <Button style={{ 
