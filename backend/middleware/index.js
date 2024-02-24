@@ -1,3 +1,5 @@
+const CustomError = require('../utils/CustomError');
+
 module.exports = (app) => {
     const express = require('express');
     const cors = require('cors');
