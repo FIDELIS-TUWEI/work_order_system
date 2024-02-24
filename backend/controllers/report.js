@@ -1,6 +1,7 @@
 const WorkOrder = require("../model/workOrder");
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorRespone");
+const { count } = require("../model/user");
 
 // Filter Work Orders
 const filterWorkStatus = asyncHandler (async (req, res, next) => {
@@ -44,6 +45,41 @@ const filterWorkStatus = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse(error.message, 500));
     }
 });
+
+// Work orders by tracker Count
+const countWorkTracker = asyncHandler( async (req, res, next) => {
+    try {
+        const result = await WorkOrder.aggregate([
+            {
+                $group: {
+                    _id: '$tracker',
+                    count: { $sum: 1 }
+                },
+            },
+        ]);
+
+        const counts = {
+            not_attended: 0,
+            in_attendance: 0,
+            in_complete: 0,
+            attended: 0
+        };
+
+        result.forEach((item) => {
+            if (item._id === 'Not_Attended') counts.not_attended = item.count;
+            else if (item._id === 'In_Attendance') counts.in_attendance = item.count;
+            else if (item._id === 'In_Complete') counts.in_complete = item.count;
+            else if (item._id === 'Attended') counts.attended = item.count;
+        });
+
+        res.status(200).json({
+            success: true,
+            data: counts
+        })
+    } catch (error) {
+        return next(new ErrorResponse(error.message, 500));
+    }
+})
 
 // Logic to get work orders created in a day
 const workCreatedByDate = asyncHandler (async (req, res, next) => {
@@ -139,6 +175,7 @@ const countTotalWork = asyncHandler (async (req, res, next) => {
 
 module.exports = {
     filterWorkStatus,
+    countWorkTracker,
     workCreatedByDate,
     countWorkStatus,
     countReviewed,
