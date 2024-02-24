@@ -53,10 +53,12 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
           rules={[{ required: true, message: 'Please Select Employee to Assign!' }]}
         >
           <Select
+            mode="multiple"
             placeholder='Select Employee to Assign'
             allowClear
             style={{ width: '100%' }}
             value={selectedEmployee}
+            showSearch
             onChange={handleEmployeeChange}
             filterOption={false}
           >
