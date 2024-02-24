@@ -14,11 +14,11 @@ const NewCategory = () => {
           const { error } = await newCategory(values).unwrap();
   
           if (error) {
-            if (error === 400 && error.data && error.data.message) {
+            if (error === 400 && error?.data?.message) {
               message.error(error.data.message)
               navigate("/all-categories");
             } else {
-              message.error("Failed to create new category")
+              message.error("Failed to create new category!")
             }
           } else {
             message.success("New Category Created Succesfully");
@@ -26,7 +26,7 @@ const NewCategory = () => {
           }
 
         } catch (error) {
-          message.error(error.message);
+          message.error("Failed to create new category!");
         }
     };
 

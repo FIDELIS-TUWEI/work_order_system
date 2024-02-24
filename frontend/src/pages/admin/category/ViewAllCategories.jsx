@@ -23,10 +23,10 @@ const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
             const { error } = await deleteCategory(selectedCategoryToDelete._id).unwrap();
 
             if (error) {
-                if (error === 400 && error.data && error.data.message) {
+                if (error === 400 && error?.data?.message) {
                     message.error(error.data.message)
                 } else {
-                    message.error("Failed to delete Category")
+                    message.error("Failed to delete Category with ID!")
                 }
             } else {
                 message.success("Category deleted successfully");
@@ -34,7 +34,7 @@ const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
                 refetch();
             }
         } catch (error) {
-            message.error(error.message);
+            message.error("Failed to delete Category with ID!");
         }
     };
 
