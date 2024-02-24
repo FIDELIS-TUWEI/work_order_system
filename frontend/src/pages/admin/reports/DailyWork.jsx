@@ -24,7 +24,7 @@ const DailyWork = () => {
             });
             setWorkOrders(res.data);
         } catch (error) {
-            console.error(error.message);
+            message.error("Error Occured loading data!")
         }
     };
 
