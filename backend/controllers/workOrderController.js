@@ -277,7 +277,15 @@ const getAllWorkOrders = asyncHandler (async (req, res, next) => {
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({}).estimatedDocumentCount();
     try {
-        const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
+        const { status } = req.query;
+        let query = {};
+
+        if (status) {
+            query.status = status;
+        };
+
+        const workOrders = await WorkOrder.find(query)
+            .populate("location", "locationTitle")
             .populate("requestedBy", "username")
             .populate("category", "categoryTitle")
             .populate("assignedTo", "firstName lastName")
