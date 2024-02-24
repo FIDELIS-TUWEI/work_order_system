@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const cache = require("memory-cache");
-const ErrorResponse = require("../utils/errorRespone");
+const ErrorResponse = require("../utils/CustomError");
 
 // check if user is authenticated
 const protect = asyncHandler(async (req, res, next) => {

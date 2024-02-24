@@ -2,7 +2,7 @@ const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
-const ErrorResponse = require("../utils/errorRespone");
+const ErrorResponse = require("../utils/CustomError");
 const createSecretToken = require("../utils/secretToken");
 
 // @desc Register User
@@ -95,10 +95,7 @@ const login = asyncHandler (async (req, res, next) => {
             res.cookie("token", token, {
                 withCredentials: true,
                 path: '/',
-                httpOnly: true,
-                sameSite: 'none',
-                secure: process.env.NODE_ENV === 'production',
-                expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
+                httpOnly: false,
             });
 
             res.status(200).json({
