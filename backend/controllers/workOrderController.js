@@ -41,7 +41,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
         return next(new ErrorResponse("User not found", 404));
     }
 
-    const { priority, description, location, serviceType, category } = req.body;
+    const { priority, description, location, serviceType, category, notes } = req.body;
 
     try {
         
@@ -53,6 +53,7 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             location,
             serviceType,
             category,
+            notes
         });
 
         // Save Work Order
@@ -67,6 +68,8 @@ const createWorkOrder = asyncHandler (async (req, res, next) => {
             - Description: ${description}
             - Priority: ${priority}
             - Service Type: ${serviceType}
+            - Notes: ${notes}
+            - Requested By: ${user.username}
 
             Thank you for using Holiday Inn Work Order System.
 
@@ -177,7 +180,7 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
         employee.assignedWork.push(updatedWorkOrder._id);
         await employee.save();
     } else {
-        return res.json({ message: "Employee not found" });
+        throw new Error("Employee not found");
     }
 };
 
@@ -379,8 +382,8 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     }
 });
 
-// Check Work Orders status and send an email notification everyday at 10 am
-cron.schedule("00 07 * * *", async (next) => {
+// Check Work Orders status and send an email notification everyday at 11 am
+cron.schedule("00 21 * * *", async (next) => {
     try {
 
         // Find all work orders with status and tracker
@@ -391,17 +394,19 @@ cron.schedule("00 07 * * *", async (next) => {
 
         if (workOrderStatus.length > 0) {
             const emailSubject = `Work Order Reminder`;
-            let emailText = `The following work orders need your immediate attention:\n`
+            let emailText = `The following work orders need your immediate attention. 
+            Kindly login and update the details:\n`
 
             workOrderStatus.forEach((workOrder) => {
-                emailText += `\n-Work Order Description: ${workOrder.description}\n-`
+                emailText += `\n-Work Order Description: ${workOrder.description}\n`
             });
 
             // Email addresses
             const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
             const ccEmails = [
                  "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-                 "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
+                 "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
+                 "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
             ];
 
             // Send email
@@ -412,46 +417,6 @@ cron.schedule("00 07 * * *", async (next) => {
                 text: emailText
             });
 
-        }
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-});
-
-// Check due date for work orders and send an email notification everyday at 3 pm
-cron.schedule("00 07 * * *", async (next) => {
-    try {
-        const currentDate = moment();
-    
-        // Find all overDue dates
-        const dueWorkDate = await WorkOrder.find({
-            dueDate: { $lte: currentDate.toDate() },
-            status: "Pending",
-            tracker: { $in: ["In_Attendance, In_Complete"] },
-        }). populate("requestedBy", "username");
-    
-        if (dueWorkDate.length > 0) {
-            const emailSubject = `WORK ORDER DUE DATE REMINDER`
-            let emailText = `The following work orders need your immediate attention:\n`;
-
-            dueWorkDate.forEach((workOrder) => {
-                emailText += `\n-Work Order with description: ${workOrder.description} and due date: ${moment(workOrder.dueDate).format("DD-MM-YYYY, hh:mm a")}\n-`
-            });
-
-            // Email Addresses
-            const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
-            const ccEmails = [
-                "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-                "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com"
-            ];
-
-            // Send email
-            sendEmail({
-                email: engineerEmail,
-                cc: ccEmails,
-                subject: emailSubject,
-                text: emailText
-            });
         }
     } catch (error) {
         return next(new ErrorResponse(error.message, 500));

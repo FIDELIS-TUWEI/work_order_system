@@ -60,7 +60,7 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
   const columns = [
     {
       title: "First Name",
-      width: 100,
+      width: 80,
       fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
@@ -69,7 +69,7 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
     },
     {
       title: "Last Name",
-      width: 100,
+      width: 80,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "lastName",
@@ -77,7 +77,7 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
     },
     {
       title: "Username",
-      width: 100,
+      width: 80,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "username",
@@ -85,7 +85,7 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
     },
     {
       title: "Role",
-      width: 100,
+      width: 80,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "role",
@@ -93,8 +93,7 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
     },
     {
       title: "Actions",
-      fixed: "right",
-      width: 120,
+      width: 100,
       align: "center",
       responsive: ["md", "lg"],
       render: (_, user) => (
@@ -184,7 +183,8 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
           columns={columns}
           pagination={false}
           rowKey="_id"
-          scroll={{ x: 600, y: 300 }}
+          scroll={{ x: 1500, y: 300 }}
+
         />
       </Card>
 

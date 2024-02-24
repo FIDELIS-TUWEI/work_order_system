@@ -64,6 +64,11 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
                     <span>Description:</span>
                     <span>{workDetailsArray?.description}</span>
                 </div>
+                
+                <div className="details">
+                    <span>Notes:</span>
+                    <span>{workDetailsArray?.notes}</span>
+                </div>
 
                 <div className="details">
                     <span>Date Requested:</span>
@@ -135,6 +140,11 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
                 <div className="details">
                     <span>Date Verified:</span>
                     <span>{workDetailsArray?.dateVerified ? moment(workDetailsArray.dateVerified).format("DD-MM-YYYY, hh:mm a") : "Not Reviewed"}</span>
+                </div>
+
+                <div className="details">
+                    <span>Checked By:</span>
+                    <span>{workDetailsArray?.checkedBy}</span>
                 </div>
             </div>
         </div>

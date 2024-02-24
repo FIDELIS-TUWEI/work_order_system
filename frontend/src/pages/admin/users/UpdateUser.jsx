@@ -95,7 +95,7 @@ const UpdateUser = ({ onFinishHandler, userDataArray, navigate, loading, departm
                   options={[
                     { value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }, { value: 'engineer', label: 'Engineer' }, 
                     { value: 'hod', label: 'HoD' }, { value: isSuperAdmin ? 'superadmin' : "", label: 'Super Admin' },
-                    { value: 'supervisor', label: 'Supervisor' }, { value: 'reviewer', label: 'Reviewer' }
+                    { value: 'supervisor', label: 'Supervisor' }, { value: 'reviewer', label: 'Reviewer' }, { value: 'maintenance', label: 'Maintenance' }
                   ]}
                   onChange={(value) => {
                     if (value === "superadmin" && !isSuperAdmin) {

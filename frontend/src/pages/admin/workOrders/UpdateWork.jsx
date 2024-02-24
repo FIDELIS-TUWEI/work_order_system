@@ -196,7 +196,16 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
             >
               <Input type='text' placeholder='Enter comments' />
             </Form.Item>
-          </Col>      
+          </Col>   
+          <Col xs={24} md={24} lg={8}>
+            <Form.Item
+              name="checkedBy"
+              label="Checked By"
+              rules={[{ required: true, message: "Please Enter HoD name!" }]}
+            >
+              <Input type="text" placeholder="Enter the relevant department HoD name" />
+            </Form.Item>
+          </Col>   
         </>
       );
     } else {

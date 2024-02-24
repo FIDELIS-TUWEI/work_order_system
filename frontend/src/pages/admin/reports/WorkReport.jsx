@@ -105,7 +105,6 @@ const WorkReport = ({ workOrdersData, loading, handleStatusChange, exportPDF }) 
     },
     {
       title: "Service Type",
-      fixed: "left",
       width: 150,
       align: "center",
       responsive: ["md", "lg"],

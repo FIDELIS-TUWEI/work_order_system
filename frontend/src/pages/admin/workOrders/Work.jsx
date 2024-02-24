@@ -47,13 +47,19 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
     setIsModalVisible(false);
   };
 
-  // Function to check if user is authorised to view, edit or delete work
+  // Function to determine if the edit button should be disabled if the work status is not complete
+  const isAllowedEdit = (work) => {
+    return [
+      "admin", "engineer", "superadmin", "maintenance"
+    ].includes(user?.role) 
+    || (
+      ["hod", "user", "supervisor", "reviewer"].includes(user?.role) && work.status === "Complete"
+    );
+  } 
+
+  // Function to check if user is authorised to delete work
   const isAuthorised = [
     "admin", "superadmin"
-  ].includes(user?.role);
-
-  const isAllowedEdit = [
-    "admin", "engineer", "reviewer", "superadmin", "hod", "supervisor"
   ].includes(user?.role);
 
   // Status badge colors
@@ -115,11 +121,11 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
           </Button>
         </Tooltip>
       ) : (
-        <Tooltip title={ isAllowedEdit ? "Edit Work" : "Operation disabled!"}>
+        <Tooltip title={ isAllowedEdit(work) ? "Edit Work" : "Operation disabled!"}>
             <Button
                 style={{ color: 'green', border: 'none', margin: '0 5px' }}
                 onClick={() => navigate(`/edit/work/${work._id}`)}
-                disabled={!isAllowedEdit}
+                disabled={!isAllowedEdit(work)}
             >
                 <BiSolidEditAlt />
             </Button>
@@ -155,7 +161,6 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
     {
       title: "Service Type",
       width: 100,
-      fixed: "left",
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "serviceType",

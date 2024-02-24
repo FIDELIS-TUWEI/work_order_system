@@ -28,7 +28,7 @@ const DashboardComponent = ({ user, pendingCount,
 
     // Conditional render for admin or superadmin
     const isAdmin = user &&(user.role === "admin" || user.role === "superadmin");
-    const isManager = user && (user.role === "hod" || user.role === "reviewer" || user.role === "engineer" || user.role === "supervisor");
+    const isManager = user && (user.role === "hod" || user.role === "reviewer" || user.role === "engineer" || user.role === "supervisor" || user?.role === "maintenance");
 
     // Render admin or superadmin card
     const renderAdminsCard = () => (
