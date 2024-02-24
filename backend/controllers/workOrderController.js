@@ -391,7 +391,7 @@ const deleteWorkOrder = asyncHandler (async (req, res, next) => {
 });
 
 // Check Work Orders status and send an email notification everyday at 11 am
-cron.schedule("00 21 * * *", async (next) => {
+cron.schedule("00 11 * * *", async (next) => {
     try {
 
         // Find all work orders with status and tracker
