@@ -18,7 +18,7 @@ const Reports = () => {
 
   useEffect(() => {
     if (error) {
-      message.error(error.message)
+      message.error("Error Occured loading reports data, try again later!")
     }
   }, [error]);
 
