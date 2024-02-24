@@ -252,7 +252,7 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
             Edit Work Order
         </Typography>
-        <Card title={singleWorkArray?.title} style={{ margin: '15px' }}>
+        <Card title={singleWorkArray?.description} style={{ margin: '15px' }}>
         <Form onFinish={onFinishHandler} layout='vertical'>
             
             <Row gutter={20}>
