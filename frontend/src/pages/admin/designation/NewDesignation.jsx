@@ -14,11 +14,11 @@ const NewDesignation = () => {
       const { error } = await newDesignation(values).unwrap();
 
       if (error) {
-        if (error === 400 && error.data && error.data.message) {
+        if (error === 400 && error?.data?.message) {
           message.error(error.data.message);
           navigate("/all/designations");
         } else {
-          message.error("Failed to create new designation");
+          message.error("Failed to create new designation!");
         }
       } else {
         message.success("New Designation Created Succesfully");
@@ -26,7 +26,7 @@ const NewDesignation = () => {
       };
 
     } catch (error) {
-      message.error(error.message)
+      message.error("Failed to create new designation!")
     }
   }
 

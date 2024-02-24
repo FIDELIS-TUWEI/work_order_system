@@ -13,7 +13,7 @@ const AllDesignations = () => {
 
   useEffect(() => {
     if (error) {
-      message.error(error.message)
+      message.error("Failed to load all designations data!")
     }
   }, [error]);
 
