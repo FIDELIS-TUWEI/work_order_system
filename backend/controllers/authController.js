@@ -11,10 +11,8 @@ const signupUser = asyncHandler (asyncErrorHandler (async (req, res) => {
     // check for existing user
     const existingUser = await User.findOne({ username: req.body.username });
     if (existingUser) {
-        return res.status(400).json({
-            success: false,
-            message: "User already exists",
-        });
+        const error = new CustomError("User already exists!", 400);
+        return next(error);
     };
 
     // create new user
@@ -42,7 +40,10 @@ const signupUser = asyncHandler (asyncErrorHandler (async (req, res) => {
 
         // Send Email
         sendEmail(emailOptions);
-    }
+    }  else {
+        const error = new CustomError("Failed to create new User!", 400);
+        return next(error);
+    };
 }));
 
 // @desc Auth user & get token
