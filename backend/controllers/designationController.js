@@ -1,124 +1,97 @@
 const Designation = require('../model/designation');
 const asyncHandler = require('express-async-handler');
+const asyncErrorHandler = require('../utils/asyncErrorHandler');
+const CustomError = require('../utils/CustomError');
 
 // @desc Create designations
 // @route POST /new/designations
 // @access Private
-const createDesignation = asyncHandler(async (req, res) => {
-    try {
-        const duplicate = await Designation.findOne({ designationName: req.body.designationName });
-        if (duplicate) {
-            return res.status(400).json({
-                success: false,
-                message: "Designation already exists",
-            });
-        };
+const createDesignation = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    // Check duplicate
+    const duplicate = await Designation.findOne({ designationName: req.body.designationName });
+    if (duplicate) {
+        const error = new CustomError("Designation already exists!", 400);
+        return next(error);
+    };
 
-        // create new designation
-        const newDesignation = new Designation(req.body);
-        if (!newDesignation) {
-            return res.status(400).json({
-                success: false,
-                message: "Designation not created",
-            });
-        }
-
-        // Save the created designation
-        await newDesignation.save();
-        res.status(201).json({
-            success: true,
-            data: newDesignation
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+    // create new designation
+    const newDesignation = new Designation(req.body);
+    if (!newDesignation) {
+        const error = new CustomError("Failed to create new Designation!", 400);
+        return next(error);
     }
-});
+
+    // Save the created designation
+    await newDesignation.save();
+    res.status(201).json({
+        success: true,
+        data: newDesignation
+    });
+}));
 
 // @desc Get all designations
 // @route GET /all-designations
 // @access Private
-const getAllDesignations = asyncHandler(async (req, res) => {
+const getAllDesignations = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     // Enable Pagination
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Designation.find({}).estimatedDocumentCount();
-    try {
-        const designations = await Designation.find({})
-            .skip(pageSize * (page - 1))
-            .limit(pageSize)
-            .exec();
 
-        if (!designations) {
-            return res.status(400).json({ message: "No designations found" });
-        };
+    // Find designations
+    const designations = await Designation.find({})
+        .skip(pageSize * (page - 1))
+        .limit(pageSize)
+        .exec();
 
-        res.status(200).json({
-            success: true,
-            data: designations,
-            page,
-            pages: Math.ceil(count / pageSize),
-            count
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-});
+    if (!designations) {
+        const error = new CustomError("Designations not found!", 404);
+        return next(error);
+    };
+
+    res.status(200).json({
+        success: true,
+        data: designations,
+        page,
+        pages: Math.ceil(count / pageSize),
+        count
+    });
+}));
 
 // @desc query all designations
 // @route GET /query/all-designations
 // @access Private
-const queryAllDesignations = asyncHandler(async (req, res) => {
-    try {
-        const designations = await Designation.find({});
+const queryAllDesignations = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    const designations = await Designation.find({});
 
-        if (!designations) {
-            return res.status(404).json({ message: "No Designstions Found" });
-        }
-
-        res.status(200).json({
-            success: true,
-            data: designations
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+    if (!designations) {
+        const error = new CustomError("Designations not found!", 404);
+        return next(error)
     }
-});
+
+    res.status(200).json({
+        success: true,
+        data: designations
+    });
+}));
 
 // @desc Delete designation
 // @route DELETE /delete/designation/:id
 // @access Private
-const deleteDesignation = asyncHandler(async (req, res) => {
-    try {
-        const designationId = req.params.id;
-        const designation = await Designation.findByIdAndDelete(designationId);
+const deleteDesignation = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    const designationId = req.params.id;
+    const designation = await Designation.findByIdAndDelete(designationId);
 
-        if (!designation) {
-            return res.status(400).json({
-                success: false,
-                message: "Designation not found",
-            });
-        };
+    if (!designation) {
+        const error = new CustomError("Designation with ID not found!", 404);
+        return next(error);
+    };
 
-        res.status(200).json({
-            success: true,
-            message: "Designation deleted successfully",
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-})
+    res.status(200).json({
+        success: true,
+        message: "Designation deleted successfully",
+    });
+}));
 
 module.exports = {
     createDesignation,
