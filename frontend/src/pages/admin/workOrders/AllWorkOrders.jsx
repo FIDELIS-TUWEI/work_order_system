@@ -20,7 +20,7 @@ const AllWorkOrders = () => {
  // Handle errors
  useEffect(() => {
     if (error) {
-      message.error(error.message);
+      message.error("Error Occured loading work orders!");
     };
  }, [error]);
 

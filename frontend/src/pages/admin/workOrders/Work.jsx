@@ -30,7 +30,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
               if (error.status === 400 && error?.data?.message) {
                   message.error(error.data.message);
               } else {
-                  message.error("Failed to delete work order");
+                  message.error("Failed to delete work order with ID!");
               }
           } else {
             message.success("Work deleted successfully");
@@ -38,7 +38,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
             refetch();
           }
       } catch (error) {
-          message.error(error.message);
+          message.error("Failed to delete work order with ID!");
       }
   };
 

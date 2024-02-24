@@ -13,7 +13,7 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
     };
 
     if (error) {
-        return message.error(error);
+        return message.error("Failed to load work details!");
     };
 
     // Function to convert dueDate values from Object to date string format to YYYY-MM-DD

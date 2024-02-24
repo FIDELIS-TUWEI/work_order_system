@@ -27,11 +27,11 @@ const EditWorkOrder = () => {
       const { error } = await updateWorkOrder({id, values}).unwrap();
 
       if (error) {
-        if (error.status === 400 && error.data && error.data.message) {
+        if (error.status === 400 && error?.data?.message) {
           message.error(error.data.message);
           navigate('/work/list');
         } else {
-          message.error("Failed to update work order");
+          message.error("Failed to update work order!");
         }
       } else {
         message.success('Work Order Updated Successfully');
@@ -39,7 +39,7 @@ const EditWorkOrder = () => {
       }
 
     } catch (error) {
-      message.error(error.message);
+      message.error("Failed to update work order!");
     }
   };
 

@@ -31,11 +31,11 @@ const CreateWorkOrder = () => {
       const { error } = await addWork(values).unwrap();
 
       if (error) {
-        if (error.status === 400 && error.data && error.data.message) {
+        if (error.status === 400 && error?.data?.message) {
           message.error(error.data.message);
           navigate("/work/list");
         } else {
-          message.error("Failed to create new work order");
+          message.error("Failed to create new work order!");
         }
       } else {
         message.success('Work Order Created Successfully');
@@ -47,7 +47,7 @@ const CreateWorkOrder = () => {
       } 
       
     } catch (error) {
-      message.error(error.message);
+      message.error("Failed to create new work order!");
     }
   };
 
