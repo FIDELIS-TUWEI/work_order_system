@@ -28,9 +28,13 @@ export const workApi = createApi({
             invalidatesTags: ["WorkOrder"],
         }),
         WorkOrders: builder.query({
-            query: (page) => ({
-                url: `/getall/work?pageNumber=${page}`,
+            query: (args) => ({
+                url: `/getall/work`,
                 method: "GET",
+                params: {
+                    pageNumber: args.page,
+                    status: args.status
+                }
             }),
             providesTags: ["WorkOrder"],
         }),
