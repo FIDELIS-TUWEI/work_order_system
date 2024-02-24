@@ -34,7 +34,7 @@ const LogIn = () => {
             if (error) {
                 switch (error.statusCode) {
                     case 401:
-                        message.error("Invalid Credentials");
+                        message.error("Incorrect username or password!");
                         break;
                     case 500:
                         message.error("Server Error, Please try again later!");
@@ -48,7 +48,7 @@ const LogIn = () => {
                 navigate('/private');
             };
         } catch (error) {
-            message.error("Invalid Credentials");
+            message.error("Invalid username or password!");
         }
     }
 
