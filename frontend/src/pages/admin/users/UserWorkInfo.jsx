@@ -51,6 +51,7 @@ const UserWorkInfo = ({ userHistoryArray, navigate, loading, error }) => {
                 rowKey="_id"
                 loading={loading}
                 pagination={false}
+                scroll={{ x: 1500, y: 300 }}
             />
         </Card>
 
