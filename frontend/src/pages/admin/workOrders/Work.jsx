@@ -145,7 +145,6 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
       )}
         </>
   );
-  
 
   // AntD Table Columns
   const columns = [
@@ -174,6 +173,14 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
       dataIndex: "status",
       key: "status",
       render: renderStatusBagde,
+    },
+    {
+      title: "Tracker",
+      width: 100,
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "tracker",
+      key: "tracker",
     },
     {
       title: "Location",
@@ -223,7 +230,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
           <select id="filterStatus" onChange={handleStatusChange} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
             <option value="">All</option>
             <option value="Pending">Pending</option>
-            <option value="Complete">Completed</option>
+            <option value="Complete">Complete</option>
           </select>
         </div>
 
