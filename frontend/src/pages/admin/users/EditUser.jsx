@@ -29,18 +29,18 @@ const EditUser = () => {
       const { error } = await editUser({id, values}).unwrap();
       
       if (error) {
-        if (error === 400 && error.data && error.data.message) {
+        if (error === 400 && error?.data?.message) {
           message.error(error.data.message);
           navigate('/users/all');
         } else {
-          message.error("Failed to update user details")
+          message.error("Failed to update user details!")
         }
       } else {
         message.success('User Updated Successfully');
         navigate('/users/all');
       }
     } catch (error) {
-      message.error(error.message);
+      message.error("Failed to update user details!");
     }
   };
 

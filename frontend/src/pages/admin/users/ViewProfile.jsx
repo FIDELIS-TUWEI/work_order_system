@@ -13,7 +13,7 @@ const ViewProfile = ({ loading, error, id, user, navigate, userInfoArray }) => {
   };
   
   if (error) {
-      return message.error(error);
+      return message.error("Error Occured getting user details!");
   };
 
   const departmentTitle = userInfoArray.department

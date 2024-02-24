@@ -8,7 +8,7 @@ const UserWorkInfo = ({ userHistoryArray, navigate, loading, error }) => {
 
     // Handle errors
     if (error) {
-        message.error(error.message);
+        message.error("Error Occured getting Work History!");
     }
 
     // antd Columns

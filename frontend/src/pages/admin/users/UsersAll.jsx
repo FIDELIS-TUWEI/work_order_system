@@ -19,7 +19,7 @@ const UsersAll = () => {
   // Handle Errors
   useEffect(() => {
     if (error) {
-      message.error(error.message);
+      message.error("Error Occured getting all users!");
     };
   }, [error]);
 

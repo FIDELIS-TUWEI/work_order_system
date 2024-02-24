@@ -33,7 +33,7 @@ const onFinishHandler = async (values) => {
     const { error } = await registerUser(values);
 
     if (error) {
-      if (error.status === 400 && error.data && error.data.message) {
+      if (error.status === 400 && error?.data?.message) {
         message.error(error.data.message);
         navigate('/users/all');
       } else {
@@ -46,7 +46,7 @@ const onFinishHandler = async (values) => {
     }
   } catch (error) {
     setLoading(false);
-    message.error( error.message);
+    message.error("User Registration Failed");
   }
 }
 

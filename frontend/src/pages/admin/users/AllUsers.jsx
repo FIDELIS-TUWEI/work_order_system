@@ -39,7 +39,7 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
           if (error.status === 400 && error?.data?.message) {
             message.error(error.data.message);
           } else {
-            message("Failed to delete the User")
+            message.error("Failed to User with ID!")
           }
          } else {
           message.success("User deleted successfully");
@@ -47,7 +47,7 @@ const AllUsers = ({ allUsersArray, loading, refetch, user }) => {
           refetch();
          }
       } catch (error) {
-          message.error("An error occurred while deleting the user", error);
+          message.error("An error occurred while deleting the user");
       }
   };
 
