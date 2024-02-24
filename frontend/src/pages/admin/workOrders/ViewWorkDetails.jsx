@@ -148,7 +148,7 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
                 </div>
             </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly', margin: "20px" }}>
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none'}} onClick={() => navigate(-1)}>Back</Button>
             <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} onClick={handlePrint}>Print</Button>
         </div>
