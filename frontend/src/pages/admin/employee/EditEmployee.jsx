@@ -16,7 +16,7 @@ const EditEmployee = () => {
   // Hook to handle errors
   useEffect(() => {
     if (error) {
-      message.error(error.message);
+      message.error("An Error has occured!");
     }
   }, [error]);
 
@@ -26,11 +26,11 @@ const EditEmployee = () => {
       const { error } = await editEmployee({id, values}).unwrap(); 
 
       if (error) {
-        if (error === 400 && error.data && error.data.message) {
+        if (error === 400 && error?.data?.message) {
           message.error(error.data.message);
           navigate('/all/employees');
         } else {
-          message.error("Failed to Update employee")
+          message.error("Failed to Update employee with ID!")
         }
       } else {
         message.success('Employee Updated Successfully');
@@ -38,7 +38,7 @@ const EditEmployee = () => {
       }
 
     } catch (error) {
-      message.error(error.message);
+      message.error("Failed to Update employee with ID!");
     }
   };
 

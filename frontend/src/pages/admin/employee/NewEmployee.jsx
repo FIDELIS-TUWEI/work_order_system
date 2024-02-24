@@ -15,18 +15,18 @@ const NewEmployee = () => {
       const { error } = await addEmployee(values).unwrap();
 
       if (error) {
-        if (error === 400 && error.data && error.data.message) {
+        if (error === 400 && error?.data?.message) {
           message.error(error.data.message);
           navigate("/all/employees");
         } else {
-          message.error("Failed to create new employee");
+          message.error("Failed to create new employee!");
         }
       } else {
         message.success("New Employee Created Succesfully");
         navigate("/all/employees");
       }
     } catch (error) {
-      message.error(error.message);
+      message.error("An error occured, Failed to create new employee!");
     }
   }
 

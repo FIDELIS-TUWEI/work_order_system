@@ -32,7 +32,7 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
             if (error === 400 && error?.data?.message) {
               message.error(error.data.message);
             } else {
-              message.error("Failed to delete employee")
+              message.error("Failed to delete employee with ID!")
             }
           } else {
             message.success("Employee deleted successfully");
@@ -40,7 +40,7 @@ const AllEmployees = ({ navigate, loading, employees, refetch }) => {
             refetch();
           }
       } catch (error) {
-          message.error(error.message);
+          message.error("An Error occured, failed to delete employee with ID!");
       }
   };
 

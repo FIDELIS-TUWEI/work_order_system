@@ -14,7 +14,7 @@ const EmployeeDetails = () => {
 
   useEffect(() => {
     if (error) {
-      message.error(error.message)
+      message.error("Failed to get employee details!")
     }
   }, [error]);
 

@@ -15,7 +15,7 @@ const Employees = () => {
 
   useEffect(() => {
     if (error) {
-      message.error(error.message);
+      message.error("Failed to load all employees data!");
     }
   }, [error]);
 
