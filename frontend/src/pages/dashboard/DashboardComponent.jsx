@@ -3,8 +3,11 @@ import { Card, Col, Row, Space, Statistic, Typography } from "antd";
 import { MdGroups, MdOutlinePendingActions, MdOutlinePreview, MdOutlineWork } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6";
-import { BiSolidUserCheck } from "react-icons/bi";
+import { BiSolidUserCheck, BiTask, BiTaskX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { TbProgressCheck } from "react-icons/tb";
+import { AiOutlineFileDone } from "react-icons/ai";
+import { BsClipboardCheckFill, BsFillClipboard2XFill } from "react-icons/bs";
 
 // Dashboard card
 const DashboardCard = ({ title, value, icon, onClick }) => (
@@ -64,7 +67,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     title={"Not-attended Work"}
                     value={notAttendedCount}
                     icon={
-                        <MdOutlinePendingActions size={24} color="orange" />
+                        <BiTaskX size={24} color="orange" />
                     }
                     onClick={navigateToPendingWork}
                 />
@@ -75,7 +78,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     title={"Pending Work"}
                     value={pendingCount}
                     icon={
-                        <MdOutlinePendingActions size={24} color="orange" />
+                        <MdOutlinePendingActions size={24} color="red" />
                     }
                     onClick={navigateToPendingWork}
                 />
@@ -85,7 +88,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     title={"In-attendance Work"}
                     value={inAttendanceCount}
                     icon={
-                        <MdOutlinePendingActions size={24} color="orange" />
+                        <TbProgressCheck  size={24} color="blue" />
                     }
                     onClick={navigateToPendingWork}
                 />
@@ -95,7 +98,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     title={"In-complete Work"}
                     value={inCompleteCount}
                     icon={
-                        <MdOutlinePendingActions size={24} color="orange" />
+                        <BsFillClipboard2XFill size={24} color="maroon" />
                     }
                     onClick={navigateToPendingWork}
                 />
@@ -105,7 +108,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     title={"Attended Work"}
                     value={attendedCount}
                     icon={
-                        <MdOutlinePendingActions size={24} color="orange" />
+                        <BiTask size={24} color="green" />
                     }
                     onClick={navigateToPendingWork}
                 />
@@ -116,7 +119,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     title={"Completed Work"}
                     value={completedCount}
                     icon={
-                        <FaCheckCircle size={24} color="green" />
+                        <AiOutlineFileDone size={24} color="green" />
                     }
                     onClick={navigateToCompleteWork}
                 />
@@ -127,7 +130,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     title={"Reviewed Work"}
                     value={reviewedCount}
                     icon={
-                        <MdOutlinePreview size={24} color="purple" />
+                        <BsClipboardCheckFill size={24} color="purple" />
                     }
                     onClick={navigateToReviewWork}
                 />
@@ -149,7 +152,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                 title={"Active Users"}
                 value={countActiveUsers}
                 icon={
-                    <BiSolidUserCheck size={24} color="violet" />
+                    <BiSolidUserCheck size={24} color="green" />
                 }
                 onClick={navigateToActiveUsers}
             />
