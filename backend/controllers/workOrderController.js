@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
 const moment = require("moment");
-const ErrorResponse = require("../utils/errorRespone");
+const ErrorResponse = require("../utils/CustomError");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
