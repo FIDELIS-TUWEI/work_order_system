@@ -5,7 +5,6 @@ module.exports = (app) => {
     const bodyParser = require('body-parser');
     const helmet = require("helmet");
     const morgan = require("morgan");
-    const errorHandler = require("../middleware/error");
     const mongoSanitize = require("express-mongo-sanitize");
     const hpp = require("hpp");
     const addKey = require("./addKey");
@@ -53,6 +52,6 @@ module.exports = (app) => {
     // Prevent SQL Injection
     app.use(mongoSanitize());
 
-    // Error Middleware
-    app.use(errorHandler);
+    // Reduce server fingerprinting
+    app.disable('x-powered-by');
 }

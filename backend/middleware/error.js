@@ -10,12 +10,6 @@ const errorHandler = (err, req, res, next) => {
         error = new ErrorResponse(message, 404);
     }
 
-    // Handle Axios Error (network error)
-    if (err.name === "AxiosError") {
-        const message = "Network Error, please Check your internet connection";
-        error = new ErrorResponse(message, 500);
-    };
-
     // Handle Duplicate field value
     if (err.code === 11000) {
         const field = Object.values(err.keyValue)[0];

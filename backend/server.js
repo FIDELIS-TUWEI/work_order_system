@@ -1,6 +1,7 @@
 const connectDB = require("../config/connectDB");
 const express = require('express');
 const cookieParser = require("cookie-parser");
+const errorHandler = require("./middleware/error");
 
 let app = express();
 
@@ -16,6 +17,9 @@ require("./middleware")(app);
 
 //Routes
 require("./routes/index")(app);
+
+// Error Middleware
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
