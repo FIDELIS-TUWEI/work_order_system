@@ -12,7 +12,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
     };
 
     if (error) {
-        return message.error(error);
+        return message.error("Error Occured loading data");
     };
 
     // Count the number of work assigned to each employee
