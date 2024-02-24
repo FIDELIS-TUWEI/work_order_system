@@ -23,8 +23,8 @@ DashboardCard.propTypes = {
     onClick: PropTypes.func
 }
 
-const DashboardComponent = ({ user, pendingCount, 
-    completedCount, workCountData, reviewedCount, 
+const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendanceCount,
+    inCompleteCount, attendedCount, completedCount, workCountData, reviewedCount, 
     usersData, countActiveUsers, countEmployees 
 }) => {
     const navigate = useNavigate();
@@ -61,8 +61,49 @@ const DashboardComponent = ({ user, pendingCount,
 
             <Col span={8}>
                 <DashboardCard 
+                    title={"Not-attended Work"}
+                    value={notAttendedCount}
+                    icon={
+                        <MdOutlinePendingActions size={24} color="orange" />
+                    }
+                    onClick={navigateToPendingWork}
+                />
+            </Col>
+
+            <Col span={8}>
+                <DashboardCard 
                     title={"Pending Work"}
                     value={pendingCount}
+                    icon={
+                        <MdOutlinePendingActions size={24} color="orange" />
+                    }
+                    onClick={navigateToPendingWork}
+                />
+            </Col>
+            <Col span={8}>
+                <DashboardCard 
+                    title={"In-attendance Work"}
+                    value={inAttendanceCount}
+                    icon={
+                        <MdOutlinePendingActions size={24} color="orange" />
+                    }
+                    onClick={navigateToPendingWork}
+                />
+            </Col>
+            <Col span={8}>
+                <DashboardCard 
+                    title={"In-complete Work"}
+                    value={inCompleteCount}
+                    icon={
+                        <MdOutlinePendingActions size={24} color="orange" />
+                    }
+                    onClick={navigateToPendingWork}
+                />
+            </Col>
+            <Col span={8}>
+                <DashboardCard 
+                    title={"Attended Work"}
+                    value={attendedCount}
                     icon={
                         <MdOutlinePendingActions size={24} color="orange" />
                     }
@@ -240,7 +281,11 @@ const DashboardComponent = ({ user, pendingCount,
 
 DashboardComponent.propTypes = {
     user: PropTypes.object,
+    notAttendedCount: PropTypes.number,
     pendingCount: PropTypes.number,
+    inAttendanceCount: PropTypes.number,
+    inCompleteCount: PropTypes.number,
+    attendedCount: PropTypes.number,
     completedCount: PropTypes.number,
     workCountData: PropTypes.number,
     reviewedCount: PropTypes.number,
