@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useDeleteWorkMutation } from "@/features/work/workSlice";
 
 
-const Work = ({workOrdersArray, user, loading, refetch }) => {
+const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) => {
   const { id } = useParams();
   const [deleteWork] = useDeleteWorkMutation(id);
   const navigate = useNavigate();
@@ -210,11 +210,23 @@ const Work = ({workOrdersArray, user, loading, refetch }) => {
     <>
         <div className="add-btn">
             <Button 
-            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
-            onClick={() => navigate("/new/work")}
+              style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+              onClick={() => navigate("/new/work")}
             >
-            New Work
+              New Work
             </Button>
+
+            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+            <label htmlFor="filterStatus" style={{ fontWeight: "700", marginLeft: "20px" }}>
+              Filter By Status:
+            </label>
+            <select id="filterStatus" onChange={handleStatusChange} style={{ marginLeft: "10px", backgroundColor: "darkgreen", color: "white" }}>
+              <option value="">All</option>
+              <option value="Pending">Pending</option>
+              <option value="Complete">Completed</option>
+            </select>
+            </div>
+            
         </div>
 
         <Card>
@@ -256,7 +268,8 @@ Work.propTypes = {
   workOrdersArray: PropTypes.array,
   user: PropTypes.object,
   loading: PropTypes.bool,
-  refetch: PropTypes.func
+  refetch: PropTypes.func,
+  handleStatusChange: PropTypes.func
 };
 
 export default Work;
