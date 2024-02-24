@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Card, Col, Row, Space, Statistic, Typography } from "antd";
-import { MdGroups, MdOutlinePendingActions, MdOutlinePreview, MdOutlineWork } from "react-icons/md";
+import { MdGroups, MdOutlinePendingActions, MdOutlineWork } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaUsersLine } from "react-icons/fa6";
 import { BiSolidUserCheck, BiTask, BiTaskX } from "react-icons/bi";
@@ -148,25 +148,25 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
             </Col>
 
             <Col span={8}>
-            <DashboardCard 
-                title={"Active Users"}
-                value={countActiveUsers}
-                icon={
-                    <BiSolidUserCheck size={24} color="green" />
-                }
-                onClick={navigateToActiveUsers}
-            />
+                <DashboardCard 
+                    title={"Active Users"}
+                    value={countActiveUsers}
+                    icon={
+                        <BiSolidUserCheck size={24} color="green" />
+                    }
+                    onClick={navigateToActiveUsers}
+                />
             </Col>
 
             <Col span={8}>
-            <DashboardCard 
-                title={"Total Employees"}
-                value={countEmployees}
-                icon={
-                    <FaUsersLine size={24} color="black" />
-                }
-                onClick={navigateToEmployees}
-            />
+                <DashboardCard 
+                    title={"Total Employees"}
+                    value={countEmployees}
+                    icon={
+                        <FaUsersLine size={24} color="black" />
+                    }
+                    onClick={navigateToEmployees}
+                />
             </Col>
         </Row>
         </Space>
@@ -188,12 +188,56 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                 </Col>
 
                 <Col span={8}>
-                    <DashboardCard
+                    <DashboardCard 
+                        title={"Not-attended Work"}
+                        value={notAttendedCount}
+                        icon={
+                            <BiTaskX size={24} color="orange" />
+                        }
+                        onClick={navigateToPendingWork}
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard 
                         title={"Pending Work"}
                         value={pendingCount}
                         icon={
-                            <MdOutlinePendingActions size={24} color="orange" />
-                        } 
+                            <MdOutlinePendingActions size={24} color="red" />
+                        }
+                        onClick={navigateToPendingWork}
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"In-attendance Work"}
+                        value={inAttendanceCount}
+                        icon={
+                            <TbProgressCheck  size={24} color="blue" />
+                        }
+                        onClick={navigateToPendingWork}
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"In-complete Work"}
+                        value={inCompleteCount}
+                        icon={
+                            <BsFillClipboard2XFill size={24} color="maroon" />
+                        }
+                        onClick={navigateToPendingWork}
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Attended Work"}
+                        value={attendedCount}
+                        icon={
+                            <BiTask size={24} color="green" />
+                        }
                         onClick={navigateToPendingWork}
                     />
                 </Col>
@@ -203,7 +247,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         title={"Completed Work"}
                         value={completedCount}
                         icon={
-                            <FaCheckCircle size={24} color="green" />
+                            <AiOutlineFileDone size={24} color="green" />
                         }
                         onClick={navigateToCompleteWork}
                     />
@@ -214,7 +258,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         title={"Reviewed Work"}
                         value={reviewedCount}
                         icon={
-                            <MdOutlinePreview size={24} color="purple" />
+                            <BsClipboardCheckFill size={24} color="purple" />
                         }
                         onClick={navigateToReviewWork}
                     />
@@ -254,6 +298,17 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         icon={
                             <FaCheckCircle size={24} color="green" />
                         }
+                    />
+                </Col>
+
+                <Col span={8}>
+                    <DashboardCard 
+                        title={"Reviewed Work"}
+                        value={reviewedCount}
+                        icon={
+                            <BsClipboardCheckFill size={24} color="purple" />
+                        }
+                        onClick={navigateToReviewWork}
                     />
                 </Col>
             </Row>
