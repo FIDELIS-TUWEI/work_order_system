@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const { ObjectId } = mongoose.Schema;
 const crypto = require("crypto");
+const validator = require("validator")
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -18,7 +19,8 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please fill your email"],
         unique: [true, "Email already exists"],
         lowercase: true,
-        match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email"]
+        match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email"],
+        validate: [validator.isEmail, 'Please Enter a valid email']
     },
     username: {
         type: String,
