@@ -2,12 +2,12 @@ const User = require("../model/user");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
-const ErrorResponse = require("../utils/CustomError");
 const createSecretToken = require("../utils/secretToken");
+const CustomError = require("../utils/CustomError");
+const asyncErrorHandler = require("../utils/asyncErrorHandler");
 
 // @desc Register User
-const signupUser = asyncHandler (async (req, res) => {
-    try {
+const signupUser = asyncHandler (asyncErrorHandler(async (req, res) => {
         // check for existing user
         const existingUser = await User.findOne({ username: req.body.username });
         if (existingUser) {
@@ -15,7 +15,7 @@ const signupUser = asyncHandler (async (req, res) => {
                 success: false,
                 message: "User already exists",
             });
-        }
+        };
 
         // create new user
         const user = await User.create(req.body);
@@ -28,14 +28,14 @@ const signupUser = asyncHandler (async (req, res) => {
 
             // Send email notification
             const recepients = ["fideliofidel9@gmail.com"]
-            const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+            //const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
 
             const emailSubject = `New User successfully Created`;
             const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
 
             const emailOptions = {
                 email: recepients,
-                cc: ccEmails,
+                //cc: ccEmails,
                 subject: emailSubject,
                 text: emailText
             };
@@ -43,27 +43,14 @@ const signupUser = asyncHandler (async (req, res) => {
             // Send Email
             sendEmail(emailOptions);
 
-        } else {
-            res.status(500).json({
-                success: false,
-                message: error.message
-            })
         }
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        })
-    }
-});
+}));
 
 // @desc Auth user & get token
 // @route POST /hin/login
 // @access Public
 
-const login = asyncHandler (async (req, res, next) => {
-    try {
+const login = asyncHandler (asyncErrorHandler(async (req, res, next) => {
         const { username, password } = req.body;
 
         // Check user input
@@ -75,14 +62,16 @@ const login = asyncHandler (async (req, res, next) => {
         const user = await User.findOne({ username });
 
         if (!user) {
-            return res.status(401).json({ message: "Incorrect username or password!" })
+            const error = new CustomError("User not found!", 400)
+            return next(error);
         };
 
         // check if password matches in DB
         const passwordIsMatch = await bcrypt.compare(password, user.password);
 
         if (!passwordIsMatch) {
-            return res.status(401).json({ message: "Incorrect Password or username!" })
+            const error = new CustomError("Incorrect password or username!", 401)
+            return next(error);
         }
 
         // send token if username and password match DB
@@ -95,7 +84,10 @@ const login = asyncHandler (async (req, res, next) => {
             res.cookie("token", token, {
                 withCredentials: true,
                 path: '/',
-                httpOnly: false,
+                httpOnly: true,
+                sameSite: 'none',
+                secure: process.env.NODE_ENV === 'production',
+                expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
             });
 
             res.status(200).json({
@@ -110,12 +102,10 @@ const login = asyncHandler (async (req, res, next) => {
 
             next();
         } else {
-            return next(new ErrorResponse("Invalid Credentials", 401));
+            const error = new CustomError("Invalid Credentials!", 401)
+            return next(error);
         }
-    } catch (error) {
-        return next(new ErrorResponse(error.message, 500));
-    }
-});
+}));
 
 // @desc Logout user
 // @route POST /hin/logout
