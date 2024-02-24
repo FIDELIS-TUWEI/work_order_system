@@ -1,7 +1,8 @@
 const connectDB = require("../config/connectDB");
 const express = require('express');
 const cookieParser = require("cookie-parser");
-const errorHandler = require("./middleware/error");
+const errorHandler = require("./controllers/errorController");
+const CustomError = require("./utils/CustomError");
 
 let app = express();
 
@@ -17,6 +18,12 @@ require("./middleware")(app);
 
 //Routes
 require("./routes/index")(app);
+
+// Error logic
+app.all('*', (req, res, next) => {
+    const err = new CustomError(`Can't find ${req.originalUrl} on the server!`, 404);
+    next(err);
+})
 
 // Error Middleware
 app.use(errorHandler);
