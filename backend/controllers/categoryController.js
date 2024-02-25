@@ -31,7 +31,7 @@ const createCategory = asyncHandler (asyncErrorHandler (async (req, res, next) =
 // Get all categories
 const getAllCategories = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     // Enable Pagination
-    const pageSize = 5;
+    const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Category.find({}).estimatedDocumentCount();
 
