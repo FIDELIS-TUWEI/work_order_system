@@ -92,6 +92,8 @@ const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
                     dataSource={categories}
                     rowKey="_id"
                     pagination={false}
+                    scroll={{ x: 1500, y: 300 }}
+
                 />
             </Card>
 
