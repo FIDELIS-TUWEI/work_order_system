@@ -1,5 +1,6 @@
 const WorkOrder = require("../model/workOrder");
 const User = require("../model/user");
+const Category = require("../model/category")
 const Employee = require("../model/employee");
 const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
@@ -15,16 +16,31 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
         console.error("Requested User not found");
         return;
     }
-    const engineerEmail = ["fideliofidel9@gmail.com"];
-    //const ccList = [
-    //    ...engineerEmail, "fidel.tuwei@holidayinnnairobi.com", "ms@holidayinnnairobi.com",
-    //    "allan.kimani@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
-    //    "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
-    //];
     
+    // Fetch category details to determine the email recipient list
+    const workOrderCategory = await Category.findById(WorkOrder.category).select("categoryTitle");
+    let ccList;
+
+    const itCategoryList = [
+        "IT", "Room Wi-Fi", "Room-Tv", "Telephone", "Cable Pulling", "Office Printer", 
+        "Guest Wi-Fi", "Conference I.T Support", "Office Wi-Fi"
+    ].includes(workOrderCategory.categoryTitle);
+
+    if (itCategoryList) {
+        ccList = [
+            "fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com", 
+            "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
+        ];
+    } else {
+        ccList = [
+            "solomon.ouma@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
+            "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
+        ];
+    }
+
     const emailOptions = {
         email: requestedUser.email,
-        cc: engineerEmail, //ccList.join(", "),
+        cc: ccList.join(", "),
         subject: subject,
         text: text
     }
@@ -385,16 +401,16 @@ cron.schedule("00 11 * * *", asyncErrorHandler (async (next) => {
 
         // Email addresses
         const engineerEmail = "fideliofidel9@gmail.com"
-        //const ccEmails = [
-        //        "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-        //        "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
-        //        "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
-        //];
+        const ccEmails = [
+                "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
+               "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
+               "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
+        ];
 
         // Send email
         sendEmail({
             email: engineerEmail,
-        //    cc: ccEmails,
+            cc: ccEmails,
             subject: emailSubject,
             text: emailText
         });
