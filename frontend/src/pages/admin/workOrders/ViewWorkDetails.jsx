@@ -40,6 +40,9 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
             <div className="company--logo">
                 <img src={Logo} alt="Logo" />
             </div>
+            <div className="work--serial">
+                <h3>Order No: {workDetailsArray?.workOrderNumber}</h3>
+            </div>
             <div className="details--header">
                 <div className="details--header1">
                     <h2>Category: {workDetailsArray.category?.categoryTitle}</h2>
