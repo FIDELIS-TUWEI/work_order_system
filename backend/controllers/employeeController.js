@@ -23,14 +23,17 @@ const newEmployee = asyncHandler (asyncErrorHandler (async (req, res, next) => {
         await newEmployee.save();
 
         // Send email notification
-        const recepients = ["fideliofidel9@gmail.com"];
+        const recepients = "fidel.tuwei@holidayinnnairobi.com";
         const ccEmails = [
-            "fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", 
-            "joel.njau@holidayinnnairobi.com", "solomon.ouma@holidayinnnairobi.com"
+            "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com", "solomon.ouma@holidayinnnairobi.com"
         ];
 
         const emailSubject = `New employee created`;
-        const emailText = `An employee with name ${newEmployee.firstName} ${newEmployee.lastName} has been created.`;
+        const emailText = `An employee with name ${newEmployee.firstName} ${newEmployee.lastName} has been created.
+
+            Thank you,
+            Holiday Inn Work Order System - All rights reserved.
+        `;
 
         const emailOptions = {
             email: recepients,
@@ -226,14 +229,17 @@ const deleteEmployee = asyncHandler (asyncErrorHandler (async (req, res, next) =
     }
 
     // Send email notification
-    const recepients = ["fideliofidel9@gmail.com"]
+    const recepients = "fidel.tuwei@holidayinnnairobi.com"
     const ccEmails = [
-        "fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", 
-        "joel.njau@holidayinnnairobi.com"
+        "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"
     ];
 
     const emailSubject = `Employee deleted successfully`;
-    const emailText = `An employee with name ${deletedEmployee.firstName} ${deletedEmployee.lastName} has been deleted.`;
+    const emailText = `An employee with name ${deletedEmployee.firstName} ${deletedEmployee.lastName} has been deleted.
+    
+        Thank you,
+        Holiday Inn Work Order System - All rights reserved.
+    `;
 
     const emailOptions = {
         email: recepients,
