@@ -86,9 +86,8 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
         - Notes: ${notes}
         - Requested By: ${user.username}
 
-        Thank you for using Holiday Inn Work Order System.
-
-        Login to your account to view the work order details.
+        Thank you,
+        Holiday Inn Work Order System - All rights reserved. 2024
     `;
 
     await sendEmailNotification(savedWorkorder, subject, emailText);
@@ -103,49 +102,39 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
 }));
 
 // Update Work Order
-const updateWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const updateWorkOrder = asyncHandler(asyncErrorHandler(async (req, res, next) => {
     const { id } = req.params;
-    const  userId = req.user._id;
+    const userId = req.user._id;
     const user = await User.findById(userId).select("-password");
 
     if (!user) {
-        return next(new ErrorResponse("User not found", 404));
-    };
-    // Update work logic
-    const { assignedTo, reviewed, ...updatedFields } = req.body;
+        return next(new ErrorResponse("User not found",  404));
+    }
 
-    // Update the work order and populate the assignedTo field
+    const { assignedTo, reviewed, ...updatedFields } = { ...req.body };
     const updatedWorkOrder = await updateWorkOrderDetails(id, updatedFields);
 
-
-    // check if any relevant fields were actually updated
-    const isUpdated = Object.keys(updatedFields).some(key => updatedFields[key] !== updatedWorkOrder[key]);
-
-    // check if work order exists
     if (!updatedWorkOrder) {
-        const error = new CustomError("Work order not found!", 404);
+        const error = new CustomError("Work order not found!",  404);
         return next(error);
-    };
+    }
 
-    // Check work order tracker
     if (updatedFields.tracker === "In_Complete") {
         await handleInCompleteWorkOrder(updatedWorkOrder);
     }
 
-    // check if work order is reviewed
-    if (reviewed && isUpdated) {
-        await handleReviewedWorkOrder(updatedWorkOrder, userId, req);
-    };
+    if (updatedFields.status === "Complete") {
+        await sendCompletedEmailNotification(updatedWorkOrder);
+    }
 
-    // check if an employee is assigned to the work order
+    if (reviewed && Object.keys(updatedFields).some(key => updatedFields[key] !== updatedWorkOrder[key])) {
+        await handleReviewedWorkOrder(updatedWorkOrder, userId, req);
+    }
+
     if (assignedTo) {
         await handleAssignedWorkOrder(updatedWorkOrder, assignedTo);
-    };
+    }
 
-    // Send an email notification
-    await sendUpdateEmailNotification(updatedWorkOrder);
-
-    // Return a response
     return res.status(200).json({
         success: true,
         data: updatedWorkOrder
@@ -182,6 +171,9 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
 
     await updatedWorkOrder.save();
 
+    // Send an email notification to the assigned employee
+    await sendAssignedEmailNotification(updatedWorkOrder, assignedTo);
+
     // Find the employee and add the work order to their assignedwork array
     const employee = await Employee.findById(assignedTo);
     if (employee) {
@@ -189,6 +181,49 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
         await employee.save();
     }
 };
+
+async function sendAssignedEmailNotification(updatedWorkOrder, assignedTo) {
+    const employee = await Employee.findById(assignedTo);
+
+    const subject = `Work Order Assigned`;
+    const text = `The following work order has been assigned:
+        - Description: ${updatedWorkOrder.description}
+        - Priority: ${updatedWorkOrder.priority}
+        - Status: ${updatedWorkOrder.status}
+        - Service Type: ${updatedWorkOrder.serviceType}
+        - Assigned To: ${employee.firstName} ${employee.lastName}
+        - Date Assigned: ${updatedWorkOrder.dateAssigned}
+
+        - Date Updated: ${updatedWorkOrder.Date_Updated}
+
+        Thank you,
+        Holiday Inn Work Order System - All rights reserved.
+    `;
+
+    await sendEmailNotification(updatedWorkOrder, subject, text);
+}
+
+
+async function sendCompletedEmailNotification(updatedWorkOrder) {
+    const subject = `Work Order Completed`;
+    const text = `The following work order has been completed:
+        - Description: ${updatedWorkOrder.description}
+        - Status: ${updatedWorkOrder.status}
+        - Date Completed: ${updatedWorkOrder.dateCompleted}
+        - Comments: ${updatedWorkOrder.comments}
+        - Supervised By: ${updatedWorkOrder.supervisedBy}
+        - Tracker: ${updatedWorkOrder.tracker}
+        - Tracker Message: ${updatedWorkOrder.trackerMessage}
+
+        - Date Updated: ${updatedWorkOrder.Date_Updated}
+
+        Thank you,
+        Holiday Inn Work Order System - All rights reserved.
+    `;
+
+    await sendEmailNotification(updatedWorkOrder, subject, text);
+}
+
 
 // Handle In Complete Work Order tracker
 async function handleInCompleteWorkOrder (updatedWorkOrder) {
@@ -202,7 +237,8 @@ async function handleInCompleteWorkOrder (updatedWorkOrder) {
         - Tracker Message: ${updatedWorkOrder.trackerMessage}
         - Date Updated: ${updatedWorkOrder.Date_Updated}
 
-        Thank you for using Holiday Inn Work Order System.
+        Thank you,
+        Holiday Inn Work Order System - All rights reserved.
     `;
 
     // send email notification
@@ -249,28 +285,34 @@ async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
     // Save the updated work order
     await updatedWorkOrder.save();
 
+    await sendReviewedEmailNotification(updatedWorkOrder)
+
     // Update the user's workOrders array
     await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
 
 };
 
-// send email notification
-async function sendUpdateEmailNotification (updatedWorkOrder) {
-    const subject = `A WORK ORDER HAS BEEN UPDATED`;
-    const text = `The following details have been updated:
-         - Description: ${updatedWorkOrder.description}
-         - Status: ${updatedWorkOrder.status}
-         - Tracker: ${updatedWorkOrder.tracker}
-         - Tracker Message: ${updatedWorkOrder.trackerMessage}
-         - Date Updated: ${updatedWorkOrder.Date_Updated}
+async function sendReviewedEmailNotification(updatedWorkOrder) {
+    const subject = `Work Order Reviewed`;
+    const text = `The following work order has been reviewed:
+        - Description: ${updatedWorkOrder.description}
+        - Status: ${updatedWorkOrder.status}
+        - Tracker: ${updatedWorkOrder.tracker}
+        - Tracker Message: ${updatedWorkOrder.trackerMessage}
+        - Reviewed: ${updatedWorkOrder.reviewed}
+        - Verified By: ${updatedWorkOrder.verifiedBy}
+        - Verify Comments: ${updatedWorkOrder.verifyComments}
+        - Date Verified: ${updatedWorkOrder.dateVerified}
+        - Checked By: ${updatedWorkOrder.checkedBy}
 
-        Thank you for using Holiday Inn Work Order System.
+        - Date Updated: ${updatedWorkOrder.Date_Updated}
 
-        Log in to your account to see more details about the updated work order.
+        Thank you,
+        Holiday Inn Work Order System - All rights reserved.
     `;
 
     await sendEmailNotification(updatedWorkOrder, subject, text);
-};
+}
 
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (asyncErrorHandler (async (req, res, next) => {
@@ -371,7 +413,11 @@ const deleteWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
 
     // Send Email Notification
     const subject = `WORK ORDER DELETED`;
-    const text = `The work order with description ${workOrder.description} has been deleted by ${deletedByUser.username}`;
+    const text = `The work order with description ${workOrder.description} has been deleted by ${deletedByUser.username}
+
+        Thank you,
+        Holiday Inn Work Order System - All rights reserved.
+    `;
 
     await sendEmailNotification(workOrder, subject, text);
 
@@ -382,7 +428,7 @@ const deleteWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
 }));
 
 // Check Work Orders status and send an email notification everyday at 11 am
-cron.schedule("00 11 * * *", asyncErrorHandler (async (next) => {
+cron.schedule("10 18 * * *", asyncErrorHandler (async (next) => {
 
     // Find all work orders with status and tracker
     const workOrderStatus = await WorkOrder.find({ 
@@ -400,7 +446,7 @@ cron.schedule("00 11 * * *", asyncErrorHandler (async (next) => {
         });
 
         // Email addresses
-        const engineerEmail = "fideliofidel9@gmail.com"
+        const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
         const ccEmails = [
                 "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
                "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
