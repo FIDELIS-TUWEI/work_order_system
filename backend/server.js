@@ -19,6 +19,11 @@ require("./middleware")(app);
 //Routes
 require("./routes/index")(app);
 
+// Create route
+app.get("/", (req, res) => {
+    res.send("Server is running");
+})
+
 // Error logic
 app.all('*', (req, res, next) => {
     const err = new CustomError(`Can't find ${req.originalUrl} on the server!`, 404);
@@ -31,11 +36,6 @@ app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
-
-// Create route
-app.get("/", (req, res) => {
-    res.send("Server is running");
-})
 
 process.on('unhandledRejection', error => {
     console.error('unhandledRejection', error)
