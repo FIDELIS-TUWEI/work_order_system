@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
 const workOrderSchema = new mongoose.Schema({
-    workOrderNumber: {
-        type: String,
-        unique: true,
-        index: true,
-    },
+    //workOrderNumber: {
+    //    type: String,
+    //    unique: true,
+    //    index: true,
+    //},
     description: {
         type: String,
         required: true,
@@ -124,26 +124,26 @@ const workOrderSchema = new mongoose.Schema({
 );
 
 
-const Counter = mongoose.model('Counter', new mongoose.Schema({
-    _id: { type: String, required: true },
-    seq: { type: Number, default: 0 }
-}));
+//const Counter = mongoose.model('Counter', new mongoose.Schema({//
+//    _id: { type: String, required: true },
+//   seq: { type: Number, default: 0 }
+//}));
 
-async function getNextSequenceValue(sequenceName) {
-    const sequenceDocument = await Counter.findByIdAndUpdate(
-        sequenceName,
-        { $inc: { seq: 1 } },
-        { new: true, upsert: true }
-    );
-    return sequenceDocument.seq;
-}
+//async function getNextSequenceValue(sequenceName) {
+//    const sequenceDocument = await Counter.findByIdAndUpdate(
+//        sequenceName,
+//        { $inc: { seq: 1 } },
+//        { new: true, upsert: true }
+//    );
+//    return sequenceDocument.seq;
+////}
 
-workOrderSchema.pre('save', async function(next) {
-    if (!this.workOrderNumber) {
-        const sequenceValue = await getNextSequenceValue('workOrderNumber');
-        this.workOrderNumber = `HINWOS${new Date().getFullYear()}${sequenceValue.toString().padStart(3, '0')}`;
-    }
-    next();
-});
+//workOrderSchema.pre('save', async function(next) {
+//    if (!this.workOrderNumber) {
+//        const sequenceValue = await getNextSequenceValue('workOrderNumber');
+//        this.workOrderNumber = `HINWOS${new Date().getFullYear()}${sequenceValue.toString().padStart(3, '0')}`;
+//    }
+//    next();
+//});
 
 module.exports = mongoose.model("Workorder", workOrderSchema);
