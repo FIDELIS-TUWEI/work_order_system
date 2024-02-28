@@ -7,6 +7,7 @@ const sendEmail = require("../utils/email");
 const cron = require("node-cron");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");
+const Location = require("../model/location");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
@@ -77,12 +78,17 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     // Update the user's workOrders array
     await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
 
+    // Fetch Location Details
+    const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+    const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+
     // Send Email notification
     const subject = "NEW WORK ORDER CREATED";
     const emailText = `New Work Order Created with the following details:
         - Description: ${description}
         - Priority: ${priority}
         - Service Type: ${serviceType}
+        - Locations: ${locationTitles}
         - Notes: ${notes}
         - Requested By: ${user.username}
 
@@ -300,7 +306,7 @@ async function sendReviewedEmailNotification(updatedWorkOrder) {
         - Tracker: ${updatedWorkOrder.tracker}
         - Tracker Message: ${updatedWorkOrder.trackerMessage}
         - Reviewed: ${updatedWorkOrder.reviewed}
-        - Verified By: ${updatedWorkOrder.verifiedBy}
+        - Verified By: ${updatedWorkOrder.verifiedByUsername}
         - Verify Comments: ${updatedWorkOrder.verifyComments}
         - Date Verified: ${updatedWorkOrder.dateVerified}
         - Checked By: ${updatedWorkOrder.checkedBy}
