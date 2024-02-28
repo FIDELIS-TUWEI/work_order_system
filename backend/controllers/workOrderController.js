@@ -29,7 +29,7 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
 
     if (itCategoryList) {
         ccList = [
-            "fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com", 
+            "fidel.tuwei@holidayinnnairobi.com", 
             "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
         ];
     } else {
@@ -93,7 +93,7 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
         - Requested By: ${user.username}
 
         Thank you,
-        Holiday Inn Work Order System - All rights reserved. 2024
+        Holiday Inn Work Order System - All rights reserved.
     `;
 
     await sendEmailNotification(savedWorkorder, subject, emailText);
@@ -209,7 +209,6 @@ async function sendAssignedEmailNotification(updatedWorkOrder, assignedTo) {
     await sendEmailNotification(updatedWorkOrder, subject, text);
 }
 
-
 async function sendCompletedEmailNotification(updatedWorkOrder) {
     const subject = `Work Order Completed`;
     const text = `The following work order has been completed:
@@ -229,7 +228,6 @@ async function sendCompletedEmailNotification(updatedWorkOrder) {
 
     await sendEmailNotification(updatedWorkOrder, subject, text);
 }
-
 
 // Handle In Complete Work Order tracker
 async function handleInCompleteWorkOrder (updatedWorkOrder) {
