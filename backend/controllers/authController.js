@@ -25,15 +25,19 @@ const signupUser = asyncHandler (asyncErrorHandler (async (req, res) => {
         });
 
         // Send email notification
-        const recepients = ["fideliofidel9@gmail.com"]
-        //const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+        const recepients = ["fidel.tuwei@holidayinnnairobi.com"]
+        const ccEmails = ["peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
 
         const emailSubject = `New User successfully Created`;
-        const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.`;
+        const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.
+        
+            Thank you,
+            Holiday Inn Work Order System - All rights reserved.
+        `;
 
         const emailOptions = {
             email: recepients,
-            //cc: ccEmails,
+            cc: ccEmails,
             subject: emailSubject,
             text: emailText
         };
