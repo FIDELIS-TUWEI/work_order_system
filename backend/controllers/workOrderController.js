@@ -125,8 +125,11 @@ const updateWorkOrder = asyncHandler(asyncErrorHandler(async (req, res, next) =>
         return next(error);
     }
 
+    // Check the user who updated the tracker
+    const username = req.user.username
+
     if (updatedFields.tracker === "In_Complete") {
-        await handleInCompleteWorkOrder(updatedWorkOrder);
+        await handleInCompleteWorkOrder(updatedWorkOrder, username);
     }
 
     if (updatedFields.status === "Complete") {
@@ -230,7 +233,7 @@ async function sendCompletedEmailNotification(updatedWorkOrder) {
 }
 
 // Handle In Complete Work Order tracker
-async function handleInCompleteWorkOrder (updatedWorkOrder) {
+async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
     const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
     const text = `The following work order needs your attention:
         - Description: ${updatedWorkOrder.description}
@@ -240,6 +243,7 @@ async function handleInCompleteWorkOrder (updatedWorkOrder) {
         - Tracker: ${updatedWorkOrder.tracker}
         - Tracker Message: ${updatedWorkOrder.trackerMessage}
         - Date Updated: ${updatedWorkOrder.Date_Updated}
+        - Updated By: ${username}
 
         Thank you,
         Holiday Inn Work Order System - All rights reserved.
