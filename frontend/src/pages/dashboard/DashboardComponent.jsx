@@ -308,7 +308,6 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         icon={
                             <BsClipboardCheckFill size={24} color="purple" />
                         }
-                        onClick={navigateToReviewWork}
                     />
                 </Col>
             </Row>
