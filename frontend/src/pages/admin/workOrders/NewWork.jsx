@@ -64,7 +64,8 @@ const NewWork = ({
                 options={[
                   { value: 'Fix', label: 'Fix' }, { value: 'Repair', label: 'Repair' }, 
                   { value: 'Replace', label: 'Replace' }, { value: 'Install', label: 'Install' },
-                  { value: 'Upgrade', label: 'Upgrade' }, { value: 'Remove', label: 'Remove' }
+                  { value: 'Upgrade', label: 'Upgrade' }, { value: 'Remove', label: 'Remove' },
+                  { value: 'Touchup', label: 'Touchup' }, { value: 'Move', label: 'Move' }
                 ]}
               />
             </Form.Item>
