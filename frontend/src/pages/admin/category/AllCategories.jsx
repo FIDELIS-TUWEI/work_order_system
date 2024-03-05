@@ -52,4 +52,4 @@ const AllCategories = () => {
   )
 }
 
-export default AllCategories
+export default AllCategories;
