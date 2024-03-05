@@ -1,7 +1,6 @@
 const WorkOrder = require("../model/workOrder");
 const User = require("../model/user");
 const Category = require("../model/category");
-const ServiceType = require("../model/serviceType");
 const Employee = require("../model/employee");
 const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
