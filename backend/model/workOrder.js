@@ -10,7 +10,8 @@ const workOrderSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        min: [10, "Description must be at least 10 characters"]
+        min: [10, "Description must be at least 10 characters long!"],
+        max: [20, "Description can only be 20 characters long!"]
     },
     location: [{
         // Rooms, Open place, Back office, Admin office
@@ -35,12 +36,6 @@ const workOrderSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "Category",
         required: true
-    },
-    notes: {
-        type: String,
-        //required: true,
-        min: [10, "Notes description must be at least 10 characters"],
-        max: 20
     },
     status: {
         // Pending, Complete
