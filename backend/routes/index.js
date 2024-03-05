@@ -9,7 +9,6 @@ module.exports = (app) => {
     const departmentRoutes = require("../routes/departmentRoutes");
     const designationRoutes = require("../routes/designationRoutes");
     const employeeRoutes = require("../routes/employeeRoutes");
-    const serviceRoutes = require("../routes/serviceRoutes");
 
 
     // Routes Middleware
@@ -22,5 +21,4 @@ module.exports = (app) => {
     app.use("/hin", departmentRoutes);
     app.use("/hin", designationRoutes);
     app.use("/hin", employeeRoutes);
-    app.use("/hin", serviceRoutes);
 };
