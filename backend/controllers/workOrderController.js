@@ -59,7 +59,7 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
         return next(error);
     }
 
-    const { priority, description, location, serviceType, category, notes } = req.body;
+    const { priority, description, location, serviceType, category } = req.body;
 
     // Create Work Order
     const newWorkOrder = await WorkOrder({
@@ -69,7 +69,6 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
         location,
         serviceType,
         category,
-        notes
     });
 
     // Save Work Order
@@ -82,14 +81,18 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
     const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
 
+    // Fetch category details
+    const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
+    const categoryTitle = categories.map(cat => cat.categoryTitle);
+
     // Send Email notification
     const subject = "NEW WORK ORDER CREATED";
-    const emailText = `New Work Order Created with the following details:
-        - Description: ${description}
-        - Priority: ${priority}
-        - Service Type: ${serviceType}
+    const emailText = `New Work Order Requested with the following details:
         - Locations: ${locationTitles}
-        - Notes: ${notes}
+        - Service Type: ${serviceType}
+        - Category: ${categoryTitle}
+        - Priority: ${priority}
+        - Description: ${description}
         - Requested By: ${user.username}
 
         Thank you,
