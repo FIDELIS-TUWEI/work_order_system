@@ -86,15 +86,11 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
     const categoryTitle = categories.map(cat => cat.categoryTitle);
 
-    // Find Service Type details
-    const services = await ServiceType.find({ _id: { $in: serviceType } }).select("serviceTitle");
-    const serviceTypes = services.map(service => service.serviceTitle);
-
     // Send Email notification
     const subject = "NEW WORK ORDER CREATED";
     const emailText = `New Work Order Requested with the following details:
         - Locations: ${locationTitles}
-        - Service Type: ${serviceTypes}
+        - Service Type: ${serviceType}
         - Category: ${categoryTitle}
         - Priority: ${priority}
         - Description: ${description}
