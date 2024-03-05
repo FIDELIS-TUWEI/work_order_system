@@ -104,7 +104,7 @@ const NewWork = ({
                 rules={[
                   { required: true, message: 'Please Enter Work Description!' },
                   { min: 10, message: 'Work Description must be at least 10 characters' },
-                  { max: 20, message: "Description can only be 20 characters long!" }
+                  { max: 80, message: "Description can only be 80 characters long!" }
                 ]}
             >
               <Input type='text' placeholder='Work Description' />
