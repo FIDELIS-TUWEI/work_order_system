@@ -20,19 +20,6 @@ const NewWork = ({
         <Row gutter={20}>
           <Col xs={24} md={24} lg={8}>
             <Form.Item 
-                name="description" 
-                label="Work Description" 
-                required 
-                rules={[
-                  { required: true, message: 'Please Enter Work Description!' },
-                  { min: 10, message: 'Work Description must be at least 10 characters' }
-                ]}
-            >
-              <Input type='text' placeholder='Work Description' />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item 
                 name="location" 
                 label="Work Location" 
                 required rules={[{ required: true, message: 'Please Select Work Location!' }]}>
@@ -109,15 +96,17 @@ const NewWork = ({
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              name="notes"
-              label="Notes"
-              rules={[
-                { required: true, message: 'Please Leave some notes description!' },
-                { min: 10, message: 'Notes Description must be at least 10 characters' }
-              ]}
+            <Form.Item 
+                name="description" 
+                label="Work Description" 
+                required 
+                rules={[
+                  { required: true, message: 'Please Enter Work Description!' },
+                  { min: 10, message: 'Work Description must be at least 10 characters' },
+                  { max: 20, message: "Description can only be 20 characters long!" }
+                ]}
             >
-              <Input type="text" placeholder="Leave some notes for the technician..." />
+              <Input type='text' placeholder='Work Description' />
             </Form.Item>
           </Col>
         </Row>
