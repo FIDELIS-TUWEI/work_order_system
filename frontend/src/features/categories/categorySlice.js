@@ -61,5 +61,6 @@ export const {
     useCreateCategoryMutation,
     useAllCategoriesQuery,
     useQueryAllCategoriesQuery,
+    useUpdateCategoryMutation,
     useDeleteCategoryMutation,
 } = categoriesApi;
