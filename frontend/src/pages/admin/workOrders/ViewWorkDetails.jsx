@@ -67,11 +67,6 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
                     <span>Description:</span>
                     <span>{workDetailsArray?.description}</span>
                 </div>
-                
-                <div className="details">
-                    <span>Notes:</span>
-                    <span>{workDetailsArray?.notes}</span>
-                </div>
 
                 <div className="details">
                     <span>Date Requested:</span>
