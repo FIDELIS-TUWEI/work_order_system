@@ -11,7 +11,7 @@ const workOrderSchema = new mongoose.Schema({
         type: String,
         required: true,
         min: [10, "Description must be at least 10 characters long!"],
-        max: [20, "Description can only be 20 characters long!"]
+        max: [80, "Description can only be 80 characters long!"]
     },
     location: [{
         // Rooms, Open place, Back office, Admin office
