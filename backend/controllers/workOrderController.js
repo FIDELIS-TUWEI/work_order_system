@@ -1,6 +1,7 @@
 const WorkOrder = require("../model/workOrder");
 const User = require("../model/user");
-const Category = require("../model/category")
+const Category = require("../model/category");
+const ServiceType = require("../model/serviceType");
 const Employee = require("../model/employee");
 const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
@@ -85,11 +86,15 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
     const categoryTitle = categories.map(cat => cat.categoryTitle);
 
+    // Find Service Type details
+    const services = await ServiceType.find({ _id: { $in: serviceType } }).select("serviceTitle");
+    const serviceTypes = services.map(service => service.serviceTitle);
+
     // Send Email notification
     const subject = "NEW WORK ORDER CREATED";
     const emailText = `New Work Order Requested with the following details:
         - Locations: ${locationTitles}
-        - Service Type: ${serviceType}
+        - Service Type: ${serviceTypes}
         - Category: ${categoryTitle}
         - Priority: ${priority}
         - Description: ${description}
