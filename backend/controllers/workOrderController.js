@@ -24,7 +24,7 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
 
     const itCategoryList = [
         "IT", "Room Wi-Fi", "Room-Tv", "Telephone", "Cable Pulling", "Office Printer", 
-        "Guest Wi-Fi", "Conference I.T Support", "Office Wi-Fi"
+        "Guest Wi-Fi", "Conference I.T Support", "Office Wi-Fi", "Restaurant Tv", "Onity-lock"
     ].includes(workOrderCategory.categoryTitle);
 
     if (itCategoryList) {
