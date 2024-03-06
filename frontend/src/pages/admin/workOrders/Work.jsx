@@ -74,6 +74,16 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
     }
   };
 
+  // shorten description logic
+  const renderDescription = (description) => {
+    const maxLength = 10;
+
+    if (description.length > maxLength) {
+      return `${description.substring(0, maxLength)}...`;
+    }
+    return description;
+  }
+
   const renderStatusBagde = (status) => (
       <Badge
         color={getStatusColor(status)}
@@ -156,6 +166,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
       responsive: ["md", "lg"],
       dataIndex: "description",
       key: "description",
+      render: (description) => renderDescription(description),
     },
     {
       title: "Service Type",
