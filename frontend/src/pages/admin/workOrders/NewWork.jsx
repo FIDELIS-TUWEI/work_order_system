@@ -54,7 +54,7 @@ const NewWork = ({
                   { value: 'Upgrade', label: 'Upgrade' }, { value: 'Remove', label: 'Remove' },
                   { value: 'Touchup', label: 'Touchup' }, { value: 'Move', label: 'Move' },
                   { value: 'Paint', label: 'Paint' }, { value: 'Prune', label: 'Prune' },
-                  { value: 'Clean', label: 'Clean' },
+                  { value: 'Clean', label: 'Clean' }, { value: 'Check', label: 'Check' }
                 ]}
               />
             </Form.Item>
