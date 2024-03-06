@@ -104,7 +104,6 @@ const login = asyncHandler (asyncErrorHandler (async (req, res, next) => {
             token
         });
 
-        next();
     } else {
         const error = new CustomError("Invalid Credentials!", 401)
         return next(error);
@@ -114,7 +113,7 @@ const login = asyncHandler (asyncErrorHandler (async (req, res, next) => {
 // @desc Logout user
 // @route POST /hin/logout
 // @access Private
-const logout = (req, res, next) => {
+const logout = (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.token) return res.status(204);
     res.clearCookie("token", "", { path: "/", httpOnly: true, expires: new Date(0), sameSite: 'None', secure: true });
@@ -124,7 +123,6 @@ const logout = (req, res, next) => {
         message: "Logged Out successfully" 
     });
 
-    next();
 };
 
 // @desc Get user info
