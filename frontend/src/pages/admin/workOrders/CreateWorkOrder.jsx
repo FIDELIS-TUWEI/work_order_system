@@ -31,8 +31,8 @@ const CreateWorkOrder = () => {
       const { error } = await addWork(values).unwrap();
 
       if (error) {
-        if (error.status === 400 && error?.data?.message) {
-          message.error(error.data.message);
+        if (error.status === 400 && error?.message) {
+          message.error(error.message);
           navigate("/work/list");
         } else {
           message.error("Failed to create new work order!");
