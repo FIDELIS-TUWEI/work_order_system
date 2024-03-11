@@ -21,13 +21,21 @@ const duplicateKeyErrorHandler = (err) => {
     return new CustomError(msg, 400);
    }
    
-   const validationErrorHandler = (err) => {
-       const errors = Object.values(err.errors).map(val => val.message);
-       const errorMessages = errors.join('. ');
-       const msg = `Invalid input data: ${errorMessages}`;
-   
-       return new CustomError(msg, 400);
-   }
+const validationErrorHandler = (err) => {
+    const errors = Object.values(err.errors).map(val => val.message);
+    const errorMessages = errors.join('. ');
+    const msg = `Invalid input data: ${errorMessages}`;
+
+    return new CustomError(msg, 400);
+}
+
+const invalidEnumErrorHandler = (err) => {
+    const path = Object.keys(err.errors)[0];
+    const value = err.errors[path].value;
+    const msg = `Inavlid value ${value} for ${path}`;
+
+    return new CustomError(msg, 400);
+}
 
 const prodErrors = (res, error) => {
     if(error.isOperational) {
@@ -53,6 +61,7 @@ module.exports = (error, req, res, next) => {
         if (error.name === 'CastError') error = castErrorHandler(error);
         if (error.code === 11000) error = duplicateKeyErrorHandler(error);
         if (error.name === 'ValidationError') error = validationErrorHandler(error);
+        if (error.message.includes('is not a valid enum value')) error = invalidEnumErrorHandler(error);
         prodErrors(res, error);
     }
 };
