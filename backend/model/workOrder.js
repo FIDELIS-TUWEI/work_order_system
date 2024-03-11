@@ -29,7 +29,7 @@ const workOrderSchema = new mongoose.Schema({
         // Fix, Repair, Replace, Install, Upgrade, Remove
         type: String,
         required: true,
-        enum: ["Fix", "Repair", "Replace", "Install", "Upgrade", "Remove", "Move", "Check", "Clean", "Prune", "Touchup"],
+        enum: ["Fix", "Repair", "Replace", "Install", "Upgrade", "Remove", "Move", "Check", "Clean", "Prune", "Touchup", "Paint"],
     },
     category: {
         // Wi-Fi/ Internet, Bulb/ Lights, Paint, Door/ Lock, Hvac panel, Hvac cold/ Hot
