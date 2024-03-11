@@ -51,63 +51,67 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
 
 // Create Work Order
 const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const userId = req.user._id;
-    const user = await User.findById(userId).select("-password");
-
-    if (!user) {
-        const error = new CustomError("User with ID not found!", 404);
-        return next(error);
-    }
-
-    const { priority, description, location, serviceType, category } = req.body;
-
-    // Create Work Order
-    const newWorkOrder = await WorkOrder({
-        requestedBy: userId,
-        priority,
-        description,
-        location,
-        serviceType,
-        category,
-    });
-
-    // Save Work Order
-    const savedWorkorder = await newWorkOrder.save();
-
-    // Update the user's workOrders array
-    await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
-
-    // Fetch Location Details
-    const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
-    const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
-
-    // Fetch category details
-    const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
-    const categoryTitle = categories.map(cat => cat.categoryTitle);
-
-    // Send Email notification
-    const subject = "NEW WORK ORDER CREATED";
-    const emailText = `New Work Order Requested with the following details:
-        - Locations: ${locationTitles}
-        - Service Type: ${serviceType}
-        - Category: ${categoryTitle}
-        - Priority: ${priority}
-        - Description: ${description}
-        - Requested By: ${user.username}
-
-        Thank you,
-        Holiday Inn Work Order System - All rights reserved.
-    `;
-
-    await sendEmailNotification(savedWorkorder, subject, emailText);
-
-    // Return a response
-    return res.status(201).json({
-        success: true,
-        data: {
-            savedWorkorder
+    try {
+        const userId = req.user._id;
+        const user = await User.findById(userId).select("-password");
+    
+        if (!user) {
+            const error = new CustomError("User with ID not found!", 404);
+            return next(error);
         }
-    });  
+    
+        const { priority, description, location, serviceType, category } = req.body;
+    
+        // Create Work Order
+        const newWorkOrder = await WorkOrder({
+            requestedBy: userId,
+            priority,
+            description,
+            location,
+            serviceType,
+            category,
+        });
+    
+        // Save Work Order
+        const savedWorkorder = await newWorkOrder.save();
+    
+        // Update the user's workOrders array
+        await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
+    
+        // Fetch Location Details
+        const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+        const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+    
+        // Fetch category details
+        const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
+        const categoryTitle = categories.map(cat => cat.categoryTitle);
+    
+        // Send Email notification
+        const subject = "NEW WORK ORDER CREATED";
+        const emailText = `New Work Order Requested with the following details:
+            - Locations: ${locationTitles}
+            - Service Type: ${serviceType}
+            - Category: ${categoryTitle}
+            - Priority: ${priority}
+            - Description: ${description}
+            - Requested By: ${user.username}
+    
+            Thank you,
+            Holiday Inn Work Order System - All rights reserved.
+        `;
+    
+        await sendEmailNotification(savedWorkorder, subject, emailText);
+    
+        // Return a response
+        return res.status(201).json({
+            success: true,
+            data: {
+                savedWorkorder
+            }
+        }); 
+    } catch (error) {
+        return next(error);
+    } 
 }));
 
 // Update Work Order
