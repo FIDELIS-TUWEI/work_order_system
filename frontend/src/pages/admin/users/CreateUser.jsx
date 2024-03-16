@@ -103,7 +103,7 @@ const CreateUser = ({
             </Form.Item>  
           </Col>
         </Row>
-        <div className="user_submit">
+        <div className="submit--btn">
           <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Submit</Button>
         </div>
         <Col xs={24} md={24} lg={8}></Col>
