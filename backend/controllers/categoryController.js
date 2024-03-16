@@ -70,6 +70,22 @@ const queryAllCategories = asyncHandler (asyncErrorHandler (async (req, res, nex
     });
 }));
 
+// Category info
+const singleCategory = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    const catId = req.params.id;
+    const categoryInfo = await Category.findById(catId);
+
+    if (!categoryInfo) {
+        const error = new CustomError("Category not found!", 404);
+        return next(error);
+    };
+
+    return res.status(200).json({
+        success: true,
+        data: categoryInfo
+    });
+}))
+
 // Update category
 const updateCategory = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const catId = req.params.id;
@@ -108,5 +124,6 @@ module.exports = {
     getAllCategories,
     queryAllCategories,
     updateCategory,
+    singleCategory,
     deleteCategory
 };
