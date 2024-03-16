@@ -17,6 +17,7 @@ import UserDetails from "@/pages/admin/users/UserDetails";
 import Reports from "@/pages/admin/reports/Reports";
 import WorkReport from "@/pages/admin/reports/WorkReport";
 import NewCategory from "@/pages/admin/category/NewCategory";
+import EditCategory from "./admin/category/EditCategory";
 import AllCategories from "@/pages/admin/category/AllCategories";
 import AllLocations from "@/pages/admin/locations/AllLocations";
 import NewLocation from "@/pages/admin/locations/NewLocation";
@@ -39,7 +40,7 @@ export {
     AllWorkOrders, CreateWorkOrder, WorkDetails, EditWorkOrder,
     Home, LogIn, NotFound, Dashboard, Analytics, Profile,
     EditUser, UsersAll, Register, UserDetails, Reports, WorkReport,
-    NewCategory, AllCategories, AllLocations, NewLocation,
+    NewCategory, AllCategories, EditCategory, AllLocations, NewLocation,
     AdminPanel, NewDepartment, AllDepartments, AllDesignations,
     NewDesignation, ChangePassword, Employees, EditEmployee,
     EmployeeDetails, NewEmployee, UserWorkHistory, DailyWork
