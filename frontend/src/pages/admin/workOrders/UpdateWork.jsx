@@ -257,10 +257,8 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
             <Row gutter={20}>
                 {renderFormFields()}
             </Row>
-            <div>
-              <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
-            </div>
-            <div className="user_submit">
+            
+            <div className="submit--btn">
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
             </div>
             <Col xs={24} md={24} lg={8}></Col>
@@ -268,6 +266,10 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
               { isLoading && <LoadingBox /> }
             </div>
         </Form>
+
+        <div>
+          <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+        </div>
         </Card>
     </div>
   )
