@@ -120,10 +120,8 @@ const UpdateUser = ({ onFinishHandler, userDataArray, navigate, loading, departm
               </Form.Item>
             </Col>
             </Row>
-            <div>
-              <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
-            </div>
-            <div className="user_submit">
+            
+            <div className="submit--btn">
               <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit">Update</Button>
             </div>
             <Col xs={24} md={24} lg={8}></Col>
@@ -131,6 +129,10 @@ const UpdateUser = ({ onFinishHandler, userDataArray, navigate, loading, departm
               { loading && <LoadingBox /> }
             </div>
         </Form>
+
+        <div>
+          <Button style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} htmlType="submit" onClick={() => {navigate(-1)}}>Go Back</Button>
+        </div>
         </Card>
     </div>
   )
