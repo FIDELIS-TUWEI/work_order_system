@@ -19,7 +19,7 @@ const EditUserPassword = ({ onFinishHandler, password, setPassword, loading }) =
 
   const cardStyle = { margin: "15px" };
   const formStyle = { margin: '18px' };
-  const submitStyle = { className: "user_submit" };
+  const submitStyle = { className: "submit--btn" };
 
   return (
     <>
@@ -46,14 +46,7 @@ const EditUserPassword = ({ onFinishHandler, password, setPassword, loading }) =
               </Form.Item>
             </Col>
           </Row>
-          <div className="add-btn">
-            <Button
-              onClick={() => navigate(-1)}
-              style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} 
-            >
-              Back
-            </Button>
-          </div>
+          
           <div {...submitStyle}>
             <Button
               style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }}
@@ -67,6 +60,14 @@ const EditUserPassword = ({ onFinishHandler, password, setPassword, loading }) =
             { loading && <LoadingBox /> }
           </div>
         </Form>
+        <div className="add-btn">
+          <Button
+            onClick={() => navigate(-1)}
+            style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none', marginLeft: '10px' }} 
+          >
+            Back
+          </Button>
+        </div>
       </Card>
     </>
   )
