@@ -4,6 +4,7 @@ import {MdDelete} from "react-icons/md";
 import { useState } from "react";
 import { useDeleteCategoryMutation } from "@/features/categories/categorySlice";
 import { useParams } from "react-router-dom";
+import { BiSolidEditAlt } from "react-icons/bi";
 
 const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
     const {id} = useParams();
@@ -57,15 +58,26 @@ const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
             align: "center",
             responsive: ["md", "lg"],
             render: (_, category) => (
-                <Tooltip title="Delete Category">
-                    <Button
-                        danger
-                        style={{ border: "none" }}
-                        onClick={() => showModal(category)}
-                    >
-                        <MdDelete />
-                    </Button>
-                </Tooltip>
+                <>
+                    <Tooltip title="Edit Category">
+                        <Button
+                            style={{ color: 'grey', border: 'none', margin: '0 5px' }}
+                            onClick={() => navigate(`/edit/category/${category._id}`)}
+
+                        >
+                            <BiSolidEditAlt />
+                        </Button>
+                    </Tooltip>
+                    <Tooltip title="Delete Category">
+                        <Button
+                            danger
+                            style={{ border: "none" }}
+                            onClick={() => showModal(category)}
+                        >
+                            <MdDelete />
+                        </Button>
+                    </Tooltip>
+                </>
             )
         }
     ];
