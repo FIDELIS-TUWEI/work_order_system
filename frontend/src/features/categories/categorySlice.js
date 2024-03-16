@@ -39,6 +39,13 @@ export const categoriesApi = createApi({
             }),
             providesTags: ["Categories"],
         }),
+        singleCategory: builder.query({
+            query: (id) => ({
+                url: `/single/category/${id}`,
+                method: "GET",
+            }),
+            providesTags: ["Categories"],
+        }),
         updateCategory: builder.mutation({
             query: ({id, values}) => ({
                 url: `/edit/category/${id}`,
@@ -61,6 +68,7 @@ export const {
     useCreateCategoryMutation,
     useAllCategoriesQuery,
     useQueryAllCategoriesQuery,
+    useSingleCategoryQuery,
     useUpdateCategoryMutation,
     useDeleteCategoryMutation,
 } = categoriesApi;
