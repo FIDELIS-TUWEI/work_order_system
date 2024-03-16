@@ -5,7 +5,7 @@ import {
   PrivateRoute, PublicRoute, AllWorkOrders, CreateWorkOrder, WorkDetails, EditWorkOrder,
   Home, LogIn, NotFound, Dashboard, Analytics, Profile,
   EditUser, UsersAll, Register, UserDetails, Reports, WorkReport,
-  NewCategory, AllCategories, AllLocations, NewLocation,
+  NewCategory, AllCategories, EditCategory, AllLocations, NewLocation,
   AdminPanel, NewDepartment, AllDepartments, AllDesignations,
   NewDesignation, ChangePassword, Employees, EditEmployee,
   EmployeeDetails, NewEmployee, UserWorkHistory, DailyWork 
@@ -22,6 +22,7 @@ export const router = createBrowserRouter(
         <Route path="/new/work" element={ <PrivateRoute> <CreateWorkOrder /> </PrivateRoute> } />
         <Route path="/new/category" element={ <PrivateRoute> <NewCategory /> </PrivateRoute>} />
         <Route path="/all-categories" element={ <PrivateRoute> <AllCategories /> </PrivateRoute>} />
+        <Route path="/edit/category/:id" element={ <PrivateRoute> <EditCategory /> </PrivateRoute>} />
         <Route path="/all/departments" element={ <PrivateRoute> <AllDepartments /> </PrivateRoute>} />
         <Route path="/create/department" element={ <PrivateRoute> <NewDepartment /> </PrivateRoute>} />
         <Route path="/all/designations" element={ <PrivateRoute> <AllDesignations /> </PrivateRoute>} />
