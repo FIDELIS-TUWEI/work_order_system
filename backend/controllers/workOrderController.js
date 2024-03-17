@@ -359,6 +359,22 @@ const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, nex
     });
 }));
 
+// Search work by order number 
+const searchWorkByOrderNumber = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    const workOrderNumber = req.params.workOrderNumber;
+    const workOrder = await WorkOrder.findOne({ workOrderNumber: workOrderNumber });
+
+    if (!workOrder) {
+        const error = new CustomError("Work order not found!", 404);
+        return next(error);
+    }
+
+    return res.status(200).json({
+        success: true,
+        data: workOrder
+    })
+}));
+
 // Delete Work Order
 const deleteWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const workOrderId = req.params.id;
@@ -434,5 +450,6 @@ module.exports = {
     getAllWorkOrders,
     queryAllWork,
     getSingleWorkOrder,
+    searchWorkByOrderNumber,
     deleteWorkOrder,
 };
