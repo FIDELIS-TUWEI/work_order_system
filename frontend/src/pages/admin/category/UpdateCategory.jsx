@@ -8,11 +8,14 @@ const UpdateCategory = ({ onFinishHandler, categoryInfo, loading, navigate }) =>
         <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
             Edit Category Details
         </Typography>
-        <Card title={categoryInfo?.categoryTitle} style={{ margin: "18px" }}>
+        <Card title="Edit category Details" style={{ margin: "18px" }}>
             <Form layout="vertical" onFinish={onFinishHandler} style={{ margin: "18px" }}>
                 <Row gutter={20}>
                     <Col xs={24} md={24} lg={8}>
-                        <Form.Item>
+                        <Form.Item
+                            name="categoryTitle"
+                            label="Category Title"
+                        >
                             <Input type="text" placeholder={categoryInfo?.categoryTitle} />
                         </Form.Item>
                     </Col>
