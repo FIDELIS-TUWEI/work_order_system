@@ -120,12 +120,12 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
         </Button>
       </Tooltip>
 
-      {work.reviewed === true ? (
-        <Tooltip title="This work has been reviewed, you cannot edit it!">
+      {work?.status === "Complete" ? (
+        <Tooltip title="This work has been closed, you cannot edit it!">
           <Button
               style={{ color: 'grey', border: 'none', margin: '0 5px' }}
               onClick={() => navigate(`/edit/work/${work._id}`)}
-              disabled={work.reviewed === true}
+              disabled={work?.status === "Complete"}
           >
               <BiSolidEditAlt />
           </Button>
