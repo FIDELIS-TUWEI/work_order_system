@@ -301,7 +301,6 @@ const getAllWorkOrders = asyncHandler (asyncErrorHandler (async (req, res, next)
         .populate("requestedBy", "username")
         .populate("category", "categoryTitle")
         .populate("assignedTo", "firstName lastName")
-        .populate("verifiedBy", "username")
         .sort({ Date_Created: -1 })
         .skip(pageSize * (page -1))
         .limit(pageSize);
@@ -326,7 +325,6 @@ const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => 
         .populate("requestedBy", "firstName")
         .populate("category", "categoryTitle")
         .populate("assignedTo", "firstName lastName")
-        .populate("verifiedBy", "username")
         .sort({ Date_Created: -1 });
 
     if (!workOrders) {
@@ -348,7 +346,6 @@ const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, nex
         .populate("location", "locationTitle")
         .populate("category", "categoryTitle")
         .populate("assignedTo", "firstName lastName")
-        .populate("verifiedBy", "username")
         .exec();
 
     if (!work) {
