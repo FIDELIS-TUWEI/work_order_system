@@ -78,34 +78,9 @@ const workOrderSchema = new mongoose.Schema({
         type: Date,
         index: true
     },
-    supervisedBy: {
-        type: String,
-        default: "Not supervised"
-    },
     comments: {
         type: String,
         default: "No comments"
-    },
-    reviewed: {
-        type: Boolean,
-        default: false
-    },
-    verifiedBy: {
-        type: ObjectId,
-        ref: "User",
-    },
-    verifiedByUsername: {
-        type: String,
-        ref: "User",
-        default: "Not Verified",
-    },
-    verifyComments: {
-        type: String,
-        default: "No review comments"
-    },
-    dateVerified: {
-        type: Date,
-        index: true
     },
     checkedBy: {
         type: String,
