@@ -124,7 +124,7 @@ const updateWorkOrder = asyncHandler(asyncErrorHandler(async (req, res, next) =>
         return next(new ErrorResponse("User not found",  404));
     }
 
-    const { assignedTo, reviewed, ...updatedFields } = { ...req.body };
+    const { assignedTo, ...updatedFields } = { ...req.body };
     const updatedWorkOrder = await updateWorkOrderDetails(id, updatedFields);
 
     if (!updatedWorkOrder) {
@@ -215,9 +215,14 @@ async function sendAssignedEmailNotification(updatedWorkOrder, assignedTo) {
 }
 
 async function sendCompletedEmailNotification(updatedWorkOrder) {
+    // Fetch Location Details
+    const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+    const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+
     const subject = `Work Order Completed`;
     const text = `The following work order has been completed:
         - Description: ${updatedWorkOrder.description}
+        - Location: ${locationTitles}
         - Status: ${updatedWorkOrder.status}
         - Date Completed: ${updatedWorkOrder.dateCompleted}
         - Comments: ${updatedWorkOrder.comments}
@@ -236,9 +241,14 @@ async function sendCompletedEmailNotification(updatedWorkOrder) {
 
 // Handle In Complete Work Order tracker
 async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
+    // Fetch Location Details
+    const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+    const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+
     const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
     const text = `The following work order needs your attention:
         - Description: ${updatedWorkOrder.description}
+        - Location: ${locationTitles}
         - Priority: ${updatedWorkOrder.priority}
         - Status: ${updatedWorkOrder.status}
         - Service Type: ${updatedWorkOrder.serviceType}
