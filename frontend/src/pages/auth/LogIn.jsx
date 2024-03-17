@@ -28,7 +28,7 @@ const LogIn = () => {
     }, [userInfo, navigate, token]);
 
     const checkMaintenanceStatus = () => {
-        const maintenanceStatus = true;
+        const maintenanceStatus = false;
         setMaintenance(maintenanceStatus);
     };
 
