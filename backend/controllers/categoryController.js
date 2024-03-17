@@ -88,9 +88,9 @@ const singleCategory = asyncHandler (asyncErrorHandler (async (req, res, next) =
 
 // Update category
 const updateCategory = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const catId = req.params.id;
-    const updates = req.body;
-    const updatedCategory = await Category.findById(catId, updates, { new: true, runValidators: true });
+    const categoryId = req.params.id;
+    const { ...updateFields } = req.body;
+    const updatedCategory = await Category.findByIdAndUpdate(categoryId, updateFields, { new: true });
 
     if (!updatedCategory) {
         const error = new CustomError("Category not found!", 404);
@@ -99,7 +99,7 @@ const updateCategory = asyncHandler (asyncErrorHandler (async (req, res, next) =
 
     res.status(200).json({
         success: true,
-        data: updatedCategory
+        message: "Category Updated successfully"
     });
 }));
 
