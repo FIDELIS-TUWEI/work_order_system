@@ -13,8 +13,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
   }
   // to render edit columns based on work status and user role
   const isWorkPending = singleWorkArray?.status === 'Pending';
-  const isWorkCompleted = singleWorkArray?.status === 'Complete';
-  const isRoleAuthorized = ["reviewer", "admin", "superadmin", "supervisor", "hod", "engineer"].includes(user?.role);
 
   // Check work tracker status
   const isNotAttended = singleWorkArray?.tracker === 'Not_Attended';
@@ -168,49 +166,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
     </>
   );
 
-  // if Work is complete check if user is authprised
-  const renderReviewFormFields = () => {
-    if (isWorkCompleted && !singleWorkArray?.reviewed) {
-      return (
-        <>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Reviewed"
-              name="reviewed"
-              rules={[{ required: true, message: 'Please Select Work Review Status!' }]}
-            >
-              <Select 
-                placeholder='Select Review Status'
-                allowClear
-                style={{ width: '100%' }}
-                options={[
-                  { value: true, label: 'Reviewed' }
-                ]}
-              />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Verify Comments"
-              name="verifyComments"
-              rules={[{ required: true, message: 'Please Enter verify Comments!' }]}
-            >
-              <Input type='text' placeholder='Enter comments' />
-            </Form.Item>
-          </Col>   
-             
-        </>
-      );
-    } else {
-      return (
-        <Typography.Text style={{ fontSize: '1.5rem', fontWeight: '500', marginBottom: '1rem' }}>
-          This work is already reviewed, no need to review again.
-        </Typography.Text>
-      )
-    }
-    
-  };
-
   // Render loader when fetching form to update work
   const renderLoader = () => (
     <div className='loader'>
@@ -227,8 +182,6 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
         return renderTrackerFields();
       case isAttended && isWorkPending:
         return renderCompleteFormFields();
-      case isWorkCompleted && isRoleAuthorized: 
-        return renderReviewFormFields();
       case isInComplete:
         redirectToWorkList();
         break;
