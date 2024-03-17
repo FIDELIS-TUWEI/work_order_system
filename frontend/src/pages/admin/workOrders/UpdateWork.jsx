@@ -158,11 +158,11 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
         </Col>
         <Col xs={24} md={24} lg={8}>
           <Form.Item
-            label="Supervised By"
-            name="supervisedBy"
-            rules={[{ required: true, message: `Please Enter Supervisor's Name!` }]}
+            name="checkedBy"
+            label="Checked By"
+            rules={[{ required: true, message: "Please Enter HoD name!" }]}
           >
-            <Input type='text' placeholder='Enter Supervisor Name' />
+            <Input type="text" placeholder="Enter the relevant department HoD name" />
           </Form.Item>
         </Col>
     </>
@@ -198,15 +198,7 @@ const UpdateWork = ({ singleWorkArray, onFinishHandler, user, navigate, employee
               <Input type='text' placeholder='Enter comments' />
             </Form.Item>
           </Col>   
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              name="checkedBy"
-              label="Checked By"
-              rules={[{ required: true, message: "Please Enter HoD name!" }]}
-            >
-              <Input type="text" placeholder="Enter the relevant department HoD name" />
-            </Form.Item>
-          </Col>   
+             
         </>
       );
     } else {
