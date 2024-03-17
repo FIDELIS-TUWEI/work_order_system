@@ -61,7 +61,7 @@ const ViewAllCategories = ({ navigate, loading, categories, refetch }) => {
                 <>
                     <Tooltip title="Edit Category">
                         <Button
-                            style={{ color: 'grey', border: 'none', margin: '0 5px' }}
+                            style={{ color: 'green', border: 'none', margin: '0 5px' }}
                             onClick={() => navigate(`/edit/category/${category._id}`)}
 
                         >
