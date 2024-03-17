@@ -141,10 +141,9 @@ const updateWorkOrder = asyncHandler(asyncErrorHandler(async (req, res, next) =>
 
     if (updatedFields.status === "Complete") {
         await sendCompletedEmailNotification(updatedWorkOrder);
-    }
 
-    if (reviewed && Object.keys(updatedFields).some(key => updatedFields[key] !== updatedWorkOrder[key])) {
-        await handleReviewedWorkOrder(updatedWorkOrder, userId, req);
+        // Update the user's workOrders array
+        await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
     }
 
     if (assignedTo) {
@@ -170,10 +169,6 @@ async function updateWorkOrderDetails (id, updatedFields) {
 
     if (updatedFields.status === "Complete") {
         updatedFields.dateCompleted = new Date();
-    }
-
-    if (updatedFields.reviewed) {
-        updatedFields.dateVerified = new Date(); 
     }
 
     return await WorkOrder.findByIdAndUpdate(id, updatedFields, updateOptions);
@@ -275,59 +270,6 @@ async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
 
     updatedWorkOrder.timeoutId = timeoutId;
 };
-
-// Handle Reviewed Work Order
-async function handleReviewedWorkOrder (updatedWorkOrder, userId, req) {
-    // Check if the work order has already been reviewed
-    if (updatedWorkOrder.reviewed) {
-        // If the work order has already been reviewed, do nothing and return
-        return;
-    }
-
-    // Update the work order only if it hasn't been reviewed
-    updatedWorkOrder.reviewed = true;
-    updatedWorkOrder.verifiedBy = userId;
-
-    const verifyingUser = await User.findById(userId).select("username")
-
-    if (verifyingUser) {
-        updatedWorkOrder.verifiedByUsername = verifyingUser.username || "No username";
-    };
-
-    updatedWorkOrder.dateVerified = new Date();
-    updatedWorkOrder.verifyComments = req.body.verifyComments;
-
-    // Save the updated work order
-    await updatedWorkOrder.save();
-
-    await sendReviewedEmailNotification(updatedWorkOrder)
-
-    // Update the user's workOrders array
-    await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
-
-};
-
-async function sendReviewedEmailNotification(updatedWorkOrder) {
-    const subject = `Work Order Reviewed`;
-    const text = `The following work order has been reviewed:
-        - Description: ${updatedWorkOrder.description}
-        - Status: ${updatedWorkOrder.status}
-        - Tracker: ${updatedWorkOrder.tracker}
-        - Tracker Message: ${updatedWorkOrder.trackerMessage}
-        - Reviewed: ${updatedWorkOrder.reviewed}
-        - Verified By: ${updatedWorkOrder.verifiedByUsername}
-        - Verify Comments: ${updatedWorkOrder.verifyComments}
-        - Date Verified: ${updatedWorkOrder.dateVerified}
-        - Checked By: ${updatedWorkOrder.checkedBy}
-
-        - Date Updated: ${updatedWorkOrder.Date_Updated}
-
-        Thank you,
-        Holiday Inn Work Order System - All rights reserved.
-    `;
-
-    await sendEmailNotification(updatedWorkOrder, subject, text);
-}
 
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler (asyncErrorHandler (async (req, res, next) => {
