@@ -338,6 +338,32 @@ const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => 
     })
 }));
 
+// Find work order with tracker status
+const inAttendanceTracker = asyncHandler (asyncErrorHandler (async(req, res, next) => {
+    // Enable Pagination
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await WorkOrder.find({}).estimatedDocumentCount();
+    const workInAttendance = await WorkOrder.find({ tracker: "In_Attendance" })
+        .sort({ Date_Created: -1 })
+        .skip(pageSize * (page -1))
+        .limit(pageSize)
+        .exec();
+
+    if (!workInAttendance) {
+        const error = new CustomError("No Work Orders In-attendance found!", 404);
+        return next(error);
+    }
+
+    return res.status(200).json({
+        success: true,
+        data: workInAttendance,
+        page,
+        pages: Math.ceil(count / pageSize),
+        count
+    });
+}))
+
 // Get single Work Order
 const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const workOrderId = req.params.id;
@@ -449,6 +475,7 @@ module.exports = {
     updateWorkOrder,
     getAllWorkOrders,
     queryAllWork,
+    inAttendanceTracker,
     getSingleWorkOrder,
     searchWorkByOrderNumber,
     deleteWorkOrder,
