@@ -428,7 +428,7 @@ const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, nex
         .populate("requestedBy", "username")
         .populate("location", "locationTitle")
         .populate("category", "categoryTitle")
-        .populate("assignedTo", "firstName lastName")
+        .populate("assignedTo", "firstName lastName phone")
         .exec();
 
     if (!work) {
