@@ -50,13 +50,6 @@ export const reportsApi = createApi({
             }),
             providesTags: ["Reports"],
         }),
-        totalReviewedWork: builder.query({
-            query: () => ({
-                url: `/report/work/total/reviewed`,
-                method: "GET",
-            }),
-            providesTags: ["Reports"],
-        }),
         totalWorkCount: builder.query({
             query: () => ({
                 url: `/report/total/work/count`,
