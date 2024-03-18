@@ -1,14 +1,15 @@
 import PropTypes from "prop-types";
-import { Button, Modal, message, Tooltip, Badge, Table, Card } from "antd"
+import { Button, Modal, message, Tooltip, Badge, Table, Card, Input } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi"
 import {MdDelete} from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react";
 import { useDeleteWorkMutation } from "@/features/work/workSlice";
+const { Search } = Input;
 
 
-const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) => {
+const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange, handleSearchTerm, workOrder, isLoading }) => {
   const { id } = useParams();
   const [deleteWork] = useDeleteWorkMutation(id);
   const navigate = useNavigate();
@@ -245,11 +246,19 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
           </select>
         </div>
 
+        <Search 
+          placeholder="Search by work order number" 
+          onSearch={handleSearchTerm} 
+          enterButton 
+          allowClear 
+          loading={isLoading} 
+        />
+        
         <Card>
           <Table
               loading={loading}
               columns={columns}
-              dataSource={workOrdersArray}
+              dataSource={ workOrder ? [workOrder] : workOrdersArray }
               pagination={false}
               scroll={{ x: 1500, y: 300 }}
               rowKey="_id"
@@ -285,7 +294,10 @@ Work.propTypes = {
   user: PropTypes.object,
   loading: PropTypes.bool,
   refetch: PropTypes.func,
-  handleStatusChange: PropTypes.func
+  handleStatusChange: PropTypes.func,
+  handleSearchTerm: PropTypes.func,
+  workOrder: PropTypes.object,
+  isLoading: PropTypes.bool
 };
 
 export default Work;
