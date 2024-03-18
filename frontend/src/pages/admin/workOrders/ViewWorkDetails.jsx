@@ -30,10 +30,6 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
         ? `${workDetailsArray.requestedBy.username}`
         : 'Not Requested';
 
-    // Display review commments
-    const verifyComments = workDetailsArray.verifyComments
-        ? workDetailsArray.verifyComments : 'No review comments';
-
   return (
     <>
         <div className="details--card" ref={componentPDF}>
@@ -89,6 +85,11 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
                 </div>
 
                 <div className="details">
+                    <span>Employee Contact:</span>
+                    <span>{workDetailsArray?.assignedTo.phone}</span>
+                </div>
+
+                <div className="details">
                     <span>Date Assigned:</span>
                     <span>
                         {workDetailsArray.dateAssigned
@@ -111,33 +112,8 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
                 </div>
 
                 <div className="details">
-                    <span>Supervised By:</span>
-                    <span>{workDetailsArray?.supervisedBy}</span>
-                </div>
-
-                <div className="details">
                     <span>Comments:</span>
                     <span>{workDetailsArray.comments}</span>
-                </div>
-
-                <div className="details">
-                    <span>Reviewed:</span>
-                    <span>{workDetailsArray.reviewed === true ? "Yes" : "No"}</span>
-                </div>
-
-                <div className="details">
-                    <span>Verified By:</span>
-                    <span>{workDetailsArray?.verifiedByUsername}</span>
-                </div>
-
-                <div className="details">
-                    <span>Verify Comments:</span>
-                    <span>{verifyComments}</span>
-                </div>
-
-                <div className="details">
-                    <span>Date Verified:</span>
-                    <span>{workDetailsArray?.dateVerified ? moment(workDetailsArray.dateVerified).format("DD-MM-YYYY, hh:mm a") : "Not Reviewed"}</span>
                 </div>
 
                 <div className="details">
