@@ -141,21 +141,6 @@ const countWorkStatus = asyncHandler (asyncErrorHandler (async (req, res, next) 
     });
 }));
 
-// Count reviewed work
-const countReviewed = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const totalReviewed = await WorkOrder.countDocuments({ reviewed: true });
-
-    if (!totalReviewed) {
-        const error = new CustomError("Total reviewed work not found!", 404);
-        return next(error);
-    }
-
-    res.status(200).json({
-        success: true,
-        data: totalReviewed
-    });
-}));
-
 // Count Total work orders
 const countTotalWork = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const totalWorkCount = await WorkOrder.countDocuments();
@@ -176,6 +161,5 @@ module.exports = {
     countWorkTracker,
     workCreatedByDate,
     countWorkStatus,
-    countReviewed,
     countTotalWork,
 };
