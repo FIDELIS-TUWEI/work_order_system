@@ -11,7 +11,7 @@ router.get("/single/work/:id", protect, restrict(["admin", "supervisor", "supera
 router.get("/work-orders/in-attendance", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, inAttendanceTracker);
 router.get("/work-orders/in-complete", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, inCompleteTracker);
 router.get("/work-orders/attended", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, attendedTracker);
-router.get("/search/work/:workOrderNumber", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, searchWorkByOrderNumber)
+router.get("/search/work/:workOrderNumber", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, searchWorkByOrderNumber);
 router.put("/update/work/:id", protect, restrict(["admin", "supervisor", "superadmin", "reviewer", "engineer", "hod", "maintenance"]), setVerifiedBy, updateWorkOrder);
 router.delete("/delete/work/:id", protect, restrict(["admin", "superadmin"]), deleteWorkOrder);
 
