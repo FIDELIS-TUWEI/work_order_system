@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Button, Modal, message, Tooltip, Badge, Table, Card } from "antd"
 import {AiFillEye} from "react-icons/ai"
-import {BiSolidEditAlt} from "react-icons/bi"
+import {BiSolidEditAlt} from "react-icons/bi";
 import {MdDelete} from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react";
@@ -14,6 +14,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
+
 
   // Function to show modal to delete work
   const showModal = async (work) => {
@@ -167,6 +168,14 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
       dataIndex: "description",
       key: "description",
       render: (description) => renderDescription(description),
+    },
+    {
+      title: "Order Number",
+      width: 100,
+      align: "center",
+      responsive: ["md", "lg"],
+      dataIndex: "workOrderNumber",
+      key: "workOrderNumber",
     },
     {
       title: "Service Type",
