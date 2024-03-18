@@ -61,8 +61,8 @@ const Reports = () => {
 
     const columns = [
       {
-        header: "Description",
-        dataKey: "description",
+        header: "Order Number",
+        dataKey: "workOrderNumber",
       },
       {
         header: "Service Type",
@@ -89,10 +89,6 @@ const Reports = () => {
         dataKey: "assignedTo",
       },
       {
-        header: "Supervisor",
-        dataKey: "supervisedBy",
-      },
-      {
         header: "Date Completed",
         dataKey: "dateCompleted",
       },
@@ -108,14 +104,14 @@ const Reports = () => {
     const showEmployeeName = (employee) => (employee ? `${employee.firstName} ${employee.lastName}` : "Unassigned");
 
     const rows = workOrdersData.map((workOrder) => [
-      workOrder.description,
+      workOrder.workOrderNumber,
       workOrder.serviceType,
       workOrder.priority,
       `${workOrder.category.categoryTitle}`,
       workOrder.tracker,
       formatDate(workOrder.Date_Created),
       showEmployeeName(workOrder.assignedTo),
-      workOrder.supervisedBy,
+      workOrder.checkedBy,
       formatDateCompleted(workOrder.dateCompleted),
     ]);
 
