@@ -2,13 +2,12 @@ import { useSelector } from "react-redux";
 import Layout from "@/components/Layout";
 import { selectUserInfo } from "@/features/auth/authSlice";
 import DashboardComponent from "@/pages/dashboard/DashboardComponent";
-import { useCountWorkTrackerQuery, useGetWorkCountByStatusQuery, useTotalReviewedWorkQuery, useTotalWorkCountQuery } from "@/features/reports/reportSlice";
+import { useCountWorkTrackerQuery, useGetWorkCountByStatusQuery, useTotalWorkCountQuery } from "@/features/reports/reportSlice";
 import { useCountActiveUsersQuery, useCountAllUsersQuery } from "@/features/users/userSlice";
 import { useCountAllEmployeesQuery } from "@/features/employees/employeeSlice";
 
 const Dashboard = () => {
   const user = useSelector(selectUserInfo);
-  const { data: reviewed } = useTotalReviewedWorkQuery();
   const { data: counts } = useGetWorkCountByStatusQuery();
   const { data: workTotal } = useTotalWorkCountQuery();
   const { data: trackerCounts } = useCountWorkTrackerQuery();
@@ -22,7 +21,6 @@ const Dashboard = () => {
   const inCompleteCount = trackerCounts?.data.in_complete || [];
   const attendedCount = trackerCounts?.data.attended || [];
   const completedCount = counts?.data.completed || [];
-  const reviewCount = reviewed?.data || [];
   const workCountData = workTotal?.data || [];
   const usersData = totalUsers?.data || [];
   const countActiveUsers = activeUsers?.data || [];
@@ -37,7 +35,6 @@ const Dashboard = () => {
         inCompleteCount={inCompleteCount}
         attendedCount={attendedCount}
         completedCount={completedCount}
-        reviewedCount={reviewCount}
         workCountData={workCountData}
         user={user} 
         usersData={usersData}
