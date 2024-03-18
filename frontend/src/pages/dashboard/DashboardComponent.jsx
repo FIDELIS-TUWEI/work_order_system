@@ -7,7 +7,7 @@ import { BiSolidUserCheck, BiTask, BiTaskX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { TbProgressCheck } from "react-icons/tb";
 import { AiOutlineFileDone } from "react-icons/ai";
-import { BsClipboardCheckFill, BsFillClipboard2XFill } from "react-icons/bs";
+import { BsFillClipboard2XFill } from "react-icons/bs";
 
 // Dashboard card
 const DashboardCard = ({ title, value, icon, onClick }) => (
@@ -27,7 +27,7 @@ DashboardCard.propTypes = {
 }
 
 const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendanceCount,
-    inCompleteCount, attendedCount, completedCount, workCountData, reviewedCount, 
+    inCompleteCount, attendedCount, completedCount, workCountData, 
     usersData, countActiveUsers, countEmployees 
 }) => {
     const navigate = useNavigate();
@@ -36,7 +36,6 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
     const navigateTotalWork = () => navigate('/work/list');
     const navigateToPendingWork = () => navigate('/work/list');
     const navigateToCompleteWork = () => navigate('/work/list');
-    const navigateToReviewWork = () => navigate('/work/list');
     const navigateToUsers = () => navigate('/users/all');
     const navigateToActiveUsers = () => navigate('/users/all');
     const navigateToEmployees = () => navigate('/all/employees');
@@ -122,17 +121,6 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         <AiOutlineFileDone size={24} color="green" />
                     }
                     onClick={navigateToCompleteWork}
-                />
-            </Col>
-
-            <Col span={8}>
-                <DashboardCard 
-                    title={"Reviewed Work"}
-                    value={reviewedCount}
-                    icon={
-                        <BsClipboardCheckFill size={24} color="purple" />
-                    }
-                    onClick={navigateToReviewWork}
                 />
             </Col>
 
@@ -252,17 +240,6 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         onClick={navigateToCompleteWork}
                     />
                 </Col>
-
-                <Col span={8}>
-                    <DashboardCard 
-                        title={"Reviewed Work"}
-                        value={reviewedCount}
-                        icon={
-                            <BsClipboardCheckFill size={24} color="purple" />
-                        }
-                        onClick={navigateToReviewWork}
-                    />
-                </Col>
             </Row>
         </Space>
     );
@@ -297,16 +274,6 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         value={completedCount}
                         icon={
                             <FaCheckCircle size={24} color="green" />
-                        }
-                    />
-                </Col>
-
-                <Col span={8}>
-                    <DashboardCard 
-                        title={"Reviewed Work"}
-                        value={reviewedCount}
-                        icon={
-                            <BsClipboardCheckFill size={24} color="purple" />
                         }
                     />
                 </Col>
@@ -345,7 +312,6 @@ DashboardComponent.propTypes = {
     attendedCount: PropTypes.number,
     completedCount: PropTypes.number,
     workCountData: PropTypes.number,
-    reviewedCount: PropTypes.number,
     usersData: PropTypes.number,
     countActiveUsers: PropTypes.number,
     countEmployees: PropTypes.number
