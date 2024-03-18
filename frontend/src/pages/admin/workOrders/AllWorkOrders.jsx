@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
 import Work from "@/pages/admin/workOrders/Work";
-import { useWorkOrdersQuery } from "@/features/work/workSlice";
+import { useSearchWorkQuery, useWorkOrdersQuery } from "@/features/work/workSlice";
 import { selectUserInfo } from "@/features/auth/authSlice";
 
 
@@ -14,8 +14,12 @@ const AllWorkOrders = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [page, setPage] = useState(1);
   const { data, isLoading: loading, error, refetch } = useWorkOrdersQuery({ page, status: filterStatus });
+  const [searchTerm, setSearchTerm] = useState("");
+  const { workOrderData, isLoading } = useSearchWorkQuery(searchTerm);
 
   const { data: workOrdersArray, pages } = data || {};
+  const { workOrderData: workOrder } = workOrderData || {}
+  console.log("Search work by order no:", workOrder);
 
  // Handle errors
  useEffect(() => {
@@ -35,6 +39,11 @@ const AllWorkOrders = () => {
  const handlePageChange = (newPage) => {
    setPage(newPage);
    refetch();
+ };
+
+ // Handle search term
+ const handleSearchTerm = (value) => {
+  setSearchTerm(value);
  }
  
 
@@ -47,6 +56,9 @@ const AllWorkOrders = () => {
         loading={loading}
         refetch={refetch}
         handleStatusChange={handleStatusChange}
+        handleSearchTerm={handleSearchTerm}
+        workOrder={workOrder}
+        isLoading={isLoading}
       />
       
       <div className="pagination">
