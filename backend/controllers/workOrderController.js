@@ -338,7 +338,7 @@ const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => 
     })
 }));
 
-// Find work order with tracker status
+// Find work order with In_Attendance tracker status
 const inAttendanceTracker = asyncHandler (asyncErrorHandler (async(req, res, next) => {
     // Enable Pagination
     const pageSize = 10;
@@ -362,7 +362,34 @@ const inAttendanceTracker = asyncHandler (asyncErrorHandler (async(req, res, nex
         pages: Math.ceil(count / pageSize),
         count
     });
-}))
+}));
+
+// Find work order with  In_Complete tracker status
+const inCompleteTracker = asyncHandler (asyncErrorHandler (async(req, res, next) => {
+    // Enable pagination
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await WorkOrder.find({}).estimatedDocumentCount();
+
+    const workInComplete = await WorkOrder.find({ tracker: "In_Complete" })
+        .sort({ Date_Created: -1 }).
+        skip(pageSize * (page -1) )
+        .limit(pageSize)
+        .exec();
+
+    if (!workInComplete) {
+        const error = new CustomError("In-complete work data not found!", 404);
+        return next(error);
+    };
+
+    return res.status(200).json({
+        success: true,
+        data: workInComplete,
+        page,
+        pages: Math.ceil(count / pageSize),
+        count
+    })
+}));
 
 // Get single Work Order
 const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
@@ -476,6 +503,7 @@ module.exports = {
     getAllWorkOrders,
     queryAllWork,
     inAttendanceTracker,
+    inCompleteTracker,
     getSingleWorkOrder,
     searchWorkByOrderNumber,
     deleteWorkOrder,
