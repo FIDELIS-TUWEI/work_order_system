@@ -345,6 +345,7 @@ const inAttendanceTracker = asyncHandler (asyncErrorHandler (async(req, res, nex
     const page = Number(req.query.pageNumber) || 1;
     const count = await WorkOrder.find({}).estimatedDocumentCount();
     const workInAttendance = await WorkOrder.find({ tracker: "In_Attendance" })
+        .populate("requestedBy", "username")
         .sort({ Date_Created: -1 })
         .skip(pageSize * (page -1))
         .limit(pageSize)
@@ -372,8 +373,9 @@ const inCompleteTracker = asyncHandler (asyncErrorHandler (async(req, res, next)
     const count = await WorkOrder.find({}).estimatedDocumentCount();
 
     const workInComplete = await WorkOrder.find({ tracker: "In_Complete" })
-        .sort({ Date_Created: -1 }).
-        skip(pageSize * (page -1) )
+        .populate("requestedBy", "username")
+        .sort({ Date_Created: -1 })
+        .skip(pageSize * (page -1) )
         .limit(pageSize)
         .exec();
 
@@ -390,6 +392,34 @@ const inCompleteTracker = asyncHandler (asyncErrorHandler (async(req, res, next)
         count
     })
 }));
+
+// Find work order with Attended tracker status
+const attendedTracker = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+    // Enable Pagination
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await WorkOrder.find({}).estimatedDocumentCount();
+
+    const workAttended = await WorkOrder.find({ tracker: "Attended" })
+        .populate("requestedBy", "username")
+        .sort({ Date_Created: -1 })
+        .skip(pageSize * (page -1))
+        .limit(pageSize)
+        .exec();
+    
+        if (!workAttended) {
+            const error = new CustomError("No work attended data found!", 404);
+            return error;
+        };
+
+        return res.status(200).json({
+            success: true,
+            data: workAttended,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        })
+}))
 
 // Get single Work Order
 const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
@@ -415,7 +445,9 @@ const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, nex
 // Search work by order number 
 const searchWorkByOrderNumber = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const workOrderNumber = req.params.workOrderNumber;
-    const workOrder = await WorkOrder.findOne({ workOrderNumber: workOrderNumber });
+    const workOrder = await WorkOrder.findOne({ workOrderNumber: workOrderNumber })
+        .populate("requestedBy", "username")
+        .populate("assignedTo", "firstName lastName")
 
     if (!workOrder) {
         const error = new CustomError("Work order not found!", 404);
@@ -504,6 +536,7 @@ module.exports = {
     queryAllWork,
     inAttendanceTracker,
     inCompleteTracker,
+    attendedTracker,
     getSingleWorkOrder,
     searchWorkByOrderNumber,
     deleteWorkOrder,
