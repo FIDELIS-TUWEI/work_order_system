@@ -283,44 +283,55 @@ async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
 
 // Get all Work Orders
 const getAllWorkOrders = asyncHandler(async (req, res, next) => {
-    // Enable Pagination
-    const pageSize = Number(req.query.pageSize) || 10;
-    const pageNumber = Number(req.query.pageNumber) || 1;
-    const count = await WorkOrder.find({}).estimatedDocumentCount();
-
-    // Status query
+    const pageSize = 10;
+    const page = Number(req.query.pageNumber) || 1;
     let query = {};
 
     if (req.query.status) {
         query.status = req.query.status;
-    };
-
-    if (req.query.search) {
-        query.workOrderNumber = { $regex: req.query.searchTerm, $options: "i" }
     }
 
-    const workOrders = await WorkOrder.find(query)
-        .populate("location", "locationTitle")
-        .populate("requestedBy", "username")
-        .populate("category", "categoryTitle")
-        .populate("assignedTo", "firstName lastName")
-        .sort({ Date_Created: -1 })
-        .skip(pageSize * (pageNumber - 1))
-        .limit(pageSize);
+    if (req.query.search) {
+        query.workOrderNumber = { $regex: req.query.searchTerm, $options: "i" };
+    }
+
+    const countQuery = req.query.search ? query : {};
+    const count = await WorkOrder.find(countQuery).estimatedDocumentCount();
+
+    let workOrders;
+
+    if (req.query.search) {
+        workOrders = await WorkOrder.find(query)
+            .populate("location", "locationTitle")
+            .populate("requestedBy", "username")
+            .populate("category", "categoryTitle")
+            .populate("assignedTo", "firstName lastName")
+            .sort({ Date_Created: -1 })
+            .skip(pageSize * (page - 1))
+            .limit(pageSize);
+    } else {
+        workOrders = await WorkOrder.find({})
+            .populate("location", "locationTitle")
+            .populate("requestedBy", "username")
+            .populate("category", "categoryTitle")
+            .populate("assignedTo", "firstName lastName")
+            .sort({ Date_Created: -1 });
+    }
 
     if (!workOrders) {
         const error = new CustomError("Work orders not found!", 404);
         return next(error);
-    };
+    }
 
     return res.status(200).json({
         success: true,
         data: workOrders,
-        page: pageNumber,
+        page,
         pages: Math.ceil(count / pageSize),
         count
-    })
+    });
 });
+
 
 
 // Query All work orders for line graph frontend
