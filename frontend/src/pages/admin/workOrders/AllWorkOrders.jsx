@@ -6,17 +6,18 @@ import { useSelector } from "react-redux";
 import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 
 import Work from "@/pages/admin/workOrders/Work";
-import { useWorkOrdersQuery } from "@/features/work/workSlice";
+import { useSearchWorkQuery, useWorkOrdersQuery } from "@/features/work/workSlice";
 import { selectUserInfo } from "@/features/auth/authSlice";
 const { Search } = Input;
 
 // Search component
-const Filter = ({ searchTerm, handleSearch }) => {
+const Filter = ({ searchTerm, setSearchTerm, handleSearch }) => {
   return (
     <Search 
       type="search"
       value={searchTerm}
-      onChange={handleSearch}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      onSearch={handleSearch}
       placeholder="Enter work order number to search..."
     />
   )
@@ -52,6 +53,7 @@ const AllWorkOrders = () => {
   const user = useSelector(selectUserInfo);
   const [filterStatus, setFilterStatus] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const { workData = [], isLoading } = useSearchWorkQuery(searchTerm)
   const [page, setPage] = useState(1);
   const { data, isLoading: loading, error, refetch } = useWorkOrdersQuery({ page, status: filterStatus });
 
@@ -77,18 +79,18 @@ const AllWorkOrders = () => {
    refetch();
  };
 
- const handleSearch = (event) => {
-  setSearchTerm(event.target.value);
+ const handleSearch = (value) => {
+  setSearchTerm(value);
  }
 
  // Function to filter work by order number
- const filteredWork = workOrdersArray?.filter(work => work.workOrderNumber.toLowerCase().includes(searchTerm.toLowerCase()));
+ const filteredWork = workData?.filter(work => work.workOrderNumber.toLowerCase().includes(searchTerm.toLowerCase()));
  
 
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Work Orders</Typography>
-      <Filter searchTerm={searchTerm} handleSearch={handleSearch} />
+      <Filter searchTerm={searchTerm} setSearchTerm={setSearchTerm} handleSearch={handleSearch} />
       <SearchedWork filteredWork={filteredWork} />
 
       <Work 
