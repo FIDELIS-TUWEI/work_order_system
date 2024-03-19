@@ -15,7 +15,6 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWorkToDelete, setSelectedWorkToDelete] = useState(null);
 
-
   // Function to show modal to delete work
   const showModal = async (work) => {
       setSelectedWorkToDelete(work);
