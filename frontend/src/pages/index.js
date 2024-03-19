@@ -35,6 +35,7 @@ import UserWorkHistory from "@/pages/admin/users/UserWorkHistory";
 import DailyWork from "@/pages/admin/reports/DailyWork";
 import InAttendanceWork from "@/pages/admin/workOrders/InAttendanceWork";
 import InCompleteWork from "@/pages/admin/workOrders/InCompleteWork";
+import AttendedWork from "@/pages/admin/workOrders/AttendedWork";
 
 export { 
     PrivateRoute, PublicRoute, 
@@ -44,5 +45,6 @@ export {
     NewCategory, AllCategories, EditCategory, AllLocations, NewLocation,
     AdminPanel, NewDepartment, AllDepartments, AllDesignations,
     NewDesignation, ChangePassword, Employees, EditEmployee,
-    EmployeeDetails, NewEmployee, UserWorkHistory, DailyWork, InAttendanceWork, InCompleteWork
+    EmployeeDetails, NewEmployee, UserWorkHistory, DailyWork, 
+    InAttendanceWork, InCompleteWork, AttendedWork
 }
