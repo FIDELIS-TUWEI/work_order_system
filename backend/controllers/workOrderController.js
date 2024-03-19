@@ -289,12 +289,15 @@ const getAllWorkOrders = asyncHandler (asyncErrorHandler (async (req, res, next)
     const count = await WorkOrder.find({}).estimatedDocumentCount();
 
     // Status query
-    const { status } = req.query;
     let query = {};
 
-    if (status) {
-        query.status = status;
+    if (req.query.status) {
+        query.status = req.query.status;
     };
+
+    if (req.query.search) {
+        query.workOrderNumber = { $regex: req.query.searchTerm, $options: "i" }
+    }
 
     const workOrders = await WorkOrder.find(query)
         .populate("location", "locationTitle")
