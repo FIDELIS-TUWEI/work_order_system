@@ -33,7 +33,8 @@ export const workApi = createApi({
                 method: "GET",
                 params: {
                     pageNumber: args.page,
-                    status: args.status
+                    status: args.status,
+                    searchTerm: args.searchTerm
                 }
             }),
             providesTags: ["WorkOrder"],
