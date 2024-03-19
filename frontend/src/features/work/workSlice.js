@@ -46,8 +46,8 @@ export const workApi = createApi({
             providesTags: ["WorkOrder"],
         }),
         searchWork: builder.query({
-            query: ({workOrderNumber}) => ({
-                url: `/search/work/${workOrderNumber}`,
+            query: (searchTerm) => ({
+                url: `/search/work?searchTerm=${searchTerm}`,
                 method: "GET",
             }),
             providesTags: ["WorkOrder"],
