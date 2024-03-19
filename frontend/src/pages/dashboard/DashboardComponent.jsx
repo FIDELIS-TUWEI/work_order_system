@@ -37,6 +37,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
     const navigateToPendingWork = () => navigate('/work/list');
     const navigateToInAttendanceWork = () => navigate("/in-attendance/work");
     const navigateToInCompleteWork = () => navigate('/in-complete/work');
+    const navigateToAttendedWork = () => navigate('/attended/work');
     const navigateToCompleteWork = () => navigate('/work/list');
     const navigateToUsers = () => navigate('/users/all');
     const navigateToActiveUsers = () => navigate('/users/all');
@@ -111,7 +112,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     icon={
                         <BiTask size={24} color="green" />
                     }
-                    onClick={navigateToPendingWork}
+                    onClick={navigateToAttendedWork}
                 />
             </Col>
 
@@ -228,7 +229,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         icon={
                             <BiTask size={24} color="green" />
                         }
-                        onClick={navigateToPendingWork}
+                        onClick={navigateToAttendedWork}
                     />
                 </Col>
 
