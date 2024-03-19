@@ -12,8 +12,9 @@ import { selectUserInfo } from "@/features/auth/authSlice";
 const AllWorkOrders = () => {
   const user = useSelector(selectUserInfo);
   const [filterStatus, setFilterStatus] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const { data, isLoading: loading, error, refetch } = useWorkOrdersQuery({ page, status: filterStatus });
+  const { data, isLoading: loading, error, refetch } = useWorkOrdersQuery({ page, status: filterStatus, searchTerm });
 
   const { data: workOrdersArray, pages } = data || {};
 
@@ -37,6 +38,11 @@ const AllWorkOrders = () => {
    refetch();
  };
 
+ const handleSearch = (value) => {
+  setSearchTerm(value);
+  refetch();
+ }
+
 
   return (
     <Layout>
@@ -48,6 +54,8 @@ const AllWorkOrders = () => {
         loading={loading}
         refetch={refetch}
         handleStatusChange={handleStatusChange}
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
       />
       
       <div className="pagination">
