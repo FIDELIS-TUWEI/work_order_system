@@ -8,6 +8,7 @@ import {GrFormNext, GrFormPrevious} from "react-icons/gr";
 import Work from "@/pages/admin/workOrders/Work";
 import { useSearchWorkQuery, useWorkOrdersQuery } from "@/features/work/workSlice";
 import { selectUserInfo } from "@/features/auth/authSlice";
+import LoadingBox from "@/components/LoadingBox";
 const { Search } = Input;
 
 // Search component
@@ -53,11 +54,12 @@ const AllWorkOrders = () => {
   const user = useSelector(selectUserInfo);
   const [filterStatus, setFilterStatus] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const { workData = [], isLoading } = useSearchWorkQuery(searchTerm)
+  const { dataInfo, isLoading } = useSearchWorkQuery(searchTerm)
   const [page, setPage] = useState(1);
   const { data, isLoading: loading, error, refetch } = useWorkOrdersQuery({ page, status: filterStatus });
 
   const { data: workOrdersArray, pages } = data || {};
+  const { dataInfo: workSearch } = dataInfo || {};
 
  // Handle errors
  useEffect(() => {
@@ -84,14 +86,21 @@ const AllWorkOrders = () => {
  }
 
  // Function to filter work by order number
- const filteredWork = workData?.filter(work => work.workOrderNumber.toLowerCase().includes(searchTerm.toLowerCase()));
+ const filteredWork = workSearch?.filter(work => work.workOrderNumber.toLowerCase().includes(searchTerm.toLowerCase()));
  
 
   return (
     <Layout>
       <Typography style={{ textAlign: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>All Work Orders</Typography>
       <Filter searchTerm={searchTerm} setSearchTerm={setSearchTerm} handleSearch={handleSearch} />
-      <SearchedWork filteredWork={filteredWork} />
+      { isLoading && <LoadingBox /> }
+      { filteredWork?.map((workOrder) => {
+        <Typography key={workOrder._id}>
+          {workOrder.description} {workOrder.workOrderNumber}
+
+          <Button type="submit">Edit</Button>
+        </Typography>
+      })}
 
       <Work 
         workOrdersArray={workOrdersArray}
