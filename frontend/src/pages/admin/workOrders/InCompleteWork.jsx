@@ -17,7 +17,7 @@ const InCompleteWork = () => {
     // Handle errors
     useEffect(() => {
         if (error) {
-            message.error("An error occured loading In-attendance work data!")
+            message.error("An error occured loading In-complete work data!")
         }
     }, [error]);
 
