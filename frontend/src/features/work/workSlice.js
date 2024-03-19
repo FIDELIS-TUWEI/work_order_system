@@ -60,23 +60,32 @@ export const workApi = createApi({
             providesTags: ["WorkOrder"],
         }),
         inAttendanceWork: builder.query ({
-            query: () => ({
+            query: (args) => ({
                 url: `/work-orders/in-attendance`,
                 method: "GET",
+                params: {
+                    pageNumber: args.page
+                }
             }),
             providesTags: ["WorkOrder"],
         }),
         inCompleteWork: builder.query ({
-            query: () => ({
+            query: (args) => ({
                 url: `/work-orders/in-complete`,
                 method: "GET",
+                params: {
+                    pageNumber: args.page,
+                }
             }),
             providesTags: ["WorkOrder"],
         }),
         attendedWork: builder.query ({
-            query: () => ({
+            query: (args) => ({
                 url: `/work-orders/attended`,
                 method: "GET",
+                params: {
+                    pageNumber: args.page,
+                }
             }),
             providesTags: ["WorkOrder"],
         }),
