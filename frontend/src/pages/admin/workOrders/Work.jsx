@@ -1,14 +1,15 @@
 import PropTypes from "prop-types";
-import { Button, Modal, message, Tooltip, Badge, Table, Card } from "antd"
+import { Button, Modal, message, Tooltip, Badge, Table, Card, Input } from "antd"
 import {AiFillEye} from "react-icons/ai"
 import {BiSolidEditAlt} from "react-icons/bi";
 import {MdDelete} from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react";
 import { useDeleteWorkMutation } from "@/features/work/workSlice";
+const { Search } = Input;
 
 
-const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) => {
+const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange, searchTerm, handleSearch }) => {
   const { id } = useParams();
   const [deleteWork] = useDeleteWorkMutation(id);
   const navigate = useNavigate();
@@ -231,6 +232,11 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
     },
   ];
 
+  // Filter searched data
+  const filteredWorkOrders = workOrdersArray?.filter((workOrder) => 
+    workOrder.workOrderNumber.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
         <div className="add-btn">
@@ -241,6 +247,11 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
               New Work
             </Button>
         </div>
+        <Search 
+          placeholder="Enter work order number to search..."
+          type="search"
+          onChange={(e) => handleSearch(e.target.value)}
+        />
 
         <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", margin: "20px" }}>
           <label htmlFor="filterStatus" style={{ fontWeight: "700", marginLeft: "20px" }}>
@@ -257,7 +268,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange }) =>
           <Table
               loading={loading}
               columns={columns}
-              dataSource={workOrdersArray}
+              dataSource={filteredWorkOrders}
               pagination={false}
               scroll={{ x: 1500, y: 300 }}
               rowKey="_id"
@@ -294,6 +305,8 @@ Work.propTypes = {
   loading: PropTypes.bool,
   refetch: PropTypes.func,
   handleStatusChange: PropTypes.func,
+  searchTerm: PropTypes.string,
+  handleSearch: PropTypes.func
 };
 
 export default Work;
