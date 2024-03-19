@@ -65,6 +65,5 @@ export const {
     useGetWorkCountByStatusQuery,
     useCountWorkTrackerQuery,
     useGetWorkByDateQuery,
-    useTotalReviewedWorkQuery,
     useTotalWorkCountQuery
 } = reportsApi;
