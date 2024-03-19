@@ -59,6 +59,27 @@ export const workApi = createApi({
             }),
             providesTags: ["WorkOrder"],
         }),
+        inAttendanceWork: builder.query ({
+            query: () => ({
+                url: `/work-orders/in-attendance`,
+                method: "GET",
+            }),
+            providesTags: ["WorkOrder"],
+        }),
+        inCompleteWork: builder.query ({
+            query: () => ({
+                url: `/work-orders/in-complete`,
+                method: "GET",
+            }),
+            providesTags: ["WorkOrder"],
+        }),
+        attendedWork: builder.query ({
+            query: () => ({
+                url: `/work-orders/attended`,
+                method: "GET",
+            }),
+            providesTags: ["WorkOrder"],
+        }),
         updateWork: builder.mutation({
             query: ({id, values}) => ({
                 url: `/update/work/${id}`,
@@ -84,6 +105,9 @@ export const {
     useSingleWorkQuery,
     useSearchWorkQuery,
     useQueryAllWorkQuery,
+    useInAttendanceWorkQuery,
+    useInCompleteWorkQuery,
+    useAttendedWorkQuery,
     useUpdateWorkMutation,
     useDeleteWorkMutation,
 } = workApi;
