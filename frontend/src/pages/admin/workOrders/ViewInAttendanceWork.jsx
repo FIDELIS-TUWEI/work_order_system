@@ -167,17 +167,20 @@ const ViewInAttendanceWork = ({ user, workArray, loading, refetch }) => {
           },
     ];
 
-  return (
-    <Card>
-        <Table 
-            loading={loading}
-            columns={columns}
-            dataSource={workArray}
-            pagination={false}
-            scroll={{ x: 1500, y: 300 }}
-            rowKey="_id"
-        />
-
+    return (
+        <>
+        <Card>
+            <Table 
+                loading={loading}
+                columns={columns}
+                dataSource={workArray}
+                pagination={false}
+                scroll={{ x: 1500, y: 300 }}
+                rowKey="_id"
+            />
+    
+            
+        </Card>
         <Modal
             title="Delete Work"
             open={isModalVisible}
@@ -189,9 +192,17 @@ const ViewInAttendanceWork = ({ user, workArray, loading, refetch }) => {
         >
             <p>Are you sure you want to delete a work order titled: {selectedWorkToDelete?.description}?</p>
         </Modal>
-    </Card>
-  )
-};
+        <div className="add-btn">
+            <Button 
+                onClick={() => navigate(-1)} 
+                style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
+            >
+                Go Back
+            </Button>
+        </div>
+        </>
+      )
+    };
 
 ViewInAttendanceWork.propTypes = {
     user: PropTypes.object,
