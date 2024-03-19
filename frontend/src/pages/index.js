@@ -33,6 +33,7 @@ import EmployeeDetails from "@/pages/admin/employee/EmployeeDetails";
 import NewEmployee from "@/pages/admin/employee/NewEmployee";
 import UserWorkHistory from "@/pages/admin/users/UserWorkHistory";
 import DailyWork from "@/pages/admin/reports/DailyWork";
+import InAttendanceWork from "@/pages/admin/workOrders/InAttendanceWork";
 
 
 export { 
@@ -43,5 +44,5 @@ export {
     NewCategory, AllCategories, EditCategory, AllLocations, NewLocation,
     AdminPanel, NewDepartment, AllDepartments, AllDesignations,
     NewDesignation, ChangePassword, Employees, EditEmployee,
-    EmployeeDetails, NewEmployee, UserWorkHistory, DailyWork
+    EmployeeDetails, NewEmployee, UserWorkHistory, DailyWork, InAttendanceWork
 }
