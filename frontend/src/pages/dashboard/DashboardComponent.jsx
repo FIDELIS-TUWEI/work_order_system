@@ -36,6 +36,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
     const navigateTotalWork = () => navigate('/work/list');
     const navigateToPendingWork = () => navigate('/work/list');
     const navigateToInAttendanceWork = () => navigate("/in-attendance/work");
+    const navigateToInCompleteWork = () => navigate('/in-complete/work');
     const navigateToCompleteWork = () => navigate('/work/list');
     const navigateToUsers = () => navigate('/users/all');
     const navigateToActiveUsers = () => navigate('/users/all');
@@ -100,7 +101,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                     icon={
                         <BsFillClipboard2XFill size={24} color="maroon" />
                     }
-                    onClick={navigateToPendingWork}
+                    onClick={navigateToInCompleteWork}
                 />
             </Col>
             <Col span={8}>
@@ -216,7 +217,7 @@ const DashboardComponent = ({ user, notAttendedCount, pendingCount, inAttendance
                         icon={
                             <BsFillClipboard2XFill size={24} color="maroon" />
                         }
-                        onClick={navigateToPendingWork}
+                        onClick={navigateToInCompleteWork}
                     />
                 </Col>
 
