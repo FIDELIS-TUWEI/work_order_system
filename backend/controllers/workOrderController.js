@@ -444,8 +444,8 @@ const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, nex
 
 // Search work by order number 
 const searchWorkByOrderNumber = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const workOrderNumber = req.params.workOrderNumber;
-    const workOrder = await WorkOrder.findOne({ workOrderNumber: workOrderNumber })
+    const searchTerm = req.query;
+    const workOrder = await WorkOrder.find({ workOrderNumber: { $regex: new RegExp(searchTerm, 'i')} })
         .populate("requestedBy", "username")
         .populate("assignedTo", "firstName lastName")
 
