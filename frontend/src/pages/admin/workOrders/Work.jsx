@@ -251,6 +251,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange, sear
           placeholder="Enter work order number to search..."
           type="search"
           onChange={(e) => handleSearch(e.target.value)}
+          allowClear
         />
 
         <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", margin: "20px" }}>
