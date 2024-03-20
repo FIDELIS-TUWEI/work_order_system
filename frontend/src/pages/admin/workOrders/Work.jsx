@@ -222,7 +222,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange, sear
     },
     {
       title: "Actions",
-      width: 100,
+      width: 150,
       align: "center",
       responsive: ["md", "lg"],
       dataIndex: "actions",
