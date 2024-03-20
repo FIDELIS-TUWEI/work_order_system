@@ -250,6 +250,7 @@ const Work = ({workOrdersArray, user, loading, refetch, handleStatusChange, sear
         <Search 
           placeholder="Enter work order number to search..."
           type="search"
+          value={searchTerm}
           onChange={(e) => handleSearch(e.target.value)}
           allowClear
         />
