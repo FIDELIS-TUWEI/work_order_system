@@ -295,28 +295,17 @@ const getAllWorkOrders = asyncHandler(async (req, res, next) => {
         query.workOrderNumber = { $regex: req.query.searchTerm, $options: "i" };
     }
 
-    const countQuery = req.query.search ? query : {};
-    const count = await WorkOrder.find(countQuery).estimatedDocumentCount();
+    const count = await WorkOrder.countDocuments(query);
 
-    let workOrders;
-
-    if (req.query.search) {
-        workOrders = await WorkOrder.find(query)
-            .populate("location", "locationTitle")
-            .populate("requestedBy", "username")
-            .populate("category", "categoryTitle")
-            .populate("assignedTo", "firstName lastName")
-            .sort({ Date_Created: -1 })
-            .skip(pageSize * (page - 1))
-            .limit(pageSize);
-    } else {
-        workOrders = await WorkOrder.find({})
-            .populate("location", "locationTitle")
-            .populate("requestedBy", "username")
-            .populate("category", "categoryTitle")
-            .populate("assignedTo", "firstName lastName")
-            .sort({ Date_Created: -1 });
-    }
+    const workOrders = await WorkOrder.find(query)
+        .populate("location", "locationTitle")
+        .populate("requestedBy", "username")
+        .populate("category", "categoryTitle")
+        .populate("assignedTo", "firstName lastName")
+        .sort({ Date_Created: -1 })
+        .skip(pageSize * (page - 1))
+        .limit(pageSize)
+        .lean();
 
     if (!workOrders) {
         const error = new CustomError("Work orders not found!", 404);
@@ -331,6 +320,7 @@ const getAllWorkOrders = asyncHandler(async (req, res, next) => {
         count
     });
 });
+
 
 // Query All work orders for line graph frontend
 const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => {
