@@ -215,15 +215,19 @@ async function sendAssignedEmailNotification(updatedWorkOrder, assignedTo) {
 }
 
 async function sendCompletedEmailNotification(updatedWorkOrder) {
+    const locations = await Location.find({ _id: { $in: updatedWorkOrder.location } });
+    const locationTitles = locations.map(location => location.locationTitle).join(", ");
 
     const subject = `Work Order Completed`;
     const text = `The following work order has been completed:
         - Description: ${updatedWorkOrder.description}
         - Status: ${updatedWorkOrder.status}
+        - Location(s): ${locationTitles}
         - Date Completed: ${updatedWorkOrder.dateCompleted}
         - Comments: ${updatedWorkOrder.comments}
         - Tracker: ${updatedWorkOrder.tracker}
         - Tracker Message: ${updatedWorkOrder.trackerMessage}
+        - Checked By: ${updatedWorkOrder.checkedBy}
 
         - Date Updated: ${updatedWorkOrder.Date_Updated}
 
