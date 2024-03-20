@@ -46,13 +46,6 @@ export const workApi = createApi({
             }),
             providesTags: ["WorkOrder"],
         }),
-        searchWork: builder.query({
-            query: (searchTerm) => ({
-                url: `/search/work?searchTerm=${searchTerm}`,
-                method: "GET",
-            }),
-            providesTags: ["WorkOrder"],
-        }),
         queryAllWork: builder.query({
             query: () => ({
                 url: `/query/all/work`,
@@ -113,7 +106,6 @@ export const {
     useCreateWorkMutation,
     useWorkOrdersQuery,
     useSingleWorkQuery,
-    useSearchWorkQuery,
     useQueryAllWorkQuery,
     useInAttendanceWorkQuery,
     useInCompleteWorkQuery,
