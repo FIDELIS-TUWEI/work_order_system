@@ -285,26 +285,24 @@ async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
 const getAllWorkOrders = asyncHandler(async (req, res, next) => {
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const searchTerm = req.query.searchTerm || "";
     let query = {};
 
     if (req.query.status) {
         query.status = req.query.status;
     }
 
-    if (req.query.search) {
-        query.workOrderNumber = { $regex: req.query.searchTerm, $options: "i" };
-    }
-
     const count = await WorkOrder.countDocuments(query);
 
-    const workOrders = await WorkOrder.find(query)
+    const workOrders = await WorkOrder.find({...query, workOrderNumber: { $regex: searchTerm, $options: "i" }})
         .populate("location", "locationTitle")
         .populate("requestedBy", "username")
         .populate("category", "categoryTitle")
         .populate("assignedTo", "firstName lastName")
         .sort({ Date_Created: -1 })
         .skip(pageSize * (page - 1))
-        .limit(pageSize)
+        .limit(limit)
         .lean();
 
     if (!workOrders) {
