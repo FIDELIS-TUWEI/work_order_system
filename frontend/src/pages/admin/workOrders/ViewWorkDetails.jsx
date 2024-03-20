@@ -86,7 +86,7 @@ const ViewWorkDetails = ({ workDetailsArray, isLoading, error, componentPDF, han
 
                 <div className="details">
                     <span>Employee Contact:</span>
-                    <span>{workDetailsArray?.assignedTo.phone}</span>
+                    <span>{workDetailsArray?.assignedTo?.phone}</span>
                 </div>
 
                 <div className="details">
