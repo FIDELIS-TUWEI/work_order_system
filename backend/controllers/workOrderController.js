@@ -88,7 +88,7 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     
         // Send Email notification
         const subject = "NEW WORK ORDER CREATED";
-        const emailText = `A New Work Order has been requested with the following details:
+        const emailText = `A New Work with Order number: ${savedWorkorder.workOrderNumber}  has been requested with the following details:
             - Locations: ${locationTitles}
             - Service Type: ${serviceType}
             - Category: ${categoryTitle}
