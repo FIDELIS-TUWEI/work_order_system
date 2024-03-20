@@ -88,7 +88,7 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     
         // Send Email notification
         const subject = "NEW WORK ORDER CREATED";
-        const emailText = `A New Work Order has been requested with order number ${workOrderNumber} with the following details:
+        const emailText = `A New Work Order has been requested with the following details:
             - Locations: ${locationTitles}
             - Service Type: ${serviceType}
             - Category: ${categoryTitle}
@@ -226,7 +226,6 @@ async function sendCompletedEmailNotification(updatedWorkOrder) {
         - Status: ${updatedWorkOrder.status}
         - Date Completed: ${updatedWorkOrder.dateCompleted}
         - Comments: ${updatedWorkOrder.comments}
-        - Supervised By: ${updatedWorkOrder.supervisedBy}
         - Tracker: ${updatedWorkOrder.tracker}
         - Tracker Message: ${updatedWorkOrder.trackerMessage}
 
@@ -276,7 +275,7 @@ async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
         // Save the updated work order
         updatedWorkOrder.save();
 
-    }, 10 * 60 * 1000); // 1 minute in milliseconds
+    }, 24 * 60 * 1000); // 1 minute in milliseconds
 
     updatedWorkOrder.timeoutId = timeoutId;
 };
