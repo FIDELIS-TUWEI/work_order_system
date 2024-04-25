@@ -155,9 +155,9 @@ const BarGraph = ({ workDataArray, loading, error }) => {
                 </ResponsiveContainer>
             </Card>
             </Col> 
+            </Row>
 
-            <Col>
-            <Card title="Work Requested" style={{ margin: "6px" }}>
+            <Card title="Work Requested" style={{ marginTop: "1rem" }}>
                 <ResponsiveContainer width="100%" minWidth={700} aspect={1}>
                     <LineChart>
                         <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
@@ -169,8 +169,6 @@ const BarGraph = ({ workDataArray, loading, error }) => {
                     </LineChart>
                 </ResponsiveContainer>
             </Card>
-            </Col>
-            </Row>
         </div>
     </>
   )
