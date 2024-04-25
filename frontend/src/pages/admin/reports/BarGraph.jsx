@@ -96,8 +96,8 @@ const BarGraph = ({ workDataArray, loading, error }) => {
                             nameKey="employee" 
                             cx="50%" 
                             cy="50%" 
-                            innerRadius={60}
-                            outerRadius={80} 
+                            innerRadius={50}
+                            outerRadius={70} 
                             paddingAngle={5}
                             fill="#8884d8"  
                         />
