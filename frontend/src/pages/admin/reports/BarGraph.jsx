@@ -109,7 +109,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
             </Col>
 
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Status" style={{ margin: "6px" }}>
+            <Card title="Work Status" style={{ margin: "auto" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie 
@@ -133,7 +133,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
             </Col>
 
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Priority" style={{ margin: "6px" }}>
+            <Card title="Work Priority" style={{ margin: "auto" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie
