@@ -87,7 +87,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
         <div style={{ margin: "15px 2px" }}>
             <Row gutter={16}>
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Assigned" style={{ margin: "auto" }}>
+            <Card title="Work Assigned" style={{ margin: "auto", marginBottom: "0.8rem" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie 
@@ -96,8 +96,8 @@ const BarGraph = ({ workDataArray, loading, error }) => {
                             nameKey="employee" 
                             cx="50%" 
                             cy="50%" 
-                            innerRadius={60}
-                            outerRadius={80} 
+                            innerRadius={50}
+                            outerRadius={70} 
                             paddingAngle={5}
                             fill="#8884d8"  
                         />
@@ -109,7 +109,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
             </Col>
 
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Status" style={{ margin: "6px" }}>
+            <Card title="Work Status" style={{ margin: "auto", marginBottom: "0.8rem" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie 
@@ -133,7 +133,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
             </Col>
 
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Priority" style={{ margin: "6px" }}>
+            <Card title="Work Priority" style={{ margin: "auto", marginBottom: "0.8rem" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie
@@ -155,10 +155,10 @@ const BarGraph = ({ workDataArray, loading, error }) => {
                 </ResponsiveContainer>
             </Card>
             </Col> 
+            </Row>
 
-            <Col>
-            <Card title="Work Requested" style={{ margin: "6px" }}>
-                <ResponsiveContainer width="100%" minWidth={700} aspect={1}>
+            <Card title="Work Requested" style={{ marginTop: "1rem" }}>
+                <ResponsiveContainer width="100%" aspect={1}>
                     <LineChart>
                         <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
                         <XAxis dataKey="user" />
@@ -169,8 +169,6 @@ const BarGraph = ({ workDataArray, loading, error }) => {
                     </LineChart>
                 </ResponsiveContainer>
             </Card>
-            </Col>
-            </Row>
         </div>
     </>
   )

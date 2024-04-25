@@ -1,9 +1,9 @@
-
+import ErrorPage from "../assets/images/ErrorPage.jpg";
 
 const NotFound = () => {
   return (
     <div className="not-found">
-      <h1>Page Not Found!</h1>
+      <img src={ErrorPage} alt="error page" />
     </div>
   )
 };
