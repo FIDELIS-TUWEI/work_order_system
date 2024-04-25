@@ -87,7 +87,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
         <div style={{ margin: "15px 2px" }}>
             <Row gutter={16}>
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Assigned" style={{ margin: "auto" }}>
+            <Card title="Work Assigned" style={{ margin: "auto", marginBottom: "0.8rem" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie 
@@ -109,7 +109,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
             </Col>
 
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Status" style={{ margin: "auto" }}>
+            <Card title="Work Status" style={{ margin: "auto", marginBottom: "0.8rem" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie 
@@ -133,7 +133,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
             </Col>
 
             <Col xs={24} md={12} lg={8}>
-            <Card title="Work Priority" style={{ margin: "auto" }}>
+            <Card title="Work Priority" style={{ margin: "auto", marginBottom: "0.8rem" }}>
                 <ResponsiveContainer width="100%" aspect={1}>
                     <PieChart>
                         <Pie
@@ -158,7 +158,7 @@ const BarGraph = ({ workDataArray, loading, error }) => {
             </Row>
 
             <Card title="Work Requested" style={{ marginTop: "1rem" }}>
-                <ResponsiveContainer width="100%" minWidth={700} aspect={1}>
+                <ResponsiveContainer width="100%" aspect={1}>
                     <LineChart>
                         <Line data={userCountsArray} dataKey="count" type='monotone' stroke="#8884d8" dot={{r:6}} activeDot={{r:8}} fill="#8884d8"  />
                         <XAxis dataKey="user" />
