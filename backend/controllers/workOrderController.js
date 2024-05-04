@@ -514,7 +514,6 @@ module.exports = {
     createWorkOrder,
     updateWorkOrder,
     getAllWorkOrders,
-    getWorkOrders,
     queryAllWork,
     inAttendanceTracker,
     inCompleteTracker,
