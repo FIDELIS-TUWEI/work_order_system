@@ -318,7 +318,6 @@ const getAllWorkOrders = asyncHandler(async (req, res, next) => {
     });
 });
 
-
 // Query All work orders for line graph frontend
 const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
@@ -515,6 +514,7 @@ module.exports = {
     createWorkOrder,
     updateWorkOrder,
     getAllWorkOrders,
+    getWorkOrders,
     queryAllWork,
     inAttendanceTracker,
     inCompleteTracker,
