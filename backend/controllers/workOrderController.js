@@ -318,55 +318,6 @@ const getAllWorkOrders = asyncHandler(async (req, res, next) => {
     });
 });
 
-// Fetch all work orders with location, category, employee assigned, status
-const getWorkOrders = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    try {
-        // Extract query parameters for filtering and pagination
-        const { page = 1, limit = 10, status, priority, serviceType } = req.query;
-
-        // prepare query filters
-        const queryFilters = {};
-        if (status) queryFilters.status = status;
-        if (priority) queryFilters.priority = priority;
-        if (serviceType) queryFilters.serviceType = serviceType;
-
-        // calculate the number of documents to skip
-        const skip = (page - 1) * limit;
-
-        // Fetch work orders with pagination and filters
-        const workOrders = await WorkOrder.find(queryFilters)
-            .sort({ Date_Created: -1 })
-            .skip(skip)
-            .limit(parseInt(limit))
-            .populate("location", "locationTitle")
-            .populate("category", "categoryTitle")
-            .populate("assignedTo", "firstName lastName")
-            .populate("requestedBy", "username")
-
-        if (!workOrders) {
-            const error = new CustomError("Work orders not found!",  404);
-            return next(error);
-        }
-
-        // Get total count of work orders matching the filter
-        const total = await WorkOrder.countDocuments(queryFilters);
-
-        // prepare response
-        const response = {
-            success: true,
-            data: workOrders,
-            total,
-            page, 
-            limit
-        };
-
-        res.status(200).json(response);
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-}));
-
 // Query All work orders for line graph frontend
 const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
