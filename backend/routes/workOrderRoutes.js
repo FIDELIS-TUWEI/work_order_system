@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { createWorkOrder, updateWorkOrder, getAllWorkOrders, getSingleWorkOrder, deleteWorkOrder, queryAllWork, searchWorkByOrderNumber, inAttendanceTracker, inCompleteTracker, attendedTracker, getWorkOrders } = require('../controllers/workOrderController');
+const { createWorkOrder, updateWorkOrder, getAllWorkOrders, getSingleWorkOrder, deleteWorkOrder, queryAllWork, inAttendanceTracker, inCompleteTracker, attendedTracker } = require('../controllers/workOrderController');
 const { protect, restrict, cacheMiddleware, setVerifiedBy} = require('../middleware/authMiddleware');
 
 
 router.post("/create/work", protect, restrict(["admin", "hod", "user", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), createWorkOrder);
 router.get("/getall/work", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, getAllWorkOrders);
-router.get("/work/orders", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, getWorkOrders);
 router.get("/query/all/work", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, queryAllWork);
 router.get("/single/work/:id", protect, restrict(["admin", "supervisor", "superadmin", "hod", "reviewer", "engineer", "maintenance"]), cacheMiddleware, getSingleWorkOrder);
 router.get("/work-orders/in-attendance", protect, restrict(["admin", "hod", "supervisor", "superadmin", "reviewer", "engineer", "maintenance"]), cacheMiddleware, inAttendanceTracker);
