@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createWorkOrder, updateWorkOrder, getAllWorkOrders, getSingleWorkOrder, deleteWorkOrder, queryAllWork, searchWorkByOrderNumber, inAttendanceTracker, inCompleteTracker, attendedTracker } = require('../controllers/workOrderController');
+const { createWorkOrder, updateWorkOrder, getAllWorkOrders, getSingleWorkOrder, deleteWorkOrder, queryAllWork, inAttendanceTracker, inCompleteTracker, attendedTracker } = require('../controllers/workOrderController');
 const { protect, restrict, cacheMiddleware, setVerifiedBy} = require('../middleware/authMiddleware');
 
 
