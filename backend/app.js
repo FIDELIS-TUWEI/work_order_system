@@ -9,6 +9,7 @@ const app = express();
 
 const middleware = require("./utils/middleware");
 const CustomError = require("./utils/CustomError");
+const appRoutes = require("./routes/index");
 
 // Express trust proxy settings
 app.set("trust proxy", 1);
@@ -52,7 +53,7 @@ app.get("/", (req, res) => {
     res.json({ message: "Backend Server is ready!"});
 });
 
-require("./routes/index")(app); // application routes
+app.use(appRoutes); // application routes from the index file
 
 app.all('*', (req, res, next) => {
     const err = new CustomError(`Can't find ${req.originalUrl} on the server!`, 404);
