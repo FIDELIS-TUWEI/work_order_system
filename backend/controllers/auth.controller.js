@@ -5,50 +5,84 @@ const sendEmail = require("../utils/email");
 const createSecretToken = require("../utils/secretToken");
 const CustomError = require("../utils/CustomError");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
+const logger = require("../utils/logger");
 
 // @desc Register User
-const signupUser = asyncHandler (asyncErrorHandler (async (req, res) => {
-    // check for existing user
-    const existingUser = await User.findOne({ username: req.body.username });
-    if (existingUser) {
-        const error = new CustomError("User already exists!", 400);
-        return next(error);
-    };
+const register = asyncHandler (async (req, res) => {
+    try {
+        const { firstName, lastName, email, username, password } = req.body;
 
-    // create new user
-    const user = await User.create(req.body);
-
-    if (user) {
-        res.status(201).json({
-            success: true,
-            message: "User created successfully"
-        });
-
-        // Send email notification
-        const recepients = ["fidel.tuwei@holidayinnnairobi.com"]
-        const ccEmails = ["peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
-
-        const emailSubject = `New User successfully Created`;
-        const emailText = `A user with Name ${user.firstName} ${user.lastName} has been created.
-        
-            Thank you,
-            Holiday Inn Work Order System - All rights reserved.
-        `;
-
-        const emailOptions = {
-            email: recepients,
-            cc: ccEmails,
-            subject: emailSubject,
-            text: emailText
+        // 1. check email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: "Invalid email format!" })
         };
 
-        // Send Email
-        sendEmail(emailOptions);
-    }  else {
-        const error = new CustomError("Failed to create new User!", 400);
-        return next(error);
+        // 2. Check if user exists
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ error: "Username is already registered, please login!" });
+        };
+
+        // 3. check if email exists
+        const emailExists = await User.findOne({ email });
+        if (emailExists) {
+            return res.status(400).json({ error: "Email is already registered!" });
+        };
+
+        // check password length
+        if (password.length < 6) {
+            return res.status(400).json({ error: "Password must be atleast 6 characters long!" });
+        };
+
+        // 4. Hash password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // 5. Create new user
+        const newUser = new User({
+            firstName,
+            lastName,
+            email,
+            username,
+            password: hashedPassword
+        });
+
+        // 6. Check if all requirements are met
+        if (newUser) {
+            await newUser.save();
+
+            res.status(201).json({ message: "User registered successfully" });
+
+            // Send email notification
+            const recepients = ["fidel.tuwei@holidayinnnairobi.com"]
+            const ccEmails = ["peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+
+            const emailSubject = `New User successfully Created`;
+            const emailText = `A user with Name ${newUser.firstName} ${newUser.lastName} has been created.
+            
+                Thank you,
+                Holiday Inn Work Order System - All rights reserved.
+            `;
+
+            const emailOptions = {
+                email: recepients,
+                cc: ccEmails,
+                subject: emailSubject,
+                text: emailText
+            };
+
+            // Send Email
+            sendEmail(emailOptions);
+        } else {
+            res.status(400).json({ error: "Invalid user data!" });
+        };
+
+    } catch (error) {
+        logger.error("Error in signup controller", error);
+        req.status(500).json({ error: "Internal Server Error" });
     };
-}));
+});
 
 // @desc Auth user & get token
 // @route POST /hin/login
@@ -186,7 +220,7 @@ const changePassword = asyncHandler (asyncErrorHandler (async (req, res, next) =
 }));
 
 module.exports = {
-    signupUser,
+    register,
     login,
     logout,
     getUserInfo,
