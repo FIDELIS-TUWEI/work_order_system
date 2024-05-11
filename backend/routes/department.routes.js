@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { protect, restrict, cacheMiddleware } = require("../middleware/authMiddleware");
-const { createDepartment, getAllDepartments, deleteDepartment, queryAllDepartments } = require("../controllers/departmentController");
+const { createDepartment, getAllDepartments, deleteDepartment, queryAllDepartments } = require("../controllers/department.controller");
 
 
 router.post("/new/department", protect, restrict(["admin", "superadmin"]), createDepartment);

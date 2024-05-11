@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { newEmployee, getAllEmployees, singleEmployee, deleteEmployee, editEmployee, countWorkAssigned, queryAllEmployees, countEmployees, getEmployeeInfo } = require("../controllers/employeeController");
+const { newEmployee, getAllEmployees, singleEmployee, deleteEmployee, editEmployee, countWorkAssigned, queryAllEmployees, countEmployees, getEmployeeInfo } = require("../controllers/employee.controller");
 const { protect, restrict, cacheMiddleware } = require("../middleware/authMiddleware");
 
 router.post("/new/employee", protect, restrict(["admin", "superadmin", "engineer", "maintenance"]), newEmployee);

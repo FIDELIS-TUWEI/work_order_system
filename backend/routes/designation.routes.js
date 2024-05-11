@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createDesignation, getAllDesignations, deleteDesignation, queryAllDesignations } = require('../controllers/designationController');
+const { createDesignation, getAllDesignations, deleteDesignation, queryAllDesignations } = require('../controllers/designation.controller');
 const { protect, restrict, cacheMiddleware } = require('../middleware/authMiddleware');
 
 router.post("/new/designation", protect, restrict(["admin", "superadmin"]), createDesignation);

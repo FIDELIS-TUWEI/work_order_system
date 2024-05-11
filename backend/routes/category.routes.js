@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createCategory, getAllCategories, updateCategory, deleteCategory, queryAllCategories, singleCategory } = require("../controllers/categoryController");
+const { createCategory, getAllCategories, updateCategory, deleteCategory, queryAllCategories, singleCategory } = require("../controllers/category.controller");
 const { protect, restrict, cacheMiddleware } = require("../middleware/authMiddleware");
 
 router.post("/new/category", protect, restrict(["admin", "superadmin", "maintenance"]), createCategory);

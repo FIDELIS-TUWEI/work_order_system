@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createLocation, getAllLocations, deleteLocation, queryAllLocations } = require('../controllers/locationController');
+const { createLocation, getAllLocations, deleteLocation, queryAllLocations } = require('../controllers/location.controller');
 const { protect, restrict, cacheMiddleware } = require('../middleware/authMiddleware');
 
 

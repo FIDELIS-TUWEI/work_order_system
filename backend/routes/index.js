@@ -1,24 +1,26 @@
 module.exports = (app) => {
+    const limiter = require("../middleware/limiter");
+
     // Import Routes
-    const authRoutes = require("../routes/authRoutes");
-    const userRoutes = require("../routes/userRoutes");
-    const workOrderRoutes = require("../routes/workOrderRoutes");
-    const locationRoutes = require("../routes/locationRoutes");
-    const reportsRoutes = require("../routes/reportRoutes");
-    const categoryRoutes = require("../routes/categoryRoutes");
-    const departmentRoutes = require("../routes/departmentRoutes");
-    const designationRoutes = require("../routes/designationRoutes");
-    const employeeRoutes = require("../routes/employeeRoutes");
+    const authRoutes = require("../routes/auth.routes");
+    const userRoutes = require("./user.routes");
+    const workOrderRoutes = require("./work.order.routes");
+    const locationRoutes = require("./location.routes");
+    const reportsRoutes = require("./report.routes");
+    const categoryRoutes = require("../routes/category.routes");
+    const departmentRoutes = require("../routes/department.routes");
+    const designationRoutes = require("../routes/designation.routes");
+    const employeeRoutes = require("../routes/employee.routes");
 
 
     // Routes Middleware
-    app.use("/hin", authRoutes);
-    app.use("/hin", userRoutes);
-    app.use("/hin", workOrderRoutes);
-    app.use("/hin", locationRoutes);
-    app.use("/hin", reportsRoutes);
-    app.use("/hin", categoryRoutes);
-    app.use("/hin", departmentRoutes);
-    app.use("/hin", designationRoutes);
-    app.use("/hin", employeeRoutes);
+    app.use("/api/wos/v2/auth", limiter, authRoutes);
+    app.use("/api/wos/v2/users", limiter, userRoutes);
+    app.use("/api/wos/v2/work-orders", limiter, workOrderRoutes);
+    app.use("/api/wos/v2/locations", limiter, locationRoutes);
+    app.use("/api/wos/v2/reports", limiter, reportsRoutes);
+    app.use("/api/wos/v2/categories", limiter, categoryRoutes);
+    app.use("/api/wos/v2/departments", limiter, departmentRoutes);
+    app.use("/api/wos/v2/designations", limiter, designationRoutes);
+    app.use("/api/wos/v2/employees", limiter, employeeRoutes);
 };

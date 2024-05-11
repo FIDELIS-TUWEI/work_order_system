@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllUsers, singleUser, editUser, deleteUser, countAllUsers, countActiveUsers} = require('../controllers/userController');
+const { getAllUsers, singleUser, editUser, deleteUser, countAllUsers, countActiveUsers} = require('../controllers/user.controller');
 const { protect, restrict, cacheMiddleware, isAdmin } = require('../middleware/authMiddleware');
 
 router.get("/all-users", protect, restrict(['admin', "superadmin"]), cacheMiddleware, getAllUsers);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { filterWorkStatus, countWorkStatus, countTotalWork, workCreatedByDate, countWorkTracker } = require('../controllers/report');
+const { filterWorkStatus, countWorkStatus, countTotalWork, workCreatedByDate, countWorkTracker } = require('../controllers/report.controller');
 const { protect, restrict, cacheMiddleware } = require('../middleware/authMiddleware');
 
 router.get("/work", protect, restrict(["admin", "hod", "reviewer", "supervisor", "superadmin", "engineer", "maintenance"]), cacheMiddleware, filterWorkStatus);
