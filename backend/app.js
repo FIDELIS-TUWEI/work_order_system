@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
@@ -32,14 +31,6 @@ app.use(cors({
     optionsSuccessStatus: 200,
 }));
 
-// Rate limit
-let limiter = rateLimit({
-    max: 200,
-    windows: 10 * 60 * 1000,
-    message: "Too many requests from this IP. Please try again later!"
-});
-app.use(limiter);
-
 // Add key generator middleware
 app.use(middleware.addKey);
 
@@ -60,6 +51,8 @@ app.disable("x-powered-by"); // disable server fingerprinting
 app.get("/", (req, res) => {
     res.json({ message: "Backend Server is ready!"});
 });
+
+require("./routes/index")(app); // application routes
 
 app.all('*', (req, res, next) => {
     const err = new CustomError(`Can't find ${req.originalUrl} on the server!`, 404);
