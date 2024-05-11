@@ -1,4 +1,4 @@
-const User = require("../model/user");
+const User = require("../model/user.model");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");

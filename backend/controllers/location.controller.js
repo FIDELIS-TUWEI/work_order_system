@@ -1,4 +1,4 @@
-const Location = require("../model/location"); 
+const Location = require("../model/location.model"); 
 const asyncHandler = require("express-async-handler");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");

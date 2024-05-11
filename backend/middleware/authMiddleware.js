@@ -1,6 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const User = require("../model/user");
+const User = require("../model/user.model");
 const asyncHandler = require("express-async-handler");
 const cache = require("memory-cache");
 const CustomError = require("../utils/CustomError");

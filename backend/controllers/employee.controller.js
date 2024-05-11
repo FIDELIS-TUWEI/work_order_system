@@ -1,5 +1,5 @@
-const Employee = require("../model/employee");
-const Work = require("../model/workOrder");
+const Employee = require("../model/employee.model");
+const Work = require("../model/work.order.model");
 const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");

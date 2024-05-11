@@ -1,4 +1,4 @@
-const Department = require("../model/departments");
+const Department = require("../model/department.model");
 const asyncHandler = require("express-async-handler");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");

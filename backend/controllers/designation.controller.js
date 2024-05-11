@@ -1,4 +1,4 @@
-const Designation = require('../model/designation');
+const Designation = require('../model/designation.model');
 const asyncHandler = require('express-async-handler');
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
 const CustomError = require('../utils/CustomError');

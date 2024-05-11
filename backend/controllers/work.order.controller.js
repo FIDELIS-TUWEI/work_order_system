@@ -1,13 +1,13 @@
-const WorkOrder = require("../model/workOrder");
-const User = require("../model/user");
-const Category = require("../model/category");
-const Employee = require("../model/employee");
+const WorkOrder = require("../model/work.order.model");
+const User = require("../model/user.model");
+const Category = require("../model/category.model");
+const Employee = require("../model/employee.model");
 const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
 const cron = require("node-cron");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");
-const Location = require("../model/location");
+const Location = require("../model/location.model");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
