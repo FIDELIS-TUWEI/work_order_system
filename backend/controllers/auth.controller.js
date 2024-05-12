@@ -6,6 +6,7 @@ const createSecretToken = require("../utils/generateToken");
 const CustomError = require("../utils/CustomError");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const logger = require("../utils/logger");
+const generateTokenAndSetCookie = require("../utils/generateToken");
 
 // @desc Register User
 const register = asyncHandler (async (req, res) => {
@@ -86,59 +87,30 @@ const register = asyncHandler (async (req, res) => {
 
 // @desc Auth user & get token
 const login = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+try {
     const { username, password } = req.body;
-
-    // Check user input
-    if (!username || !password) {
-        return res.json({ message: "All fields are required!" })
-    };
-
-    // Find user using their username in DB
     const user = await User.findOne({ username });
 
-    if (!user) {
-        const error = new CustomError("User not found!", 404)
-        return next(error);
+    // Check if password is correct with the one in DB
+    isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+    if (!user || !isPasswordCorrect) {
+        return res.status(400).json({ error: "Invalid username or password" });
     };
 
-    // check if password matches in DB
-    const passwordIsMatch = await bcrypt.compare(password, user.password);
+    // generate token as cookie
+    generateTokenAndSetCookie(user._id, res);
 
-    if (!passwordIsMatch) {
-        const error = new CustomError("Incorrect password or username!", 401)
-        return next(error);
-    }
+    res.status(200).json({
+        user: {
+            ...user._doc,
+            password: undefined
+        }
+    });
 
-    // send token if username and password match DB
-    if (user && passwordIsMatch) {
-        //Generate Token
-        const token = createSecretToken(user._id);
-        user.token = token;
-
-        // Send and store the token as HTTP-Only cookie
-        res.cookie("token", token, {
-            withCredentials: true,
-            path: '/',
-            httpOnly: true,
-            sameSite: 'none',
-            secure: process.env.NODE_ENV === 'production',
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
-        });
-
-        res.status(200).json({
-            success: true,
-            message: "User logged in successfully",
-            user: {
-                ...user._doc,
-                password: undefined
-            },
-            token
-        });
-
-    } else {
-        const error = new CustomError("Invalid Credentials!", 401)
-        return next(error);
-    }
+} catch (error) {
+    logger.error("Error in login controller", error);
+    res.status(500).json({ error: "Internal Server Error" });
+}
 }));
 
 // @desc Logout user
