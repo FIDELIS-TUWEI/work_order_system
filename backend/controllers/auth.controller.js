@@ -125,23 +125,20 @@ const logout = (req, res) => {
 };
 
 // @desc Get user info
-const getUserInfo = asyncHandler (async (req, res) => {
-    const userId = req.user.id;
-    const user = await User.findById(userId).select("-password")
-        .populate("workOrders")
-        .populate("department", "departmentName")
-        .populate("designation", "designationName")
+const getMe = asyncHandler (async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id)
+            .select("-password")
+            .populate("workOrders")
+            .populate("department", "departmentName")
+            .populate("designation", "designationName");
 
-    if (!user) {
-        const error = new CustomError("User not found!", 404);
-        return next(error)
-    }
+        res.status(200).json(user);
 
-    res.status(200).json({
-        success: true,
-        user
-    });
-    
+    } catch (error) {
+        logger.error("Error in getMe controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
 });
 
 // @desc Change User Password
@@ -186,6 +183,6 @@ module.exports = {
     register,
     login,
     logout,
-    getUserInfo,
+    getMe,
     changePassword
 };
