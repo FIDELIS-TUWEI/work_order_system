@@ -143,40 +143,58 @@ const getMe = asyncHandler (async (req, res) => {
 // @desc Change User Password
 // @route POST /hin/changePassword
 // @access Private
-const changePassword = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    if (req.body.password) {
+const changePassword = asyncHandler (async (req, res) => {
+    const { newPassword, confirmPassword } = req.body;
+    const userId = req.params.id;
+
+    try {
+        // check if user exists
+        const user = await User.findById(userId);
+        if (!user) return res.status(400).json({ error: `User with ID ${userId} not found!` });
+
+        // check if password is provided
+        if (!newPassword && !confirmPassword) {
+            return res.status(400).json({ error: "Please provide new password and confirm password" });
+        };
+
+        // check if password meets the requirements
+        if (newPassword.length && confirmPassword.length < 6) {
+            return res.status(400).json({ error: "Password must be at least 6 characters long" });
+        };
+
+        // hash password
         const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(req.body.password, salt);
-    } else {
-        const error = new CustomError("User password is required!", 400);
-        return next(error);
-    }
-
-    const updateUser = await User.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true });
-
-    // Send email notification
-    const recepients = ["fideliofidel9@gmail.com"]
-    const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
-
-    const emailSubject = `Password Changed`;
-    const emailText = `Password changed successfully for ${updateUser.username}`;
-
-    const emailOptions = {
-        email: recepients,
-        cc: ccEmails,
-        subject: emailSubject,
-        text: emailText
-    };
+        user.password = await bcrypt.hash(newPassword, salt);    
     
-    // Send Email
-    sendEmail(emailOptions);
-
-    res.status(200).json({
-        success: true,
-        message: "Password changed successfully",
-        updateUser
-    });
-}));
+        const updateUser = await User.findByIdAndUpdate(userId, {$set: newPassword}, { new: true, runValidators: true });
+        if (!updateUser) return res.status(400).json({ error: `Failed to update user password with ID: ${userId}!` });
+    
+        // Send email notification
+        const recepients = ["fideliofidel9@gmail.com"]
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+    
+        const emailSubject = `Password Changed`;
+        const emailText = `Password changed successfully for ${updateUser.username}`;
+    
+        const emailOptions = {
+            email: recepients,
+            cc: ccEmails,
+            subject: emailSubject,
+            text: emailText
+        };
+        
+        // Send Email
+        sendEmail(emailOptions);
+    
+        res.status(200).json({
+            message: "Password changed successfully",
+            updateUser
+        });
+    } catch (error) {
+        logger.error("Error in changePassword controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
+});
 
 module.exports = {
     register,

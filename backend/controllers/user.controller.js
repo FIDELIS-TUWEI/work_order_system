@@ -6,7 +6,7 @@ const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");
 
 // Controller function to get all users
-const getAllUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const getAllUsers = asyncHandler (async (req, res, next) => {
     // Enable Pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -31,10 +31,10 @@ const getAllUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
         pages: Math.ceil(count / pageSize),
         count
     });
-}));
+});
 
 // Controller function to get single user
-const getProfile = asyncHandler (asyncErrorHandler (async (req, res) => {
+const getProfile = asyncHandler (async (req, res) => {
     try {
         const { username } = req.params;
         const user = await User.findOne({ username })
@@ -52,26 +52,25 @@ const getProfile = asyncHandler (asyncErrorHandler (async (req, res) => {
         logger.error("Error in getUserProfile controller", error);
         res.status(500).json({  error: "Internal Server Error" });
     };
-}));
+});
 
 // Controller function to edit user
-const editUser = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    // update user
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+const updateUser = asyncHandler (async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-    if (!user) {
-        const error = new CustomError("User not found!", 404);
-        return next(error);
-    }
+        if (!user) return res.status(404).json({ error: "User not found!" });
+    
+        res.status(200).json({ message: `User updated succesfully` });
 
-    res.status(200).json({ 
-        success: true,
-        message: `User updated succesfully` 
-    });
-}));
+    } catch (error) {
+        logger.error("Error in updateUser controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
+});
 
 // Controller function to Delete User
-const deleteUser = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const deleteUser = asyncHandler (async (req, res, next) => {
     const userId = req.params.id;
     const user = await User.findByIdAndRemove(userId);
 
@@ -109,10 +108,10 @@ const deleteUser = asyncHandler (asyncErrorHandler (async (req, res, next) => {
         success: true,
         message: `User with username ${user.username} deleted`
     });
-}));
+});
 
 // Controller function to count all users
-const countAllUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const countAllUsers = asyncHandler (async (req, res, next) => {
     const totalUsers = await User.countDocuments();
 
     if (!totalUsers) {
@@ -124,10 +123,10 @@ const countAllUsers = asyncHandler (asyncErrorHandler (async (req, res, next) =>
         success: true,
         data: totalUsers 
     });
-}));
+});
 
 // Controller function to count all users active
-const countActiveUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const countActiveUsers = asyncHandler (async (req, res, next) => {
     const activeUsersCount = await User.countDocuments({ active: true });
 
     if (!activeUsersCount) {
@@ -139,13 +138,13 @@ const countActiveUsers = asyncHandler (asyncErrorHandler (async (req, res, next)
         success: true,
         data: activeUsersCount 
     });
-}));
+});
 
 
 module.exports = {
     getAllUsers,
     getProfile,
-    editUser,
+    updateUser,
     deleteUser,
     countAllUsers,
     countActiveUsers
