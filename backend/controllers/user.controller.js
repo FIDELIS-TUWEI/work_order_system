@@ -34,26 +34,24 @@ const getAllUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
 }));
 
 // Controller function to get single user
-const singleUser = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    // Check if user id exists
-    const userExists = await User.exists({ _id: req.params.id });
+const getProfile = asyncHandler (asyncErrorHandler (async (req, res) => {
+    try {
+        const { username } = req.params;
+        const user = await User.findOne({ username })
+            .select("-password")
+            .populate("workOrders")
+            .populate("department", "departmentName")
+            .populate("designation", "designationName")
+            .lean();
 
-    if (!userExists) {
-        const error = new CustomError("User not found!", 404);
-        return next(error);
+        if (!user) return re.status(404).json({ error: "User not found!" });
+
+        res.status(200).json(user);
+
+    } catch (error) {
+        logger.error("Error in getUserProfile controller", error);
+        res.status(500).json({  error: "Internal Server Error" });
     };
-    
-    // find user by ID
-    const user = await User.findById(req.params.id).select("-password")
-        .populate("workOrders")
-        .populate("department", "departmentName")
-        .populate("designation", "designationName")
-        .lean();
-
-    res.status(200).json({
-        success: true,
-        data: user
-    });
 }));
 
 // Controller function to edit user
@@ -146,7 +144,7 @@ const countActiveUsers = asyncHandler (asyncErrorHandler (async (req, res, next)
 
 module.exports = {
     getAllUsers,
-    singleUser,
+    getProfile,
     editUser,
     deleteUser,
     countAllUsers,
