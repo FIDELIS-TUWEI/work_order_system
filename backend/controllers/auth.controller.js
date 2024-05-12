@@ -88,7 +88,9 @@ const register = asyncHandler (async (req, res) => {
 const login = asyncHandler (async (req, res) => {
 try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username })
+        .populate("department", "departmentName")
+        .populate("designation", "designationName");
 
     // Check if password is correct with the one in DB
     const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
@@ -144,30 +146,14 @@ const getMe = asyncHandler (async (req, res) => {
 // @route POST /hin/changePassword
 // @access Private
 const changePassword = asyncHandler (async (req, res) => {
-    const { newPassword, confirmPassword } = req.body;
-    const userId = req.params.id;
-
     try {
-        // check if user exists
-        const user = await User.findById(userId);
-        if (!user) return res.status(400).json({ error: `User with ID ${userId} not found!` });
-
-        // check if password is provided
-        if (!newPassword && !confirmPassword) {
-            return res.status(400).json({ error: "Please provide new password and confirm password" });
-        };
-
-        // check if password meets the requirements
-        if (newPassword.length && confirmPassword.length < 6) {
-            return res.status(400).json({ error: "Password must be at least 6 characters long" });
-        };
-
-        // hash password
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);    
+        if (!req.body.password) {
+            return res.status(400).json({ error: "Please enter password!" })
+        } 
     
-        const updateUser = await User.findByIdAndUpdate(userId, {$set: newPassword}, { new: true, runValidators: true });
-        if (!updateUser) return res.status(400).json({ error: `Failed to update user password with ID: ${userId}!` });
+        const salt = await bcrypt.genSalt(10);
+        req.body.password = await bcrypt.hash(req.body.password, salt);
+        const updateUser = await User.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true });
     
         // Send email notification
         const recepients = ["fideliofidel9@gmail.com"]
@@ -186,10 +172,8 @@ const changePassword = asyncHandler (async (req, res) => {
         // Send Email
         sendEmail(emailOptions);
     
-        res.status(200).json({
-            message: "Password changed successfully",
-            updateUser
-        });
+        res.status(200).json({ message: "Password changed successfully" });
+
     } catch (error) {
         logger.error("Error in changePassword controller", error);
         res.status(500).json({ error: "Internal Server Error" });

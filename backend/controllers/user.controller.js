@@ -2,8 +2,8 @@ const User = require("../model/user.model");
 const Work = require("../model/work.order.model");
 const sendEmail = require("../utils/email");
 const asyncHandler = require("express-async-handler");
-const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");
+const logger = require("../utils/logger");
 
 // Controller function to get all users
 const getAllUsers = asyncHandler (async (req, res, next) => {
@@ -14,23 +14,36 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
 
     // Find users in DB
     const users = await User.find({}).select("-password")
-        .populate("workOrders")
         .sort({ Date_Created: -1 })
         .skip(pageSize * (page -1))
         .limit(pageSize);
     
-    if (!users) {
-        const error = new CustomError("Users not found!", 404)
-        return next(error);
-    }
+    if (!users) return res.status(404).json({ error: "User not found!" });
 
     res.status(200).json({
-        success: true,
         data: users,
         page,
         pages: Math.ceil(count / pageSize),
         count
     });
+});
+
+const getUser = asyncHandler (async (req, res) => {
+    try {
+        // check if the user exists
+        const userId = req.params.id; 
+        const user = await User.findById(userId)
+            .select("-password")
+            .populate("department", "departmentName")
+            .populate("designation", "designationName");
+
+        if (!user) return res.status(404).json({ error: `User with user ID ${userId} not found` });
+
+        res.status(200).json(user);
+    } catch (error) {
+        logger.error("Error in getUser controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
 });
 
 // Controller function to get single user
@@ -143,6 +156,7 @@ const countActiveUsers = asyncHandler (async (req, res, next) => {
 
 module.exports = {
     getAllUsers,
+    getUser,
     getProfile,
     updateUser,
     deleteUser,
