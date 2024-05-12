@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../model/user.model");
 const sendEmail = require("../utils/email");
-const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const logger = require("../utils/logger");
 const generateTokenAndSetCookie = require("../utils/generateToken");
 
