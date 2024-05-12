@@ -57,7 +57,7 @@ const getProfile = asyncHandler (async (req, res) => {
             .populate("designation", "designationName")
             .lean();
 
-        if (!user) return re.status(404).json({ error: "User not found!" });
+        if (!user) return res.status(404).json({ error: "User not found!" });
 
         res.status(200).json(user);
 
@@ -87,10 +87,7 @@ const deleteUser = asyncHandler (async (req, res, next) => {
     const userId = req.params.id;
     const user = await User.findByIdAndRemove(userId);
 
-    if (!user) {
-        const error = new CustomError("User with ID not found!", 404);
-        return next(error);
-    }
+    if (!user) return res.status(404).json({ errror: `User with ID: ${userId} not found!` })
 
     // Check for work requested
     const workRequested = await Work.find({ requestedBy: userId });
