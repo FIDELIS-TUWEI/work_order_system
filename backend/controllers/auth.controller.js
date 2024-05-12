@@ -85,7 +85,7 @@ const register = asyncHandler (async (req, res) => {
 });
 
 // @desc Auth user & get token
-const login = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const login = asyncHandler (async (req, res) => {
 try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -110,27 +110,22 @@ try {
     logger.error("Error in login controller", error);
     res.status(500).json({ error: "Internal Server Error" });
 }
-}));
+});
 
 // @desc Logout user
-// @route POST /hin/logout
-// @access Private
 const logout = (req, res) => {
-    const cookies = req.cookies;
-    if (!cookies?.token) return res.status(204);
-    res.clearCookie("token", "", { path: "/", httpOnly: true, expires: new Date(0), sameSite: 'None', secure: true });
-    
-    res.status(200).json({ 
-        success: true, 
-        message: "Logged Out successfully" 
-    });
+    try {
+        res.cookie("token", "", { maxAge: 0 });
+        res.status(200).json({ message: "Logged out successfully" });
 
+    } catch (error) {
+        logger.error("Error in logout controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
 };
 
 // @desc Get user info
-// @route GET /hin/userInfo
-// @access Private
-const getUserInfo = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const getUserInfo = asyncHandler (async (req, res) => {
     const userId = req.user.id;
     const user = await User.findById(userId).select("-password")
         .populate("workOrders")
@@ -147,7 +142,7 @@ const getUserInfo = asyncHandler (asyncErrorHandler (async (req, res, next) => {
         user
     });
     
-}));
+});
 
 // @desc Change User Password
 // @route POST /hin/changePassword
