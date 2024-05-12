@@ -129,7 +129,6 @@ const getMe = asyncHandler (async (req, res) => {
     try {
         const user = await User.findById(req.user._id)
             .select("-password")
-            .populate("workOrders")
             .populate("department", "departmentName")
             .populate("designation", "designationName");
 
