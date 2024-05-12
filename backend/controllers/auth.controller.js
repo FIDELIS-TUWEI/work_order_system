@@ -2,7 +2,7 @@ const User = require("../model/user.model");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../utils/email");
-const createSecretToken = require("../utils/secretToken");
+const createSecretToken = require("../utils/generateToken");
 const CustomError = require("../utils/CustomError");
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const logger = require("../utils/logger");
@@ -85,9 +85,6 @@ const register = asyncHandler (async (req, res) => {
 });
 
 // @desc Auth user & get token
-// @route POST /hin/login
-// @access Public
-
 const login = asyncHandler (asyncErrorHandler (async (req, res, next) => {
     const { username, password } = req.body;
 
