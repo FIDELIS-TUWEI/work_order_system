@@ -17,10 +17,7 @@ const createDepartment = asyncHandler (async (req, res) => {
         // Save the created department
         await newDepartment.save();
 
-        res.status(201).json({
-            success: true,
-            data: newDepartment
-        });
+        res.status(201).json(newDepartment);
 
     } catch (error) {
         logger.error("Error in createDepartment controller", error);
@@ -49,7 +46,6 @@ const getAllDepartments = asyncHandler (async (req, res) => {
         };
     
         res.status(200).json({
-            success: true,
             data: departments,
             page,
             pages: Math.ceil(count / pageSize),
@@ -70,10 +66,7 @@ const queryAllDepartments = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: "No departments found" });
         };
         
-        res.status(200).json({
-          success: true,
-          data: departments
-        });
+        res.status(200).json(departments);
 
     } catch (error) {
         logger.error("Error in queryAllDepartments controller", error);
@@ -91,10 +84,8 @@ const deleteDepartment = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: `Department with ID: ${departmentId} not found` });
         }
     
-        return res.status(200).json({
-            success: true,
-            message: "Department deleted successfully"
-        });
+        res.status(200).json({ message: "Department deleted successfully" });
+
     } catch (error) {
         logger.error("Error in deleteCategory controller", error);
         res.status(500).json({ error: "Internal Server Error" });
