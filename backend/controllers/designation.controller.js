@@ -44,7 +44,6 @@ const getAllDesignations = asyncHandler (async (req, res) => {
         };
     
         res.status(200).json({
-            success: true,
             data: designations,
             page,
             pages: Math.ceil(count / pageSize),
@@ -83,7 +82,7 @@ const deleteDesignation = asyncHandler (async (req, res) => {
         };
     
         res.status(200).json({ message: "Designation deleted successfully" });
-        
+
     } catch (error) {
         logger.error("Error in deleteDesignation controller", error);
         res.status(500).json({ error: "Internal Server Error" });
