@@ -4,9 +4,9 @@ const { createLocation, getLocations, deleteLocation, queryLocations } = require
 const { protect, restrict, cacheMiddleware } = require('../middleware/authMiddleware');
 
 
-router.post("/create/location", protect, restrict(["admin", "superadmin"]), createLocation);
-router.get("/locations", protect, restrict(["admin", "superadmin"]), cacheMiddleware, getLocations);
-router.get("/search/location", protect, restrict(["admin", "superadmin", "hod", "reviewer", "engineer", "user", "supervisor", "maintenance"]), cacheMiddleware, queryLocations);
+router.post("/new/location", protect, restrict(["admin", "superadmin"]), createLocation);
+router.get("/all", protect, restrict(["admin", "superadmin"]), cacheMiddleware, getLocations);
+router.get("/search", protect, restrict(["admin", "superadmin", "hod", "reviewer", "engineer", "user", "supervisor", "maintenance"]), cacheMiddleware, queryLocations);
 router.delete("/location/:id", protect, restrict(["admin", "superadmin"]), deleteLocation);
 
 module.exports = router;
