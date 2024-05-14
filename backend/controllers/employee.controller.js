@@ -14,6 +14,10 @@ const newEmployee = asyncHandler (async (req, res) => {
         if (duplicate) {
             return res.status(400).json({ error: "Employee already exists" });
         };
+
+        if (phone.length < 10) {
+            return res.status(400).json({ error: "Phone number field must have at least 10 digits" })
+        }
     
         // create new employee
         const newEmployee = new Employee({
@@ -56,7 +60,7 @@ const newEmployee = asyncHandler (async (req, res) => {
     
         res.status(201).json(newEmployee);
     } catch (error) {
-        Logger.error("Error in newEmployee controller", error);
+        logger.error("Error in newEmployee controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
