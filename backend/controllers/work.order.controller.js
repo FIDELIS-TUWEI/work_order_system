@@ -1,13 +1,14 @@
+const asyncHandler = require("express-async-handler");
+const cron = require("node-cron");
+
 const WorkOrder = require("../model/work.order.model");
 const User = require("../model/user.model");
 const Category = require("../model/category.model");
 const Employee = require("../model/employee.model");
-const asyncHandler = require("express-async-handler");
 const sendEmail = require("../utils/email");
-const cron = require("node-cron");
-const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");
 const Location = require("../model/location.model");
+const logger = require("../utils/logger");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
@@ -50,18 +51,18 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
 };
 
 // Create Work Order
-const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const createWorkOrder = asyncHandler (async (req, res) => {
     try {
+        const { description, location, priority, serviceType, category, } = req.body;
+
+        // Iclude the username of the user who requests for work
         const userId = req.user._id;
         const user = await User.findById(userId).select("-password");
     
         if (!user) {
-            const error = new CustomError("User with ID not found!", 404);
-            return next(error);
-        }
-    
-        const { priority, description, location, serviceType, category } = req.body;
-    
+            return res.status(404).json({ error: `User with ID: ${userId} not found` });
+        };
+        
         // Create Work Order
         const newWorkOrder = await WorkOrder({
             requestedBy: userId,
@@ -74,10 +75,13 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     
         // Save Work Order
         const savedWorkorder = await newWorkOrder.save();
+
+        res.status(201).json(savedWorkorder);
     
         // Update the user's workOrders array
         await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
-    
+
+        // Send email notification
         // Fetch Location Details
         const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
         const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
@@ -102,59 +106,50 @@ const createWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
     
         await sendEmailNotification(savedWorkorder, subject, emailText);
     
-        // Return a response
-        return res.status(201).json({
-            success: true,
-            data: {
-                savedWorkorder
-            }
-        }); 
     } catch (error) {
-        return next(error);
+        logger.error("Error in cretaeWorkOrder controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
     } 
-}));
+});
 
 // Update Work Order
-const updateWorkOrder = asyncHandler(asyncErrorHandler(async (req, res, next) => {
-    const { id } = req.params;
-    const userId = req.user._id;
-    const user = await User.findById(userId).select("-password");
-
-    if (!user) {
-        return next(new ErrorResponse("User not found",  404));
+const updateWorkOrder = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.user._id;
+        const user = await User.findById(userId).select("-password");
+    
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+    
+        const { assignedTo, ...updatedFields } = { ...req.body };
+        const updatedWorkOrder = await updateWorkOrderDetails(id, updatedFields);
+    
+        // Check the user who updated the tracker
+        const username = req.user.username
+    
+        if (updatedFields.tracker === "In_Complete") {
+            await handleInCompleteWorkOrder(updatedWorkOrder, username);
+        }
+    
+        if (updatedFields.status === "Complete") {
+            await sendCompletedEmailNotification(updatedWorkOrder);
+    
+            // Update the user's workOrders array
+            await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
+        }
+    
+        if (assignedTo) {
+            await handleAssignedWorkOrder(updatedWorkOrder, assignedTo);
+        }
+    
+        res.status(200).json( updatedWorkOrder);
+    } catch (error) {
+        logger.error("Error in updateWorkOrder controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-
-    const { assignedTo, ...updatedFields } = { ...req.body };
-    const updatedWorkOrder = await updateWorkOrderDetails(id, updatedFields);
-
-    if (!updatedWorkOrder) {
-        const error = new CustomError("Work order not found!",  404);
-        return next(error);
-    }
-
-    // Check the user who updated the tracker
-    const username = req.user.username
-
-    if (updatedFields.tracker === "In_Complete") {
-        await handleInCompleteWorkOrder(updatedWorkOrder, username);
-    }
-
-    if (updatedFields.status === "Complete") {
-        await sendCompletedEmailNotification(updatedWorkOrder);
-
-        // Update the user's workOrders array
-        await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
-    }
-
-    if (assignedTo) {
-        await handleAssignedWorkOrder(updatedWorkOrder, assignedTo);
-    }
-
-    return res.status(200).json({
-        success: true,
-        data: updatedWorkOrder
-    });
-}));
+});
 
 // Functions broken down to make it easier to update the work order, read the code and debug
 async function updateWorkOrderDetails (id, updatedFields) {
@@ -198,6 +193,7 @@ async function sendAssignedEmailNotification(updatedWorkOrder, assignedTo) {
 
     const subject = `Work Order Assigned`;
     const text = `The following work order has been assigned:
+        - Work Order Number: ${updatedWorkOrder.workOrderNumber}
         - Description: ${updatedWorkOrder.description}
         - Priority: ${updatedWorkOrder.priority}
         - Status: ${updatedWorkOrder.status}
@@ -319,7 +315,7 @@ const getAllWorkOrders = asyncHandler(async (req, res, next) => {
 });
 
 // Query All work orders for line graph frontend
-const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const queryAllWork = asyncHandler (async (req, res, next) => {
     const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
         .populate("requestedBy", "firstName")
         .populate("category", "categoryTitle")
@@ -335,10 +331,10 @@ const queryAllWork = asyncHandler (asyncErrorHandler (async (req, res, next) => 
         success: true,
         data: workOrders
     })
-}));
+});
 
 // Find work order with In_Attendance tracker status
-const inAttendanceTracker = asyncHandler (asyncErrorHandler (async(req, res, next) => {
+const inAttendanceTracker = asyncHandler (async(req, res, next) => {
     // Enable Pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -362,10 +358,10 @@ const inAttendanceTracker = asyncHandler (asyncErrorHandler (async(req, res, nex
         pages: Math.ceil(count / pageSize),
         count
     });
-}));
+});
 
 // Find work order with  In_Complete tracker status
-const inCompleteTracker = asyncHandler (asyncErrorHandler (async(req, res, next) => {
+const inCompleteTracker = asyncHandler (async(req, res, next) => {
     // Enable pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -390,10 +386,10 @@ const inCompleteTracker = asyncHandler (asyncErrorHandler (async(req, res, next)
         pages: Math.ceil(count / pageSize),
         count
     })
-}));
+});
 
 // Find work order with Attended tracker status
-const attendedTracker = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const attendedTracker = asyncHandler (async (req, res, next) => {
     // Enable Pagination
     const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
@@ -418,10 +414,10 @@ const attendedTracker = asyncHandler (asyncErrorHandler (async (req, res, next) 
             pages: Math.ceil(count / pageSize),
             count
         })
-}))
+});
 
 // Get single Work Order
-const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
     const workOrderId = req.params.id;
     const work = await WorkOrder.findById(workOrderId)
         .populate("requestedBy", "username")
@@ -439,10 +435,10 @@ const getSingleWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, nex
         success: true,
         data: work
     });
-}));
+});
 
 // Delete Work Order
-const deleteWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) => {
+const deleteWorkOrder = asyncHandler (async (req, res, next) => {
     const workOrderId = req.params.id;
     const workOrder = await WorkOrder.findByIdAndDelete(workOrderId).populate("requestedBy", "username");
 
@@ -471,10 +467,10 @@ const deleteWorkOrder = asyncHandler (asyncErrorHandler (async (req, res, next) 
         success: true,
         message: "Work Order deleted"
     });
-}));
+});
 
 // Check Work Orders status and send an email notification everyday at 11 am
-cron.schedule("00 08 * * *", asyncErrorHandler (async (next) => {
+cron.schedule("00 08 * * *", async (next) => {
 
     // Find all work orders with status and tracker
     const workOrderStatus = await WorkOrder.find({ 
@@ -508,7 +504,7 @@ cron.schedule("00 08 * * *", asyncErrorHandler (async (next) => {
         });
 
     }
-}));
+});
 
 module.exports = {
     createWorkOrder,
