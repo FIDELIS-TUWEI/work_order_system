@@ -6,7 +6,6 @@ const User = require("../model/user.model");
 const Category = require("../model/category.model");
 const Employee = require("../model/employee.model");
 const sendEmail = require("../utils/email");
-const CustomError = require("../utils/CustomError");
 const Location = require("../model/location.model");
 const logger = require("../utils/logger");
 
@@ -15,8 +14,7 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
     const requestedUser = await User.findById(WorkOrder.requestedBy).select("email");
 
     if (!requestedUser) {
-        console.error("Requested User not found");
-        return;
+        return logger.error("Requested User not found");
     }
     
     // Fetch category details to determine the email recipient list
@@ -144,7 +142,8 @@ const updateWorkOrder = asyncHandler(async (req, res) => {
             await handleAssignedWorkOrder(updatedWorkOrder, assignedTo);
         }
     
-        res.status(200).json( updatedWorkOrder);
+        res.status(200).json(updatedWorkOrder);
+
     } catch (error) {
         logger.error("Error in updateWorkOrder controller", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -277,243 +276,302 @@ async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
 };
 
 // Get all Work Orders
-const getAllWorkOrders = asyncHandler(async (req, res, next) => {
-    const pageSize = 10;
-    const page = Number(req.query.pageNumber) || 1;
-    const limit = parseInt(req.query.limit) || 10;
-    const searchTerm = req.query.searchTerm || "";
-    let query = {};
-
-    if (req.query.status) {
-        query.status = req.query.status;
-    }
-
-    const count = await WorkOrder.countDocuments(query);
-
-    const workOrders = await WorkOrder.find({...query, workOrderNumber: { $regex: searchTerm, $options: "i" }})
-        .populate("location", "locationTitle")
-        .populate("requestedBy", "username")
-        .populate("category", "categoryTitle")
-        .populate("assignedTo", "firstName lastName")
-        .sort({ Date_Created: -1 })
-        .skip(pageSize * (page - 1))
-        .limit(limit)
-        .lean();
-
-    if (!workOrders) {
-        const error = new CustomError("Work orders not found!", 404);
-        return next(error);
-    }
-
-    return res.status(200).json({
-        success: true,
-        data: workOrders,
-        page,
-        pages: Math.ceil(count / pageSize),
-        count
-    });
-});
-
-// Query All work orders for line graph frontend
-const queryAllWork = asyncHandler (async (req, res, next) => {
-    const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
-        .populate("requestedBy", "firstName")
-        .populate("category", "categoryTitle")
-        .populate("assignedTo", "firstName lastName")
-        .sort({ Date_Created: -1 });
-
-    if (!workOrders) {
-        const error = new CustomError("Work orders not found!", 404);
-        return next(error);
-    };
-
-    return res.status(200).json({
-        success: true,
-        data: workOrders
-    })
-});
-
-// Find work order with In_Attendance tracker status
-const inAttendanceTracker = asyncHandler (async(req, res, next) => {
-    // Enable Pagination
-    const pageSize = 10;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await WorkOrder.find({}).estimatedDocumentCount();
-    const workInAttendance = await WorkOrder.find({ tracker: "In_Attendance" })
-        .populate("requestedBy", "username")
-        .sort({ Date_Created: -1 })
-        .skip(pageSize * (page -1))
-        .limit(pageSize)
-        .exec();
-
-    if (!workInAttendance) {
-        const error = new CustomError("No Work Orders In-attendance found!", 404);
-        return next(error);
-    }
-
-    return res.status(200).json({
-        success: true,
-        data: workInAttendance,
-        page,
-        pages: Math.ceil(count / pageSize),
-        count
-    });
-});
-
-// Find work order with  In_Complete tracker status
-const inCompleteTracker = asyncHandler (async(req, res, next) => {
-    // Enable pagination
-    const pageSize = 10;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await WorkOrder.find({}).estimatedDocumentCount();
-
-    const workInComplete = await WorkOrder.find({ tracker: "In_Complete" })
-        .populate("requestedBy", "username")
-        .sort({ Date_Created: -1 })
-        .skip(pageSize * (page -1) )
-        .limit(pageSize)
-        .exec();
-
-    if (!workInComplete) {
-        const error = new CustomError("In-complete work data not found!", 404);
-        return next(error);
-    };
-
-    return res.status(200).json({
-        success: true,
-        data: workInComplete,
-        page,
-        pages: Math.ceil(count / pageSize),
-        count
-    })
-});
-
-// Find work order with Attended tracker status
-const attendedTracker = asyncHandler (async (req, res, next) => {
-    // Enable Pagination
-    const pageSize = 10;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await WorkOrder.find({}).estimatedDocumentCount();
-
-    const workAttended = await WorkOrder.find({ tracker: "Attended" })
-        .populate("requestedBy", "username")
-        .sort({ Date_Created: -1 })
-        .skip(pageSize * (page -1))
-        .limit(pageSize)
-        .exec();
+const getWorkOrders = asyncHandler(async (req, res) => {
+    try {
+        const pageSize = 10;
+        const page = Number(req.query.pageNumber) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const searchTerm = req.query.searchTerm || "";
+        let query = {};
     
-        if (!workAttended) {
-            const error = new CustomError("No work attended data found!", 404);
-            return error;
+        // query work status
+        if (req.query.status) {
+            query.status = req.query.status;
+        }
+    
+        // query work tracker status
+        if (req.query.tracker) {
+            query.tracker = req.query.tracker;
+        }
+
+        // query work serviceType
+        if (req.query.serviceType) {
+            query.serviceType = req.query.serviceType;
         };
 
-        return res.status(200).json({
-            success: true,
-            data: workAttended,
+        // query work priority
+        if (req.query.priority) {
+            query.priority = req.query.priority;
+        }
+
+        // query work location
+        if (req.query.location) {
+            query.location = req.query.location;
+        };
+        
+        // query work category
+        if (req.query.category) {
+            query.category = req.query.category;
+        };
+
+        // query work by employee assigned
+        if (req.query.assignedTo) {
+            query.assignedTo = req.query.assignedTo;
+        }
+    
+        const count = await WorkOrder.countDocuments(query);
+    
+        const workOrders = await WorkOrder.find({...query, workOrderNumber: { $regex: searchTerm, $options: "i" }})
+            .populate("location", "locationTitle")
+            .populate("requestedBy", "username")
+            .populate("category", "categoryTitle")
+            .populate("assignedTo", "firstName lastName")
+            .sort({ Date_Created: -1 })
+            .skip(pageSize * (page - 1))
+            .limit(limit)
+            .lean();
+    
+        if (!workOrders) {
+            return res.status(404).json({ error: "Work Orders not found!" });
+        }
+    
+        res.status(200).json({
+            workOrders,
             page,
             pages: Math.ceil(count / pageSize),
             count
-        })
+        });
+
+    } catch (error) {
+        logger.error("Error in getWorkOrders controller", error);
+        res.status(500).json({ error: "Internal ServerError" });
+    }
+});
+
+// Query All work orders for line graph frontend
+const displayWork = asyncHandler (async (req, res) => {
+    try {
+        const workOrders = await WorkOrder.find({}).populate("location", "locationTitle")
+            .populate("requestedBy", "firstName")
+            .populate("category", "categoryTitle")
+            .populate("assignedTo", "firstName lastName")
+            .sort({ Date_Created: -1 });
+    
+        if (!workOrders) {
+            return res.status(404).json({ error: "Work Orders not found" });
+        };
+    
+        return res.status(200).json(workOrders);
+
+    } catch (error) {
+        logger.error("Error in queryWork controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Find work order with In_Attendance tracker status
+const inAttendanceTracker = asyncHandler (async(req, res) => {
+    try {
+        // Enable Pagination
+        const pageSize = 10;
+        const page = Number(req.query.pageNumber) || 1;
+        const count = await WorkOrder.find({}).estimatedDocumentCount();
+        const workInAttendance = await WorkOrder.find({ tracker: "In_Attendance" })
+            .populate("requestedBy", "username")
+            .sort({ Date_Created: -1 })
+            .skip(pageSize * (page -1))
+            .limit(pageSize)
+            .exec();
+    
+        if (!workInAttendance) {
+            return res.status(404).json({ error: "No Work Orders In-attendance found!" });
+        }
+    
+        return res.status(200).json({
+            workInAttendance,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
+    } catch (error) {
+        logger.error("Error in inAttendanceTracker controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Find work order with  In_Complete tracker status
+const inCompleteTracker = asyncHandler (async(req, res) => {
+    try {
+        // Enable pagination
+        const pageSize = 10;
+        const page = Number(req.query.pageNumber) || 1;
+        const count = await WorkOrder.find({}).estimatedDocumentCount();
+    
+        const workInComplete = await WorkOrder.find({ tracker: "In_Complete" })
+            .populate("requestedBy", "username")
+            .sort({ Date_Created: -1 })
+            .skip(pageSize * (page -1) )
+            .limit(pageSize)
+            .exec();
+    
+        if (!workInComplete) {
+            return res.status(404).json({ error: "In-complete work data not found!" });
+        };
+    
+        res.status(200).json({
+            workInComplete,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
+
+    } catch (error) {
+        logger.error("Error in incompleteTracker controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Find work order with Attended tracker status
+const attendedTracker = asyncHandler (async (req, res) => {
+    try {
+        // Enable Pagination
+        const pageSize = 10;
+        const page = Number(req.query.pageNumber) || 1;
+        const count = await WorkOrder.find({}).estimatedDocumentCount();
+    
+        const workAttended = await WorkOrder.find({ tracker: "Attended" })
+            .populate("requestedBy", "username")
+            .sort({ Date_Created: -1 })
+            .skip(pageSize * (page -1))
+            .limit(pageSize)
+            .exec();
+        
+        if (!workAttended) {
+            return res.status(404).json({ error: "No work attended data found!" });
+        };
+    
+        res.status(200).json({
+            workAttended,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
+
+    } catch (error) {
+        logger.error("Error in attendedTracker", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 // Get single Work Order
-const getSingleWorkOrder = asyncHandler (async (req, res, next) => {
-    const workOrderId = req.params.id;
-    const work = await WorkOrder.findById(workOrderId)
-        .populate("requestedBy", "username")
-        .populate("location", "locationTitle")
-        .populate("category", "categoryTitle")
-        .populate("assignedTo", "firstName lastName phone")
-        .exec();
+const getWorkOrder = asyncHandler (async (req, res) => {
+    try {
+        const workOrderId = req.params.id;
+        const work = await WorkOrder.findById(workOrderId)
+            .populate("requestedBy", "username")
+            .populate("location", "locationTitle")
+            .populate("category", "categoryTitle")
+            .populate("assignedTo", "firstName lastName phone")
+            .exec();
+    
+        if (!work) {
+            return res.status(404).json({ error: "Work order not found!" });
+        }
+    
+        res.status(200).json(work);
 
-    if (!work) {
-        const error = new CustomError("Work order not found!", 404);
-        return next(error)
+    } catch (error) {
+        logger.error("Error in getWorkOrder controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-
-    return res.status(200).json({
-        success: true,
-        data: work
-    });
 });
 
 // Delete Work Order
-const deleteWorkOrder = asyncHandler (async (req, res, next) => {
-    const workOrderId = req.params.id;
-    const workOrder = await WorkOrder.findByIdAndDelete(workOrderId).populate("requestedBy", "username");
-
-    if (!workOrder) {
-        const error = new CustomError("Work order with ID not found!", 404);
-        return next(error)
+const deleteWorkOrder = asyncHandler (async (req, res) => {
+    try {
+        const workOrderId = req.params.id;
+        const workOrder = await WorkOrder.findByIdAndDelete(workOrderId).populate("requestedBy", "username");
+    
+        if (!workOrder) {
+            return res.status(404).json({ error: "Work order with ID not found!" });
+        }
+    
+        // user who deleted the work
+        const deletedByUser = req.user;
+    
+        // Remove the deleted work order from the user's workOrders array
+        await User.findByIdAndUpdate(deletedByUser._id, { $pull: { workOrders: workOrderId }});
+    
+        // Send Email Notification
+        const subject = `WORK ORDER DELETED`;
+        const text = `The work order with description ${workOrder.description} has been deleted by ${deletedByUser.username}
+    
+            Thank you,
+            Holiday Inn Work Order System - All rights reserved.
+        `;
+    
+        await sendEmailNotification(workOrder, subject, text);
+    
+        return res.status(200).json({ message: "Work Order deleted" });
+    } catch (error) {
+        logger.error("Error in deleteWorkOrder controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
+});
 
-    // user who deleted the work
-    const deletedByUser = req.user;
+// send email reminder for work order schedule
+async function sendWorkOrderReminderEmail(workOrders) {
+    const emailSubject = `Work Order Reminder`;
+    let emailText = `The following work orders need your immediate attention. Kindly login and update the details:\n`;
 
-    // Remove the deleted work order from the user's workOrders array
-    await User.findByIdAndUpdate(deletedByUser._id, { $pull: { workOrders: workOrderId }});
-
-    // Send Email Notification
-    const subject = `WORK ORDER DELETED`;
-    const text = `The work order with description ${workOrder.description} has been deleted by ${deletedByUser.username}
-
-        Thank you,
-        Holiday Inn Work Order System - All rights reserved.
-    `;
-
-    await sendEmailNotification(workOrder, subject, text);
-
-    return res.status(200).json({
-        success: true,
-        message: "Work Order deleted"
+    workOrders.forEach((workOrder) => {
+        emailText += `\n- Work Order Number: ${workOrder.workOrderNumber}\n`;
+        emailText += `- Work Order Description: ${workOrder.description}\n`;
+        emailText += `- Work Order Status: ${workOrder.status}\n`;
+        emailText += `- Work Order Priority: ${workOrder.priority}\n`;
     });
-});
 
-// Check Work Orders status and send an email notification everyday at 11 am
-cron.schedule("00 08 * * *", async (next) => {
+    const engineerEmail = "workorder@holidayinnnairobi.com";
+    const ccEmails = [
+        "fidel.tuwei@holidayinnnairobi.com"
+    ];
 
-    // Find all work orders with status and tracker
-    const workOrderStatus = await WorkOrder.find({ 
-        status: { $in: ["Pending"] },
-        tracker: { $in: ["Not_Attended", "In_Attendance"]},
-    }).populate("requestedBy", "username");
+    sendEmail({
+        email: engineerEmail,
+        cc: ccEmails,
+        subject: emailSubject,
+        text: emailText
+    });
+}
 
-    if (workOrderStatus.length > 0) {
-        const emailSubject = `Work Order Reminder`;
-        let emailText = `The following work orders need your immediate attention. 
-        Kindly login and update the details:\n`
+// fundtion to filter work by status for cron job
+async function workOrderReminderCron() {
+    try {
+        const workOrders = await WorkOrder.find({
+            status: { $in: ["Pending"] },
+            tracker: { $in: ["Not_Attended", "In_Attendance"] },
+        }).sort({ Date_Created: -1 });
 
-        workOrderStatus.forEach((workOrder) => {
-            emailText += `\n-Work Order Description: ${workOrder.description}\n`
-        });
-
-        // Email addresses
-        const engineerEmail = "solomon.ouma@holidayinnnairobi.com"
-        const ccEmails = [
-                "fidel.tuwei@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-               "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
-               "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
-        ];
-
-        // Send email
-        sendEmail({
-            email: engineerEmail,
-            cc: ccEmails,
-            subject: emailSubject,
-            text: emailText
-        });
-
+        if (workOrders.length > 0) {
+            await sendWorkOrderReminderEmail(workOrders);
+        }
+    } catch (error) {
+        logger.error("Error in workOrderReminderCron scheduler", error);
     }
-});
+}
+
+// Schedule the cron job to run everyday at 11 am (Server-time, Oregon-US)
+cron.schedule("00 08 * * *", workOrderReminderCron);
+
 
 module.exports = {
     createWorkOrder,
     updateWorkOrder,
-    getAllWorkOrders,
-    queryAllWork,
+    getWorkOrders,
+    displayWork,
     inAttendanceTracker,
     inCompleteTracker,
     attendedTracker,
-    getSingleWorkOrder,
+    getWorkOrder,
     deleteWorkOrder,
 };
