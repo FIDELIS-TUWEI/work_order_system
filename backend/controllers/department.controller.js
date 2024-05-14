@@ -28,7 +28,7 @@ const createDepartment = asyncHandler (async (req, res) => {
 });
 
 // @desc Get all departments
-const getAllDepartments = asyncHandler (async (req, res) => {
+const getDepartments = asyncHandler (async (req, res) => {
     try {
         // Enable Pagination
         const pageSize = 5;
@@ -52,13 +52,13 @@ const getAllDepartments = asyncHandler (async (req, res) => {
             count
         });
     } catch (error) {
-        logger.error("Error in getAllDepartments controller", error);
+        logger.error("Error in getDepartments controller", error);
         re.status(500).json({ error: "Internal Server Error" });
     }
 });
 
 // @desc Query all departments
-const queryAllDepartments = asyncHandler (async (req, res) => {
+const queryDepartments = asyncHandler (async (req, res) => {
     try {
         const departments = await Department.find({});
     
@@ -69,7 +69,7 @@ const queryAllDepartments = asyncHandler (async (req, res) => {
         res.status(200).json(departments);
 
     } catch (error) {
-        logger.error("Error in queryAllDepartments controller", error);
+        logger.error("Error in queryDepartments controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
@@ -94,7 +94,7 @@ const deleteDepartment = asyncHandler (async (req, res) => {
 
 module.exports = {
     createDepartment,
-    getAllDepartments,
-    queryAllDepartments,
+    getDepartments,
+    queryDepartments,
     deleteDepartment
 };

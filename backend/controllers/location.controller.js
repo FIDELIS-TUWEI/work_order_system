@@ -54,7 +54,7 @@ const getLocations = asyncHandler (async (req, res) => {
         });
     } catch (error) {
         logger.error("Error in getLocations controller", error);
-        res.status(500),json({ error: "Internal Server Error" });
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

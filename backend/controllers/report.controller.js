@@ -1,6 +1,5 @@
 const WorkOrder = require("../model/work.order.model");
 const asyncHandler = require("express-async-handler");
-const CustomError = require("../utils/CustomError");
 const logger = require("../utils/logger");
 
 // Filter Work Orders

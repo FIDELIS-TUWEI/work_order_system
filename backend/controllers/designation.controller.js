@@ -26,7 +26,7 @@ const createDesignation = asyncHandler (async (req, res) => {
 });
 
 // @desc Get all designations
-const getAllDesignations = asyncHandler (async (req, res) => {
+const getDesignations = asyncHandler (async (req, res) => {
     try {
         // Enable Pagination
         const pageSize = 5;
@@ -50,13 +50,13 @@ const getAllDesignations = asyncHandler (async (req, res) => {
             count
         });
     } catch (error) {
-        logger.error("Error in getAllDesignations controller", error);
+        logger.error("Error in getDesignations controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
 // @desc query all designations
-const queryAllDesignations = asyncHandler (async (req, res) => {
+const queryDesignations = asyncHandler (async (req, res) => {
     try {
         const designations = await Designation.find({});
     
@@ -66,7 +66,7 @@ const queryAllDesignations = asyncHandler (async (req, res) => {
     
         res.status(200).json(designations);
     } catch (error) {
-        logger.error("Error in queryAllDesignations controller");
+        logger.error("Error in queryDesignations controller");
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
@@ -91,7 +91,7 @@ const deleteDesignation = asyncHandler (async (req, res) => {
 
 module.exports = {
     createDesignation,
-    getAllDesignations,
-    queryAllDesignations,
+    getDesignations,
+    queryDesignations,
     deleteDesignation
 };

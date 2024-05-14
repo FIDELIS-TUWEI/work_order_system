@@ -29,7 +29,7 @@ const createCategory = asyncHandler (async (req, res) => {
 });
 
 // Get all categories
-const getAllCategories = asyncHandler (async (req, res) => {
+const getCategories = asyncHandler (async (req, res) => {
     try {
         // Enable Pagination
         const pageSize = 10;
@@ -54,13 +54,13 @@ const getAllCategories = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        logger.error("Error in getAllCategories", error);
+        logger.error("Error in getCategories", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
 // Query all categories without pagination
-const queryAllCategories = asyncHandler (async (req, res) => {
+const queryCategories = asyncHandler (async (req, res) => {
     try {
         // Find categories in DB
         const categories = await Category.find({});
@@ -75,13 +75,13 @@ const queryAllCategories = asyncHandler (async (req, res) => {
         });
 
     } catch (error) {
-        logger.error("Error in queryAllCategories controller", error);
+        logger.error("Error in queryCategories controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
 // Category info
-const singleCategory = asyncHandler (async (req, res) => {
+const getCategory = asyncHandler (async (req, res) => {
     try {
         const catId = req.params.id;
         const categoryInfo = await Category.findById(catId);
@@ -95,7 +95,7 @@ const singleCategory = asyncHandler (async (req, res) => {
             data: categoryInfo
         });
     } catch (error) {
-        logger.error("Error in singleCategory controller", error);
+        logger.error("Error in getCategory controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
@@ -139,9 +139,9 @@ const deleteCategory = asyncHandler (async (req, res) => {
 
 module.exports = {
     createCategory,
-    getAllCategories,
-    queryAllCategories,
+    getCategories,
+    queryCategories,
     updateCategory,
-    singleCategory,
+    getCategory,
     deleteCategory
 };

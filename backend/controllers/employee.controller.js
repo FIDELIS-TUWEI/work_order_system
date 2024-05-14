@@ -62,7 +62,7 @@ const newEmployee = asyncHandler (async (req, res) => {
 });
 
 // Get all employees
-const getAllEmployees = asyncHandler (async (req, res) => {
+const getEmployees = asyncHandler (async (req, res) => {
    try {
      // Enable Pagination
      const pageSize = 5;
@@ -86,13 +86,13 @@ const getAllEmployees = asyncHandler (async (req, res) => {
          count
      });
    } catch (error) {
-        logger.error("Error in getAllEmployees controller", error);
+        logger.error("Error in getEmployees controller", error);
         res.status(500).json({ error: "Internal Server Error" });
    }
 });
 
 // Query all employees for selection in frontend
-const queryAllEmployees = asyncHandler (async (req, res) => {
+const queryEmployees = asyncHandler (async (req, res) => {
     try {
         const allEmployees = await Employee.find({});
     
@@ -102,7 +102,7 @@ const queryAllEmployees = asyncHandler (async (req, res) => {
         
         res.status(200).json(allEmployees);
     } catch (error) {
-        logger.error("Error in queryAllEmployees controller", error);
+        logger.error("Error in queryEmployees controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
@@ -235,8 +235,8 @@ const deleteEmployee = asyncHandler (async (req, res) => {
 
 module.exports = {
     newEmployee,
-    getAllEmployees,
-    queryAllEmployees,
+    getEmployees,
+    queryEmployees,
     getEmployee,
     countEmployees,
     updateEmployee,

@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 const logger = require("../utils/logger");
 
 // Controller function to get all users
-const getAllUsers = asyncHandler (async (req, res, next) => {
+const getUsers = asyncHandler (async (req, res, next) => {
     try {
         // Enable Pagination
         const pageSize = 10;
@@ -27,7 +27,7 @@ const getAllUsers = asyncHandler (async (req, res, next) => {
             count
         });
     } catch (error) {
-        logger.error("Error in getAllUsers controller", error);
+        logger.error("Error in getUsers controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     };
 });
@@ -130,7 +130,7 @@ const deleteUser = asyncHandler (async (req, res, next) => {
 });
 
 // Controller function to count all users
-const countAllUsers = asyncHandler (async (req, res, next) => {
+const countUsers = asyncHandler (async (req, res, next) => {
     try {
         const totalUsers = await User.countDocuments();
     
@@ -141,7 +141,7 @@ const countAllUsers = asyncHandler (async (req, res, next) => {
             data: totalUsers 
         });
     } catch (error) {
-        logger.error("Error in countAllUsers controller", error);
+        logger.error("Error in countUsers controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     };
 });
@@ -165,11 +165,11 @@ const countActiveUsers = asyncHandler (async (req, res, next) => {
 
 
 module.exports = {
-    getAllUsers,
+    getUsers,
     getUser,
     getProfile,
     updateUser,
     deleteUser,
-    countAllUsers,
+    countUsers,
     countActiveUsers
 };
