@@ -33,8 +33,7 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
         ];
     } else {
         ccList = [
-            "solomon.ouma@holidayinnnairobi.com", "allan.kimani@holidayinnnairobi.com",
-            "ms@holidayinnnairobi.com", "workshop@holidayinnnairobi.com", 
+            "workorder@holidayinnnairobi.com", "ms@holidayinnnairobi.com", 
         ];
     }
 
@@ -70,39 +69,45 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             serviceType,
             category,
         });
-    
-        // Save Work Order
-        const savedWorkorder = await newWorkOrder.save();
 
-        res.status(201).json(savedWorkorder);
-    
-        // Update the user's workOrders array
-        await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
+        if (newWorkOrder) {
+            // Save Work Order
+            const savedWorkorder = await newWorkOrder.save();
 
-        // Send email notification
-        // Fetch Location Details
-        const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
-        const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+            res.status(201).json(savedWorkorder);
+
+            // Update the user's workOrders array
+            await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
+
+            // Send email notification
+            // Fetch Location Details
+            const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+            const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+
+            // Fetch category details
+            const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
+            const categoryTitle = categories.map(cat => cat.categoryTitle);
+
+            // Send Email notification
+            const subject = "NEW WORK ORDER CREATED";
+            const emailText = `A New Work with Order number: ${savedWorkorder.workOrderNumber}  has been requested with the following details:
+                - Locations: ${locationTitles}
+                - Service Type: ${serviceType}
+                - Category: ${categoryTitle}
+                - Priority: ${priority}
+                - Description: ${description}
+                - Requested By: ${user.username}
+
+                Thank you,
+                Holiday Inn Work Order System - All rights reserved.
+            `;
+
+            await sendEmailNotification(savedWorkorder, subject, emailText);
+        } else {
+            return res.status(400).json({ error: "Invalid work order fields entered" });
+        }
     
-        // Fetch category details
-        const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
-        const categoryTitle = categories.map(cat => cat.categoryTitle);
-    
-        // Send Email notification
-        const subject = "NEW WORK ORDER CREATED";
-        const emailText = `A New Work with Order number: ${savedWorkorder.workOrderNumber}  has been requested with the following details:
-            - Locations: ${locationTitles}
-            - Service Type: ${serviceType}
-            - Category: ${categoryTitle}
-            - Priority: ${priority}
-            - Description: ${description}
-            - Requested By: ${user.username}
-    
-            Thank you,
-            Holiday Inn Work Order System - All rights reserved.
-        `;
-    
-        await sendEmailNotification(savedWorkorder, subject, emailText);
+        
     
     } catch (error) {
         logger.error("Error in cretaeWorkOrder controller", error);
