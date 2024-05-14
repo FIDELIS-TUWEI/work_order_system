@@ -8,7 +8,6 @@ const morgan = require("morgan");
 const app = express();
 
 const middleware = require("./utils/middleware");
-const CustomError = require("./utils/CustomError");
 const appRoutes = require("./routes/index");
 
 // Express trust proxy settings
@@ -55,9 +54,8 @@ app.get("/", (req, res) => {
 
 app.use(appRoutes); // application routes from the index file
 
-app.all('*', (req, res, next) => {
-    const err = new CustomError(`Can't find ${req.originalUrl} on the server!`, 404);
-    next(err);
+app.all('*', (req, res) => {
+    return res.status(404).json({ error: `Can't find ${req.originalUrl} on the server!` });
 });
 
 app.use(middleware.unknownEndpoint);
