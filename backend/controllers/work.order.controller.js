@@ -8,6 +8,8 @@ const Employee = require("../model/employee.model");
 const sendEmail = require("../utils/email");
 const Location = require("../model/location.model");
 const logger = require("../utils/logger");
+const { SendAssignedWorkEmail } = require("../EmailService/assignedWork");
+const { SendNewWorkEmail } = require("../EmailService/newWork");
 
 // Sending email function
 const sendEmailNotification = async (WorkOrder, subject, text) => {
@@ -28,12 +30,11 @@ const sendEmailNotification = async (WorkOrder, subject, text) => {
 
     if (itCategoryList) {
         ccList = [
-            "fidel.tuwei@holidayinnnairobi.com", 
-            "joel.njau@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com"
+            "fidel.tuwei@holidayinnnairobi.com"
         ];
     } else {
         ccList = [
-            "workorder@holidayinnnairobi.com", "ms@holidayinnnairobi.com", 
+            "workorder@holidayinnnairobi.com", 
         ];
     }
 
@@ -79,30 +80,7 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             // Update the user's workOrders array
             await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
 
-            // Send email notification
-            // Fetch Location Details
-            const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
-            const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
-
-            // Fetch category details
-            const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
-            const categoryTitle = categories.map(cat => cat.categoryTitle);
-
-            // Send Email notification
-            const subject = "NEW WORK ORDER CREATED";
-            const emailText = `A New Work with Order number: ${savedWorkorder.workOrderNumber}  has been requested with the following details:
-                - Locations: ${locationTitles}
-                - Service Type: ${serviceType}
-                - Category: ${categoryTitle}
-                - Priority: ${priority}
-                - Description: ${description}
-                - Requested By: ${user.username}
-
-                Thank you,
-                Holiday Inn Work Order System - All rights reserved.
-            `;
-
-            await sendEmailNotification(savedWorkorder, subject, emailText);
+            await SendNewWorkEmail(savedWorkorder);
         } else {
             return res.status(400).json({ error: "Invalid work order fields entered" });
         }
@@ -182,7 +160,7 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
     await updatedWorkOrder.save();
 
     // Send an email notification to the assigned employee
-    await sendAssignedEmailNotification(updatedWorkOrder, assignedTo);
+    await SendAssignedWorkEmail(updatedWorkOrder, assignedTo);
 
     // Find the employee and add the work order to their assignedwork array
     const employee = await Employee.findById(assignedTo);
