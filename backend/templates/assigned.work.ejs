@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Holiday Inn Nairobi: Assigned Work Order</title>
+        <style type="text/css">
+            body {
+                margin: 0;
+                padding: 0;
+                min-width: 100%;
+                font-family: Arial, sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+                background-color: #FAFAFA;
+                color: #222222;
+            }
+            
+            h1 {
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 1.25;
+                margin-top: 0;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            p {
+                margin-top: 0;
+                margin-bottom: 24px;
+            }
+
+            table td{
+            vertical-align: top;
+            }
+
+            .email-wrapper{
+                max-width:700px;
+                margin: 0 auto;
+            }
+
+            .email-header{
+                background-color: darkgreen;
+                padding: 24px;
+                color: #fff;
+            }
+
+            .email-body{
+                padding:24px;
+                background-color: #f6f6f6;
+            }
+            .email-footer{
+                background-color: #f6f6f6;
+                padding: 24px;
+            }
+
+        </style>
+        <body>
+            <div class="email-wrapper">
+
+                <div class="email-header">
+                    <h1>Assigned Work Order</h1>
+                </div>
+                
+                <div class="email-body">
+                <p>Hello Staff, you have a new work order assigned to you. Below are the details.</p>
+                <p>Work Order Number: <%= workOrderNumber %></p>
+                <p>Description: <%= description %></p>
+                <p>Priority: <%= priority %></p>
+                <p>Status: <%= status %></p>
+                <p>Service Type: <%= serviceType %></p>
+                <p>Location: <%= locationTitles %></p>
+                <p>Date Assigned: <%= dateAssigned %></p>
+                </div>    
+                <div class="email-footer">
+                    <p>Holiday Inn Work Order System - All rights reserved.</p>
+                </div>
+            </div>   
+        </body>
+    </head>
+</html>
