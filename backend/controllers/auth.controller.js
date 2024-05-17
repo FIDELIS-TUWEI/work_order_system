@@ -5,6 +5,7 @@ const User = require("../model/user.model");
 const sendEmail = require("../utils/email");
 const logger = require("../utils/logger");
 const generateTokenAndSetCookie = require("../utils/generateToken");
+const { SendWelcomeUserEmail } = require("../EmailService/welcomeUser");
 
 // @desc Register User
 const register = asyncHandler (async (req, res) => {
@@ -49,30 +50,16 @@ const register = asyncHandler (async (req, res) => {
 
         // 6. Check if all requirements are met
         if (newUser) {
-            await newUser.save();
+            const savedUser = await newUser.save();
 
             res.status(201).json({ message: "User registered successfully" });
 
-            // Send email notification
-            const recepients = ["fidel.tuwei@holidayinnnairobi.com"]
-            const ccEmails = ["peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
-
-            const emailSubject = `New User successfully Created`;
-            const emailText = `A user with Name ${newUser.firstName} ${newUser.lastName} has been created.
-            
-                Thank you,
-                Holiday Inn Work Order System - All rights reserved.
-            `;
-
-            const emailOptions = {
-                email: recepients,
-                cc: ccEmails,
-                subject: emailSubject,
-                text: emailText
-            };
-
             // Send Email
-            sendEmail(emailOptions);
+            await SendWelcomeUserEmail({
+                firstName: savedUser.firstName,
+                lastName: savedUser.lastName,
+                username: savedUser.username
+            });
         } else {
             res.status(400).json({ error: "Invalid user data!" });
         };
