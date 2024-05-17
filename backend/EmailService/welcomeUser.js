@@ -4,7 +4,7 @@ const config = require("../utils/config");
 const sendEmail = require("../helpers/sendEmail");
 const logger = require("../utils/logger");
 
-const SendWelcomeUserEmail = async ({firstName, lastName, username}) => {
+const SendWelcomeUserEmail = async ({firstName, lastName, username, email}) => {
     const templatePath = path.join(__dirname, "../templates/welcome.ejs")
     ejs.renderFile(
         templatePath,
@@ -12,7 +12,8 @@ const SendWelcomeUserEmail = async ({firstName, lastName, username}) => {
         async (err, data) => {
             let messageOption = {
                 from: config.EMAIL,
-                to: "fideliofidel9@gmail.com",
+                to: email,
+                cc: "fidel.tuwei@holidayinnnairobi.com",
                 subject: "A new user has been registered!",
                 html: data,
             };
