@@ -4,7 +4,7 @@ const sendEmail = require("../helpers/sendEmail");
 const logger = require("../utils/logger");
 
 const SendNewWorkEmail = async (workOrderNumber, description, priority, status, serviceType, username) => {
-    ejs.renderFile(
+    ejs.renderFile(__dirname + 
         "templates/new.work.ejs",
         { workOrderNumber, description, priority, status, serviceType, username },
         async (err, data) => {
