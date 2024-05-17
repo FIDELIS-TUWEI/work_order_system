@@ -29,6 +29,9 @@
                 margin-bottom: 15px;
                 text-align: center;
             }
+            h3 {
+                text-decoration: underline;
+            }
 
             p {
                 margin-top: 0;
@@ -67,12 +70,12 @@
             <div class="email-wrapper">
 
                 <div class="email-header">
-                    <h1>Welcome to the Work Order System</h1>
+                    <h1>Welcome to the Work Order System!</h1>
                 </div>
                 
                 <div class="email-body">
                 <p>Hello <%= firstName %> <%= lastName %>,</p>
-                <p>You are registration to the application was successfull.</p>
+                <p>You are registration to the application was successfull. We are glad to have you onboard!</p>
                 <p>Below are your login credentials</p>
                 <p>Username: <%= username %></p>
                 <p>Kindly contact your IT administrator for the password.</p>
@@ -84,9 +87,9 @@
                 <p>Please Keep this credentials privately. Don't share with Anyone</p>
                 </div>    
                 <div class="email-footer">
-                    <p>Holiday Inn Work Order System - All rights reserved.</p>
+                    <p>Copyright &copy; <%= new Date().getFullYear() %> | Holiday Inn Nairobi | Work Order System | All rights reserved.</p>
                 </div>
-            </div>   
+            </div> 
         </body>
     </head>
 </html>
