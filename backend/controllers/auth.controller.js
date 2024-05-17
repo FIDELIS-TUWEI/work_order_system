@@ -58,7 +58,8 @@ const register = asyncHandler (async (req, res) => {
             await SendWelcomeUserEmail({
                 firstName: savedUser.firstName,
                 lastName: savedUser.lastName,
-                username: savedUser.username
+                username: savedUser.username,
+                email: savedUser.email
             });
         } else {
             res.status(400).json({ error: "Invalid user data!" });
