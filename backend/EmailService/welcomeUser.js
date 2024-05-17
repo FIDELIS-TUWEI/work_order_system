@@ -13,7 +13,7 @@ const SendWelcomeUserEmail = async ({firstName, lastName, username}) => {
             let messageOption = {
                 from: config.EMAIL,
                 to: "fideliofidel9@gmail.com",
-                subject: "A user has been registered!",
+                subject: "A new user has been registered!",
                 html: data,
             };
 
