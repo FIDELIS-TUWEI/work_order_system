@@ -53,26 +53,29 @@
                 background-color: #f6f6f6;
                 padding: 24px;
             }
+            .email-footer > p {
+                text-align: center;
+            }
 
         </style>
         <body>
             <div class="email-wrapper">
 
                 <div class="email-header">
-                    <h1>New Work Order</h1>
+                    <h1>New Work Order Request</h1>
                 </div>
                 
                 <div class="email-body">
-                <p>Hello, you have a new work order request. Below are the details.</p>
+                <p>Hello, you have a new work order request. Below are the details:- </p>
                 <p>Work Order Number: <%= workOrderNumber %></p>
                 <p>Description: <%= description %></p>
                 <p>Priority: <%= priority %></p>
                 <p>Status: <%= status %></p>
                 <p>Service Type: <%= serviceType %></p>
-                <p>Requested By: <%= username %></p>
+                <p>Requested By: <%= requestedBy %></p>
                 </div>    
                 <div class="email-footer">
-                    <p>Holiday Inn Work Order System - All rights reserved.</p>
+                    <p>Copyright &copy; <%= new Date().getFullYear() %> | Holiday Inn Nairobi | Work Order System | All rights reserved.</p>
                 </div>
             </div>   
         </body>
