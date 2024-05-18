@@ -8,6 +8,7 @@ const Employee = require("../model/employee.model");
 const sendEmail = require("../utils/email");
 const Location = require("../model/location.model");
 const logger = require("../utils/logger");
+const config = require("../utils/config");
 const { SendAssignedWorkEmail } = require("../EmailService/assignedWork");
 const { SendNewWorkEmail } = require("../EmailService/newWork");
 
@@ -77,8 +78,28 @@ const createWorkOrder = asyncHandler (async (req, res) => {
 
             res.status(201).json(savedWorkorder);
 
-            // Update the user's workOrders array
-            await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
+            // Determin email receipients based on work order category
+            const user = await User.findById(userId).select("email");
+            const workOrderCategory = await Category.findById(newWorkOrder.category).select("categoryTitle");
+            let ccList;
+
+            const itCategoryList = [
+                "IT", "Room Wi-Fi", "Room-Tv", "Telephone", "Cable Pulling", "Office Printer", 
+                "Guest Wi-Fi", "Conference I.T Support", "Office Wi-Fi", "Restaurant Tv", "Onity-lock"
+            ].includes(workOrderCategory.categoryTitle);
+
+            if (itCategoryList) {
+                ccList = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"]
+            } else {
+                ccList = ["workorder@holidayinnnairobi.com", "ms@holidayinnnairobi.com"]
+            };
+
+            //Prepare email options including CC list
+            const emailOptions = {
+                from: config.EMAIL,
+                to: user.email, // include the requester's email
+                cc: ccList.join(","),
+            };
 
             await SendNewWorkEmail({
                 workOrderNumber: savedWorkorder.workOrderNumber,
@@ -87,7 +108,11 @@ const createWorkOrder = asyncHandler (async (req, res) => {
                 status: savedWorkorder.status,
                 serviceType: savedWorkorder.serviceType,
                 username: savedWorkorder.requestedBy,
+                emailOptions
             });
+
+            // Update the user's workOrders array
+            await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
         } else {
             return res.status(400).json({ error: "Invalid work order fields entered" });
         }
