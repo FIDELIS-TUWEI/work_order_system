@@ -79,7 +79,7 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             res.status(201).json(savedWorkorder);
 
             // Determin email receipients based on work order category
-            const user = await User.findById(userId).select("email");
+            const requestedUser = await User.findById(userId).select("email");
             const workOrderCategory = await Category.findById(newWorkOrder.category).select("categoryTitle");
             let ccList;
 
@@ -97,7 +97,7 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             //Prepare email options including CC list
             const emailOptions = {
                 from: config.EMAIL,
-                to: user.email, // include the requester's email
+                to: requestedUser.email, // include the requester's email
                 cc: ccList.join(","),
             };
 
@@ -107,7 +107,7 @@ const createWorkOrder = asyncHandler (async (req, res) => {
                 priority: savedWorkorder.priority,
                 status: savedWorkorder.status,
                 serviceType: savedWorkorder.serviceType,
-                username: savedWorkorder.requestedBy,
+                requestedBy: user.username,
                 emailOptions
             });
 
