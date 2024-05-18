@@ -78,6 +78,14 @@ const createWorkOrder = asyncHandler (async (req, res) => {
 
             res.status(201).json(savedWorkorder);
 
+            // Fetch Location Details
+            const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+            const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+        
+            // Fetch category details
+            const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
+            const categoryTitle = categories.map(cat => cat.categoryTitle);
+
             // Determin email receipients based on work order category
             const requestedUser = await User.findById(userId).select("email");
             const workOrderCategory = await Category.findById(newWorkOrder.category).select("categoryTitle");
@@ -104,7 +112,9 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             await SendNewWorkEmail({
                 workOrderNumber: savedWorkorder.workOrderNumber,
                 description: savedWorkorder.description,
+                location: locationTitles,
                 priority: savedWorkorder.priority,
+                category: categoryTitle,
                 status: savedWorkorder.status,
                 serviceType: savedWorkorder.serviceType,
                 requestedBy: user.username,
