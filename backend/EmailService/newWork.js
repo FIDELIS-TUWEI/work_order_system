@@ -4,12 +4,12 @@ const config = require("../utils/config");
 const sendEmail = require("../helpers/sendEmail");
 const logger = require("../utils/logger");
 
-const SendNewWorkEmail = async ({workOrderNumber, description, priority, status, serviceType, requestedBy, emailOptions}) => {
+const SendNewWorkEmail = async ({workOrderNumber, description, location, priority, category, status, serviceType, requestedBy, emailOptions}) => {
     const templatePath = path.join(__dirname, "../templates/new.work.ejs");
 
     ejs.renderFile( 
         templatePath,
-        { workOrderNumber, description, priority, status, serviceType, requestedBy },
+        { workOrderNumber, description, location, priority, category, status, serviceType, requestedBy },
         async (err, data) => {
             let messageOption = {
                 ...emailOptions,
