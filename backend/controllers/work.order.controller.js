@@ -12,43 +12,6 @@ const config = require("../utils/config");
 const { SendAssignedWorkEmail } = require("../EmailService/assignedWork");
 const { SendNewWorkEmail } = require("../EmailService/newWork");
 
-// Sending email function
-const sendEmailNotification = async (WorkOrder, subject, text) => {
-    const requestedUser = await User.findById(WorkOrder.requestedBy).select("email");
-
-    if (!requestedUser) {
-        return logger.error("Requested User not found");
-    }
-    
-    // Fetch category details to determine the email recipient list
-    const workOrderCategory = await Category.findById(WorkOrder.category).select("categoryTitle");
-    let ccList;
-
-    const itCategoryList = [
-        "IT", "Room Wi-Fi", "Room-Tv", "Telephone", "Cable Pulling", "Office Printer", 
-        "Guest Wi-Fi", "Conference I.T Support", "Office Wi-Fi", "Restaurant Tv", "Onity-lock"
-    ].includes(workOrderCategory.categoryTitle);
-
-    if (itCategoryList) {
-        ccList = [
-            "fidel.tuwei@holidayinnnairobi.com"
-        ];
-    } else {
-        ccList = [
-            "workorder@holidayinnnairobi.com", 
-        ];
-    }
-
-    const emailOptions = {
-        email: requestedUser.email,
-        cc: ccList.join(", "),
-        subject: subject,
-        text: text
-    }
-
-    sendEmail(emailOptions);
-};
-
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res) => {
     try {
@@ -86,7 +49,7 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             const categories = await Category.find({ _id: { $in: category } }).select("categoryTitle");
             const categoryTitle = categories.map(cat => cat.categoryTitle);
 
-            // Determin email receipients based on work order category
+            // Determine email receipients based on work order category
             const requestedUser = await User.findById(userId).select("email");
             const workOrderCategory = await Category.findById(newWorkOrder.category).select("categoryTitle");
             let ccList;
