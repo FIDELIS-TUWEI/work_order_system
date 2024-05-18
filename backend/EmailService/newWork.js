@@ -4,7 +4,7 @@ const config = require("../utils/config");
 const sendEmail = require("../helpers/sendEmail");
 const logger = require("../utils/logger");
 
-const SendNewWorkEmail = async ({workOrderNumber, description, priority, status, serviceType, username}) => {
+const SendNewWorkEmail = async ({workOrderNumber, description, priority, status, serviceType, username, emailOptions}) => {
     const templatePath = path.join(__dirname, "../templates/new.work.ejs");
 
     ejs.renderFile( 
@@ -12,8 +12,7 @@ const SendNewWorkEmail = async ({workOrderNumber, description, priority, status,
         { workOrderNumber, description, priority, status, serviceType, username },
         async (err, data) => {
             let messageOption = {
-                from: config.EMAIL,
-                to: "fideliofidel9@gmail.com",
+                ...emailOptions,
                 subject: "A new work order request has been created",
                 html: data,
             };
