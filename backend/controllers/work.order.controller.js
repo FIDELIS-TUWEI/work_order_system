@@ -80,13 +80,18 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             // Update the user's workOrders array
             await User.findByIdAndUpdate(userId, { $push: { workOrders: savedWorkorder._id }});
 
-            await SendNewWorkEmail(savedWorkorder);
+            await SendNewWorkEmail({
+                workOrderNumber: savedWorkorder.workOrderNumber,
+                description: savedWorkorder.description,
+                priority: savedWorkorder.priority,
+                status: savedWorkorder.status,
+                serviceType: savedWorkorder.serviceType,
+                username: savedWorkorder.requestedBy,
+            });
         } else {
             return res.status(400).json({ error: "Invalid work order fields entered" });
         }
-    
-        
-    
+     
     } catch (error) {
         logger.error("Error in cretaeWorkOrder controller", error);
         res.status(500).json({ error: "Internal Server Error" });
