@@ -60,7 +60,7 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             ].includes(workOrderCategory.categoryTitle);
 
             if (itCategoryList) {
-                ccList = ["fidel.tuwei@holidayinnnairobi.com", "fideliofidel9@gmail.com"]
+                ccList = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"]
             } else {
                 ccList = ["workorder@holidayinnnairobi.com", "ms@holidayinnnairobi.com"]
             };
