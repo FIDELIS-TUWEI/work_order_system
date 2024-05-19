@@ -53,6 +53,9 @@
                 background-color: #f6f6f6;
                 padding: 24px;
             }
+            .email-footer > p {
+                text-align: center;
+            }
 
         </style>
         <body>
@@ -68,12 +71,14 @@
                 <p>Description: <%= description %></p>
                 <p>Priority: <%= priority %></p>
                 <p>Status: <%= status %></p>
+                <p>Location: <%= location %></p>
+                <p>Category: <%= category %></p>
                 <p>Service Type: <%= serviceType %></p>
                 <p>Assigned To: <%= username %></p>
                 <p>Date Assigned: <%= dateAssigned %></p>
                 </div>    
                 <div class="email-footer">
-                    <p>Holiday Inn Work Order System - All rights reserved.</p>
+                    <p>Copyright &copy; <%= new Date().getFullYear() %> | Holiday Inn Nairobi | Work Order System | All rights reserved.</p>
                 </div>
             </div>   
         </body>
