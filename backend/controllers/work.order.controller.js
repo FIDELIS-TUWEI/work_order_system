@@ -11,6 +11,7 @@ const logger = require("../utils/logger");
 const config = require("../utils/config");
 const { SendAssignedWorkEmail } = require("../EmailService/assignedWork");
 const { SendNewWorkEmail } = require("../EmailService/newWork");
+const { SendCompleteWorkEmail } = require("../EmailService/completeWork");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res) => {
@@ -101,7 +102,7 @@ const updateWorkOrder = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
         const userId = req.user._id;
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(userId).select("-password", "email");
     
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -117,8 +118,53 @@ const updateWorkOrder = asyncHandler(async (req, res) => {
             await handleInCompleteWorkOrder(updatedWorkOrder, username);
         }
     
+        // check if the work status is complete and send email notification
         if (updatedFields.status === "Complete") {
-            await sendCompletedEmailNotification(updatedWorkOrder);
+            // fetch the work order category to determine recipients
+            const workOrderCategory = await Category.findById(updatedWorkOrder.category).select("categoryTitle");
+            const categoryTitle = workOrderCategory.map(cat => cat.categoryTitle);
+
+            // Fetch Location Details
+            const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+            const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+
+            let ccList;
+
+            // Determine recipients based on the work order category
+            const itCategoryList = [
+                "IT", "Room Wi-Fi", "Room-Tv", "Telephone", "Cable Pulling", "Office Printer", 
+                "Guest Wi-Fi", "Conference I.T Support", "Office Wi-Fi", "Restaurant Tv", "Onity-lock"
+            ].includes(workOrderCategory.categoryTitle);
+
+            if (itCategoryList) {
+                ccList = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+            } else {
+                ccList = ["workorder@holidayinnnairobi.com", "ms@holidayinnnairobi.com"];
+            };
+
+            // Prepare email options including CC list
+            const emailOptions = {
+                from: config.EMAIL,
+                to: user.email, // include the requester's email 
+                cc: ccList.join(", "),
+            };
+
+            await SendCompleteWorkEmail({
+                workOrderNumber: updatedWorkOrder.workOrderNumber,
+                description: updatedWorkOrder.description,
+                location: locationTitles,
+                priority: updatedWorkOrder.priority,
+                category: categoryTitle,
+                status: updatedWorkOrder.status,
+                serviceType: updatedWorkOrder.serviceType,
+                tracker: updatedWorkOrder.tracker,
+                trackerMessage: updatedWorkOrder.trackerMessage,
+                dateCompleted: updatedWorkOrder.dateCompleted,
+                comments: updatedWorkOrder.comments,
+                checkedBy: updatedWorkOrder.checkedBy,
+                dateUpdated: updatedWorkOrder.Date_Updated,
+                emailOptions
+            });
     
             // Update the user's workOrders array
             await User.findByIdAndUpdate(userId, { $push: { workOrders: updatedWorkOrder._id }});
@@ -185,30 +231,6 @@ async function sendAssignedEmailNotification(updatedWorkOrder, assignedTo) {
         - Service Type: ${updatedWorkOrder.serviceType}
         - Assigned To: ${employee.firstName} ${employee.lastName}
         - Date Assigned: ${updatedWorkOrder.dateAssigned}
-
-        - Date Updated: ${updatedWorkOrder.Date_Updated}
-
-        Thank you,
-        Holiday Inn Work Order System - All rights reserved.
-    `;
-
-    await sendEmailNotification(updatedWorkOrder, subject, text);
-}
-
-async function sendCompletedEmailNotification(updatedWorkOrder) {
-    const locations = await Location.find({ _id: { $in: updatedWorkOrder.location } });
-    const locationTitles = locations.map(location => location.locationTitle).join(", ");
-
-    const subject = `Work Order Completed`;
-    const text = `The following work order has been completed:
-        - Description: ${updatedWorkOrder.description}
-        - Status: ${updatedWorkOrder.status}
-        - Location(s): ${locationTitles}
-        - Date Completed: ${updatedWorkOrder.dateCompleted}
-        - Comments: ${updatedWorkOrder.comments}
-        - Tracker: ${updatedWorkOrder.tracker}
-        - Tracker Message: ${updatedWorkOrder.trackerMessage}
-        - Checked By: ${updatedWorkOrder.checkedBy}
 
         - Date Updated: ${updatedWorkOrder.Date_Updated}
 
