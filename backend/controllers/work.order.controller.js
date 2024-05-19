@@ -202,44 +202,48 @@ async function updateWorkOrderDetails (id, updatedFields) {
 
 // Handle Assigned Work Orders
 async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
+    const employee = await Employee.findById(assignedTo);
+
     // update the assignedTo field
     updatedWorkOrder.assignedTo = assignedTo;
     updatedWorkOrder.dateAssigned = new Date();
 
     await updatedWorkOrder.save();
 
+     // Fetch Location Details
+     const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+     const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+ 
+     // Fetch category details
+     const categories = await Category.find({ _id: { $in: updatedWorkOrder.category } }).select("categoryTitle");
+     const categoryTitle = categories.map(cat => cat.categoryTitle);
+
+    const emailOptions = {
+        from: config.EMAIL,
+        to: "workshop@holidayinnnairobi.com",
+        cc: "workorder@holidayinnnairobi.com"
+    }
+
     // Send an email notification to the assigned employee
-    await SendAssignedWorkEmail(updatedWorkOrder, assignedTo);
+    await SendAssignedWorkEmail({
+        workOrderNumber: updatedWorkOrder.workOrderNumber,
+        description: updatedWorkOrder.description,
+        priority: updatedWorkOrder.priority,
+        status: updatedWorkOrder.status,
+        location: locationTitles,
+        category: categoryTitle,
+        serviceType: updatedWorkOrder.serviceType,
+        assignedTo: employee.firstName,
+        dateAssigned: updatedWorkOrder.dateAssigned,
+        emailOptions
+    });
 
     // Find the employee and add the work order to their assignedwork array
-    const employee = await Employee.findById(assignedTo);
     if (employee) {
         employee.assignedWork.push(updatedWorkOrder._id);
         await employee.save();
     }
 };
-
-async function sendAssignedEmailNotification(updatedWorkOrder, assignedTo) {
-    const employee = await Employee.findById(assignedTo);
-
-    const subject = `Work Order Assigned`;
-    const text = `The following work order has been assigned:
-        - Work Order Number: ${updatedWorkOrder.workOrderNumber}
-        - Description: ${updatedWorkOrder.description}
-        - Priority: ${updatedWorkOrder.priority}
-        - Status: ${updatedWorkOrder.status}
-        - Service Type: ${updatedWorkOrder.serviceType}
-        - Assigned To: ${employee.firstName} ${employee.lastName}
-        - Date Assigned: ${updatedWorkOrder.dateAssigned}
-
-        - Date Updated: ${updatedWorkOrder.Date_Updated}
-
-        Thank you,
-        Holiday Inn Work Order System - All rights reserved.
-    `;
-
-    await sendEmailNotification(updatedWorkOrder, subject, text);
-}
 
 // Handle In Complete Work Order tracker
 async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
