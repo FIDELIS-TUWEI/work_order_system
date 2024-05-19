@@ -1,17 +1,18 @@
 const ejs = require("ejs");
-const config = require("../utils/config");
+const path = require("path");
 const sendEmail = require("../helpers/sendEmail");
 const logger = require("../utils/logger");
 
-const SendAssignedWorkEmail = async (workOrderNumber, description, priority, status, serviceType, username, dateAssigned) => {
-    ejs.renderFile(__dirname +
-        "templates/assigned.work.ejs",
-        { workOrderNumber, description, priority, status, serviceType, username, dateAssigned },
+const SendAssignedWorkEmail = async ({workOrderNumber, description, priority, status, location, category, serviceType, assignedTo, dateAssigned, emailOptions}) => {
+    const templatePath = path.join(__dirname, "../templates/assigned.work.ejs");
+
+    ejs.renderFile(
+        templatePath,
+        { workOrderNumber, description, priority, status, location, category, serviceType, assignedTo, dateAssigned },
         async (err, data) => {
             let messageOption = {
-                from: config.EMAIL,
-                to: "fideliofidel9@gmail.com",
-                subject: "Your work order request has been assigned.",
+                ...emailOptions,
+                subject: "A Work order has been assigned.",
                 html: data,
             };
 
