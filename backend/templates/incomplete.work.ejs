@@ -59,19 +59,22 @@
             <div class="email-wrapper">
 
                 <div class="email-header">
-                    <h1>In-complete Work Order</h1>
+                    <h1>In-complete Work Order Notification</h1>
                 </div>
                 
                 <div class="email-body">
                 <p>Hello, you have a work order request that is In-complete. Below are the details.</p>
                 <p>Work Order Number: <%= workOrderNumber %></p>
                 <p>Description: <%= description %></p>
+                <p>Location: <%= locationTitles %></p>
                 <p>Priority: <%= priority %></p>
+                <p>Category: <%= categoryTitle %></p>
                 <p>Status: <%= status %></p>
                 <p>Service Type: <%= serviceType %></p>
-                <p>Category: <%= categoryTitle %></p>
-                <p>Location: <%= locationTitles %></p>
-                <p>Updated By: <%= username %></p>
+                <p>Tracker: <%= tracker %></p>
+                <p>Tracker Message: <%= trackerMessage %></p>
+                <p>Updated By: <%= updatedBy %></p>
+                <p>Date Updated: <%= dateUpdated %></p>
                 </div>    
                 <div class="email-footer">
                     <p>Holiday Inn Work Order System - All rights reserved.</p>
