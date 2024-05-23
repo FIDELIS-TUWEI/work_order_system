@@ -12,13 +12,14 @@ const config = require("../utils/config");
 const { SendAssignedWorkEmail } = require("../EmailService/assignedWork");
 const { SendNewWorkEmail } = require("../EmailService/newWork");
 const { SendCompleteWorkEmail } = require("../EmailService/completeWork");
+const { SendIncompleteWorkEmail } = require("../EmailService/incompleteWork");
 
 // Create Work Order
 const createWorkOrder = asyncHandler (async (req, res) => {
     try {
         const { description, location, priority, serviceType, category, } = req.body;
 
-        // Iclude the username of the user who requests for work
+        // Include the username of the user who requests for work
         const userId = req.user._id;
         const user = await User.findById(userId).select("-password");
     
@@ -102,7 +103,7 @@ const updateWorkOrder = asyncHandler(async (req, res) => {
     try {
         const { id } = req.params;
         const userId = req.user._id;
-        const user = await User.findById(userId).select("-password", "email");
+        const user = await User.findById(userId).select("-password", "email", "username");
     
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -111,11 +112,66 @@ const updateWorkOrder = asyncHandler(async (req, res) => {
         const { assignedTo, ...updatedFields } = { ...req.body };
         const updatedWorkOrder = await updateWorkOrderDetails(id, updatedFields);
     
-        // Check the user who updated the tracker
-        const username = req.user.username
-    
         if (updatedFields.tracker === "In_Complete") {
-            await handleInCompleteWorkOrder(updatedWorkOrder, username);
+            // fetch the work order category to determine recipients
+            const workOrderCategory = await Category.findById(updatedWorkOrder.category).select("categoryTitle");
+            const categoryTitle = workOrderCategory.map(cat => cat.categoryTitle);
+
+            // Fetch Location Details
+            const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
+            const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
+
+            let ccList;
+
+            // Determine recipients based on the work order category
+            const itCategoryList = [
+                "IT", "Room Wi-Fi", "Room-Tv", "Telephone", "Cable Pulling", "Office Printer", 
+                "Guest Wi-Fi", "Conference I.T Support", "Office Wi-Fi", "Restaurant Tv", "Onity-lock"
+            ].includes(workOrderCategory.categoryTitle);
+
+            if (itCategoryList) {
+                ccList = ["fidel.tuwei@holidayinnnairobi.com", "peter.wangodi@holidayinnnairobi.com", "joel.njau@holidayinnnairobi.com"];
+            } else {
+                ccList = ["workorder@holidayinnnairobi.com", "ms@holidayinnnairobi.com"];
+            };
+
+            // Prepare email options including CC list
+            const emailOptions = {
+                from: config.EMAIL,
+                to: user.email, // include the requester's email 
+                cc: ccList.join(", "),
+            };
+
+            await SendIncompleteWorkEmail({
+                workOrderNumber: updatedWorkOrder.workOrderNumber,
+                description: updatedWorkOrder.description,
+                location: locationTitles,
+                priority: updatedWorkOrder.priority,
+                category: categoryTitle,
+                status: updatedWorkOrder.status,
+                serviceType: updatedWorkOrder.serviceType,
+                tracker: updatedWorkOrder.tracker,
+                trackerMessage: updatedWorkOrder.trackerMessage,
+                updatedBy: user.username,
+                dateUpdated: updatedWorkOrder.Date_Updated,
+                emailOptions
+            });
+
+            // Schedule the reversion of the work order status after 10 minutes
+            const timeoutId = setTimeout(function () {
+                updatedWorkOrder.status = "Pending";
+                updatedWorkOrder.assignedTo = null;
+                updatedWorkOrder.tracker = "Not_Attended";
+                updatedWorkOrder.trackerMessage = "";
+                updatedWorkOrder.dateAssigned = null;
+                updatedWorkOrder.dueDate = null;
+
+                // Save the updated work order
+                updatedWorkOrder.save();
+
+            }, 24 * 60 * 1000); // 1 minute in milliseconds
+
+            updatedWorkOrder.timeoutId = timeoutId;
         }
     
         // check if the work status is complete and send email notification
@@ -243,48 +299,6 @@ async function handleAssignedWorkOrder (updatedWorkOrder, assignedTo) {
         employee.assignedWork.push(updatedWorkOrder._id);
         await employee.save();
     }
-};
-
-// Handle In Complete Work Order tracker
-async function handleInCompleteWorkOrder (updatedWorkOrder, username) {
-    // Fetch Location Details
-    const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
-    const locationTitles = locations.map(loc => loc.locationTitle).join(', ');
-
-    const subject = `A WORK ORDER NEEDS YOUR ATTENTION`;
-    const text = `The following work order needs your attention:
-        - Description: ${updatedWorkOrder.description}
-        - Location: ${locationTitles}
-        - Priority: ${updatedWorkOrder.priority}
-        - Status: ${updatedWorkOrder.status}
-        - Service Type: ${updatedWorkOrder.serviceType}
-        - Tracker: ${updatedWorkOrder.tracker}
-        - Tracker Message: ${updatedWorkOrder.trackerMessage}
-        - Date Updated: ${updatedWorkOrder.Date_Updated}
-        - Updated By: ${username}
-
-        Thank you,
-        Holiday Inn Work Order System - All rights reserved.
-    `;
-
-    // send email notification
-    await sendEmailNotification(updatedWorkOrder, subject, text);
-
-    // Schedule the reversion of the work order status after 10 minutes
-    const timeoutId = setTimeout(function () {
-        updatedWorkOrder.status = "Pending";
-        updatedWorkOrder.assignedTo = null;
-        updatedWorkOrder.tracker = "Not_Attended";
-        updatedWorkOrder.trackerMessage = "";
-        updatedWorkOrder.dateAssigned = null;
-        updatedWorkOrder.dueDate = null;
-
-        // Save the updated work order
-        updatedWorkOrder.save();
-
-    }, 24 * 60 * 1000); // 1 minute in milliseconds
-
-    updatedWorkOrder.timeoutId = timeoutId;
 };
 
 // Get all Work Orders
