@@ -2,153 +2,174 @@ const User = require("../model/user.model");
 const Work = require("../model/work.order.model");
 const sendEmail = require("../utils/email");
 const asyncHandler = require("express-async-handler");
-const asyncErrorHandler = require("../utils/asyncErrorHandler");
-const CustomError = require("../utils/CustomError");
+const logger = require("../utils/logger");
 
 // Controller function to get all users
-const getAllUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    // Enable Pagination
-    const pageSize = 10;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await User.find({}).estimatedDocumentCount();
-
-    // Find users in DB
-    const users = await User.find({}).select("-password")
-        .populate("workOrders")
-        .sort({ Date_Created: -1 })
-        .skip(pageSize * (page -1))
-        .limit(pageSize);
+const getUsers = asyncHandler (async (req, res, next) => {
+    try {
+        // Enable Pagination
+        const pageSize = 10;
+        const page = Number(req.query.pageNumber) || 1;
+        const count = await User.find({}).estimatedDocumentCount();
     
-    if (!users) {
-        const error = new CustomError("Users not found!", 404)
-        return next(error);
-    }
+        // Find users in DB
+        const users = await User.find({}).select("-password")
+            .sort({ Date_Created: -1 })
+            .skip(pageSize * (page -1))
+            .limit(pageSize);
+        
+        if (!users) return res.status(404).json({ error: "User not found!" });
+    
+        res.status(200).json({
+            data: users,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
+    } catch (error) {
+        logger.error("Error in getUsers controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
+});
 
-    res.status(200).json({
-        success: true,
-        data: users,
-        page,
-        pages: Math.ceil(count / pageSize),
-        count
-    });
-}));
+const getUser = asyncHandler (async (req, res) => {
+    try {
+        // check if the user exists
+        const userId = req.params.id; 
+        const user = await User.findById(userId)
+            .select("-password")
+            .populate("department", "departmentName")
+            .populate("designation", "designationName");
+
+        if (!user) return res.status(404).json({ error: `User with user ID ${userId} not found` });
+
+        res.status(200).json(user);
+    } catch (error) {
+        logger.error("Error in getUser controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
+});
 
 // Controller function to get single user
-const singleUser = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    // Check if user id exists
-    const userExists = await User.exists({ _id: req.params.id });
+const getProfile = asyncHandler (async (req, res) => {
+    try {
+        const { username } = req.params;
+        const user = await User.findOne({ username })
+            .select("-password")
+            .populate("workOrders")
+            .populate("department", "departmentName")
+            .populate("designation", "designationName")
+            .lean();
 
-    if (!userExists) {
-        const error = new CustomError("User not found!", 404);
-        return next(error);
+        if (!user) return res.status(404).json({ error: "User not found!" });
+
+        res.status(200).json(user);
+
+    } catch (error) {
+        logger.error("Error in getUserProfile controller", error);
+        res.status(500).json({  error: "Internal Server Error" });
     };
-    
-    // find user by ID
-    const user = await User.findById(req.params.id).select("-password")
-        .populate("workOrders")
-        .populate("department", "departmentName")
-        .populate("designation", "designationName")
-        .lean();
-
-    res.status(200).json({
-        success: true,
-        data: user
-    });
-}));
+});
 
 // Controller function to edit user
-const editUser = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    // update user
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+const updateUser = asyncHandler (async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
 
-    if (!user) {
-        const error = new CustomError("User not found!", 404);
-        return next(error);
-    }
+        if (!user) return res.status(404).json({ error: "User not found!" });
+    
+        res.status(200).json({ message: `User updated succesfully` });
 
-    res.status(200).json({ 
-        success: true,
-        message: `User updated succesfully` 
-    });
-}));
+    } catch (error) {
+        logger.error("Error in updateUser controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
+});
 
 // Controller function to Delete User
-const deleteUser = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const userId = req.params.id;
-    const user = await User.findByIdAndRemove(userId);
+const deleteUser = asyncHandler (async (req, res, next) => {
+   try {
+        const userId = req.params.id;
+        const user = await User.findByIdAndRemove(userId);
 
-    if (!user) {
-        const error = new CustomError("User with ID not found!", 404);
-        return next(error);
-    }
+        if (!user) return res.status(404).json({ errror: `User with ID: ${userId} not found!` })
 
-    // Check for work requested
-    const workRequested = await Work.find({ requestedBy: userId });
+        // Check for work requested
+        const workRequested = await Work.find({ requestedBy: userId });
 
-    if (workRequested.length > 0) {
-        // Remove associated work orders
-        await Work.deleteMany({ requestedBy: userId });
-    }
+        if (workRequested.length > 0) {
+            // Remove associated work orders
+            await Work.deleteMany({ requestedBy: userId });
+        }
 
-    // Send email notification
-    const recepients = ["fideliofidel9@gmail.com"]
-    const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
+        // Send email notification
+        const recepients = ["fideliofidel9@gmail.com"]
+        const ccEmails = ["fidel.tuwei@holidayinnnairobi.com"];
 
-    const emailSubject = `User deleted successfully`;
-    const emailText = `A user with username ${user.username} has been deleted.`;
+        const emailSubject = `User deleted successfully`;
+        const emailText = `A user with username ${user.username} has been deleted.`;
 
-    const emailOptions = {
-        email: recepients,
-        cc: ccEmails,
-        subject: emailSubject,
-        text: emailText
-    };
+        const emailOptions = {
+            email: recepients,
+            cc: ccEmails,
+            subject: emailSubject,
+            text: emailText
+        };
 
-    // Send Email
-    sendEmail(emailOptions);
+        // Send Email
+        sendEmail(emailOptions);
 
-    res.status(200).json({
-        success: true,
-        message: `User with username ${user.username} deleted`
-    });
-}));
+        res.status(200).json({
+            success: true,
+            message: `User with username ${user.username} deleted`
+        });
+   } catch (error) {
+        logger.error("Error in deleteUser controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+   };
+});
 
 // Controller function to count all users
-const countAllUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const totalUsers = await User.countDocuments();
-
-    if (!totalUsers) {
-        const error = new CustomError("No data for Total users count!", 404)
-        return next(error)
-    }
+const countUsers = asyncHandler (async (req, res, next) => {
+    try {
+        const totalUsers = await User.countDocuments();
     
-    res.status(200).json({ 
-        success: true,
-        data: totalUsers 
-    });
-}));
+        if (!totalUsers) return res.status(404).json({ error: "No data count for all users found" });
+        
+        res.status(200).json({ 
+            success: true,
+            data: totalUsers 
+        });
+    } catch (error) {
+        logger.error("Error in countUsers controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
+});
 
 // Controller function to count all users active
-const countActiveUsers = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const activeUsersCount = await User.countDocuments({ active: true });
-
-    if (!activeUsersCount) {
-        const error = new CustomError("No data for active users count!", 404);
-        return next(error);
-    }
+const countActiveUsers = asyncHandler (async (req, res, next) => {
+    try {
+        const activeUsersCount = await User.countDocuments({ active: true });
     
-    res.status(200).json({ 
-        success: true,
-        data: activeUsersCount 
-    });
-}));
+        if (!activeUsersCount) return res.status(404).json({ error: "No data count for active users found!" })
+        
+        res.status(200).json({ 
+            success: true,
+            data: activeUsersCount 
+        });
+    } catch (error) {
+        logger.error("Error in countActiveUsers controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
+});
 
 
 module.exports = {
-    getAllUsers,
-    singleUser,
-    editUser,
+    getUsers,
+    getUser,
+    getProfile,
+    updateUser,
     deleteUser,
-    countAllUsers,
+    countUsers,
     countActiveUsers
 };

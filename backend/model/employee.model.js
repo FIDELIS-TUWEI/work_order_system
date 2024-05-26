@@ -4,22 +4,21 @@ const { ObjectId } = mongoose.Schema;
 const employeeSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: [true, "Please fill your name"]
+        required: true,
     },
     lastName: {
         type: String,
-        required: [true, "Please fill your name"]
+        required: true,
     },
     phone: {
         type: String,
-        required: [true, "Please Enter employee phone number"],
-        minlength: [10, "Phone number must have at least (10) numbers"],
+        required: true,
     },
     username: {
         type: String,
-        required: [true, "Please enter a Username"],
+        required: true,
         uppercase: true,
-        unique: [true, "Username already exists"],
+        unique: true,
     },
     assignedWork: [
         {

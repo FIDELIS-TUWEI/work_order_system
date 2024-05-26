@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { getAllUsers, singleUser, editUser, deleteUser, countAllUsers, countActiveUsers} = require('../controllers/user.controller');
+const { getUsers, getProfile, updateUser, deleteUser, countUsers, countActiveUsers, getUser} = require('../controllers/user.controller');
 const { protect, restrict, cacheMiddleware, isAdmin } = require('../middleware/authMiddleware');
 
-router.get("/all-users", protect, restrict(['admin', "superadmin"]), cacheMiddleware, getAllUsers);
-router.get("/single/user/:id", protect, cacheMiddleware, singleUser);
-router.get("/count/total-users", protect, cacheMiddleware, countAllUsers);
-router.get("/count/active-users", protect, cacheMiddleware, countActiveUsers);
-router.put("/edit/user/:id", protect, restrict(['admin', "superadmin"]),  editUser);
-router.delete("/admin/user/delete/:id", protect, isAdmin, restrict(["superadmin"]), deleteUser);
+router.get("/all", protect, restrict(['admin', "superadmin"]), cacheMiddleware, getUsers);
+router.get("/user/:id", protect, restrict(["superadmin", "admin"]), getUser);
+router.get("/profile/:username", protect, cacheMiddleware, getProfile);
+router.get("/count/users", protect, cacheMiddleware, countUsers);
+router.get("/count/active", protect, cacheMiddleware, countActiveUsers);
+router.put("/update/:id", protect, restrict(["superadmin", "admin"]),  updateUser);
+router.delete("/admin/delete/:id", protect, isAdmin, restrict(["superadmin"]), deleteUser);
 
 
 module.exports = router;

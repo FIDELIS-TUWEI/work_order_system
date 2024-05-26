@@ -1,102 +1,100 @@
 const Department = require("../model/department.model");
 const asyncHandler = require("express-async-handler");
-const asyncErrorHandler = require("../utils/asyncErrorHandler");
-const CustomError = require("../utils/CustomError");
+const logger = require("../utils/logger");
 
 // @desc Post create departments
-// @route POST /new/departments
-// @access Private
-const createDepartment = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    // Check for duplicate
-    const duplicate = await Department.findOne({ departmentName: req.body.departmentName });
-    if (duplicate) {
-        const error = new CustomError("Department already exists!", 400);
-        return next(error);
-    };
-
-    // create new department
-    const newDepartment = new Department(req.body);
+const createDepartment = asyncHandler (async (req, res) => {
+    try {
+        // Check for duplicate
+        const duplicate = await Department.findOne({ departmentName: req.body.departmentName });
+        if (duplicate) {
+            return res.status(400).json({ error: "Category already exists" });
+        };
     
-    if (!newDepartment) {
-        const error = new CustomError("Failed to create new Department!", 400);
-        return next(error);
-    };
-
-    // Save the created department
-    await newDepartment.save();
-    res.status(201).json({
-        success: true,
-        data: newDepartment
-    });
-
+        // create new department
+        const newDepartment = new Department(req.body);
     
-}));
+        // Save the created department
+        await newDepartment.save();
 
-// @desc Get all departments
-// @route GET /all-departments
-// @access Private
-const getAllDepartments = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    // Enable Pagination
-    const pageSize = 5;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await Department.find({}).estimatedDocumentCount();
-    
-    // Find departments
-    const departments = await Department.find({})
-        .skip(pageSize * (page - 1))
-        .limit(pageSize)
-        .exec();
-    
-    if (!departments) {
-        const error = new CustomError("Departmets not found!", 404);
-        return next(error);
-    };
+        res.status(201).json(newDepartment);
 
-    res.status(200).json({
-        success: true,
-        data: departments,
-        page,
-        pages: Math.ceil(count / pageSize),
-        count
-    });
-}));
-
-// @desc Query all departments
-const queryAllDepartments = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const departments = await Department.find({});
-
-    if (!departments) {
-        const error = new CustomError("Deaprtments not found!", 404);
-        return next(error);
-    };
-    
-    res.status(200).json({
-      success: true,
-      data: departments
-    });
-}));
-
-// @desc Delete department
-// @route DELETE /delete/department/:id
-// @access Private
-const deleteDepartment = asyncHandler (asyncErrorHandler (async (req, res, next) => {
-    const departmentId = req.params.id;
-    const deleteDepartment = await Department.findByIdAndDelete(departmentId);
-
-    if (!deleteDepartment) {
-        const error = new CustomError("Department with ID not found!", 404);
-        return next(error);
+    } catch (error) {
+        logger.error("Error in createDepartment controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 
-    return res.status(200).json({
-        success: true,
-        message: "Department deleted successfully"
-    });
-}))
+    
+});
+
+// @desc Get all departments
+const getDepartments = asyncHandler (async (req, res) => {
+    try {
+        // Enable Pagination
+        const pageSize = 5;
+        const page = Number(req.query.pageNumber) || 1;
+        const count = await Department.find({}).estimatedDocumentCount();
+        
+        // Find departments
+        const departments = await Department.find({})
+            .skip(pageSize * (page - 1))
+            .limit(pageSize)
+            .exec();
+        
+        if (!departments) {
+            return res.status(404).json({ error: "Departments not found" });
+        };
+    
+        res.status(200).json({
+            data: departments,
+            page,
+            pages: Math.ceil(count / pageSize),
+            count
+        });
+    } catch (error) {
+        logger.error("Error in getDepartments controller", error);
+        re.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// @desc Query all departments
+const queryDepartments = asyncHandler (async (req, res) => {
+    try {
+        const departments = await Department.find({});
+    
+        if (!departments) {
+            return res.status(404).json({ error: "No departments found" });
+        };
+        
+        res.status(200).json(departments);
+
+    } catch (error) {
+        logger.error("Error in queryDepartments controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// @desc Delete department
+const deleteDepartment = asyncHandler (async (req, res) => {
+    try {
+        const departmentId = req.params.id;
+        const deleteDepartment = await Department.findByIdAndDelete(departmentId);
+    
+        if (!deleteDepartment) {
+            return res.status(404).json({ error: `Department with ID: ${departmentId} not found` });
+        }
+    
+        res.status(200).json({ message: "Department deleted successfully" });
+
+    } catch (error) {
+        logger.error("Error in deleteCategory controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 module.exports = {
     createDepartment,
-    getAllDepartments,
-    queryAllDepartments,
+    getDepartments,
+    queryDepartments,
     deleteDepartment
 };
