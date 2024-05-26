@@ -4,14 +4,14 @@ const { createWorkOrder, updateWorkOrder, getWorkOrders, getWorkOrder, deleteWor
 const { protect, restrict, cacheMiddleware} = require('../middleware/authMiddleware');
 
 
-router.post("/new/work", protect, createWorkOrder);
-router.get("/all", protect, cacheMiddleware, getWorkOrders);
+router.post("/new", protect, createWorkOrder);
+router.get("/", protect, cacheMiddleware, getWorkOrders);
 router.get("/graph", protect, cacheMiddleware, displayWork);
-router.get("/work/:id", protect, cacheMiddleware, getWorkOrder);
-router.get("/work/in-attendance", protect, cacheMiddleware, inAttendanceTracker);
-router.get("/work/in-complete", protect, cacheMiddleware, inCompleteTracker);
-router.get("/work/attended", protect, cacheMiddleware, attendedTracker);
+router.get("/:id", protect, cacheMiddleware, getWorkOrder);
+router.get("/in-attendance", protect, cacheMiddleware, inAttendanceTracker);
+router.get("/in-complete", protect, cacheMiddleware, inCompleteTracker);
+router.get("/attended", protect, cacheMiddleware, attendedTracker);
 router.put("/update/:id", protect, restrict(["admin", "engineer", "superadmin", "maintenance"]), updateWorkOrder);
-router.delete("/work/:id", protect, restrict(["admin", "superadmin"]), deleteWorkOrder);
+router.delete("/:id", protect, restrict(["admin", "superadmin"]), deleteWorkOrder);
 
 module.exports = router;

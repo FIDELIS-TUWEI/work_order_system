@@ -4,9 +4,9 @@ const { protect, restrict, cacheMiddleware } = require("../middleware/authMiddle
 const { createDepartment, getDepartments, deleteDepartment, queryDepartments } = require("../controllers/department.controller");
 
 
-router.post("/new/department", protect, restrict(["admin", "superadmin"]), createDepartment);
-router.get("/all", protect, restrict(["admin", "superadmin"]), cacheMiddleware, getDepartments);
+router.post("/new", protect, restrict(["admin", "superadmin"]), createDepartment);
+router.get("/", protect, restrict(["admin", "superadmin"]), cacheMiddleware, getDepartments);
 router.get("/query", protect, restrict(["admin", "superadmin"]), cacheMiddleware, queryDepartments);
-router.delete("/department/:id", protect, restrict(["admin", "superadmin"]), deleteDepartment);
+router.delete("/:id", protect, restrict(["admin", "superadmin"]), deleteDepartment);
 
 module.exports = router;
