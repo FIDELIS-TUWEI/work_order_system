@@ -101,7 +101,7 @@ const LogIn = () => {
 
                 <Alert 
                     message="Notice of System Discontinuance!"
-                    description="Kindly note that this system has been discontinued."
+                    description="Kindly note that this system has been discontinued for maintenance."
                     type="warning"
                     showIcon
                     style={{ marginBottom: '1rem' }}
