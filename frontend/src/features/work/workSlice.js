@@ -21,7 +21,7 @@ export const workApi = createApi({
     endpoints: (builder) => ({
         createWork: builder.mutation({
             query: (values) => ({
-                url: `/create/work`,
+                url: `/api/wos/v2/work-orders/new`,
                 method: "POST",
                 body: values,
             }),
@@ -29,7 +29,7 @@ export const workApi = createApi({
         }),
         WorkOrders: builder.query({
             query: (args) => ({
-                url: `/getall/work`,
+                url: `/api/wos/v2/work-orders`,
                 method: "GET",
                 params: {
                     pageNumber: args.page,
@@ -41,21 +41,21 @@ export const workApi = createApi({
         }),
         singleWork: builder.query({
             query: (id) => ({
-                url: `/single/work/${id}`,
+                url: `/api/wos/v2/work-orders/${id}`,
                 method: "GET",
             }),
             providesTags: ["WorkOrder"],
         }),
         queryAllWork: builder.query({
             query: () => ({
-                url: `/query/all/work`,
+                url: `/api/wos/v2/work-orders/graph`,
                 method: "GET",
             }),
             providesTags: ["WorkOrder"],
         }),
         inAttendanceWork: builder.query ({
             query: (args) => ({
-                url: `/work-orders/in-attendance`,
+                url: `/api/wos/v2/work-orders/in-attendance`,
                 method: "GET",
                 params: {
                     pageNumber: args.page
@@ -65,7 +65,7 @@ export const workApi = createApi({
         }),
         inCompleteWork: builder.query ({
             query: (args) => ({
-                url: `/work-orders/in-complete`,
+                url: `/api/wos/v2/work-orders/in-complete`,
                 method: "GET",
                 params: {
                     pageNumber: args.page,
@@ -75,7 +75,7 @@ export const workApi = createApi({
         }),
         attendedWork: builder.query ({
             query: (args) => ({
-                url: `/work-orders/attended`,
+                url: `/api/wos/v2/work-orders/attended`,
                 method: "GET",
                 params: {
                     pageNumber: args.page,
@@ -85,7 +85,7 @@ export const workApi = createApi({
         }),
         updateWork: builder.mutation({
             query: ({id, values}) => ({
-                url: `/update/work/${id}`,
+                url: `/api/wos/v2/work-orders/update/${id}`,
                 method: "PUT",
                 body: values,
             }),
@@ -93,7 +93,7 @@ export const workApi = createApi({
         }),
         deleteWork: builder.mutation({
             query: (id) => ({
-                url: `/delete/work/${id}`,
+                url: `/api/wos/v2/work-orders/${id}`,
                 method: "DELETE",
                 body: id,
             }),

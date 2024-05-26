@@ -19,7 +19,7 @@ export const categoriesApi = createApi({
     endpoints: (builder) => ({
         createCategory: builder.mutation({
             query: (values) => ({
-                url: `/new/category`,
+                url: `/api/wos/v2/categories/new`,
                 method: "POST",
                 body: values,
             }),
@@ -27,28 +27,28 @@ export const categoriesApi = createApi({
         }),
         allCategories: builder.query({
             query: (page) => ({
-                url: `/all/categories?pageNumber=${page}`,
+                url: `/api/wos/v2/categories?pageNumber=${page}`,
                 method: "GET",
             }),
             providesTags: ["Categories"],
         }),
         queryAllCategories: builder.query({
             query: () => ({
-                url: `/query/all/categories`,
+                url: `/api/wos/v2/categories/query`,
                 method: "GET",
             }),
             providesTags: ["Categories"],
         }),
         singleCategory: builder.query({
             query: (id) => ({
-                url: `/single/category/${id}`,
+                url: `/api/wos/v2/categories/${id}`,
                 method: "GET",
             }),
             providesTags: ["Categories"],
         }),
         updateCategory: builder.mutation({
             query: ({id, values}) => ({
-                url: `/edit/category/${id}`,
+                url: `/api/wos/v2/categories/update${id}`,
                 method: "PUT",
                 body: values,
             }),
@@ -56,7 +56,7 @@ export const categoriesApi = createApi({
         }),
         deleteCategory: builder.mutation({
             query: (id) => ({
-                url: `/delete/category/${id}`,
+                url: `/api/wos/v2/categories/${id}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Categories"],

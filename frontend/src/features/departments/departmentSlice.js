@@ -21,7 +21,7 @@ export const departmentsApi = createApi({
     endpoints: (builder) => ({
         createDepartment: builder.mutation({
             query: (values) => ({
-                url: `/new/department`,
+                url: `/api/wos/v2/departments/new`,
                 method: "POST",
                 body: values,
             }),
@@ -29,21 +29,21 @@ export const departmentsApi = createApi({
         }),
         allDepartments: builder.query({
             query: (page) => ({
-                url: `/all-departments?pageNumber=${page}`,
+                url: `/api/wos/v2/departments?pageNumber=${page}`,
                 method: "GET",
             }),
             providesTags: ["Departments"],
         }),
         queryAllDepartments: builder.query({
             query: () => ({
-                url: `/query/all/departments`,
+                url: `/api/wos/v2/departments/query`,
                 method: "GET",
             }),
             providesTags: ["Departments"],
         }),
         deleteDepartment: builder.mutation({
             query: (id) => ({
-                url: `/delete/department/${id}`,
+                url: `/api/wos/v2/departments/${id}`,
                 method: "DELETE",
                 body: id,
             }),

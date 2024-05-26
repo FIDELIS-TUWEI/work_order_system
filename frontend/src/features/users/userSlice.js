@@ -21,7 +21,7 @@ export const usersApi = createApi({
     endpoints: (builder) => ({
         registerUser: builder.mutation({
             query: (values) => ({
-                url: `/register`,
+                url: `/api/wos/v2/users/register`,
                 method: "POST",
                 body: values
             }),
@@ -29,21 +29,21 @@ export const usersApi = createApi({
         }),
         getAllUsers: builder.query({
             query: (page) => ({
-                url: `/all-users?pageNumber=${page}`,
+                url: `/api/wos/v2/users?pageNumber=${page}`,
                 method: "GET",
             }),
             providesTags: ["Users"],
         }),
         getSingleUser: builder.query({
             query: (id) => ({
-                url: `/single/user/${id}`,
+                url: `/api/wos/v2/users/${id}`,
                 method: "GET",
             }),
             providesTags: ["Users"],
         }),
         editUser: builder.mutation({
             query: ({id, values}) => ({
-                url: `/edit/user/${id}`,
+                url: `/api/wos/v2/users/update/${id}`,
                 method: "PUT",
                 body: values,
             }),
@@ -51,7 +51,7 @@ export const usersApi = createApi({
         }),
         deleteUser: builder.mutation({
             query: (id) => ({
-                url: `/admin/user/delete/${id}`,
+                url: `/api/wos/v2/users/admin/delete/${id}`,
                 method: "DELETE",
                 body: id,
             }),
@@ -59,7 +59,7 @@ export const usersApi = createApi({
         }),
         changePassword: builder.mutation({
             query: ({id, values}) => ({
-                url: `/update/password/${id}`,
+                url: `/api/wos/v2/users/update/password/${id}`,
                 method: "PUT",
                 body: values,
             }),
@@ -67,14 +67,14 @@ export const usersApi = createApi({
         }),
         countAllUsers: builder.query({
             query: () => ({
-                url: `/count/total-users`,
+                url: `/api/wos/v2/users/count/users`,
                 method: "GET",
             }),
             providesTags: ["Users"],
         }),
         countActiveUsers: builder.query({
             query: () => ({
-                url: `/count/active-users`,
+                url: `/api/wos/v2/users/count/active`,
                 method: "GET",
             }),
             providesTags: ["Users"],

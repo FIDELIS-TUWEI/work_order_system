@@ -21,7 +21,7 @@ export const designationsApi = createApi({
     endpoints: (builder) => ({
         createDesignation: builder.mutation({
             query: (values) => ({
-                url: `/new/designation`,
+                url: `/api/wos/v2/designations/new`,
                 method: "POST",
                 body: values,
             }),
@@ -29,21 +29,21 @@ export const designationsApi = createApi({
         }),
         allDesignations: builder.query({
             query: (page) => ({
-                url: `/all-designations?pageNumber=${page}`,
+                url: `/api/wos/v2/designations?pageNumber=${page}`,
                 method: "GET",
             }),
             providesTags: ["Designations"],
         }),
         queryAllDesignations: builder.query({
             query: () => ({
-                url: `/query/all-designations`,
+                url: `/api/wos/v2/designations/query`,
                 method: "GET",
             }),
             providesTags: ["Designations"],
         }),
         deleteDesignation: builder.mutation({
             query: (id) => ({
-                url: `/delete/designation/${id}`,
+                url: `/api/wos/v2/designations/${id}`,
                 method: "DELETE",
                 body: id,
             }),
