@@ -5,14 +5,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data) => ({
-                url: `${ serverUrl }/login`,
+                url: `${ serverUrl }/api/wos/v2/auth/login`,
                 method: "POST",
                 body: data,
             }),
         }),
         logout: builder.mutation({
             query: () => ({
-                url: `${ serverUrl }/logout`,
+                url: `${ serverUrl }/api/wos/v2/auth/logout`,
                 method: "POST",
             }),
         }),
