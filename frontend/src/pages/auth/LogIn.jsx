@@ -36,7 +36,7 @@ const LogIn = () => {
     };
 
     const checkDepreciationStatus = () => {
-        const depreciationDate = moment('2024-06-01');
+        const depreciationDate = moment('2024-05-26');
         const now = moment();
         const remainingTime = depreciationDate.diff(now);
 
@@ -92,7 +92,7 @@ const LogIn = () => {
         }
     };
 
-    const deadline = moment('2024-06-01').toISOString();
+    const deadline = moment('2024-05-26').toISOString();
 
   return (
     <div className="form-container">
@@ -101,7 +101,7 @@ const LogIn = () => {
 
                 <Alert 
                     message="Notice of System Discontinuance!"
-                    description="Kindly complete All work orders before 1st June 2024 as the system will be discontinued."
+                    description="Kindly note that this system has been discontinued."
                     type="warning"
                     showIcon
                     style={{ marginBottom: '1rem' }}
