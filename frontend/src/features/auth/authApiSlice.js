@@ -1,18 +1,18 @@
 import { apiSlice } from "../api/apiSlice";
-const serverUrl = 'http://localhost:5000';
+const serverUrl = import.meta.env.VITE_SERVER_API_URL;
 
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (data) => ({
-                url: `${ serverUrl }/api/wos/v2/auth/login`,
+                url: `${ serverUrl }/login`,
                 method: "POST",
                 body: data,
             }),
         }),
         logout: builder.mutation({
             query: () => ({
-                url: `${ serverUrl }/api/wos/v2/auth/logout`,
+                url: `${ serverUrl }/logout`,
                 method: "POST",
             }),
         }),
