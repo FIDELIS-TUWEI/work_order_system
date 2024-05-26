@@ -4,8 +4,9 @@ const bcrypt = require("bcryptjs");
 const User = require("../model/user.model");
 const sendEmail = require("../utils/email");
 const logger = require("../utils/logger");
-const generateTokenAndSetCookie = require("../utils/generateToken");
+const config = require("../utils/generateToken");
 const { SendWelcomeUserEmail } = require("../EmailService/welcomeUser");
+const createSecretToken = require("../utils/generateToken");
 
 // @desc Register User
 const register = asyncHandler (async (req, res) => {
@@ -73,32 +74,49 @@ const register = asyncHandler (async (req, res) => {
 
 // @desc Auth user & get token
 const login = asyncHandler (async (req, res) => {
-try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username })
+    try {
+        const { username, password } = req.body;
+       
+        const user = await User.findOne({ username })
         .populate("department", "departmentName")
         .populate("designation", "designationName");
 
-    // Check if password is correct with the one in DB
-    const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
-    if (!user || !isPasswordCorrect) {
-        return res.status(400).json({ error: "Invalid username or password" });
-    };
+        // Check if password is correct with the one in DB
+        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+        if (!user || !isPasswordCorrect) {
+            return res.status(400).json({ error: "Invalid username or password" });
+        };
 
-    // generate token as cookie
-    generateTokenAndSetCookie(user._id, res);
+        // send token if username and password match DB
+        if (user && isPasswordCorrect) {
+            //Generate Token
+            const token = createSecretToken(user._id);
+            user.token = token;
 
-    res.status(200).json({
-        user: {
-            ...user._doc,
-            password: undefined
+            // Send and store the token as HTTP-Only cookie
+            res.cookie("token", token, {
+                withCredentials: true,
+                httpOnly: true,
+                sameSite: 'none',
+                secure: config.NODE_ENV === 'production'
+            });
+
+            res.status(200).json({
+                success: true,
+                message: "User logged in successfully",
+                user: {
+                    ...user._doc,
+                    password: undefined
+                },
+                token
+            });
+
+
         }
-    });
-
-} catch (error) {
-    logger.error("Error in login controller", error);
-    res.status(500).json({ error: "Internal Server Error" });
-}
+    } catch (error) {
+        logger.error("Error in login controller", error);
+        res.status(500).json({ error: "Internal Server Error" });   
+    }
 });
 
 // @desc Logout user
