@@ -9,7 +9,6 @@ import { departmentsApi } from "./departments/departmentSlice";
 import { categoriesApi } from "./categories/categorySlice";
 import { usersApi } from "./users/userSlice";
 import { reportsApi } from "./reports/reportSlice";
-import { servicesApi } from "./services/serviceSlice";
 
 const store = configureStore({
     reducer: {
@@ -23,7 +22,6 @@ const store = configureStore({
         [categoriesApi.reducerPath]: categoriesApi.reducer,
         [usersApi.reducerPath]: usersApi.reducer,
         [reportsApi.reducerPath]: reportsApi.reducer,
-        [servicesApi.reducerPath]: servicesApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware().concat(
@@ -31,7 +29,7 @@ const store = configureStore({
             locationsApi.middleware, employeesApi.middleware,
             designationsApi.middleware, departmentsApi.middleware,
             categoriesApi.middleware, usersApi.middleware,
-            reportsApi.middleware, servicesApi.middleware,
+            reportsApi.middleware,
         ),
     devTools: process.env.NODE_ENV === 'development',
 });
