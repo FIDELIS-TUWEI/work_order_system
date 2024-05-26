@@ -568,7 +568,7 @@ async function sendWorkOrderReminderEmail(workOrders) {
         subject: emailSubject,
         text: emailText
     });
-}
+};
 
 // fundtion to filter work by status for cron job
 async function workOrderReminderCron() {
@@ -584,7 +584,7 @@ async function workOrderReminderCron() {
     } catch (error) {
         logger.error("Error in workOrderReminderCron scheduler", error);
     }
-}
+};
 
 // Schedule the cron job to run everyday at 11 am (Server-time, Oregon-US)
 cron.schedule("00 08 * * *", workOrderReminderCron);
