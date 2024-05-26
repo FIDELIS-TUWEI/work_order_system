@@ -64,12 +64,14 @@
 }
 
 .form-container {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
     background-color: rgb(220, 220, 220);
 }
+
 
 .loader {
     display: flex;
