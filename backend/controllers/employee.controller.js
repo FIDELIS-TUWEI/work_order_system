@@ -156,7 +156,11 @@ const countEmployees = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: "Employees data count not found!" });
         };
     
-        res.status(200).json(employeeCount);
+        res.status(200).json({
+            success: true,
+            data: employeeCount
+        });
+        
     } catch (error) {
         logger.error("Error in countEmployees controller", error);
         res.status(500).json({ error: "Internal Server Error" });
