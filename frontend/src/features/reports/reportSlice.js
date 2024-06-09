@@ -20,7 +20,7 @@ export const reportsApi = createApi({
     endpoints: (builder) => ({
         getFilterStatus: builder.query({
             query: (args) => ({
-                url: `/api/wos/v2/reports`,
+                url: `${ serverUrl }/api/wos/v2/reports`,
                 method: "GET",
                 params: {
                     pageNumber: args.page,
@@ -31,28 +31,28 @@ export const reportsApi = createApi({
         }),
         getWorkCountByStatus: builder.query ({
             query: () => ({
-                url: `/api/wos/v2/reports/count/status`,
+                url: `${ serverUrl }/api/wos/v2/reports/count/status`,
                 method: "GET",
             }),
             providesTags: ["Reports"],
         }),
         countWorkTracker: builder.query ({
             query: () => ({
-                url: `/api/wos/v2/reports/report/count/tracker`,
+                url: `${ serverUrl }/api/wos/v2/reports/count/tracker`,
                 method: "GET",
             }),
             providesTags: ["Reports"],
         }),
         getWorkByDate: builder.query({
             query: (selectedDate) => ({
-                url: `/api/wos/v2/reports/date/${selectedDate}`,
+                url: `${ serverUrl }/api/wos/v2/reports/date/${selectedDate}`,
                 mehtod: "GET",
             }),
             providesTags: ["Reports"],
         }),
         totalWorkCount: builder.query({
             query: () => ({
-                url: `/api/wos/v2/reports/report/total/count`,
+                url: `${ serverUrl }/api/wos/v2/reports/total/count`,
                 method: "GET",
             }),
             providesTags: ["Reports"],
