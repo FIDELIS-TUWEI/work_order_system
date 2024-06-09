@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Alert, Button, Card, Form, Input, Statistic, Typography, message } from 'antd';
+import { Button, Card, Form, Input, Typography, message } from 'antd';
 
 
 import { useLoginMutation } from "@/features/auth/authApiSlice";
 import { selectToken, selectUserInfo, setCredentials } from "@/features/auth/authSlice";
 import LoadingBox from "@/components/LoadingBox";
 import { useEffect, useState } from "react";
-import moment from "moment";
 
 
 const LogIn = () => {
@@ -18,9 +17,6 @@ const LogIn = () => {
     const token = useSelector(selectToken);
 
     const [maintenance, setMaintenance] = useState(false);
-    const [isDepreciation, setIsDepreciation] = useState(false);
-    const [timeRemaining, setTimeRemaining] = useState(false);
-
     const [login, { isLoading, error }] = useLoginMutation();
 
 
@@ -35,25 +31,8 @@ const LogIn = () => {
         setMaintenance(maintenanceStatus);
     };
 
-    const checkDepreciationStatus = () => {
-        const depreciationDate = moment('2024-06-01');
-        const now = moment();
-        const remainingTime = depreciationDate.diff(now);
-
-        if (remainingTime <= 0) {
-            setIsDepreciation(true);
-            setTimeRemaining(0);
-        } else {
-            setTimeRemaining(remainingTime);
-        }
-    }
-
     useEffect(() => {
         checkMaintenanceStatus()
-        checkDepreciationStatus();
-
-        const timer = setInterval(checkDepreciationStatus, 1000);
-        return () => clearInterval(timer);
     }, []);
 
     
@@ -62,10 +41,6 @@ const LogIn = () => {
         if (maintenance) {
             message.error("The System is currently under maintenance. Please try again later.");
             return;
-        }
-
-        if (isDepreciation) {
-            message.error("The system is discontinued. You cannot log in.")
         }
 
         try {
@@ -92,30 +67,10 @@ const LogIn = () => {
         }
     };
 
-    const deadline = moment('2024-06-01').toISOString();
-
   return (
     <div className="form-container">
         <Form onFinish={onFinishHandler} layout="vertical">
             <Card title="Log In" style={{ width: "450px", margin: "auto", textAlign: "center" }}>
-
-                <Alert 
-                    message="Notice of System Discontinuance!"
-                    description="Kindly complete All work orders before 1st June 2024 as the system will be discontinued."
-                    type="warning"
-                    showIcon
-                    style={{ marginBottom: '1rem' }}
-                />
-
-                {timeRemaining !== null && !isDepreciation && (
-                    <Statistic.Countdown 
-                        title="Time remaining until discontinuation"
-                        value={deadline}
-                        onFinish={() => setIsDepreciation(true)}
-                        format="D [days] H [hours] m [minutes]"
-                        style={{ marginBottom: '1rem' }}
-                    />
-                )}
 
                 <Form.Item name="username" label="Username" required rules={[{ required: true, message: 'Please input your username!' }]}>
                     <Input 
@@ -139,7 +94,7 @@ const LogIn = () => {
                 <Button 
                     style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
                     htmlType="submit" 
-                    disabled={maintenance || isLoading || isDepreciation}
+                    disabled={maintenance || isLoading}
                 >
                     Log In
                 </Button>
