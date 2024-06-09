@@ -20,7 +20,7 @@ export const locationsApi = createApi({
     endpoints: (builder) => ({
         createLocation: builder.mutation({
             query: (values) => ({
-                url: `/api/wos/v2/locations/new`,
+                url: `${ serverUrl }/api/wos/v2/locations/new`,
                 method: "POST",
                 body: values,
             }),
@@ -28,21 +28,21 @@ export const locationsApi = createApi({
         }),
         locations: builder.query({
             query: (page) => ({
-                url: `/api/wos/v2/locations?pageNumber=${page}`,
+                url: `${ serverUrl }/api/wos/v2/locations?pageNumber=${page}`,
                 method: "GET",
             }),
             providesTags: ["Location"],
         }),
         queryAllLocations: builder.query({
             query: () => ({
-                url: `/api/wos/v2/locations/search`,
+                url: `${ serverUrl }/api/wos/v2/locations/search`,
                 method: "GET",
             }),
             providesTags: ["Location"],
         }),
         deleteLocation: builder.mutation({
             query: (id) => ({
-                url: `/api/wos/v2/locations/${id}`,
+                url: `${ serverUrl }/api/wos/v2/locations/${id}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Location"],
