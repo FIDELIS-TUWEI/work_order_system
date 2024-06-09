@@ -13,33 +13,33 @@ const Dashboard = () => {
   const { data: trackerCounts } = useCountWorkTrackerQuery();
   const { data: totalUsers } = useCountAllUsersQuery();
   const { data: activeUsers } = useCountActiveUsersQuery();
-  const { data: totalEmployees } = useCountAllEmployeesQuery();
+  //const { data: totalEmployees } = useCountAllEmployeesQuery();
 
-  const notAttendedCount = trackerCounts?.data.not_attended || [];
-  const pendingCount = counts?.data.pending || [];
-  const inAttendanceCount = trackerCounts?.data.in_attendance || [];
-  const inCompleteCount = trackerCounts?.data.in_complete || [];
-  const attendedCount = trackerCounts?.data.attended || [];
-  const completedCount = counts?.data.completed || [];
-  const workCountData = workTotal?.data || [];
+  //const notAttendedCount = trackerCounts?.data.not_attended || [];
+  //const pendingCount = counts?.data.pending || [];
+  //const inAttendanceCount = trackerCounts?.data.in_attendance || [];
+ // const inCompleteCount = trackerCounts?.data.in_complete || [];
+ // const attendedCount = trackerCounts?.data.attended || [];
+  //const completedCount = counts?.data.completed || [];
+ // const workCountData = workTotal?.data || [];
   const usersData = totalUsers?.data || [];
   const countActiveUsers = activeUsers?.data || [];
-  const countEmployees = totalEmployees?.data || [];
+  //const countEmployees = totalEmployees?.data || [];
 
   return (
     <Layout>
       <DashboardComponent 
-        notAttendedCount={notAttendedCount}
-        pendingCount={pendingCount}
-        inAttendanceCount={inAttendanceCount}
-        inCompleteCount={inCompleteCount}
-        attendedCount={attendedCount}
-        completedCount={completedCount}
-        workCountData={workCountData}
+        //notAttendedCount={notAttendedCount}
+        //pendingCount={pendingCount}
+        //inAttendanceCount={inAttendanceCount}
+        //inCompleteCount={inCompleteCount}
+        //attendedCount={attendedCount}
+        //completedCount={completedCount}
+        //workCountData={workCountData}
         user={user} 
         usersData={usersData}
         countActiveUsers={countActiveUsers}
-        countEmployees={countEmployees}
+        //countEmployees={countEmployees}
       />
     </Layout>
   )
