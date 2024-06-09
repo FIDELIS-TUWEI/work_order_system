@@ -114,7 +114,7 @@ const queryEmployees = asyncHandler (async (req, res) => {
 // Get single employee and populate workorders
 const getEmployee = asyncHandler (async (req, res) => {
     try {
-        const employeeId = req.params.id
+        const employeeId = req.params.id;
         const employee = await Employee.findById(employeeId).populate("assignedWork");
     
         if (!employee) {
