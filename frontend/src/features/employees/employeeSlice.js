@@ -21,7 +21,7 @@ export const employeesApi = createApi({
     endpoints: (builder) => ({
         createEmployee: builder.mutation({
             query: (values) => ({
-                url: `/api/wos/v2/employees/register`,
+                url: `${ serverUrl }/api/wos/v2/employees/register`,
                 method: "POST",
                 body: values,
             }),
@@ -29,42 +29,42 @@ export const employeesApi = createApi({
         }),
         employees: builder.query({
             query: (page) => ({
-                url: `/api/wos/v2/employees?pageNumber=${page}`,
+                url: `${ serverUrl }/api/wos/v2/employees?pageNumber=${page}`,
                 method: "GET",
             }),
             providesTags: ["Employee"],
         }),
         singleEmployee: builder.query({
             query: (id) => ({
-                url: `/api/wos/v2/employees/${id}`,
+                url: `${ serverUrl }/api/wos/v2/employees/${id}`,
                 method: "GET",
             }),
             providesTags: ["Employee"],
         }),
         queryAllEmployees: builder.query({
             query: () => ({
-                url: `/api/wos/v2/employees/query`,
+                url: `${ serverUrl }/api/wos/v2/employees/query`,
                 method: "GET",
             }),
             providesTags: ["Employee"],
         }),
         employeeWorkCount: builder.query({
             query: (id) => ({
-                url: `/api/wos/v2/employees/count?id=${id}`,
+                url: `${ serverUrl }/api/wos/v2/employees/count?id=${id}`,
                 method: "GET",
             }),
             providesTags: ["Employee"],
         }),
         countAllEmployees: builder.query({
             query: () => ({
-                url: `/api/wos/v2/employees/count`,
+                url: `${ serverUrl }/api/wos/v2/employees/count`,
                 method: "GET",
             }),
             providesTags: ["Employee"],
         }),
         editEmployee: builder.mutation({
             query: ({id, values}) => ({
-                url: `/api/wos/v2/employees/${id}`,
+                url: `${ serverUrl }/api/wos/v2/employees/${id}`,
                 method: "PUT",
                 body: values,
             }),
@@ -72,7 +72,7 @@ export const employeesApi = createApi({
         }),
         deleteEmployee: builder.mutation({
             query: (id) => ({
-                url: `/api/wos/v2/employees/${id}`,
+                url: `${ serverUrl }/api/wos/v2/employees/${id}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Employee"],
