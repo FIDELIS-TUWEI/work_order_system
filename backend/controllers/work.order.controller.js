@@ -41,7 +41,7 @@ const createWorkOrder = asyncHandler (async (req, res) => {
             // Save Work Order
             const savedWorkorder = await newWorkOrder.save();
 
-            res.status(201).json(savedWorkorder);
+            res.status(201).json({data: savedWorkorder });
 
             // Fetch Location Details
             const locations = await Location.find({ _id: { $in: location } }).select("locationTitle");
@@ -230,7 +230,7 @@ const updateWorkOrder = asyncHandler(async (req, res) => {
             await handleAssignedWorkOrder(updatedWorkOrder, assignedTo);
         }
     
-        res.status(200).json(updatedWorkOrder);
+        res.status(200).json({ data: updatedWorkOrder });
 
     } catch (error) {
         logger.error("Error in updateWorkOrder controller", error);
@@ -414,7 +414,7 @@ const inAttendanceTracker = asyncHandler (async(req, res) => {
         }
     
         return res.status(200).json({
-            workInAttendance,
+            data: workInAttendance,
             page,
             pages: Math.ceil(count / pageSize),
             count
@@ -445,7 +445,7 @@ const inCompleteTracker = asyncHandler (async(req, res) => {
         };
     
         res.status(200).json({
-            workInComplete,
+            data: workInComplete,
             page,
             pages: Math.ceil(count / pageSize),
             count
@@ -477,7 +477,7 @@ const attendedTracker = asyncHandler (async (req, res) => {
         };
     
         res.status(200).json({
-            workAttended,
+            data: workAttended,
             page,
             pages: Math.ceil(count / pageSize),
             count

@@ -33,7 +33,7 @@ const filterWorkStatus = asyncHandler(async (req, res) => {
     };
 
     res.status(200).json({
-        workOrders, 
+        data: workOrders, 
         page,
         pages: Math.ceil(count / pageSize),
         count
@@ -70,7 +70,7 @@ const countWorkTracker = asyncHandler ( async (req, res) => {
             else if (item._id === 'Attended') trackerCounts.attended = item.count;
         });
 
-        res.status(200).json(trackerCounts);
+        res.status(200).json({ data: trackerCounts });
    } catch (error) {
         logger.error("Error in countWorkTracker controller", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -103,7 +103,7 @@ const workCreatedByDate = asyncHandler (async (req, res) => {
     }
 
     res.status(200).json({
-        workOrders,
+        data: workOrders,
         page,
         pages: Math.ceil(count / pageSize),
         count
@@ -136,7 +136,7 @@ const countWorkStatus = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: "Work ordeers status not found!" });
         }
     
-        res.status(200).json(counts);
+        res.status(200).json({ data: counts });
     } catch (error) {
         logger.error("Error in countWorkStatus", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -152,7 +152,7 @@ const countTotalWork = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: "Total work count not found!" });
         }
     
-        res.status(200).json(totalWorkCount);
+        res.status(200).json({ data: totalWorkCount });
 
     } catch (error) {
         logger.error("Error in countTotalWork", error);

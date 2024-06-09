@@ -17,7 +17,7 @@ const createDepartment = asyncHandler (async (req, res) => {
         // Save the created department
         await newDepartment.save();
 
-        res.status(201).json(newDepartment);
+        res.status(201).json({ data: newDepartment });
 
     } catch (error) {
         logger.error("Error in createDepartment controller", error);
@@ -66,7 +66,7 @@ const queryDepartments = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: "No departments found" });
         };
         
-        res.status(200).json(departments);
+        res.status(200).json({ data: departments });
 
     } catch (error) {
         logger.error("Error in queryDepartments controller", error);

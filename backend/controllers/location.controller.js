@@ -19,7 +19,7 @@ const createLocation = asyncHandler (async (req, res) => {
     
         // Save the created location
         await newWorkLocation.save();
-        res.status(201).json(newWorkLocation);
+        res.status(201).json({ data: newWorkLocation });
 
     } catch (error) {
         logger.error("Error in createLocation controller", error);
@@ -66,7 +66,7 @@ const queryLocations = asyncHandler (async (req, res) => {
         if (!locations) {
             return res.status(404).json({ error: "Locations not found!" });
         }
-        res.status(200).json(locations);
+        res.status(200).json({ data: locations });
     } catch (error) {
         logger.error("Error in queryLocations controller", error);
         res.status(500).json({ error: "Internal Server Error" });

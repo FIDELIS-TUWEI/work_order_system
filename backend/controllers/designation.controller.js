@@ -17,7 +17,7 @@ const createDesignation = asyncHandler (async (req, res) => {
         // Save the created designation
         await newDesignation.save();
     
-        res.status(201).json(newDesignation);
+        res.status(201).json({ data: newDesignation });
 
    } catch (error) {
         logger.error("Error in createDesignation controller", error);
@@ -64,7 +64,7 @@ const queryDesignations = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: "No Designations found" });
         }
     
-        res.status(200).json(designations);
+        res.status(200).json({data: designations });
     } catch (error) {
         logger.error("Error in queryDesignations controller");
         res.status(500).json({ error: "Internal Server Error" });

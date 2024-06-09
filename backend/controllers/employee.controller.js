@@ -58,7 +58,7 @@ const newEmployee = asyncHandler (async (req, res) => {
             return res.status(400).json({ error: "Invalid employee data" });
         };
     
-        res.status(201).json(newEmployee);
+        res.status(201).json({ data: newEmployee });
     } catch (error) {
         logger.error("Error in newEmployee controller", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -104,7 +104,7 @@ const queryEmployees = asyncHandler (async (req, res) => {
             return res.status(404).json({ error: "Employees not found" });
         };
         
-        res.status(200).json(allEmployees);
+        res.status(200).json({ data: allEmployees });
     } catch (error) {
         logger.error("Error in queryEmployees controller", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -186,7 +186,7 @@ const updateEmployee = asyncHandler (async (req, res) => {
         // save the employee
         await employee.save();
     
-        return res.status(200).json(employee);
+        return res.status(200).json({ data: employee });
 
     } catch (error) {
         logger.error("Error in updateEmployee controller", error);
