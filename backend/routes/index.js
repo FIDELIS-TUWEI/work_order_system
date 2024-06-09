@@ -1,4 +1,6 @@
 const express = require("express");
+const router = express.Router();
+
 const limiter = require("../middleware/limiter");
 
 // Import Routes
@@ -12,7 +14,6 @@ const departmentRoutes = require("../routes/department.routes");
 const designationRoutes = require("../routes/designation.routes");
 const employeeRoutes = require("../routes/employee.routes");
 
-const router = express.Router();
 
 // Routes Middleware
 router.use("/api/wos/v2/auth", limiter, authRoutes);
