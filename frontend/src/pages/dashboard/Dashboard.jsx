@@ -13,9 +13,9 @@ const Dashboard = () => {
   const { data: trackerCounts } = useCountWorkTrackerQuery();
   const { data: totalUsers } = useCountAllUsersQuery();
   const { data: activeUsers } = useCountActiveUsersQuery();
-  //const { data: totalEmployees } = useCountAllEmployeesQuery();
+  const { data: totalEmployees } = useCountAllEmployeesQuery();
 
-  //const notAttendedCount = trackerCounts?.data.not_attended || [];
+  const notAttendedCount = trackerCounts?.data.not_attended || [];
   //const pendingCount = counts?.data.pending || [];
   //const inAttendanceCount = trackerCounts?.data.in_attendance || [];
  // const inCompleteCount = trackerCounts?.data.in_complete || [];
@@ -29,7 +29,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <DashboardComponent 
-        //notAttendedCount={notAttendedCount}
+        notAttendedCount={notAttendedCount}
         //pendingCount={pendingCount}
         //inAttendanceCount={inAttendanceCount}
         //inCompleteCount={inCompleteCount}
