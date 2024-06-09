@@ -362,7 +362,7 @@ const getWorkOrders = asyncHandler(async (req, res) => {
         }
     
         res.status(200).json({
-            workOrders,
+            data: workOrders,
             page,
             pages: Math.ceil(count / pageSize),
             count
