@@ -26,7 +26,7 @@ app.use(cookieParser());
 // CORS 
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://work-orders.online", "https://www.work-orders.online"],
+    origin: ["http://localhost:3000", "https://workorder-client.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     optionsSuccessStatus: 200,
 }));
