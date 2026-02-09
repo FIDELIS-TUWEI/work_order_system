@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Form, Input, Typography, message } from 'antd';
+import { Button, Card, Form, Input, message } from 'antd';
 
 
 import { useLoginMutation } from "@/features/auth/authApiSlice";
 import { selectToken, selectUserInfo, setCredentials } from "@/features/auth/authSlice";
 import LoadingBox from "@/components/LoadingBox";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 
 const LogIn = () => {
@@ -16,7 +16,6 @@ const LogIn = () => {
     const userInfo = useSelector(selectUserInfo);
     const token = useSelector(selectToken);
 
-    const [maintenance, setMaintenance] = useState(false);
     const [login, { isLoading, error }] = useLoginMutation();
 
 
@@ -26,23 +25,7 @@ const LogIn = () => {
         }
     }, [userInfo, navigate, token]);
 
-    const checkMaintenanceStatus = () => {
-        const maintenanceStatus = false;
-        setMaintenance(maintenanceStatus);
-    };
-
-    useEffect(() => {
-        checkMaintenanceStatus()
-    }, []);
-
-    
-
     const onFinishHandler = async (values) => {
-        if (maintenance) {
-            message.error("The System is currently under maintenance. Please try again later.");
-            return;
-        }
-
         try {
             const res = await login(values).unwrap();
 
@@ -94,11 +77,9 @@ const LogIn = () => {
                 <Button 
                     style={{ color: 'white', backgroundColor: 'darkgreen', border: 'none' }} 
                     htmlType="submit" 
-                    disabled={maintenance || isLoading}
                 >
                     Log In
                 </Button>
-                { maintenance && <Typography style={{ color: "red", marginTop: "1rem", textAlign: "center" }}>The system is currently under maintenance. Please try again later</Typography> }
             </Card>
         </Form>
     </div>
